@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>优惠券管理</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Mycoupon/Mycoupon.css" rel="stylesheet">
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a id="back" class=" mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">优惠券管理</h1>
+    <!--<a><span class="mui-icon mui-icon-loop mui-pull-right"></span></a>-->
+    <a href="{:U('/home/coupon/couponhistory')}" class="mui-pull-right">
+        <img src="__PUBLIC__/Wx/img/10.png" style="width: 21px;height: 21px;position: relative;top: 10px;right: 10px">
+    </a>
+    <!--<a class="mui-btn mui-btn-blue mui-btn-link mui-pull-right"></a>-->
+</header>
+<div id="voucher">
+    <foreach name="data" item="v">
+        <a href="{:U('/home/coupon/couponinfo',array('id' => $v['id']))}">
+            <div class="list">
+                <div class="img">
+                    <img src="__PUBLIC__/uploads/{$v['logo']}" alt="">
+                </div>
+                <div class="name">
+                <if condition="$v['seller_name'] neq null">
+                    <h4>{$v['seller_name']}:{$v['name']}</h4>
+                <else />
+                    <h4>全平台:{$v['name']}</h4>
+                </if>
+                </div>
+                <div class="time">
+                    <p>有效期:{$v['start_time']}-{$v['end_time']}</p>
+                </div>
+                <div class="money">
+                    <h4>￥{$v['money']}</h4>
+                    <p>满{$v['use_condition']}元使用</p>
+                </div>
+            </div>
+        </a>
+    </foreach>
+</div>
+
+<div class="input" style="display: none">
+    <input type="button" value="+领取优惠券">
+</div>
+<script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+<script>
+    function text() {
+        mui('#voucher')[0].style.display = 'block'
+        mui('.input')[0].style.display = 'none'
+        setTimeout(function () {
+            mui('#voucher')[0].style.display = 'none'
+            mui('.input')[0].style.display = 'block'
+            setTimeout(function () {
+                text()
+            },1000)
+        },1000)
+
+    }
+    document.getElementById('back').addEventListener('tap', function () {
+        mui.openWindow({
+            url: "{:U('/home/coupon/couponindex')}",
+            id: 'Callcenter'
+        });
+    });
+//    text()
+//    mui('.input').on('tap','input',function () {
+//        mui('#voucher')[0].style.display = 'block'
+//        mui('.input')[0].style.display = 'none'
+//    })
+</script>
+</body>
+</html>

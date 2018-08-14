@@ -1,0 +1,122 @@
+<header class="Hui-header cl"> <a class="Hui-logo l" title="H-ui.admin v2.3" href="{:U('/home/index/index')}">益商城后台管理系统</a>
+    <div id="rightMenu">
+        <ul>
+            <a href="{:U('/home/index/index')}"><li>关闭全部页面</li></a>
+        </ul>
+    </div>
+    <ul class="Hui-userbar">
+        <li>管理员</li>
+        <li class="dropDown dropDown_hover"><a href="#" class="dropDown_A"><php>echo cookie('user');</php> <i class="Hui-iconfont">&#xe6d5;</i></a>
+            <ul class="dropDown-menu radius box-shadow">
+                <li><a href="{:U('/home/login/logout')}">退出</a></li>
+            </ul>
+        </li>
+    </ul>
+</header>
+<link href="__PUBLIC__/youji/css/zzsc.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="__PUBLIC__/youji/js/zzsc.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<div id="newOrderDIV" style="display:none"></div>
+<div id="newBonusDIV" style="display:none"></div>
+<div id="newUpgradeDIV" style="display:none"></div>
+<div id="newServiceDIV" style="display:none"></div>
+<div id="newUserTxDIV" style="display:none"></div>
+<div id="newSellerTxDIV" style="display:none"></div>
+<script type="text/javascript">
+    function neworder(ture){
+        $.ajax({
+            type: "post",
+            url: "{:U('/home/search/neworder')}",
+            async: false,
+            data: name,
+            dataType: "json",
+            success: function(data){
+                cash = eval(data.cash);
+                if(cash!=null){
+                    $('#newOrderDIV').html('<audio autoplay="autoplay"><source src="__PUBLIC__/admin/notifys.mp3" type="audio/mpeg"/></audio>');
+                }
+            }
+        });
+    }
+
+    //新商品奖金设置变更需要审核
+    function newbonus(ture){
+        $.ajax({
+            type: "post",
+            url: "{:U('/home/search/newbonus')}",
+            async: false,
+            data: name,
+            dataType: "json",
+            success: function(data){
+                cash = eval(data.cash);
+                if(cash!=null){
+//                    alert('您有新商品奖金设置变更需要审核');
+                    $('#newBonusDIV').html('<audio autoplay="autoplay"><source src="__PUBLIC__/admin/newbonus.mp3" type="audio/mpeg"/></audio>');
+                }
+            }
+        });
+    }
+
+    //有新的会员升级需要审核
+    function upgrade(ture){
+        $.ajax({
+            type: "post",
+            url: "{:U('/home/search/upgrade')}",
+            async: false,
+            data: name,
+            dataType: "json",
+            success: function(data){
+                cash = eval(data.cash);
+                if(cash!=null){
+//                    alert('您有新的会员升级需要审核');
+                    $('#newUpgradeDIV').html('<audio autoplay="autoplay"><source src="__PUBLIC__/admin/upgrade.mp3" type="audio/mpeg"/></audio>');
+                }
+            }
+        });
+    }
+
+    //有新的售后服务订单
+    function service(ture){
+        $.ajax({
+            type: "post",
+            url: "{:U('/home/search/service')}",
+            async: false,
+            data: name,
+            dataType: "json",
+            success: function(data){
+                cash = eval(data.cash);
+                if(cash!=null){
+//                    alert('您有新的售后服务订单,请及时处理');
+                    $('#newServiceDIV').html('<audio autoplay="autoplay"><source src="__PUBLIC__/admin/shouhou.mp3" type="audio/mpeg"/></audio>');
+                }
+            }
+        });
+    }
+
+    //有新的提现申请
+    function rechargecash(ture){
+        $.ajax({
+            type: "post",
+            url: "{:U('/home/search/rechargecash')}",
+            async: false,
+            data: name,
+            dataType: "json",
+            success: function(data){
+                cash = eval(data.cash);
+                if(cash == 1){
+//                    alert('您有新的用户提现,请及时处理');
+                    $('#newUserTxDIV').html('<audio autoplay="autoplay"><source src="__PUBLIC__/admin/usertx.mp3" type="audio/mpeg"/></audio>');
+                }
+                if(cash == 2){
+//                    alert('您有新的商家提现,请及时处理');
+                    $('#newSellerTxDIV').html('<audio autoplay="autoplay"><source src="__PUBLIC__/admin/sellertx.mp3" type="audio/mpeg"/></audio>');
+                }
+            }
+        });
+    }
+    setInterval(neworder,60000);
+    setInterval(newbonus,65000);
+//    setInterval(upgrade,70000);
+    setInterval(service,75000);
+    setInterval(rechargecash,80000);
+</script>

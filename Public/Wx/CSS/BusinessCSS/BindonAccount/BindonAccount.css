@@ -1,0 +1,85 @@
+body {
+    background-size: 100%;
+    background-image: url(../../../img/AccountBinding/accountbinding_bg.png);
+    overflow-x: hidden;
+}
+
+.mui-icon-back:before, .mui-icon-left-nav:before {
+    border: 1px solid #FFFFFF;
+    border-radius: 100px;
+    padding: 2px;
+}
+
+#header {
+    text-align: center;
+    padding: 10px;
+}
+
+#header h2 {
+    font-weight: 100;
+    color: #FFFFFF;
+    position: relative;
+    right: 10px;
+    font-size: 18px;
+}
+
+.list {
+    margin-bottom: 20px;
+    border: 1px solid #FFFFFF;
+    position: relative;
+    top:100px;
+    width: 80%;
+    position: relative;
+    left: 10%;
+    border-radius: 50px;
+    height: 42px;
+    opacity: 0.8;
+}
+
+.list img {
+    z-index: 9999;
+    left:17px;
+    opacity: 1;
+    position: absolute;
+    top: 10px;
+    width: 17px;
+    height: 18px;
+    float: left;
+    opacity: 1;
+}
+
+.list input {
+    z-index: 9;
+    padding-left: 50px;
+    height: 40px;
+    position: relative;
+    width: 100%;
+    border: none;
+    background-color: #fff;
+    border-radius: 20px;
+    opacity:0.5;
+}
+
+.yan p{
+    opacity:1;
+    position: relative;
+    z-index: 9;
+    bottom: 45px;
+    color: #FFFFFF;
+    left:60%;
+    padding-left: 20px;
+    border-left: 1px solid #FFFFFF;
+}
+
+.tijiao input{
+    position: relative;
+    top:120px;
+    width: 80%;
+    position: relative;
+    left: 10%;
+    background-color: #fe504f;
+    color: #FFFFFF;
+    border: none;
+    height:45px;
+    border-radius: 20px;
+}

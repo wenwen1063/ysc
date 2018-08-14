@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>积分管理</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="../../../CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="../../../CSS/BusinessCSS/Mypoints/Mypoints.css" rel="stylesheet">
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">积分管理</h1>
+</header>
+<div class="title">
+    <p>当前积分</p>
+    <h1>65923</h1>
+</div>
+<div class="mingxi">
+    <span>
+        <img src="../../../img/My/my_icon_detail.png" alt="">
+        赚积分明细
+    </span>
+</div>
+<div class="list">
+    <h5>积分来源</h5>
+    <p>01月13日</p>
+    <h3>+30</h3>
+</div>
+<div class="list">
+    <h5>积分来源</h5>
+    <p>01月13日</p>
+    <h3>+30</h3>
+</div>
+<div class="list">
+    <h5>积分来源</h5>
+    <p>01月13日</p>
+    <h3>+30</h3>
+</div>
+<div class="list">
+    <h5>积分来源</h5>
+    <p>01月13日</p>
+    <h3>+30</h3>
+</div>
+
+<div class="list">
+    <h5>积分来源</h5>
+    <p>01月13日</p>
+    <h3>+30</h3>
+</div>
+<div class="backm">
+    <img src="../../../img/My/default_nodetail.png" alt="">
+    <h5>暂无任何积分明细</h5>
+</div>
+<script src="../../../Script/CommonJS/Base.js"></script>
+<script>
+    function text() {
+        for (var i = 0;i<mui('.list').length;i++){
+            mui('.list')[i].style.display = 'block'
+        }
+        setTimeout(function () {
+            for (var i = 0;i<mui('.list').length;i++){
+                mui('.list')[i].style.display = 'none'
+            }
+            setTimeout(function () {
+                text()
+            },1000)
+        },1000)
+
+    }
+//    text()
+</script>
+</body>
+</html>

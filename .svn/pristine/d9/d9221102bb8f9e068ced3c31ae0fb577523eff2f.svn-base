@@ -1,0 +1,455 @@
+<?php
+/**
+ * 支付类
+ * User: cyl
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+// Vendor('Wxpay.WxPay#Api');
+// Vendor('Wxpay.WxPay#JsApiPay');
+class PayController extends Controller
+{
+    /** 链接wechat接口 */
+    public function wxpay()
+    {
+        $moeny        = I('recharge_money'); //充值金额
+        $out_trade_no = I('order_id'); //充值订单id
+        $tal_fee      = $moeny * 100;
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.Api.php";
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.JsApiPay.php";
+        //①、获取用户openid
+        $tools  = new \JsApiPay();
+        $openId = $tools->GetOpenid();
+        //②、统一下单
+        $input = new \WxPayUnifiedOrder();
+        $input->SetBody("充值金额"); //商品描述
+        $input->SetAttach("益商城"); //附加数据
+        $input->SetOut_trade_no($out_trade_no); //充值订单id
+        $input->SetTotal_fee($tal_fee); //总金额
+        $input->SetTime_start(date("YmdHis"));
+        $input->SetTime_expire(date("YmdHis", time() + 600));
+        $input->SetGoods_tag("益商城"); //商品标记
+        $input->SetNotify_url("http://" . $_SERVER['HTTP_HOST'] . "/wx.php/home/pay/wx_notify");
+        $input->SetTrade_type("JSAPI");
+        $input->SetOpenid($openId);
+        $order = \WxPayApi::unifiedOrder($input);
+//         dump($order);die;
+        $jsApiParameters = $tools->GetJsApiParameters($order);
+        $this->assign('jsApiParameters', $jsApiParameters);
+        $this->assign('moeny', $moeny);
+        $this->assign('id', $out_trade_no);
+        $this->display();
+    }
+
+    /* 支付回调地址 只要有数据回来  那说明   肯定是支付成功的   不支付成功不会回调*/
+    public function wx_notify()
+    {
+        $xml       = $GLOBALS["HTTP_RAW_POST_DATA"];
+        $xmlstring = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $xml_array = json_decode(json_encode($xmlstring), true);
+        if (!empty($xml_array['out_trade_no'])) {
+            $note = $xml_array['out_trade_no']; //充值订单id
+            //给用户充值
+            $money = M('rechargecash')->where(array('note' => $note, 'is_ok' => 0))->getField('money');
+            // $test       = M('test');
+            // $test->test = $note;
+            // $test->text = $money;
+            // $test->add();
+            if (!empty($money)) {
+                $user_id = M('rechargecash')->where(array('note' => $note))->getField('user_id');
+                // $test       = M('test');
+                // $test->test = $user_id;
+                // $test->text = $money;
+                // $test->add();
+                M('user')->where(array('id' => $user_id))->setInc('balance', $money);
+                //更新充值记录表信息
+                $data['is_ok'] = 1; //完成
+                $data['time']  = time();
+                M('rechargecash')->where(array('note' => $note, 'is_ok' => 0))->save($data);
+            }
+        }
+        /* 如果不回复这个xml  微信会给我们发送三次xml */
+        echo '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+    }
+
+    //话费充值的wxpay
+    /** 链接wechat接口 */
+    public function hf_wxpay()
+    {
+        $moeny        = I('total_money'); //充值金额
+        $out_trade_no = I('order_number'); //充值订单id
+        $tal_fee      = $moeny * 100;
+        // $tal_fee      = 0.01 * 100;
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.Api.php";
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.JsApiPay.php";
+        //①、获取用户openid
+        $tools  = new \JsApiPay();
+        $openId = $tools->GetOpenid();
+        //②、统一下单
+        $input = new \WxPayUnifiedOrder();
+        $input->SetBody("话费充值"); //商品描述
+        $input->SetAttach("益商城"); //附加数据
+        $input->SetOut_trade_no($out_trade_no); //充值订单id
+        $input->SetTotal_fee($tal_fee); //总金额
+        $input->SetTime_start(date("YmdHis"));
+        $input->SetTime_expire(date("YmdHis", time() + 600));
+        $input->SetGoods_tag("益商城"); //商品标记
+        $input->SetNotify_url("http://" . $_SERVER['HTTP_HOST'] . "/wx.php/home/pay/hf_wx_notify");
+        $input->SetTrade_type("JSAPI");
+        $input->SetOpenid($openId);
+        $order = \WxPayApi::unifiedOrder($input);
+        // dump($order);die;
+        $jsApiParameters = $tools->GetJsApiParameters($order);
+        $this->assign('jsApiParameters', $jsApiParameters);
+        $this->assign('moeny', $moeny);
+        $this->assign('id', $out_trade_no);
+        $this->display();
+    }
+
+    /* 话费充值的支付回调地址 只要有数据回来  那说明   肯定是支付成功的   不支付成功不会回调*/
+    public function hf_wx_notify()
+    {
+        //引入千米sdk
+        header("Content-type:text/html; charset=utf-8");
+        require "./ThinkPHP/Library/Vendor/Qianmi/OpenSdk.php";
+        $loader                = new \QmLoader();
+        $loader->autoload_path = array(CURRENT_FILE_DIR . DS . "client");
+        $loader->init();
+        $loader->autoload();
+        //初始化
+        $client            = new \OpenClient();
+        $client->appKey    = '10001544';
+        $client->appSecret = 'e6L8XM6YcpYeB5NNGsqljuMX62AsaWDR';
+        $accessToken       = 'c03fdca9639e42b4ba6903ea1b86cfbc';
+
+        $xml       = $GLOBALS["HTTP_RAW_POST_DATA"];
+        $xmlstring = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $xml_array = json_decode(json_encode($xmlstring), true);
+        if (!empty($xml_array['out_trade_no'])) {
+            $order_number = $xml_array['out_trade_no']; //充值订单id
+            //查询订单金额
+            $price = M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 0))->getField('price');
+            //查询号码和充值金额
+            $phone  = M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 0))->getField('tel');
+            $amount = M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 0))->getField('number');
+            //更新充值记录表信息
+            if ($price) {
+                $data['is_pay']     = 1; //已支付
+                $data['paid_price'] = $price; //已支付
+                M('telephone_fare_record')->where(array('order_number' => $order_number))->save($data);
+            }
+            //调用话费查询商品接口 返回商品id
+            $req = new \RechargeMobileGetItemInfoRequest();
+            $req->setMobileNo($phone);
+            $req->setRechargeAmount($amount);
+            $res = $client->execute($req, $accessToken);
+            $res = json_decode(json_encode($res), true); //json转为数组
+
+            if ($res) {
+                $itemId = $res['itemId']; //充值系统的商品id
+                $req1   = new \RechargeMobileCreateBillRequest();
+                $req1->setItemId($itemId);
+                $req1->setMobileNo($phone);
+                $req1->setRechargeAmount($amount);
+                $res1 = $client->execute($req1, $accessToken);
+                $res1 = json_decode(json_encode($res1), true); //json转为数组
+
+                if ($res1) {
+                    $billId                  = $res1['billId']; //充值系统的订单号
+                    $data1['feeflow_number'] = $billId;
+                    M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 1))->save($data1);
+                    //查询充值订单的支付状态 payState
+                    $req3 = new \RechargeOrderInfoRequest();
+                    $req3->setBillId($billId);
+                    $res3 = $client->execute($req3, $accessToken);
+                    $res3 = json_decode(json_encode($res3), true); //json转为数组
+
+                    if ($res3) {
+                        $order_payState = $res3['payState']; // 1已付款 0未付款
+
+                        if ($order_payState == 1) {
+                            //充值系统中此订单已付款 等待充值到账
+                            $data2['remark'] = $billId . '的订单系统正在充值中...请等待';
+                            M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 1))->save($data2);
+                        } else {
+                            //调用接口进行话费充值
+                            $req2 = new \RechargeBasePayBillRequest();
+                            $req2->setBillId($billId);
+                            $res2 = $client->execute($req2, $accessToken);
+                            $res2 = json_decode(json_encode($res2), true); //json转为数组
+
+                            if ($res2) {
+                                $payState = $res2['payState']; // 1已付款 0未付款
+                                // $test['test'] = $res2['payState'];
+                                // $test['text'] = $billId; //(到这边都没问题了)
+                                // M('test')->add($test);
+                                if ($payState == 1) {
+                                    $data2['remark'] = $billId . '的订单系统正在充值中...';
+                                    M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 1))->save($data2);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        /* 如果不回复这个xml  微信会给我们发送三次xml */
+        echo '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+    }
+
+    //流量充值的wxpay
+    /** 链接wechat接口 */
+    public function ll_wxpay()
+    {
+        $moeny        = I('total_money'); //充值金额
+        $out_trade_no = I('order_number'); //充值订单id
+        $tal_fee      = $moeny * 100;
+        // $tal_fee      = 0.01 * 100;
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.Api.php";
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.JsApiPay.php";
+        //①、获取用户openid
+        $tools  = new \JsApiPay();
+        $openId = $tools->GetOpenid();
+        //②、统一下单
+        $input = new \WxPayUnifiedOrder();
+        $input->SetBody("流量充值"); //商品描述
+        $input->SetAttach("益商城"); //附加数据
+        $input->SetOut_trade_no($out_trade_no); //充值订单id
+        $input->SetTotal_fee($tal_fee); //总金额
+        $input->SetTime_start(date("YmdHis"));
+        $input->SetTime_expire(date("YmdHis", time() + 600));
+        $input->SetGoods_tag("益商城"); //商品标记
+        $input->SetNotify_url("http://" . $_SERVER['HTTP_HOST'] . "/wx.php/home/pay/ll_wx_notify");
+        $input->SetTrade_type("JSAPI");
+        $input->SetOpenid($openId);
+        $order = \WxPayApi::unifiedOrder($input);
+        // dump($order);die;
+        $jsApiParameters = $tools->GetJsApiParameters($order);
+        $this->assign('jsApiParameters', $jsApiParameters);
+        $this->assign('moeny', $moeny);
+        $this->assign('id', $out_trade_no);
+        $this->display();
+    }
+
+    /* 流量充值的支付回调地址 只要有数据回来  那说明   肯定是支付成功的   不支付成功不会回调*/
+    public function ll_wx_notify()
+    {
+        //引入千米sdk
+        header("Content-type:text/html; charset=utf-8");
+        require "./ThinkPHP/Library/Vendor/Qianmi/OpenSdk.php";
+        $loader                = new \QmLoader();
+        $loader->autoload_path = array(CURRENT_FILE_DIR . DS . "client");
+        $loader->init();
+        $loader->autoload();
+        //初始化
+        $client            = new \OpenClient();
+        $client->appKey    = '10001544';
+        $client->appSecret = 'e6L8XM6YcpYeB5NNGsqljuMX62AsaWDR';
+        $accessToken       = 'c03fdca9639e42b4ba6903ea1b86cfbc';
+
+        $xml       = $GLOBALS["HTTP_RAW_POST_DATA"];
+        $xmlstring = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $xml_array = json_decode(json_encode($xmlstring), true);
+        if (!empty($xml_array['out_trade_no'])) {
+            $order_number = $xml_array['out_trade_no']; //充值订单id
+            //查询订单金额
+            $price = M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 0))->getField('price');
+            //查询号码和充值数量
+            $phone  = M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 0))->getField('tel');
+            $amount = M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 0))->getField('number');
+            //更新充值记录表信息
+            if ($price) {
+                $data['is_pay']     = 1; //已支付
+                $data['paid_price'] = $price; //已支付
+                M('telephone_fare_record')->where(array('order_number' => $order_number))->save($data);
+            }
+            //调用流量查询商品接口 返回商品id
+            $req = new \MobileFlowItemsList2Request();
+            $req->setMobileNo($phone);
+            $req->setFlow($amount . "M");
+            $res = $client->execute($req, $accessToken);
+            $res = json_decode(json_encode($res), true); //json转为数组
+
+            if ($res) {
+                $itemId = $res['items']['item'][0]['itemId']; //充值系统的商品id
+                $req1   = new \MobileFlowCreateBillRequest();
+                $req1->setItemId($itemId);
+                $req1->setMobileNo($phone);
+                $res1 = $client->execute($req1, $accessToken);
+                $res1 = json_decode(json_encode($res1), true); //json转为数组
+
+                if ($res1) {
+                    $billId                  = $res1['orderDetailInfo']['billId']; //充值系统的订单号
+                    $data1['feeflow_number'] = $billId;
+                    M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 1))->save($data1);
+                    //查询充值订单的支付状态 payState
+                    $req3 = new \RechargeOrderInfoRequest();
+                    $req3->setBillId($billId);
+                    $res3 = $client->execute($req3, $accessToken);
+                    $res3 = json_decode(json_encode($res3), true); //json转为数组
+
+                    if ($res3) {
+                        $order_payState = $res3['payState']; // 1已付款 0未付款
+
+                        // $test['test'] = $res3['payState'];
+                        // $test['text'] = $billId; //(到这边都没问题了)
+                        // M('test')->add($test);
+
+                        if ($order_payState == 1) {
+                            //充值系统中此订单已付款 等待充值到账
+                            $data2['remark'] = $billId . '的订单系统正在充值中...请等待';
+                            M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 1))->save($data2);
+                        } else {
+                            //调用接口进行流量充值
+                            $req2 = new \RechargeBasePayBillRequest();
+                            $req2->setBillId($billId);
+                            $res2 = $client->execute($req2, $accessToken);
+                            $res2 = json_decode(json_encode($res2), true); //json转为数组
+
+                            if ($res2) {
+                                $payState = $res2['payState']; // 1已付款 0未付款
+                                // $test['test'] = $res2['payState'];
+                                // $test['text'] = $billId; //(到这边都没问题了)
+                                // M('test')->add($test);
+                                if ($payState == 1) {
+                                    $data2['remark'] = $billId . '的订单系统正在充值中...';
+                                    M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 1))->save($data2);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        /* 如果不回复这个xml  微信会给我们发送三次xml */
+        echo '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+    }
+
+    //购买软件
+    public function tool_wxpay()
+    {
+        $moeny        = I('recharge_money'); //软件金额
+        $out_trade_no = I('order_number'); //订单编号
+        $tal_fee      = $moeny * 100;
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.Api.php";
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.JsApiPay.php";
+        //①、获取用户openid
+        $tools  = new \JsApiPay();
+        $openId = $tools->GetOpenid();
+        //②、统一下单
+        $input = new \WxPayUnifiedOrder();
+        $input->SetBody("购买软件"); //商品描述
+        $input->SetAttach("益商城"); //附加数据
+        $input->SetOut_trade_no($out_trade_no); //订单编号
+        $input->SetTotal_fee($tal_fee); //总金额
+        $input->SetTime_start(date("YmdHis"));
+        $input->SetTime_expire(date("YmdHis", time() + 600));
+        $input->SetGoods_tag("益商城"); //商品标记
+        $input->SetNotify_url("http://" . $_SERVER['HTTP_HOST'] . "/wx.php/home/pay/tool_wx_notify");
+        $input->SetTrade_type("JSAPI");
+        $input->SetOpenid($openId);
+        $order = \WxPayApi::unifiedOrder($input);
+        // dump($order);die;
+        $jsApiParameters = $tools->GetJsApiParameters($order);
+        $this->assign('jsApiParameters', $jsApiParameters);
+        $this->assign('moeny', $moeny);
+        $this->assign('id', $out_trade_no);
+        $this->display();
+
+    }
+    /* 支付回调地址 只要有数据回来  那说明   肯定是支付成功的   不支付成功不会回调*/
+    public function tool_wx_notify()
+    {
+        $xml       = $GLOBALS["HTTP_RAW_POST_DATA"];
+        $xmlstring = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $xml_array = json_decode(json_encode($xmlstring), true);
+        if (!empty($xml_array['out_trade_no'])) {
+            $note = $xml_array['out_trade_no']; //充值订单id
+            //给用户充值
+            $paid_price = M('record')->where(array('order_number' => $note, 'is_pay' => 0))->getField('paid_price');
+            $pos = M('record')->where(array('order_number' => $note, 'is_pay' => 0,'type'=>4))->getField('paid_price');
+
+            if (!empty($paid_price)) {
+                //更新特权领取记录表
+                $data['is_pay'] = 1; //完成
+                //                $data['time']  = time();
+                M('record')->where(array('order_number' => $note, 'is_pay' => 0))->save($data);
+            }
+            //pos机
+            if (!empty($pos)) {
+                //更新特权领取记录表
+                $data['is_pay'] = 1; //完成
+                M('record')->where(array('order_number' => $note, 'is_pay' => 0))->save($data);
+                //更新订单表
+                $arr['pay_status'] = 1;
+                $arr['pay_time'] = time();
+                $arr['order_status'] = 1;
+                M('orders')->where(array('order_number'=>$note,'pay_status'=>0))->save($arr);
+            }
+        }
+        /* 如果不回复这个xml  微信会给我们发送三次xml */
+        echo '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+    }
+
+public function order_wxpay()
+    {
+//      $moeny        = I('allmoney'); //软件金额
+		$moeny=0.01;
+        $out_trade_no = I('id'); //订单编号
+//      $tal_fee      = $moeny * 100;
+		$tal_fee      = 0.01 * 100;
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.Api.php";
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.JsApiPay.php";
+        //①、获取用户openid
+        $tools  = new \JsApiPay();
+        $openId = $tools->GetOpenid();
+        //②、统一下单
+        $input = new \WxPayUnifiedOrder();
+        $input->SetBody("购买商品"); //商品描述
+        $input->SetAttach("益商城"); //附加数据
+        $input->SetOut_trade_no($out_trade_no); //订单编号
+        $input->SetTotal_fee($tal_fee); //总金额
+        $input->SetTime_start(date("YmdHis"));
+        $input->SetTime_expire(date("YmdHis", time() + 600));
+        $input->SetGoods_tag("益商城"); //商品标记
+        $input->SetNotify_url("http://" . $_SERVER['HTTP_HOST'] . "/wx.php/home/pay/order_wx_notify");
+        $input->SetTrade_type("JSAPI");
+        $input->SetOpenid($openId);
+        $order = \WxPayApi::unifiedOrder($input);
+        // dump($order);die;
+        $jsApiParameters = $tools->GetJsApiParameters($order);
+        $this->assign('jsApiParameters', $jsApiParameters);
+        $this->assign('moeny', $moeny);
+        $this->assign('id', $out_trade_no);
+        $this->display();
+
+    }
+    /* 支付回调地址 只要有数据回来  那说明   肯定是支付成功的   不支付成功不会回调*/
+    public function order_wx_notify()
+    {
+        $xml       = $GLOBALS["HTTP_RAW_POST_DATA"];
+        $xmlstring = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $xml_array = json_decode(json_encode($xmlstring), true);
+        if (!empty($xml_array['out_trade_no'])) {
+            $note = $xml_array['out_trade_no']; //充值订单id
+            //订单状态修改
+           $id=substr($note,16);
+        if($id)
+                $arr['pay_status'] = 1;
+                $arr['pay_time'] = time();
+                $arr['order_status'] = 1;
+                M('orders')->where(array('id'=>$id,'pay_status'=>0))->save($arr); 
+        }else{
+        	 //更新订单表
+                $arr['pay_status'] = 1;
+                $arr['pay_time'] = time();
+                $arr['order_status'] = 1;
+                M('orders')->where(array('order_number'=>$note,'pay_status'=>0))->save($arr);
+        }
+        /* 如果不回复这个xml  微信会给我们发送三次xml */
+        echo '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+    }
+
+}

@@ -1,0 +1,211 @@
+<!--index -->
+<include file="public:index"   />
+<!--index-->
+
+<title>分销管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+    系统 <span class="c-gray en">&gt;</span>
+    分销管理 <span class="c-gray en">&gt;</span>
+    特权领取记录
+    <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20">
+
+    <form action="{:U('/home/record/recordindex/search/')}" method="post/get" name="main_form" class="form form-horizontal" id="form-admin-add" style="float:right;">
+        <div class="text-c">
+            <input type="text" name="userphone" value="{$search['userphone']}" class="input-text" style="width:250px" placeholder="输入会员账号">
+            <input type="text" name="username" value="{$search['username']}" class="input-text" style="width:250px" placeholder="输入会员名称">
+ 			<input type="text" name="pname" value="{$search['pname']}" class="input-text" style="width:250px" placeholder="输入特权名称">
+	
+<!--产品类型，0-软件，1-保险，2-话费，3-流量，4-商品（包含pos机和线下培训）,5全部-->
+            <span class="select-box inline">
+            <select name="type" class="select">
+                <if condition="$search['type'] eq null">
+                    <option value="">全部类型</option>
+                    <option value="0">软件</option>
+                    <option value="1">保险</option>
+                    <option value="2">话费</option>
+                    <option value="3">流量</option>
+                    <option value="4">线下培训</option>
+                    <option value="5">pos机</option>
+                    <elseif condition="$search['type'] eq 0"/>
+                    <option value="0">软件</option>
+                    <option value="1">保险</option>
+                    <option value="2">话费</option>
+                    <option value="3">流量</option>
+                    <option value="4">线下培训</option>
+                    <option value="5">pos机</option>
+                     <option value="">全部类型</option>
+                     <elseif condition="$search['type'] eq 1"/>
+                    <option value="1">保险</option>
+                    <option value="2">话费</option>
+                    <option value="3">流量</option>
+                    <option value="4">线下培训</option>
+                    <option value="5">pos机</option>
+                    <option value="0">软件</option>
+                     <option value="">全部类型</option>
+                     <elseif condition="$search['type'] eq 2"/>
+                    <option value="2">话费</option>
+                    <option value="3">流量</option>
+                    <option value="4">线下培训</option>
+                    <option value="5">pos机</option>
+                    <option value="0">软件</option>
+                    <option value="1">保险</option>
+                     <option value="">全部类型</option>
+                    <elseif condition="$search['type'] eq 3"/>
+                    <option value="3">流量</option>
+                    <option value="4">线下培训</option>
+                    <option value="5">pos机</option>
+                    <option value="0">软件</option>
+                    <option value="1">保险</option>
+                    <option value="2">话费</option>
+                    <option value="">全部类型</option>
+                    <elseif condition="$search['type'] eq 4"/>
+                    <option value="4">线下培训</option>
+                    <option value="5">pos机</option>
+                    <option value="0">软件</option>
+                    <option value="1">保险</option>
+                    <option value="2">话费</option>
+                    <option value="3">流量</option>
+                    <option value="">全部类型</option>
+                    <else/>
+                    <option value="5">pos机</option>
+                    <option value="0">软件</option>
+                    <option value="1">保险</option>
+                    <option value="2">话费</option>
+                    <option value="3">流量</option>
+                    <option value="4">线下培训</option>
+                    <option value="">全部类型</option>
+                </if>
+            </select>
+            </span>
+            <button type="submit" class="btn btn-success" id=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+        </div>
+    </form>
+    <div class="text-c"><br></div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <!--<span class="l"><a href="{:U('/home/seller/selleradd')}" class="btn btn-primary radius"> 新增 </a></span>&nbsp;-->
+        <span class="r">共有数据：<strong>{$count}</strong> 条</span>
+    </div>
+    <table class="table table-border table-bordered table-bg table-hover">
+        <thead>
+        <tr>
+            <th scope="col" colspan="12">特权领取记录列表</th>
+        </tr>
+        <tr class="text-c">
+        	<!--会员账号、会员名称、会员层级、特权名称、产品类型（软件/保险/话费/流量/商品）、特权产品、领取数量、流量类型（本地/国内）、领取时间、备注。-->
+            <!--<th width="70">操作</th>-->
+            <th width="40">会员账号</th>
+            <th width="40">会员名称</th>
+            <th width="40">特权名称</th>
+            <th width="40">产品类型</th>
+            <th width="40">特权产品</th>
+            <th width="40">领取数量</th>
+            <th width="40">流量类型</th>
+            <th width="40">领取时间</th>
+            <th width="40">备注</th>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name='data' item='v'>
+            <tr class="text-c">
+              
+                <!--<td>
+                    <a class="size-MINI radius maincolor" href="{:U('/home/seller/sellerinfo',array('id'=>$v['id']))}">{$v['name']}</a>
+                </td>-->
+                <td>{$v['userphone']}</td>
+                <td>{$v['username']}</td>
+                <!--<td>{$v['userphone']}</td>-->
+                <td>{$v['pname']}</td>
+                <td> <if condition="$v['type'] eq 0">软件
+                     <elseif condition="$v['type'] eq 1"/>保险
+                     <elseif condition="$v['type'] eq 2"/>话费
+                     <elseif condition="$v['type'] eq 3"/>流量
+                     <elseif condition="$v['type'] eq 4"/>线下培训
+                     <elseif condition="$v['type'] eq 5"/>pos机
+                    </if>
+                </td>
+                <td class="text-l"><center><a class="maincolor" href="{:U('/home/goods/goodsinfo',array('id'=>$v['privilege_id']))}">{$v['goods_name']}</a></center></td>
+                <!--<td>{$v['goods_name']}</td>-->
+                <td>{$v['number']}</td>
+                
+                <td >
+               <?php if ($v['type']==3): ?>
+                <?php if ($v['flow_type']==0): ?>
+               		省内流量
+                <?php else: ?>
+               		 国内流量
+                <?php endif ?>
+                	  <?php endif ?>
+                	</td>
+                	<td>  <?php if ($v['time']!=''): ?>
+                  {$v['time']|date='Y-m-d H:i:s',###}
+                	 <?php else: ?>
+                	 	    <?php endif ?>
+                	</td> 
+                  <td>{$v['remark']}</td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pageright">{$page}</div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+<script src="__PUBLIC__/assets/js/jquery.cityselect.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function() {
+        $("#dist_select").citySelect({
+            prov: "{$search['prov']}",
+            city: "{$search['city']}",
+            dist: "{$search['dist']}",
+            required:false,
+            nodata: "none"
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    /*
+     参数解释：
+     title   标题
+     url     请求的url
+     id      需要操作的数据id
+     w       弹出层宽度（缺省调默认值）
+     h       弹出层高度（缺省调默认值）
+     */
+    /*用户-查看*/
+    function member_show(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*管理员-编辑*/
+    function admin_edit(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+    //批量删除判断是否选择
+    function Check()
+    {
+        var chks=document.getElementsByTagName('input');
+        var bl=true;
+        for(var i=0;i<chks.length;i++)
+        {
+            if(chks[i].checked)
+            {
+                bl=false;
+                break;
+            }
+        }
+        if(bl)
+        {
+            alert('最少选择一个');
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

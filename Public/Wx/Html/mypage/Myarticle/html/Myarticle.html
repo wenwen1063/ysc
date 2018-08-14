@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的文章</title>
+		<meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link rel="stylesheet" type="text/css" href="../css/mui.min.css" />
+		<link href="../../../../CSS/CommonCSS/Base.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="../css/mui.poppicker.css" />
+		<link rel="stylesheet" type="text/css" href="../css/mui.picker.min.css" />
+		<link href="../css/article.css" rel="stylesheet">
+		<style>
+
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header">
+			<a href="../../../mypage/Mypage.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的文章</h1>
+		</header>
+		<div style="padding-bottom: 50px;">
+			<!--查询文章-->
+			<div class="search_article bg_white padding_15" style="width: 100%;">
+				<input id="checkPicker" class="ddl_btn" type="button" value="请选择审核状态" />
+				<!--收起 查询-->
+				<div class="closediv" style="display: none;">
+					<input type="text" placeholder="主题关键词" class="margin_b_10">
+					<div class="time">
+						<input id="starttime" class="starttime btn" type="text" placeholder="开始时间" readonly="readonly">
+						<i>--</i>
+						<input id="endtime" class="endtime btn" type="text" placeholder="结束时间" readonly="readonly">
+					</div>
+					<div class="mui-text-right">
+						<span class="closeopen" type='1' style="display: inline-block;">收起<img class="rotate" src="../img/down.png" alt=""></span>
+						<button type="button" class="mui-btn mui-btn-danger mui-pull-right">确定查询</button>
+					</div>
+				</div>
+				<!--展开 查询-->
+				<div class="opendiv mui-text-right">
+					<span class="closeopen" type='0' style="display: inline-block;">展开<img src="../img/down.png" alt=""></span>
+					<button type="button" class="mui-btn mui-btn-danger mui-pull-right">确定查询</button>
+				</div>
+			</div>
+			<!--文章审核-->
+			<div class="article_checked">
+				<!--待审核-->
+				<div class="mui-card article_details">
+					<div class="mui-card-header">
+						<span>文章标题</span> 
+						<i class="waitcheck">待审核</i>
+					</div>
+					<a href="Articledetails.html">
+						<div class="mui-card-content border_b">
+							<div class="mui-card-content-inner padding_t_0">
+								<p>时间:<span>2017-02-25</span></p>
+								<div class="article mui-ellipsis">
+									文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...
+								</div>
+							</div>
+						</div>
+					</a>
+					<div class="mui-card-footer">
+						<p class="mui-card-link mui-hidden"><img src="../img/credits.png" alt=""><span class="padding_l_10">2223</span></p>
+						<p class="mui-card-link"><img class="imgHeight20" src="../img/like_red.png" alt=""><span class="padding_l_10">2223</span></p>
+						<p class="mui-card-link"><img src="../img/browse.png" alt=""><span class="padding_l_10">2223</span></p>
+						<p class="mui-card-link"><img src="../img/checked.png" alt=""><span class="padding_l_10">2223</span></p>
+					</div>
+				</div>
+				<!--已审核-->
+				<div class="mui-card article_details">
+					<div class="mui-card-header">
+						<span>文章标题</span>
+						<i class="waitcheck checked">已审核</i> 
+					</div>
+					<a href="Articledetails.html">
+						<div class="mui-card-content border_b">
+							<div class="mui-card-content-inner padding_t_0">
+								<p>时间:<span>2017-02-25</span></p>
+								<div class="article mui-ellipsis">
+									文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...
+								</div>
+							</div>
+						</div>
+					</a>
+					<div class="mui-card-footer">
+						<p class="mui-card-link"><img src="../img/credits.png" alt=""><span class="padding_l_10">2223</span></p>
+						<p class="mui-card-link"><img class="imgHeight20" src="../img/like_red.png" alt=""><span class="padding_l_10">2223</span></p>
+						<p class="mui-card-link"><img src="../img/browse.png" alt=""><span class="padding_l_10">2223</span></p>
+						<p class="mui-card-link"><img src="../img/checked.png" alt=""><span class="padding_l_10">2223</span></p>
+					</div>
+				</div>
+				<!--不通过-->
+				<div class="mui-card article_details">
+					<div class="mui-card-header">
+						<span>文章标题</span>
+						<i class="waitcheck nopass">不通过</i>  
+					</div>
+					<a href="Articledetails.html">
+						<div class="mui-card-content border_b">
+							<div class="mui-card-content-inner padding_t_0">
+								<p>时间:<span>2017-02-25</span></p>
+								<div class="article mui-ellipsis">
+									文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...
+								</div>
+							</div>
+						</div>
+					</a>
+					<div class="mui-card-footer">
+						<p class="mui-card-link mui-hidden"><img src="../img/credits.png" alt=""><span class="padding_l_10">2223</span></p>
+						<p class="mui-card-link"><img class="imgHeight20" src="../img/like_red.png" alt=""><span class="padding_l_10">2223</span></p>
+						<p class="mui-card-link"><img src="../img/browse.png" alt=""><span class="padding_l_10">2223</span></p>
+						<p class="mui-card-link"><img src="../img/checked.png" alt=""><span class="padding_l_10">2223</span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<nav class="mui-bar mui-bar-tab">
+			<a href="Addarticle.html">
+				<input type="button" value="新增文章" onclick="">
+			</a>
+		</nav>
+	</body>
+
+</html>
+<script type="text/javascript" src="../../../../Script/ActiveXJS/mui.min.js"></script>
+<script type="text/javascript" src="../../../../Script/ActiveXJS/mui.picker.js"></script>
+<script type="text/javascript" src="../../../../Script/ActiveXJS/mui.poppicker.js"></script>
+<script type="text/javascript" src="../../../../Script/ActiveXJS/mui.picker.min.js"></script>
+<script type="text/javascript" src="../../../../Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script>
+	//  展开(0)  收起(1)
+	$('.closeopen').click(function() {
+		var type = $(this).attr('type');
+		if(type == 0) {
+			$('.opendiv').hide();
+			$('.closediv').show();
+		} else if(type == 1) {
+			$('.closediv').hide();
+			$('.opendiv').show();
+		}
+	});
+
+	//开始时间 结束时间
+	(function($) {
+		$.init();
+		//时间控件
+		var result = $('#result')[0];
+		var btns = $('.btn');
+		btns.each(function(i, btn) {
+			btn.addEventListener('tap', function() {
+				var optionsJson = this.getAttribute('data-options') || '{}';
+				var options = JSON.parse(optionsJson);
+				var id = this.getAttribute('id');
+				/*
+				 * 首次显示时实例化组件
+				 * 示例为了简洁，将 options 放在了按钮的 dom 上
+				 * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
+				 */
+				var picker = new $.DtPicker(options);
+				picker.show(function(rs) {
+					/*
+					 * rs.value 拼合后的 value
+					 * rs.text 拼合后的 text
+					 * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+					 * rs.m 月，用法同年
+					 * rs.d 日，用法同年
+					 * rs.h 时，用法同年
+					 * rs.i 分（minutes 的第二个字母），用法同年
+					 */
+					//					result.innerText = '选择结果: ' + rs.text; 
+					this.value = rs.text;
+					/* 
+					 * 返回 false 可以阻止选择框的关闭
+					 * return false;
+					 */
+					/*
+					 * 释放组件资源，释放后将将不能再操作组件
+					 * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
+					 * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
+					 * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+					 */
+					picker.dispose();
+				});
+			}, false);
+		});
+	})(mui);
+	//审核状态
+	(function($, doc) {
+		$.init();
+		$.ready(function() {
+			//审核状态
+			var userPicker = new $.PopPicker();
+			userPicker.setData([{
+				value: 'daishenhe',
+				text: '待审核'
+			}, {
+				value: 'yishenhe',
+				text: '已审核'
+			}, {
+				value: 'butongguo',
+				text: '不通过'
+			}]);
+			var showUserPickerButton = doc.getElementById('checkPicker');
+			showUserPickerButton.addEventListener('tap', function(event) {
+				userPicker.show(function(items) {
+					checkPicker.value = (items[0] || {}).text;
+					//返回 false 可以阻止选择框的关闭
+					//return false;
+				});
+			}, false);
+		});
+	})(mui, document);
+</script>

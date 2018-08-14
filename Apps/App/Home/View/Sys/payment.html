@@ -1,0 +1,87 @@
+<!--index -->
+<include file="public:index" />
+<!--index-->
+<title>支付设置</title>
+<link href="__PUBLIC__/assets/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/assets/css/bootstrapSwitch.css" media="all" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="pd-20">
+        <form id="form1" method="post" action="{:U('edit_payment')}" role="form" class="form-horizontal">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    微信支付
+                </div>
+                <div class="panel-body">
+                    <div class="row cl">
+                        <label class="form-label col-2">是否启用：</label>
+                        <div class="formControls col-10">
+                            <div class="controls">
+                                <div class="switch">
+                                    <input name="is_on[]" type="checkbox" {$info.wx_is_on} value="wx" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-2">应用ID：</label>
+                        <div class="formControls col-10">
+                            <input type="text" name="wx_appid" class="form-control" placeholder="微信开放平台审核通过的应用APPID" value="{$info.wx_appid}">
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-2">商户号：</label>
+                        <div class="formControls col-10">
+                            <input type="text" name="wx_mch_id" class="form-control" placeholder="微信支付分配的商户号" value="{$info.wx_mch_id}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    支付宝
+                </div>
+                <div class="panel-body">
+                    <div class="row cl">
+                        <label class="form-label col-2">是否启用：</label>
+                        <div class="formControls col-10">
+                            <div class="controls">
+                                <div class="switch">
+                                    <input name="is_on[]" type="checkbox" {$info.ali_is_on} value="ali" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-2">应用ID：</label>
+                        <div class="formControls col-10">
+                            <input type="text" name="ali_appid" class="form-control" placeholder="支付宝分配给开发者的应用ID" value="{$info.ali_appid}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    银联
+                </div>
+                <div class="panel-body">
+                    <div class="row cl">
+                        <label class="form-label col-2">待研究</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row cl">
+                <div class="col-9 col-offset-3">
+                    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+                    <input class="btn btn-default radius" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;">
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="__PUBLIC__/assets/js/jquery.min.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/assets/js/bootstrapSwitch.js" type="text/javascript"></script>
+</body>
+
+</html>

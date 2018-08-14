@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>订单详情</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="../../CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="http://dcloud.io/hellomui/css/mui.picker.css" rel="stylesheet"/>
+    <link href="http://dcloud.io/hellomui/css/mui.poppicker.css" rel="stylesheet"/>
+    <link href="../../CSS/BusinessCSS/ShoppingCart/Orderdetails.css" rel="stylesheet">
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">订单详情</h1>
+</header>
+<div class="address">
+    <!--oneress被css隐藏了-->
+    <div class="oneress" style="display: none">
+        <p>暂无添加收货地址</p>
+        <input type="button" value="添加">
+    </div>
+    <div class="ress">
+        <h5>何凡&numsp;&numsp;&numsp;&numsp;<a>147xxxxxxxx</a></h5>
+        <p>甘肃省兰州市城关区xxxxxxxxxxxxxxxxx</p>
+        <input type="button" value="更换地址">
+    </div>
+</div>
+<div class="border">
+    <img src="../../img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="../../img/My/my_address_blue_line.png" alt="">
+    <img src="../../img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="../../img/My/my_address_blue_line.png" alt="">
+    <img src="../../img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="../../img/My/my_address_blue_line.png" alt="">
+    <img src="../../img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="../../img/My/my_address_blue_line.png" alt="">
+    <img src="../../img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="../../img/My/my_address_blue_line.png" alt="">
+    <img src="../../img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="../../img/My/my_address_blue_line.png" alt="">
+    <img src="../../img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="../../img/My/my_address_blue_line.png" alt="">
+    <img src="../../img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="../../img/My/my_address_blue_line.png" alt="">
+    <img src="../../img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="../../img/My/my_address_blue_line.png" alt="">
+    <img src="../../img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="../../img/My/my_address_blue_line.png" alt="">
+</div>
+<div class="content">
+    <div class="list">
+        <div class="name">
+            <img class="userm" src="../../img/Common/pic_3.png" alt="">
+            <h5>商家名称&numsp;></h5>
+            <input type="button" value="回购物车">
+        </div>
+        <div class="commodity">
+            <div class="list">
+                <img class="userm" src="../../img/Common/pic_1.png" alt="">
+                <div class="title">
+                    <h5>多肉植物组合盆栽</h5>
+                    <p>￥52 &numsp;<span>x3</span></p>
+                </div>
+
+            </div>
+            <div class="list">
+                <img class="userm" src="../../img/Common/pic_1.png" alt="">
+                <div class="title">
+                    <h5>多肉植物组合盆栽</h5>
+                    <p>￥52 &numsp;<span>x3</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="zhifu">
+    <div class="title">
+        <span>支付方式</span>
+    </div>
+    <div class="list">
+        <img src="../../img/ShoppingCart/shoppingcart_btn_alipay_normal.png" alt="">
+    </div>
+    <div class="list">
+        <img src="../../img/ShoppingCart/shoppingcart_btn_wechat_normal.png" alt="">
+    </div>
+    <div class="list">
+        <img src="../../img/ShoppingCart/shoppingcart_btn_unionpay_select.png" alt="">
+    </div>
+</div>
+
+<div class="feiyong">
+    <div class="title">
+        <span>费用详情</span>
+    </div>
+    <div class="list">
+        <h5>配送费</h5>
+        <p>邮费&numsp;10元&numsp;></p>
+    </div>
+    <div class="list" id="showUserPicker">
+        <h5>邮费 这里被单机出现选择方案</h5>
+        <a>-￥5&numsp;></a>
+    </div>
+    <div class="list">
+        <h5>配送费</h5>
+        <a>￥5245&numsp;&numsp;</a>
+    </div>
+</div>
+<nav class="mui-bar mui-bar-tab">
+    <div class="right">
+        <a>￥0.00</a>
+        <input type="button" value="提交订单">
+    </div>
+</nav>
+<script src="http://dcloud.io/hellomui/js/mui.min.js"></script>
+<script src="http://dcloud.io/hellomui/js/mui.picker.js"></script>
+<script src="http://dcloud.io/hellomui/js/mui.poppicker.js"></script>
+<script>
+    (function ($, doc) {
+        $.init();
+        $.ready(function () {
+            //普通示例
+            var userPicker = new $.PopPicker();
+            userPicker.setData([{
+                value: 'ywj',
+                text: '优惠一&numsp;&numsp;&numsp;满108减5'
+            }, {
+                value: 'aaa',
+                text: '优惠二&numsp;&numsp;&numsp;满108减5'
+            }, {
+                value: 'lj',
+                text: '优惠三&numsp;&numsp;&numsp;满108减5'
+            }]);
+            var showUserPickerButton = doc.getElementById('showUserPicker');
+            var userResult = doc.getElementById('userResult');
+            showUserPickerButton.addEventListener('tap', function (event) {
+                userPicker.show(function (items) {
+                    userResult.innerText = JSON.stringify(items[0]);
+                    //返回 false 可以阻止选择框的关闭
+                    //return false;
+                });
+            }, false);
+            //-----------------------------------------
+            //级联示例
+            var cityPicker = new $.PopPicker({
+                layer: 2
+            });
+            cityPicker.setData(cityData);
+            var showCityPickerButton = doc.getElementById('showCityPicker');
+            var cityResult = doc.getElementById('cityResult');
+            showCityPickerButton.addEventListener('tap', function (event) {
+                cityPicker.show(function (items) {
+                    cityResult.innerText = "你选择的城市是:" + items[0].text + " " + items[1].text;
+                    //返回 false 可以阻止选择框的关闭
+                    //return false;
+                });
+            }, false);
+            //-----------------------------------------
+            //					//级联示例
+            var cityPicker3 = new $.PopPicker({
+                layer: 3
+            });
+            cityPicker3.setData(cityData3);
+            var showCityPickerButton = doc.getElementById('showCityPicker3');
+            var cityResult3 = doc.getElementById('cityResult3');
+            showCityPickerButton.addEventListener('tap', function (event) {
+                cityPicker3.show(function (items) {
+                    cityResult3.innerText = "你选择的城市是:" + (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+                    //返回 false 可以阻止选择框的关闭
+                    //return false;
+                });
+            }, false);
+        });
+    })(mui, document);
+</script>
+</body>
+</html>

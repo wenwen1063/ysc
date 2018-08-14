@@ -1,0 +1,192 @@
+.mui-bar-nav ~ .mui-content {
+    padding-top: 0px;
+}
+
+.mui-segmented-control .mui-control-item.mui-active {
+    color: #fe504f;
+    background-color: #fff;
+}
+
+.mui-segmented-control .mui-control-item.mui-active h6 {
+    color: #fe504f;
+}
+
+.mui-segmented-control .mui-control-item.mui-active span {
+    border-bottom: 2px solid #fe504f;
+}
+
+.mui-segmented-control .mui-control-item {
+    border: none;
+    color: #4a4a4a;
+    background-color: #fff;
+}
+
+.mui-segmented-control {
+    border: none;
+}
+
+.mui-content .class {
+    position: relative;
+    top: 20px;
+}
+
+#segmentedControl .mui-control-item img {
+    width: 50px;
+    position: relative;
+    top: 10px;
+}
+
+#segmentedControl .mui-control-item h6 {
+    position: relative;
+    top: 5px;
+    font-size: 14px;
+    padding-bottom: 5px;
+}
+
+#segmentedControl {
+    height: 100px;
+}
+
+#item1 .title span {
+    position: relative;
+    color: #909090;
+    padding-left: 15px;
+    border-left: 2px solid #fe504f;
+}
+
+.mui-content .class {
+    top: 10px;
+}
+
+#item1 #scroll .mui-scroll .content {
+    position: relative;
+    top: 10px;
+}
+
+#item1 #scroll .mui-scroll .content .mui-table-view-cell .mui-media-body {
+    position: relative;
+    top: 13px;
+}
+
+.mui-table-view .mui-media-object.mui-pull-right {
+    color: #fe504f;
+}
+
+.mui-table-view .mui-media-object.mui-pull-right span {
+    color: #4a4a4a;
+}
+
+#item2 .mui-scroll .title span {
+    font-size: 17px;
+    color: #909090;
+    border-left: 2px solid #fe504f;
+    padding-left: 15px;
+}
+#item2 .mui-scroll .title h5{
+    color: #007aff;
+    float: right;
+}
+#item2 .mui-scroll .content{
+    position: relative;
+    top:10px;
+}
+#item2 .mui-scroll .content .mui-table-view-cell .mui-media-body{
+    position: relative;
+    top:13px;
+}
+.mui-ios .mui-table-view-cell{
+    width: 100%;
+}
+
+#item3 .mui-scroll .title span {
+    font-size: 17px;
+    color: #909090;
+    border-left: 2px solid #fe504f;
+    padding-left: 15px;
+}
+
+#item3 .mui-scroll .content{
+    position: relative;
+    top:10px;
+}
+#item3 .mui-scroll .content .mui-table-view-cell .mui-media-body{
+    position: relative;
+    top:13px;
+}
+#item3 .mui-scroll .ti input{
+    top:30px;
+    width: 90%;
+    position: relative;
+    left:5%;
+    background-color: #ffd100;
+    color: #FFFFFF;
+    border-radius: 5px;
+    height:45px;
+    border: none;
+}
+#item3 .mui-scroll .cha{
+    position: relative;
+    top:60px;
+    text-align: center;
+}
+
+#item4 .mui-scroll .title span {
+    font-size: 17px;
+    color: #909090;
+    border-left: 2px solid #fe504f;
+    padding-left: 15px;
+}
+#item4{
+    height: 500px;
+    background: #FFFFFF;
+}
+#item4 .mui-scroll .information{
+    position: relative;
+    top:30px;
+    width: 40%;
+    margin: 0 auto;
+}
+#item4 .mui-scroll .information img{
+    width: 100%;
+}
+
+#item4 .mui-scroll .information input{
+    position: relative;
+    top:20px;
+    width: 90%;
+    left:5%;
+    background-color: #FFFFFF;
+    color: #ec971f;
+    border: 1px solid #e0e0e0;
+    border-radius: 0;
+}
+#item4 .mui-scroll .lian{
+    height: 60px;
+    position: relative;
+    padding-top: 80px;
+}
+#item4 .mui-scroll .lian .base{
+    position: relative;
+    height:45px;
+    width: 90%;
+    left:5%;
+    padding: 0 5%;
+    background-color: #e0e0e0;
+
+ }
+#item4 .mui-scroll .lian .base p{
+    color: #666;
+    word-wrap: break-word; word-break: normal;
+}
+
+#item4 .mui-scroll .lian .base input{
+    position: relative;
+    top:20px;
+    width: 45%;
+    left:27%;
+    text-align: center;
+    background-color: #FFFFFF;
+    color: #ec971f;
+    border: 1px solid #e0e0e0;
+    border-radius: 0;
+}

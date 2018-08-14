@@ -1,0 +1,284 @@
+<?php
+/**
+ *推广工具
+ *author:cyl
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class ExtensionController extends Controller
+{
+    //推广工具列表
+    public function extensionlist()
+    {
+        $data = M()->table('__TOOL__ t')
+            ->where(array('is_on_sale' => 2))
+            ->field('t.id,t.name,t.pic,t.market_price,t.shop_price')
+            ->select();
+        $this->assign('data', $data);
+        $this->display();
+    }
+    //推广工具详情
+    public function details()
+    {
+//        pp(I('id'));
+        $arr['privilege_id'] = I('id');
+        $arr['user_id']      = cookie('user_id');
+        $arr['type']         = 0;
+        $arr['is_pay']       = 1;
+
+        $data = M()->table('__TOOL__ t')
+            ->where(array('id' => I('id')))
+            ->find();
+        $pic = M()->table('__TOOL_PIC__ tp')
+            ->where(array('tool_id' => I('id')))
+            ->limit(4)
+            ->select();
+        $isnot = M()->table('__RECORD__ r')
+            ->where($arr)
+            ->select();
+        $isnot2 = M()->table('__USER__ u')
+            ->where(array('u.id' => cookie('user_id')))
+            ->join('left join __PRIVILEGE__ p on p.partner_id = u.privilege_hierarchy_id')
+            ->where(array('p.tool_id' => I('id')))
+            ->select();
+//        pp($isnot2);
+        $this->assign('data', $data);
+        $this->assign('pic', $pic);
+        $this->assign('isnot', $isnot);
+        $this->assign('isnot2', $isnot2);
+        $this->display();
+    }
+    //下载
+    public function download()
+    {
+//        pp(I());
+        $arr['privilege_id'] = I('id');
+        $arr['user_id']      = cookie('user_id');
+        $arr['is_pay']       = 1;
+        $arr['type']         = 0; //类型为软件
+
+        $res = M()->table('__RECORD__ r')
+            ->where($arr)
+            ->select();
+        $nostock = M('tool')->where(array('id' => I('id')))->getField('stock');
+//        dump($res);
+        if ($res) {
+            $json = array(
+                'result' => 1, //已购买过
+                'msg'    => '已购买过，可以直接下载',
+            );
+        } else {
+            if ($nostock > 0) {
+                $json = array(
+                    'result' => 2, //未购买
+                );
+            } else {
+                $json = array(
+                    'result' => 3,
+                    'msg'    => '已售罄',
+                );
+            }
+        }
+        $this->ajaxReturn($json);
+    }
+
+    public function toolpay()
+    {
+//        pp(I());
+        $data = M('tool')->where(array('id' => I('id')))->find();
+
+        $this->assign('data', $data);
+        $this->display();
+    }
+
+    //购买
+    public function buy()
+    {
+//        pp(I());
+        $user_id        = cookie('user_id');
+        $map['user_id'] = $user_id;
+        //获取用户的特权层级
+        //        $ph = M('user')->where(array('id'=>$user_id))->getField('privilege_hierarchy_id');
+        //        pp($ph);
+        $ph = M('tool')->table('__TOOL__ t')
+            ->join('left join __PRIVILEGE__ p on p.tool_id = t.id')
+            ->where(array('t.id' => I('id')))
+            ->getField('p.partner_id');
+        //添加特权领取记录表
+        $record                      = M('record');
+        $tmp                         = "TOOL" . date('YmdHis', time()) . rand(1000, 9999); //订单编号
+        $record->order_number        = $tmp;
+        $record->user_id             = $user_id;
+        $record->privilege_hierarchy = $ph;
+        $record->type                = 0;
+        $record->privilege_id        = I('id');
+        $record->number              = 1;
+        $record->time                = time();
+        $record->paid_price          = I('price');
+        $record->remark              = '软件';
+
+        if (I('ptype') == 1) {
+            $maoney = M('user')->where(array('id' => $user_id))->getField('balance');
+            if ($maoney < I('price')) {
+                $json = array(
+                    'result' => 0,
+                    'msg'    => '余额不足！',
+                );
+                $this->ajaxReturn($json);exit;
+            }
+
+            //添加用户升级记录
+            $oldtype               = M('user')->where(array('id' => $user_id))->getField('privilege_hierarchy_id');
+            $upuser                = M('user_upgrade_logs');
+            $upuser->user_id       = $user_id;
+            $upuser->type          = $oldtype;
+            $upuser->upgrade_type  = $ph;
+            $upuser->condition     = 0;
+            $upuser->payment       = I('price');
+            $upuser->time          = time();
+            $upuser->state         = 1;
+            $upuser->auditing_time = time();
+            $upuser->add();
+
+            $user                         = M('user');
+            $user->id                     = $user_id;
+            $user->balance                = $maoney - I('price');
+            $user->privilege_hierarchy_id = $ph;
+            $yueruser                     = $user->save();
+            //清空用户消费金额
+            $order              = M('orders');
+            $data['is_partner'] = 1;
+            $order->where($map)->save($data);
+            //----------------------------------搭档返佣------------------------
+            //搭档一级返佣
+            //获取会员层级
+            $data = M('user')->where(array("id" => $user_id))->find();
+            //判断上级是否为搭档
+            if ($data['introduce'] != null) {
+                $data_1 = M('user')->where(array("id" => $data['introduce']))->find();
+                if ($data_1) {
+                    //判断一级是否为搭档，是搭档给返点
+                    if ($data_1['privilege_hierarchy_id'] != 0) {
+                        $bonus_1 = M("update_bonus_set")->where(array('partner_level' => 1, 'partner_id' => $ph))->find();
+                        //获取推荐会员信息
+                        // $users_1 = M('user')->where(array("id" => $data_1['id']))->field('id,privilege_hierarchy_id')->find();
+                        //搭档奖励返佣
+                        M('user')->where(array("id" => $data_1['id']))->setInc('reward', $bonus_1['amount'], 'reward_receive', $bonus_1['amount']);
+                        M('user')->where(array("id" => $data_1['id']))->setInc('reward_receive', $bonus_1['amount']);
+                        //添加会员金币返佣记录
+                        $jdata                 = M('bonus_recommend');
+                        $jdata->user_id        = $user_id;
+                        $jdata->name           = $ph;
+                        $jdata->hierarchy      = 1;
+                        $jdata->bonus_amount   = $bonus_1['amount'];
+                        $jdata->recommend_user = $data_1['id'];
+                        $jdata->recommend_name = $data_1['privilege_hierarchy_id'];
+                        $jdata->addtime        = strtotime(date('Y-m-d H:i:s'));
+                        $jdata->add();
+                    }
+
+                }
+                //搭档二级返佣
+                $data_2 = M('user')->where(array("id" => $data_1['introduce']))->find();
+                if ($data_2) {
+                    if ($data_2['privilege_hierarchy_id'] != 0) {
+                        $bonus_2 = M("update_bonus_set")->where(array('partner_level' => 2, 'partner_id' => $ph))->find();
+                        // $users_2 = M('user')->where(array("id" => $data_2['id']))->field('id,privilege_hierarchy_id')->find();
+                        M('user')->where(array("id" => $data_2['id']))->setInc('reward', $bonus_2['amount'], 'reward_receive', $bonus_2['amount']);
+                        M('user')->where(array("id" => $data_2['id']))->setInc('reward_receive', $bonus_2['amount']);
+                        //添加会员金币返佣记录
+                        $jdata                 = M('bonus_recommend');
+                        $jdata->user_id        = $user_id;
+                        $jdata->name           = $ph;
+                        $jdata->hierarchy      = 2;
+                        $jdata->bonus_amount   = $bonus_2['amount'];
+                        $jdata->recommend_user = $data_2['id'];
+                        $jdata->recommend_name = $data_2['privilege_hierarchy_id'];
+                        $jdata->addtime        = strtotime(date('Y-m-d H:i:s'));
+                        $jdata->add();
+                    }
+                }
+                //搭档三级返佣
+                $data_3 = M('user')->where(array("id" => $data_2['introduce']))->find();
+                if ($data_3) {
+                    if ($data_2['privilege_hierarchy_id'] != 0) {
+                        $bonus_3 = M("update_bonus_set")->where(array('partner_level' => 3, 'partner_id' => $ph))->find();
+                        // $users_3 = M('user')->where(array("id" => $data_3['id']))->field('id,privilege_hierarchy_id')->find();
+                        M('user')->where(array("id" => $data_3['id']))->setInc('reward', $bonus_3['amount'], 'reward_receive', $bonus_3['amount']);
+                        M('user')->where(array("id" => $data_3['id']))->setInc('reward_receive', $bonus_3['amount']);
+                        //添加会员金币返佣记录
+                        $jdata                 = M('bonus_recommend');
+                        $jdata->user_id        = $user_id;
+                        $jdata->name           = $ph;
+                        $jdata->hierarchy      = 3;
+                        $jdata->bonus_amount   = $bonus_3['amount'];
+                        $jdata->recommend_user = $data_3['id'];
+                        $jdata->recommend_name = $data_3['privilege_hierarchy_id'];
+                        $jdata->addtime        = strtotime(date('Y-m-d H:i:s'));
+                        $jdata->add();
+                    }
+                }
+
+            }
+            $record->is_pay = 1;
+            $yuer           = $readd           = $record->add();
+
+        } else {
+            $wxpay = $readd = $record->add();
+        }
+
+        //更新推广工具的库存和销量
+        $arr['id']                  = I('id');
+        $arr['stock']               = I('stock') - 1;
+        $arr['actual_sales']        = I('as') + 1;
+        $arr['virtual_sell_amount'] = I('vsa') + 1;
+        $tool                       = M('tool');
+        $tool->save($arr);
+        if ($tool && $wxpay) {
+            $json = array(
+                'result'       => 1,
+                'order_number' => $tmp,
+                'price'        => I('price'),
+            );
+        } else if ($yueruser && $yuer) {
+            $json = array(
+                'result'  => 3,
+                'tool_id' => I('id'),
+                'msg'     => '购买成功！请联系客服下载。',
+            );
+        } else {
+            $json = array(
+                'result' => 0,
+                'msg'    => '操作失败',
+            );
+        }
+
+        $this->ajaxReturn($json);
+    }
+
+    public function loadvideo()
+    {
+        /*$filename = I('filename');
+        pp($filename);
+        header('content-disposition:attachment;filename='.basename($filename));
+        header('content-length:'.filesize($filename));
+        readfile($filename);*/
+        $file = I('filename');
+        if (file_exists($file)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . basename($file) . '"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
+            exit;
+        } else {exit($file . "文件不存在");}
+
+        download("test.mp4");
+    }
+
+}

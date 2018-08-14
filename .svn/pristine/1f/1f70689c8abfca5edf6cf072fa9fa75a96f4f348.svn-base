@@ -1,0 +1,15 @@
+<?php
+namespace Home\Controller;
+
+use Think\Controller;
+
+class DoController extends IndexController
+{
+	public function index(){
+		$data = array(
+			'order_id'=>1,
+			);
+		$arr = D('Zfbtest')->addData($data);
+		echo "这是运行结果，返回值：".$arr;
+	}
+}

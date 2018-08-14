@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>分类列表</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css">
+		<link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/classification/classification.css">
+		<!-- <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/kefandtop.css"> -->
+		<style>
+			/*侧边栏tab选项卡*/
+			
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.leftPanel {
+				position: absolute;
+				top: 100px;
+				left: 0px;
+				right: 65%;
+				bottom: 50px;
+				overflow-y: scroll;
+			}
+			
+			.contentPanel {
+				position: absolute;
+				top: 100px;
+				right: 0;
+				left: 35%;
+				/*height: 100%;*/
+				bottom: 50px;
+				width: auto;
+				background: #fff;
+				overflow-y: scroll;
+			}
+			
+			.leftPanel ul {
+				padding: 0;
+				margin: 0;
+			}
+			
+			.leftPanel ul li {
+				width: 100%;
+				height: 50px;
+				line-height: 50px;
+				padding-left: 15px;
+				border-bottom: 1px solid #E3E4E9;
+				border-right: 1px solid #E3E4E9;
+			}
+			/*分类左侧*/
+			/*默认是黄色*/
+			
+			.leftPanel ul li.active {
+				background: white;
+				border: none;
+				color: #FFC100;
+				border-left: 2px solid #FFC100;
+			}
+			
+			.leftPanel_red ul li.active {
+				background: white;
+				border: none;
+				color: #ff5353;
+				border-left: 2px solid #ff5353;
+			}
+			
+			.row {
+				width: 100%;
+				text-align: center;
+			}
+			
+			.row .row_6 {
+				width: 50%;
+				float: left;
+				padding: 10px;
+				padding-bottom: 0;
+			}
+			
+			.row .row_6 img {
+				width: 100%;
+				max-width: 300px;
+			}
+			
+			.typetitle {
+				color: #909090 !important;
+				font-size: 14px;
+				padding-top: 10px;
+			}
+			
+			.clearfix:after {
+				content: ".";
+				display: block;
+				height: 0;
+				visibility: hidden;
+				clear: both;
+			}
+			
+			.clearfix {
+				zoom: 1;
+			}
+			
+			.imgkefu {
+				position: relative;
+			}
+			
+			.imgkefu img {
+				position: fixed;
+				z-index: 9999;
+				right: 15px;
+				bottom: 50px;
+				width: 35px;
+				top: 77%;
+			}
+			/*查询栏*/
+			
+			.searchPanel {
+				position: absolute;
+				top: 45px;
+				height: 55px;
+				width: 100%;
+				background: #f1f2f6;
+				padding: 10px;
+			}
+			
+			.searchdiv {
+				text-align: left;
+				background: #fff;
+				border-radius: 25px;
+				width: 100%;
+				height: 35px;
+				position: relative;
+				padding-left: 45px;
+			}
+			
+			.searchdiv img {
+				width: 18px;
+				display: inline-block;
+				position: absolute;
+				top: 8.5px;
+				left: 20px;
+			}
+			
+			.searchdiv input[type='search'] {
+				display: inline-block;
+				width: 100%;
+				/* padding-left: 3px; */
+				padding: 0;
+				height: 35px;
+				text-align: left;
+				margin: 0;
+				background: #fff;
+				font-size: 14px;
+				border-radius: 25px;
+			}
+			
+			.mui-ellipsis-1 {
+				width: 100%;
+				overflow: hidden;
+				height: 14px; 
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+			/*查询栏  结束*/
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header" style="position:fixed;left:0;top:0;height:45px;">
+			<a href="{:U('/home/index/index')}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">分类列表</h1>
+			<!--             <a href="Commodityname.html" class="mui-action-back mui-icon-search mui-icon  mui-pull-right"></a> -->
+		</header>
+		<div class="searchPanel">
+			<a href="#">
+				<div id="searchdiv" class="searchdiv">
+					<img src="__PUBLIC__/Wx/img/SSSS.png" alt="">
+					<input type="search" placeholder="搜索商品"/>
+				</div>
+			</a>
+		</div>
+		<div class="leftPanel leftPanel_red">
+			<ul>
+				<foreach name="goodsclass" item="v">
+					<if condition="$key eq 0">
+						<li class="active aui-ellipsis-1" id="{$v['id']}" onclick="getclass(this.id)">{$v['name']}</li>
+						<else />
+						<li class="aui-ellipsis-1" id="{$v['id']}" onclick="getclass(this.id)">{$v['name']}</li>
+					</if>
+				</foreach>
+			</ul>
+		</div>
+		<div class="contentPanel  aui-padded-10 aui-padded-l-15">
+			<div id="content1" class="tabitem tabitem0">
+				<script id="tpl1" type="text/template">
+					{{each data as v i}}
+					<div class="mui-text-center typetitle">
+						—— ● {{v.name}} ● ——
+					</div>
+					<div class="typelist clearfix aui-margin-t-10">
+						<div class="row">
+							{{each v.belong as v2 i2}}
+							<div class="row_6">
+								<a href="__ROOT__/wx.php/home/goods/goodslist?id={{v2.id}}&sort_flag=default_sort">
+									<img src="__PUBLIC__/Uploads/{{v2.sm_pic}}" alt="">
+									<h5 class="mui-ellipsis-1">{{v2.name}}</h5>
+								</a>
+							</div>
+							{{/each}}
+						</div>
+					</div>
+					{{/each}}
+				</script>
+			</div>
+			<div id="content2" class="tabitem tabitem1" style="display: none;">
+				<div class="emptydiv">
+					<div class="emptyimg">
+						<img src="__PUBLIC__/Wx/img/Classification/default_noclassification.png" alt="">
+					</div>
+					<div class="emptytip">暂无相关分类</div>
+				</div>
+			</div>
+		</div>
+		<!--客服图标-->
+		<div class="imgkefu">
+			<a href="http://chat8.live800.com/live800/chatClient/chatbox.jsp?companyID=820706&configID=151385&jid=5530154684">
+				<img src="__PUBLIC__/Wx/img/KFRK.png" alt="">
+			</a>
+		</div>
+		<!--nav底部导航-->
+		<include file="public:nav" />
+		<!--nav底部导航结束-->
+	</body>
+
+</html>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<!--<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>-->
+<script type="text/javascript" src="__PUBLIC__/index/js/template.js"></script>
+<script language="javascript" src="http://chat8.live800.com/live800/chatClient/monitor.js?jid=5530154684&companyID=820706&configID=151384&codeType=custom"></script>
+<script type="text/javascript">
+	getclass("<?php echo $goodsclass[0]['id']; ?>");
+
+	function getclass(id) {
+		var id = id; //一级分类的id
+		$.ajax({
+			url: "{:U('/home/goodsclass/getclass')}",
+			type: "post",
+			data: {
+				"id": id
+			},
+			dataType: "json",
+			success: function(data) {
+				// console.log(data);
+				if(data.result == 1) {
+					$('#content1').css('display', 'block');
+					$('#content2').css('display', 'none');
+					var html = template('tpl1', data);
+					$('#content1').html(html);
+				} else {
+					$('#content1').css('display', 'none');
+					$('#content2').css('display', 'block');
+				}
+			}
+		})
+	}
+</script>
+<script type="text/javascript">
+	//	var searchdiv = document.getElementById("searchdiv");
+	//	//搜索记录
+	//	searchdiv.addEventListener("tap", function() { 
+	//		mui.openWindow({
+	//			id: 'search',
+	//			url: 'search.html'
+	//		});
+	//	});
+	mui.trigger(searchdiv, 'tap');
+	$('.leftPanel ul li').click(function() {
+		$('.leftPanel ul li').removeClass('active');
+		$(this).addClass('active');
+		var index = $(this).index();
+		$('.contentPanel .tabitem').hide();
+		$('.contentPanel .tabitem' + index).show();
+	})
+</script>

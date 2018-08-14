@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../CSS/CommonCSS/Base.css">
+    <link rel="stylesheet" href="../../../CSS/BusinessCSS/Extension.css">
+    <title>推广工具</title>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a  href="../../index.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">推广工具</h1>
+</header>
+
+<div id="content">
+    <a href="details.html">
+        <div class="list">
+            <div class="img">
+                <img src="../../../img/Home/home_extensiontool_pic.png" style="width:80px;height: 80px;">
+            </div>
+            <div class="name">
+                <span>软件名称</span>
+            </div>
+            <div class="money">
+                <span>￥198</span>
+                <del>￥198</del>
+                <input class="red" type="button" value="购买">
+            </div>
+        </div>
+    </a>
+    <a href="details.html">
+        <div class="list">
+            <div class="img">
+                <img src="../../../img/Home/home_extensiontool_pic.png" style="width:80px;height: 80px;">
+            </div>
+            <div class="name">
+                <span>软件名称</span>
+            </div>
+            <div class="money">
+                <span>￥198</span>
+                <del>￥198</del>
+                <input class="red" type="button" value="购买">
+            </div>
+        </div>
+    </a>
+    <a href="details.html">
+        <div class="list">
+            <div class="img">
+                <img src="../../../img/Home/home_extensiontool_pic.png" style="width:80px;height: 80px;">
+            </div>
+            <div class="name">
+                <span>软件名称</span>
+            </div>
+            <div class="money">
+                <span>￥198</span>
+                <del>￥198</del>
+                <input class="red" type="button" value="购买">
+            </div>
+        </div>
+    </a>
+    <a href="details.html">
+        <div class="list">
+            <div class="img">
+                <img src="../../../img/Home/home_extensiontool_pic.png" style="width:80px;height: 80px;">
+            </div>
+            <div class="name">
+                <span>软件名称</span>
+            </div>
+            <div class="money">
+                <span>￥198</span>
+                <del>￥198</del>
+                <input class="red" type="button" value="购买">
+            </div>
+        </div>
+    </a>
+    <a href="details.html">
+        <div class="list">
+            <div class="img">
+                <img src="../../../img/Home/home_extensiontool_pic.png" style="width:80px;height: 80px;">
+            </div>
+            <div class="name">
+                <span>软件名称</span>
+            </div>
+            <div class="money">
+                <span>￥198</span>
+                <del>￥198</del>
+                <input class="red" type="button" value="购买">
+            </div>
+        </div>
+    </a>
+    <a href="details.html">
+        <div class="list">
+            <div class="img">
+                <img src="../../../img/Home/home_extensiontool_pic.png" style="width:80px;height: 80px;">
+            </div>
+            <div class="name">
+                <span>软件名称</span>
+            </div>
+            <div class="money">
+                <span>￥198</span>
+                <del>￥198</del>
+                <input class="red" type="button" value="购买">
+            </div>
+        </div>
+    </a>
+    <a href="details.html">
+        <div class="list">
+            <div class="img">
+                <img src="../../../img/Home/home_extensiontool_pic.png" style="width:80px;height: 80px;">
+            </div>
+            <div class="name">
+                <span>软件名称</span>
+            </div>
+            <div class="money">
+                <span>￥198</span>
+                <del>￥198</del>
+                <input class="red" type="button" value="购买">
+            </div>
+        </div>
+    </a>
+</div>
+
+
+<script src="../../Script/CommonJS/Base.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .qrcode{
+    padding:200px 0 0 200px !important;
+    margin:-200px 0 0 -200px !important;
+    position: relative;z-index: 100;
+    -webkit-user-select: none;
+}
+</style>
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no"> -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css">
+    <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/Mypage/distribution.css">
+    <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/Mypage/Distributioncenter.css">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Mypage/Mypage.css" rel="stylesheet">
+    <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+    <title>二维码</title>
+</head>
+
+<body style="overflow:hidden">
+    <!--<header class="mui-bar mui-bar-nav header" style="background:black">
+        <a href="../../Mypage.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">二维码</h1>
+    </header>-->
+    <div class="content" style="position:fixed">
+        <img src="http://www.dadangsc.com/wx.php/home/two/twos/user_id/{$user_id}.html" alt="" style="width: 100%" class="qrcode-img ">
+    </div>
+    <!-- nav底部导航 -->
+    <include file="public:nav" />
+    <!-- nav底部导航结束 -->
+</body>
+<script type="text/javascript" src="__PUBLIC__/index/js/clipboard.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery.qrcode.min.js"></script>
+<script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+<script type="text/javascript">
+</script>
+<script type="text/javascript">
+// $(function(){
+//     alert($(".qrcode-img").attr('src'));
+// })
+    $("#qrDiv").qrcode({
+
+        width: 120, //宽度
+        height:120, //高度
+        text: "需要生成的二维码内容" //任意内容
+    });
+
+    //从 canvas 提取图片 image
+    function convertCanvasToImage(canvas) {
+        //新Image对象，可以理解为DOM
+        var image = new Image();
+        // canvas.toDataURL 返回的是一串Base64编码的URL，当然,浏览器自己肯定支持
+        // 指定格式 PNG
+        image.src = canvas.toDataURL("image/png");
+        return image;
+    }
+
+    //获取网页中的canvas对象
+    var mycanvas1=document.getElementsByTagName('canvas')[0];
+    //将转换后的img标签插入到html中
+    var img=convertCanvasToImage(mycanvas1);
+    $('#imagQrDiv').append(img);//imagQrDiv表示你要插入的容器id
+</script>
+</html>

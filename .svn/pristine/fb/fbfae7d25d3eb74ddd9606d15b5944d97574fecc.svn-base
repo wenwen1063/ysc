@@ -1,0 +1,425 @@
+<?php
+/**
+ *个人中心
+ *author:qql
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class PartnersController extends Controller
+{
+
+    public function index()
+    {
+        //搭档信息
+        // $mapn['id'] = array('eq', '1,2,3');
+        $data = M('partner')
+        // ->where($mapn)
+        ->order('id asc')->limit(3)->select();
+        // dump($data);
+        //海报
+        $wmap['ad_position'] = 3;
+        $wmap['ad_skort']    = 1;
+        $hai                 = M('ad')->where($wmap)->find();
+        //搭档条件
+        $datas = M('partner')->limit(3)
+        // ->where($mapn)
+            ->select();
+        //搭档特权
+        // $result = M()->table('__PRIVILEGE__ pv')
+        //     ->join('left join __TOOL__ t on t.id = pv.tool_id')
+        //     ->join('left join __INSURANCE__ i on i.id = pv.insurance_id')
+        //     ->join('left join __GOODS__ g on g.id = pv.goods_id')
+        //     ->field('pv.*,t.name as tname,i.name as iname,g.goods_name')
+        //     ->select();
+
+        //软件使用时间
+        $result = M()->table('__PRIVILEGE__ pv')
+            ->join("left join __PARTNER__ p on pv.partner_id = p.id")
+            ->group('p.id')
+            ->field('pv.term,p.id as partner_id ')
+            ->order('partner_id')
+            ->select();
+        // dump($result);
+        //线下培训
+
+        // dump($insur);
+        //话费折扣
+
+        //销售一级
+        $xiaos = M()->table('__SALE_BONUS_SET__ sbs')
+            ->join('left join __PARTNER__ p on sbs.partner_id = p.id')
+            ->where(array('sbs.partner_level' => 1, 'seller_id' => 0))
+            ->field('p.name,sbs.*')
+            ->select();
+        //销售二级
+        $xiaor = M()->table('__SALE_BONUS_SET__ sbs')
+            ->join('left join __PARTNER__ p on sbs.partner_id = p.id')
+            ->where(array('sbs.partner_level' => 2, 'seller_id' => 0))
+            ->field('p.name,sbs.*')
+            ->select();
+        //销售三级
+        $xiaoa = M()->table('__SALE_BONUS_SET__ sbs')
+            ->join('left join __PARTNER__ p on sbs.partner_id = p.id')
+            ->where(array('sbs.partner_level' => 3, 'seller_id' => 0))
+            ->field('p.name,sbs.*')
+            ->select();
+        //搭档一级
+        $pone = M()->table('__UPDATE_BONUS_SET__ ubs')
+            ->join('left join __PARTNER__ p on ubs.partner_id = p.id')
+            ->where(array('ubs.partner_level' => 1))
+            ->field('p.name,ubs.*')
+            ->select();
+        //搭档二级
+        $ptwo = M()->table('__UPDATE_BONUS_SET__ ubs')
+            ->join('left join __PARTNER__ p on ubs.partner_id = p.id')
+            ->where(array('ubs.partner_level' => 2))
+            ->field('p.name,ubs.*')
+            ->select();
+        //搭档三级
+        $pth = M()->table('__UPDATE_BONUS_SET__ ubs')
+            ->join('left join __PARTNER__ p on ubs.partner_id = p.id')
+            ->where(array('ubs.partner_level' => 3))
+            ->field('p.name,ubs.*')
+            ->select();
+        // dump($xiaor);
+        // dump($xiaor);
+
+        // dump($data);
+        // dump($insur);
+        $info = M("moren_parnter")->where(array("id" => 1))->find();
+        $this->assign('info', $info);
+        $this->assign('result', $result);
+        $this->assign('xiaos', $xiaos);
+        $this->assign('xiaor', $xiaor);
+        $this->assign('xiaoa', $xiaoa);
+        $this->assign('pone', $pone);
+        $this->assign('ptwo', $ptwo);
+        $this->assign('pth', $pth);
+        $this->assign('datas', $datas);
+        $this->assign('data', $data);
+        $this->assign('hai', $hai);
+        $this->display();
+    }
+    // public function info()
+    // {
+    // $id = I('id');
+    // $id = 1;
+    // $result = M()->table('__PRIVILEGE__ pv')
+    //     ->join('left join __TOOL__ t on t.id = pv.tool_id')
+    //     ->join('left join __INSURANCE__ i on i.id = pv.insurance_id')
+    //     ->join('left join __GOODS__ g on g.id = pv.goods_id')
+    //     ->field('pv.*,t.name as tname,i.name as iname,g.goods_name')
+    //     ->where(array('pv.partner_id' => $id))
+    //     ->select();
+
+    // $result = M()->table('__PARTNER__ p')
+    //     ->join("left join __PRIVILEGE__ pv on pv.partner_id = p.id")
+    //     ->field('pv.term,p.id as partner_id ')
+    //     ->order('partner_id')
+    //     ->select();
+
+    // $result = M()->table('__PRIVILEGE__ pv')
+    //     ->join("left join __PARTNER__ p on pv.partner_id = p.id")
+    //     ->group('p.id')
+    //     ->field('pv.term,p.id as partner_id ')
+    //     ->order('partner_id')
+    //     ->select();
+
+    // $bound = M()->table('__PARTNER__ p')
+    //     ->join('left join __SALE_BONUS_SET__ sbs on sbs.partner_id = p.id')
+    //     ->join('left join __PRIVILEGE__ pv on pv.partner_id = p.id')
+    //     ->join('left join __GOODS__ g on g.id = pv.goods_id')
+    //     ->where(array('p.id' => $id))
+    //     ->select();
+    // $xiaos = M()->table('__PARTNER__ p')
+    //     ->join('left join __SALE_BONUS_SET__ sbs on sbs.partner_id = p.id')
+    //     ->where(array('p.id' => $id))
+    //     ->field('p.name,sbs.*')
+    //     ->distinct(true)
+    //     ->select();
+    // $json = array(
+    //     'result' => $result,
+    // 'bound'  => $pabound,
+    // 'xiaos'  => $xiaos,
+    //     );
+    //     pp($json);
+    //     $this->ajaxReturn($json);
+    // }
+
+    public function bpartner()
+    {
+        $p_id = I('post.id');
+        // $p_id       = 2;
+        $data       = M('partner')->where('id =' . $p_id)->find();
+        $partner_id = $data['id'];
+        $cost       = $data['software_cost'];
+        $amount     = $data['consumption_amount'];
+        $name       = $data['name'];
+        $json       = array(
+            'result'     => 0,
+            'partner_id' => $partner_id,
+            'name'       => $name,
+            'fee'        => $cost,
+            'amount'     => $amount,
+        );
+        $this->ajaxReturn($json);
+    }
+
+    public function tpartners()
+    {
+        $p_id = I('post.id');
+        // $amount    = I('post.price');
+        $u_id      = cookie('user_id');
+        $ids['id'] = $u_id;
+        // $mapa['user_id']   = $u_id;
+        // $map['pay_status'] = 1;
+        // $map['is_partner'] = 0;
+        //获取会员信息
+        $data    = M('user')->where($ids)->find();
+        $datas   = $data['privilege_hierarchy_id'];
+        $partner = M('partner')->where('id =' . $p_id)->find();
+        $part    = $partner['name'];
+        if ($datas != 0) {
+            //是搭档
+            //是否重复申请
+            if ($datas == $p_id) {
+                //重复申请
+                $json = array(
+                    'result' => 0,
+                    'msg'    => '您已是' . $part . ',请不要重复申请！',
+                );
+            } else {
+                $json = array(
+                    'result' => 1,
+                );
+            }
+        } else {
+            $json = array(
+                'result' => 2,
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+
+    public function bepartner()
+    {
+        $p_id              = I('post.id');
+        $amount            = I('post.price');
+        $u_id              = cookie('user_id');
+        $ids['id']         = $u_id;
+        $mapa['user_id']   = $u_id;
+        $map['pay_status'] = 1;
+        $map['is_partner'] = 0;
+        //获取会员信息
+        $data  = M('user')->where($ids)->find();
+        $datas = $data['privilege_hierarchy_id'];
+        //获取搭档信息
+        $partner  = M('partner')->where('id =' . $p_id)->find();
+        $part     = $partner['name'];
+        $introduc = $$partner['introduc'];
+        //获取消费信息
+        $fee = M('orders')
+            ->group('user_id')
+            ->field('sum(paid_price) as number')
+            ->where($map)
+            ->where($mapa)
+            ->find();
+        // dump($fee);
+        $number = $fee['number'];
+        //判断是否搭档
+        if ($datas != 0) {
+            //是搭档
+            //是否重复申请
+            if ($datas == $p_id) {
+                //重复申请
+                $json = array(
+                    'result' => 0,
+                    'msg'    => '您已是' . $part . ',请不要重复申请！',
+                );
+            } else {
+                //不重复申请
+                if ($amount <= $number) {
+                    //变更会员搭档
+                    $user                         = M('user');
+                    $user->id                     = $u_id;
+                    $user->privilege_hierarchy_id = $p_id;
+                    $res                          = $user->save();
+                    if ($res) {
+                        //插入申请记录
+                        $users               = M('user_upgrade_logs');
+                        $users->user_id      = $u_id;
+                        $users->type         = $datas;
+                        $users->upgrade_type = $p_id;
+                        $users->condition    = 1;
+                        $users->payment      = $amount;
+                        $users->time         = strtotime(date('Y-m-d H:i:s'));
+                        $users->state        = 1;
+                        $users->add();
+                        //清空会员销售金额
+                        $order              = M('orders');
+                        $data['is_partner'] = 1;
+                        $order->where($mapa)->save($data);
+                        //----------------------------------搭档返佣------------------------
+                        //搭档一级返佣
+                        $data_1 = M('user')->where(array("id" => $data['introduce']))->find();
+                        if ($data_1) {
+                            $bonus_1 = M("update_bonus_set")->where(array('partner_level' => 1, 'partner_id' => $data_1['privilege_hierarchy_id']))->find();
+                            //获取推荐会员信息
+                            $users_1 = M('user')->where(array("id" => $data_1['id']))->field('id,privilege_hierarchy_id')->find();
+                            //搭档奖励返佣
+                            M('user')->where(array("id" => $data_1['id']))->setInc('reward', $bonus_1['amount'], 'reward_receive', $bonus_1['amount']);
+                            //添加会员金币返佣记录
+                            $jdata                 = ('bonus_recommend');
+                            $jdata->user_id        = $u_id;
+                            $jdata->name           = $p_id;
+                            $jdata->hierarchy      = 1;
+                            $jdata->bonus_amount   = $bonus_1['amount'];
+                            $jdata->recommend_user = $users_1['id'];
+                            $jdata->recommend_name = $users_1['privilege_hierarchy_id'];
+                            $jdata->add();
+                        }
+                        //搭档二级返佣
+                        $data_2 = M('user')->where(array("id" => $data_1['introduce']))->find();
+                        if ($data_2) {
+                            $bonus_2 = M("update_bonus_set")->where(array('partner_level' => 2, 'partner_id' => $data_1['privilege_hierarchy_id']))->find();
+                            $users_2 = M('user')->where(array("id" => $data_2['id']))->field('id,privilege_hierarchy_id')->find();
+                            M('user')->where(array("id" => $data_2['id']))->setInc('reward', $bonus_2['amount'], 'reward_receive', $bonus_2['amount']);
+                            //添加会员金币返佣记录
+                            $jdata                 = ('bonus_recommend');
+                            $jdata->user_id        = $u_id;
+                            $jdata->name           = $p_id;
+                            $jdata->hierarchy      = 2;
+                            $jdata->bonus_amount   = $bonus_2['amount'];
+                            $jdata->recommend_user = $users_2['id'];
+                            $jdata->recommend_name = $users_2['privilege_hierarchy_id'];
+                            $jdata->add();
+                        }
+                        //搭档三级返佣
+                        $data_3 = M('user')->where(array("id" => $data_1['introduce']))->find();
+                        if ($data_3) {
+                            $bonus_3 = M("update_bonus_set")->where(array('partner_level' => 3, 'partner_id' => $data_1['privilege_hierarchy_id']))->find();
+                            $users_3 = M('user')->where(array("id" => $data_3['id']))->field('id,privilege_hierarchy_id')->find();
+                            M('user')->where(array("id" => $data_3['id']))->setInc('reward', $bonus_3['amount'], 'reward_receive', $bonus_3['amount']);
+                            //添加会员金币返佣记录
+                            $jdata                 = ('bonus_recommend');
+                            $jdata->user_id        = $u_id;
+                            $jdata->name           = $p_id;
+                            $jdata->hierarchy      = 3;
+                            $jdata->bonus_amount   = $bonus_3['amount'];
+                            $jdata->recommend_user = $users_3['id'];
+                            $jdata->recommend_name = $users_3['privilege_hierarchy_id'];
+                            $jdata->add();
+                        }
+                        //返回结果
+                        $json = array(
+                            'result' => 1,
+                            'msg'    => '申请成功！',
+                        );
+                    } else {
+                        $json = array(
+                            'result' => 2,
+                            'msg'    => '申请失败！',
+                        );
+                    }
+                } else {
+                    $json = array(
+                        'result' => 3,
+                        'msg'    => '消费金额不足' . $amount . '元,申请失败！',
+                    );
+                }
+            }
+        } else {
+            //不是搭档
+            if ($amount <= $number) {
+                //变更会员搭档
+                $user                         = M('user');
+                $user->id                     = $u_id;
+                $user->privilege_hierarchy_id = $p_id;
+                $res                          = $user->save();
+                if ($res) {
+                    //插入申请记录
+                    $users               = M('user_upgrade_logs');
+                    $users->user_id      = $u_id;
+                    $users->upgrade_type = $p_id;
+                    $users->condition    = 1;
+                    $users->type         = $datas;
+                    $users->payment      = $amount;
+                    $users->time         = strtotime(date('Y-m-d H:i:s'));
+                    $users->state        = 1;
+                    $users->add();
+                    //清空会员销售金额
+                    $order              = M('orders');
+                    $data['is_partner'] = 1;
+                    $order->where($mapa)->save($data);
+                    //----------------------------------搭档返佣------------------------
+                    //搭档一级返佣
+                    $data_1 = M('user')->where(array("id" => $data['introduce']))->find();
+                    if ($data_1) {
+
+                        $bonus_1 = M("update_bonus_set")->where(array('partner_level' => 1, 'partner_id' => $data_1['privilege_hierarchy_id']))->find();
+                        //获取推荐会员信息
+                        $users_1 = M('user')->where(array("id" => $data_1['id']))->field('id,privilege_hierarchy_id')->find();
+                        //搭档奖励返佣
+                        M('user')->where(array("id" => $data_1['id']))->setInc('reward', $bonus_1['amount'], 'reward_receive', $bonus_1['amount']);
+                        $jdata                 = ('bonus_recommend');
+                        $jdata->user_id        = $u_id;
+                        $jdata->name           = $p_id;
+                        $jdata->hierarchy      = 1;
+                        $jdata->bonus_amount   = $bonus_1['amount'];
+                        $jdata->recommend_user = $users_1['id'];
+                        $jdata->recommend_name = $users_1['privilege_hierarchy_id'];
+                        $jdata->add();
+                    }
+                    //搭档二级返佣
+                    $data_2 = M('user')->where(array("id" => $data_1['introduce']))->find();
+                    if ($data_2) {
+                        $bonus_2 = M("update_bonus_set")->where(array('partner_level' => 2, 'partner_id' => $data_1['privilege_hierarchy_id']))->find();
+                        $users_2 = M('user')->where(array("id" => $data_2['id']))->field('id,privilege_hierarchy_id')->find();
+                        M('user')->where(array("id" => $data_1['id']))->setInc('reward', $bonus_2['amount'], 'reward_receive', $bonus_2['amount']);
+                        $jdata                 = ('bonus_recommend');
+                        $jdata->user_id        = $u_id;
+                        $jdata->name           = $p_id;
+                        $jdata->hierarchy      = 2;
+                        $jdata->bonus_amount   = $bonus_2['amount'];
+                        $jdata->recommend_user = $users_2['id'];
+                        $jdata->recommend_name = $users_2['privilege_hierarchy_id'];
+                        $jdata->add();
+                    }
+                    //搭档三级返佣
+                    $data_3 = M('user')->where(array("id" => $data_1['introduce']))->find();
+                    if ($data_3) {
+                        $bonus_3 = M("update_bonus_set")->where(array('partner_level' => 3, 'partner_id' => $data_1['privilege_hierarchy_id']))->find();
+                        $users_3 = M('user')->where(array("id" => $data_3['id']))->field('id,privilege_hierarchy_id')->find();
+                        M('user')->where(array("id" => $data_1['id']))->setInc('reward', $bonus_3['amount'], 'reward_receive', $bonus_3['amount']);
+                        $jdata                 = ('bonus_recommend');
+                        $jdata->user_id        = $u_id;
+                        $jdata->name           = $p_id;
+                        $jdata->hierarchy      = 3;
+                        $jdata->bonus_amount   = $bonus_3['amount'];
+                        $jdata->recommend_user = $users_3['id'];
+                        $jdata->recommend_name = $users_3['privilege_hierarchy_id'];
+                        $jdata->add();
+                    }
+                    $json = array(
+                        'result' => 4,
+                        'msg'    => '申请成功！',
+                    );
+                } else {
+                    $json = array(
+                        'result' => 5,
+                        'msg'    => '申请失败！',
+                    );
+                }
+            } else {
+                $json = array(
+                    'result' => 6,
+                    'msg'    => '消费金额不足' . $amount . '元,申请失败！',
+                );
+            }
+        }
+        $this->ajaxReturn($json);
+    }
+
+}

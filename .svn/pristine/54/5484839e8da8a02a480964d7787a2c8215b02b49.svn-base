@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>优惠券详情</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="../../../CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="../../../CSS/BusinessCSS/Mycoupon/Coupondetails.css" rel="stylesheet">
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a href="../Mycoupon/Mycoupon.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">优惠券详情</h1>
+</header>
+
+<div class="img">
+    <img src="../../../img/Common/coupon_icon.png" alt="">
+    <h5>阿玛尼优惠券</h5>
+    <p>有效期：2017.0.12~2017.02.12</p>
+    <div class="moeny">
+        <h4>￥800</h4>
+        <h6>满2000元使用</h6>
+    </div>
+</div>
+
+<div class="shuo">
+    <div class="title">
+        <img src="../../../img/My/my_icon_note_gray.png" alt="">
+        <h5>使用规则</h5>
+    </div>
+    <div class="p">
+        <p>1.本优惠卷值限定本品牌全场使用</p>
+        <p>2.请在有效期(2017.02.12)内使用优惠券，过期作废</p>
+        <p>3.本优惠卷限定使用一次，不叠加使用</p>
+        <p>4.本优惠券不找零，不兑换，不挂失</p>
+    </div>
+</div>
+</body>
+</html>

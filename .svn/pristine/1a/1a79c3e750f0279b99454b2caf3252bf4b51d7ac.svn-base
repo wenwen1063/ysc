@@ -1,0 +1,59 @@
+<?php
+/**
+ *商品分类
+ *author:cyl
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class GoodsclassController extends Controller
+{
+    //默认分类页
+    public function goodsclassindex()
+    {
+        //先把一级分类查出来
+        $goodsclass = M('goods_class')
+            ->where(array('is_disable' => 0))
+            ->order('sort asc')
+            ->field('id,name')
+            ->select();
+        $test = I('test');
+        $this->assign('test', $test);
+		$this->assign('id', I("id"));
+        $this->assign('goodsclass', $goodsclass);
+        $this->display();
+    }
+
+    //点击一级分类获取下级
+    public function getclass()
+    {
+        $id = I('id'); //一级分类id
+        //根据一级分类id查出二级分类和二级分类下的三级分类  组合数组
+        $class_two = M('goods_class_two')
+            ->where(array('is_disable' => 0, 'goods_class_id' => $id))
+            ->order('sort')
+            ->field('id,name')
+            ->select();
+        foreach ($class_two as $key => $value) {
+            $tmp = M('goods_class_san')
+                ->where(array('is_disable' => 0, 'gct_id' => $value['id']))
+                ->field('id,name,big_pic,sm_pic')
+                ->select();
+            foreach ($tmp as $k => $v) {
+                $class_two[$key]['belong'][] = $v;
+            }
+        }
+        if (count($class_two) != 0) {
+            $json = array(
+                'result' => 1,
+                'data'   => $class_two,
+            );
+        } else {
+            $json = array(
+                'result' => 0,
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+}

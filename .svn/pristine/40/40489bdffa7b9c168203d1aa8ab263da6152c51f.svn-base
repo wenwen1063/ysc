@@ -1,0 +1,165 @@
+<!--index -->
+<include file="public:index" />
+<!--index-->
+<style type="text/css">
+.file {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 1;
+}
+
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+</style>
+<title>商品分类</title>
+</head>
+
+<body>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 系统 <span class="c-gray en">&gt;</span> 营销活动 <span class="c-gray en">&gt;</span> 活动列表 <span class="c-gray en">&gt;</span> 编辑
+        <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回"><i class="Hui-iconfont">&#xe66b;</i></a><a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="pd-20">
+        <form action="{:U('/home/actimg/actimgupdate')}" method="post" enctype="multipart/form-data" name="main_form" class="form form-horizontal" id="form-admin-add">
+            <input type="hidden" name="id" value="{$data['id']}">
+            <input type="hidden" name="rename" value="{$data['goods_id']}">
+            <div class="row cl">
+                <label class="form-label col-3">商品名：</label>
+                <div class="formControls col-5">
+                    <input type="text" class="input-text" value="{$data['goods_name']}" name="goods_name" onkeyup="value=value.replace(/[^\d]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" readonly="readonly">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3">
+                    </span>原轮播图：</label>
+                <div class="formControls col-5">
+                    <img height="80" width="80" src="__PUBLIC__/Uploads/{$data['img']}">
+                </div>
+                <div class="col-4"> </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3">新轮播图：</label>
+                <div class="formControls col-5" style="width:10%;">
+                    <a href="javascript:;" class="file">选择图片<input onchange="change()" type="file" id="pic" name="pic"></a>
+                    <p></p>
+                    <p id="smtext" class="pic">
+                        <img id="picname" name="picname" higth="100" width="100" />
+                    </p>
+                </div>
+                <div class="col-4"> </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3">
+                    是否推荐：</label>
+                <div class="formControls col-5 skin-minimal">
+                    <if condition="$data['is_recommend'] eq 0">
+                        <div class="radio-box">
+                            <input type="radio" id="is_recommend" name="is_recommend" value="0" checked="true">
+                            <label>否</label>
+                        </div>
+                        <div class="radio-box">
+                            <input type="radio" id="is_recommend" name="is_recommend" value="1">
+                            <label>是</label>
+                        </div>
+                        <else />
+                        <div class="radio-box">
+                            <input type="radio" id="is_recommend" name="is_recommend" value="0">
+                            <label>否</label>
+                        </div>
+                        <div class="radio-box">
+                            <input type="radio" id="is_recommend" name="is_recommend" value="1" checked="true">
+                            <label>是</label>
+                        </div>
+                    </if>
+                </div>
+                <div class="col-4"> </div>
+            </div>
+            <!--         <div class="row cl">
+            <label class="form-label col-3"><span class="c-red">*</span>图片链接：</label>
+            <div class="formControls col-5">
+                <input type="text" class="input-text" value="{$data['link']}" placeholder="请输入链接" id="link" name="link" datatype="*2-16">
+            </div>
+            <div class="col-4"> </div>
+        </div> -->
+            <div class="row cl">
+                <div class="col-9 col-offset-3">
+                    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;" onclick="return check()">
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/icheck/jquery.icheck.min.js"></script>
+<script type="text/javascript">
+function check() {
+    if ($('#link').val() == "") {
+        alert("链接不能为空!");
+        return false;
+    }
+    return true;
+}
+</script>
+<script type="text/javascript">
+function change() {
+    var pic = document.getElementById("picname"),
+        file = document.getElementById("pic");
+
+    var ext = file.value.substring(file.value.lastIndexOf(".") + 1).toLowerCase();
+
+    // gif在IE浏览器暂时无法显示
+    if (ext != 'png' && ext != 'jpg' && ext != 'jpeg') {
+        alert("图片的格式必须为png或者jpg或者jpeg格式！");
+        return;
+    }
+    var isIE = navigator.userAgent.match(/MSIE/) != null,
+        isIE6 = navigator.userAgent.match(/MSIE 6.0/) != null;
+
+    if (isIE) {
+        file.select();
+        var reallocalpath = document.selection.createRange().text;
+
+        // IE6浏览器设置img的src为本地路径可以直接显示图片
+        if (isIE6) {
+            pic.src = reallocalpath;
+        } else {
+            // 非IE6版本的IE由于安全问题直接设置img的src无法显示本地图片，但是可以通过滤镜来实现
+            pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image',src=\"" + reallocalpath + "\")";
+            // 设置img的src为base64编码的透明图片 取消显示浏览器默认图片
+            pic.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+        }
+    } else {
+        html5Reader(file);
+    }
+}
+
+function html5Reader(file) {
+    var file = file.files[0];
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function(e) {
+        var pic = document.getElementById("picname");
+        pic.src = this.result;
+    }
+}
+</script>

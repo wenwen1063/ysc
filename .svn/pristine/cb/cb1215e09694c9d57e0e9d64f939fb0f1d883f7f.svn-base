@@ -1,0 +1,91 @@
+<!--index -->
+  <include file="public:index"   />
+<!--index-->
+<script type="text/javascript" src="__PUBLIC__/timejs/laydate.js"></script>
+<title>积分管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+ 系统 <span class="c-gray en">&gt;</span>
+  积分管理 <span class="c-gray en">&gt;</span>
+   会员积分列表
+   <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20">
+    <form action="{:U('/home/gold/goldindex/search/')}" method="post/get" name="main_form" class="form form-horizontal" id="form-admin-add" style="float:right;">
+        <div class="text-c">
+            <input type="text" name="username" value="{$search['username']}" class="input-text" style="width:250px" placeholder="输入会员账号">
+            <span class="select-box inline">
+            <select name="source_type" class="select">
+                <if condition="$search['source_type'] eq null">
+                <option selected="selected" value="">全部来源</option>
+                <option value="1">获得</option>
+                <option value="2">抵用</option>
+                <option value="3">兑换</option>
+                <elseif condition="$search['source_type'] eq 1"/>
+                <option value="">全部来源</option>
+                <option selected="selected" value="1">获得</option>
+                <option value="2">抵用</option>
+                <option value="3">兑换</option>
+                <elseif condition="$search['source_type'] eq 2"/>
+                <option value="">全部来源</option>
+                <option value="1">获得</option>
+                <option selected="selected" value="2">抵用</option>
+                <option value="3">兑换</option>
+                <else/>
+                <option value="">全部来源</option>
+                <option value="1">获得</option>
+                <option value="2">抵用</option>
+                <option selected="selected" value="3">兑换</option>
+                </if>
+            </select>
+            </span>
+            <button type="submit" class="btn btn-success" id=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+        </div>
+    </form>
+    <div class="text-c"><br></div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">&nbsp;</span>
+        <span class="r">共有数据：<strong>{$count}</strong> 条</span> </div>
+    <table class="table table-border table-bordered table-bg">
+        <thead>
+            <tr>
+                <th scope="col" colspan="6">会员积分列表</th>
+            </tr>
+            <tr class="text-c">
+                <!-- <th width="40">操作</th> -->
+                <th width="40">会员编号</th>
+                <th width="40">会员账号</th>
+                <th width="40">来源类别</th>
+                <th width="40">获得时间</th>
+                <th width="40">积分数量</th>
+                <th width="40">来源订单</th>
+            </tr>
+        </thead>
+        <tbody>
+            <foreach name='data' item='v'>
+                <tr class="text-c">
+<!--                     <td class="td-manage">
+                    <a class="btn btn-primary size-MINI radius" href="{:U('/home/credits/creditsupdate',array('id'=>$v['id']))}" class="ml-5" style="text-decoration:none">编辑</a>
+                    <a class="btn btn-primary size-MINI radius" href="{:U('/home/credits/creditsdel',array('id'=>$v['id']))}" onclick="return confirm('确认要删除吗？');" class="ml-5" style="text-decoration:none">删除</a>
+                    </td> -->
+                    <td>{$v['user_id']}</td>
+                    <td>{$v['username']}</td>
+                    <td><if condition="$v['source_type'] eq 1">获得<elseif condition="$v['source_type'] eq 2"/>抵用<else/>兑换</if></td>
+                    <!--<td>{$v['rule_name']}</td>-->
+                    <td>{$v['create_time']|date='Y-m-d H:i:s',###}</td>
+                    <td>{$v['credits_number']}</td>
+                    <td>{$v['order_id']}</td>
+                </tr>
+            </foreach>
+        </tbody>
+    </table>
+    <div class="pageright">{$page}</div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,372 @@
+<?php
+namespace Home\Controller;
+
+use Think\Controller;
+
+class IndexController extends Controller
+{
+    public function index()
+    {
+        $this->wx_callback();
+        // cookie('user_id', '1');
+        $map['ad_position']   = 1;
+        $mapm['is_recommend'] = 1;
+        $mapm['is_disable']   = 0;
+        $mapm['sort']         = array('neq', 0);
+        $time                 = time();
+        // $actmap['a.start_time'] = array('lt', $time);
+        // $actmap['a.end_time']   = array('gt', $time);
+        $actmap['a.status']     = 1;
+        $classmap['is_disable'] = 0;
+        //获取轮播图片
+        $picinfo = M('ad')->where($map)->field('id,ad_sort,img,img2,ad_type,ad_link')->limit(6)->order('ad_sort asc')->select();
+        // dump($picinfo);
+        //获取商家信息
+        $shop = M('seller')->where($mapm)->field('id,sort,forshort,logo')->limit(6)->order('sort asc')->select();
+        // dump($shop);
+        //获取公告信息
+        $notic = M('notice')->order('id desc')->limit(5)->select();
+        //营销活动
+        // $activity = M()->table('__ACTIVITY__ a')
+        // ->join('__ACTIVITY_GOODS__ ag on ag.activity_id = a.id')
+        // ->field('a.*,ag.goods_id')
+        // ->where('a.start_time<' . $time . ' and a.end_time>' . $time)
+        // ->limit(1)->where($actmap)->select();
+        $mapac['is_recommend'] = 1;
+        $activity              = M()->table('__ACTIVITY_IMG__ a')
+            ->where($mapac)->select();
+        // dump($activity);
+        //热销分类商品
+        $cmap['gc.is_disable']   = 0;
+        $cmap['gcs.is_disable']  = 0;
+        $cmap['gct.is_disable']  = 0;
+        $cmap['g.is_delete']     = 0;
+        $cmap['g.is_on_sale']    = 1;
+        $cmap['g.is_recommend']  = 1;
+        $cmap['gc.is_recommend'] = 1;
+        $goods                   = M()->table('__GOODS__ g')
+            ->join('left join __GOODS_AND_CLASS__ gac on gac.goods_id = g.id')
+            ->join('left join __GOODS_CLASS_SAN__ gcs on gcs.id = gac.gcs_id')
+            ->join('left join __GOODS_CLASS_TWO__ gct on gct.id = gcs.gct_id')
+            ->join('left join __GOODS_CLASS__ gc on gc.id = gct.goods_class_id')
+            ->join('left join __GOODS_ATTRIBUTE_INFO__ gai on gai.goods_id = g.id')
+            ->where($cmap)
+            ->group('gc.name,g.id')
+            ->field('gc.id as class_id,gc.name as class_name,gc.sort,g.id as goods_id,g.goods_name,g.v_sale,g.sm_pic,min(shop_price)as price')
+            ->order('sort asc,goods_id desc')
+            ->select();
+        // dump($goods);
+        $arr = array();
+        foreach ($goods as $key => $value) {
+            $arr[$value['class_name']][] = $value;
+        }
+        // dump($arr);
+        $this->assign('arr', $arr);
+        $this->assign('activity', $activity);
+        $this->assign('shop', $shop);
+        $this->assign('notic', $notic);
+        $this->assign('picinfo', $picinfo);
+        $this->display();
+    }
+
+    public function save_top_id()
+    {
+        $top_id = I('top_id');
+        session('top_id', $top_id);
+    }
+    public function pfuli()
+    {
+        $this->display();
+    }
+
+    public function notice()
+    {
+        $data = M()->table('__NOTICE__ n')
+            ->field('n.*,FROM_UNIXTIME(n.create_time,"%m") as times,FROM_UNIXTIME(n.create_time,"%d") as addtime')->select();
+        // dump($data);
+        $this->assign('pic', $pic);
+        $this->assign('data', $data);
+        $this->display();
+    }
+    public function goods()
+    {
+        $goods = M('activity_img')->select();
+        $this->assign('goods', $goods);
+        $this->display();
+
+    }
+    //商品搜索页面
+    public function search()
+    {
+        $search            = I("search");
+        $map['goods_name'] = array("like", "%$search%");
+        $data              = M()->table('__GOODS__ g')
+            ->where(array('g.is_on_sale' => 1, 'g.is_delete' => 0))
+            ->where($map)
+            ->field('g.id,g.sm_pic,g.goods_name')
+            ->select();
+
+        foreach ($data as $key => $value) {
+            $cc                       = M('goods_attribute_info')->where(array('goods_id' => $value['id']))->field('min(market_price) as min_market_price,min(shop_price) as min_shop_price')->select();
+            $data[$key]['shop_price'] = $cc[0]['min_shop_price'];
+        }
+
+        $this->assign('count', count($data));
+        $this->assign('data', $data);
+        $this->display();
+    }
+
+    public function wx_callback()
+    {
+
+        $appid  = "wxeed4372708013277";
+        $secret = "7a1683383d021f501dfd94c4dc917345";
+        if (!isset($_GET['code']) || empty($_GET['code'])) {
+            $callback = 'http://www.dadangsc.com/wx.php/home/index/index'; //回调地址
+            //-------生成唯一随机串防CSRF攻击
+            $state    = md5(uniqid(rand(), true));
+            $callback = urlencode($callback);
+            $wxurl    = "https://open.weixin.qq.com/connect/oauth2/authorize" .
+                "?appid=" . $appid .
+                "&redirect_uri=" . $callback .
+                "&response_type=code&scope=snsapi_userinfo&state={$state}#wechat_redirect";
+            header("Location: $wxurl");
+            exit;
+        }
+
+        $code      = I('code');
+        $oauth2Url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $appid . "&secret=" . $secret . "&code=" . $code . "&grant_type=authorization_code";
+        $oauth2    = $this->getJson($oauth2Url);
+        $info      = "https://api.weixin.qq.com/sns/userinfo?access_token=" . $oauth2['access_token'] . "&openid=" . $oauth2['openid'] . "&lang=zh_CN";
+        $userinfo  = $this->getJson($info);
+        // dump($userinfo);
+        \Think\Log::record("=======================================" . var_export($userinfo, true));
+        // $user_info = $userinfo; //用户基本信息
+        $open_id = $userinfo['openid']; //用户的wx open_id 唯一值
+        $wx_name = $userinfo['nickname']; //用户wx 昵称
+        // 确认此open_id是否已有用户绑定
+        // dump($open_id);
+        // dump($wx_name);\
+        if ($open_id != null) {
+            $map_is_not['openid'] = $open_id;
+            $is_not               = M('user')->where($map_is_not)->find();
+            //获取注册奖励积分
+            $gold  = M('gold')->where(array('id' => 1))->field('gold')->find();
+            $golds = $gold['gold'];
+            // dump($golds);
+            //没有用户绑定的情况下 写入user表后 跳转到绑定页面
+            if (!$is_not) {
+                //写入user表
+                $user                         = M('user');
+                $user->openid                 = $open_id;
+                $user->username               = $wx_name;
+                $user->gold                   = $golds;
+                $user->usertype               = 0;
+                $user->privilege_hierarchy_id = 0;
+                $user->avatar                 = $userinfo['headimgurl']; //头像
+                $user->province               = $userinfo['province']; //省
+                $user->city                   = $userinfo['city']; //市（拉取的用户信息没有区信息）
+                //判断是否写入成功
+                $user_id = $user->add();
+                if ($user_id) {
+                    //添加积分获取记录
+                    $gold_user                 = M('gold_user');
+                    $gold_user->user_id        = $user_id;
+                    $gold_user->source_type    = 1;
+                    $gold_user->create_time    = strtotime(date('Y-m-d H:i:s'));
+                    $gold_user->credits_number = $golds;
+                    $gold_user->add();
+                    //保存cookie();
+                    cookie('user_id', $user_id);
+                    cookie('wx_name', $wx_name);
+                }
+            } else {
+                $data = $is_not; //已经写入过数据但没有绑定手机
+                //保存cookie();
+                cookie('user_id', $data['id']);
+                cookie('wx_name', $wx_name);
+            }
+        }
+
+    }
+// http://192.168.1.147/ysc/wx.php/home/index/transmitText
+    //http://120.39.251.74/wx.php/home/index/recive_msg
+    //XQQla3028
+    //oKGNZ0nU3B58zIHVLAa3P0V1rDPQ
+    //1495812125
+    public function getJson($url)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);+
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        return json_decode($output, true);
+    }
+    //接收事件推送消息
+    public function recive_msg()
+    {
+        // $arr = I();
+        $postStr      = $GLOBALS["HTTP_RAW_POST_DATA"];
+        $postObj      = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $fromUsername = (string) $postObj->FromUserName;
+        $EventKey     = trim((string) $postObj->EventKey);
+        $keyArray     = explode("_", $EventKey);
+        // if (count($keyArray) == 1){         //已关注者扫描
+        //     $this->sendMessage($fromUsername, $EventKey);
+        // }else{　　　　　　　　　　　　　　　　　　　//未关注者关注后推送事件
+        //     $this->sendMessage($fromUsername, $keyArray[1]);
+        // }
+        logger("-----------------------" . var_export($postObj, true));
+        logger("-----------------------" . var_export($EventKey, true));
+        logger("-----------------------" . var_export($keyArray, true));
+        // logger("-----------------------" . var_export($postStr, true));
+        // // echo ('123');
+
+        traceHttp();
+
+        // define("TOKEN", "weixin");
+        // $wechatObj = new wechatCallbackapiTest();
+        // if (isset($_GET['echostr'])) {
+        //     $wechatObj->valid();
+        // } else {
+        //     $wechatObj->responseMsg();
+        // }
+    }
+
+    public function traceHttp()
+    {
+        logger("\n\nREMOTE_ADDR:" . $_SERVER["REMOTE_ADDR"] . (strstr($_SERVER["REMOTE_ADDR"], '101.226') ? " FROM WeiXin" : "Unknown IP"));
+        logger("QUERY_STRING:" . $_SERVER["QUERY_STRING"]);
+    }
+    public function logger($log_content)
+    {
+        if (isset($_SERVER['HTTP_APPNAME'])) {
+            //SAE
+            sae_set_display_errors(false);
+            sae_debug($log_content);
+            sae_set_display_errors(true);
+        } else {
+            //LOCAL
+            $max_size     = 500000;
+            $log_filename = "log.xml";
+            if (file_exists($log_filename) and (abs(filesize($log_filename)) > $max_size)) {unlink($log_filename);}
+            file_put_contents($log_filename, date('Y-m-d H:i:s') . $log_content . "\r\n", FILE_APPEND);
+        }
+    }
+}
+
+class wechatCallbackapiTest
+{
+    public function valid()
+    {
+        $echoStr = $_GET["echostr"];
+        if ($this->checkSignature()) {
+            echo $echoStr;
+            exit;
+        }
+    }
+
+    private function checkSignature()
+    {
+        $signature = $_GET["signature"];
+        $timestamp = $_GET["timestamp"];
+        $nonce     = $_GET["nonce"];
+
+        $token  = TOKEN;
+        $tmpArr = array($token, $timestamp, $nonce);
+        sort($tmpArr);
+        $tmpStr = implode($tmpArr);
+        $tmpStr = sha1($tmpStr);
+
+        if ($tmpStr == $signature) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function responseMsg()
+    {
+        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+
+        if (!empty($postStr)) {
+            $postObj      = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $fromUsername = $postObj->FromUserName;
+            $toUsername   = $postObj->ToUserName;
+            $keyword      = trim($postObj->Content);
+            $time         = time();
+            $textTpl      = "<xml>
+                        <ToUserName><![CDATA[%s]]></ToUserName>
+                        <FromUserName><![CDATA[%s]]></FromUserName>
+                        <CreateTime>%s</CreateTime>
+                        <MsgType><![CDATA[%s]]></MsgType>
+                        <Content><![CDATA[%s]]></Content>
+                        <FuncFlag>0</FuncFlag>
+                        </xml>";
+            if ($keyword == "?" || $keyword == "？") {
+                $msgType    = "text";
+                $contentStr = date("Y-m-d H:i:s", time());
+                $resultStr  = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                echo $resultStr;
+            }
+        } else {
+            echo "";
+            exit;
+        }
+    }
+}
+
+function traceHttp()
+{
+    logger("\n\nREMOTE_ADDR:" . $_SERVER["REMOTE_ADDR"] . (strstr($_SERVER["REMOTE_ADDR"], '101.226') ? " FROM WeiXin" : "Unknown IP"));
+    logger("QUERY_STRING:" . $_SERVER["QUERY_STRING"]);
+}
+function logger($log_content)
+{
+    if (isset($_SERVER['HTTP_APPNAME'])) {
+        //SAE
+        sae_set_display_errors(false);
+        sae_debug($log_content);
+        sae_set_display_errors(true);
+    } else {
+        //LOCAL
+        $max_size     = 500000;
+        $log_filename = "log.xml";
+        if (file_exists($log_filename) and (abs(filesize($log_filename)) > $max_size)) {unlink($log_filename);}
+        file_put_contents($log_filename, date('Y-m-d H:i:s') . $log_content . "\r\n", FILE_APPEND);
+    }
+}
+
+// $arr = I();
+
+// \Think\Log::record("-----------------------" . var_export($arr, true));
+// // dump($postStr);
+// // echo ('123');
+// $textTpl = "<xml>
+// <ToUserName><![CDATA[%s]]></ToUserName>
+// <FromUserName><![CDATA[%s]]></FromUserName>
+// <CreateTime>%s</CreateTime>
+// <MsgType><![CDATA[text]]></MsgType>
+// <Content><![CDATA[%s]]></Content>
+// <FuncFlag>%d</FuncFlag>
+// </xml>";
+// $resultStr = sprintf($textTpl, $object->FromUserName, $object->ToUserName, time(), $content, $flag);
+// dump($resultStr);
+// return $resultStr;
+
+// public function transmitText()
+// {
+//         <xml>
+// <ToUserName><![CDATA[toUser]]></ToUserName>
+// <FromUserName><![CDATA[fromUser]]></FromUserName>
+// <CreateTime>123456789</CreateTime>
+// <MsgType><![CDATA[event]]></MsgType>
+// <Event><![CDATA[LOCATION]]></Event>
+// <Latitude>23.137466</Latitude>
+// <Longitude>113.352425</Longitude>
+// <Precision>119.385040</Precision>
+// </xml>
+// }

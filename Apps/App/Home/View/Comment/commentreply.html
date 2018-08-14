@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<include file="public:index"/>
+    <link href="__PUBLIC__/admin/lib/icheck/icheck.css" rel="stylesheet" type="text/css" />
+	<link href="__PUBLIC__/admin/lib/Hui-iconfont/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
+	<link href="__PUBLIC__/admin/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+		<style type="text/css">
+			.txt{
+				width: 600px;
+				height: 200px;
+				margin-left: 250px;
+				margin-top: 50px;
+				resize: none;
+			}
+			input{
+				margin-left: 300px;
+				margin-top: 20px;
+				width: 100px;
+				height: 50px;
+			}
+		</style>
+	</head>
+	<body>		
+	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+	 系统 <span class="c-gray en">&gt;</span>
+	  评价管理 <span class="c-gray en">&gt;</span>
+	   评价列表 <span class="c-gray en">&gt;</span>
+	   回复评价
+	   <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回" ><i class="Hui-iconfont">&#xe66b;</i></a><a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20">			
+	    <form method="post" action="{:U('./home/comment/commentreply')}">
+			<div class="row cl">							
+				<div class="formControls col-10">
+					<textarea name="reply"  class="txt"  placeholder="回复描述...请输入字符" datatype="*10-100"  id="TextArea1" cols="45" rows="5" onkeyup="words_deal();"></textarea>
+					<p class="textarea-numberbar" style="margin-right: 600px;"><span id="textCount">200</span>/200</p>
+				</div>								
+			</div>
+			<input type="hidden" name="id" value="{$id}" />
+		    <input   class="btn btn-success radius "  style="line-height:1.6em;margin-top:30px" type="submit" value="回复" />
+		    <a class="btn btn-success radius " style="line-height:1.6em;margin-top:30px" href="#" onClick="javascript :history.go(-1);" title="取消" ><i class="Hui-iconfont">取消</i></a>
+	    </form>
+	</div>
+	</body>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript"> 
+	function words_deal() { 
+	var curLength=$("#TextArea1").val().length; 
+		if(curLength>200) { 
+			var num=$("#TextArea1").val().substr(0,200); 
+			$("#TextArea1").val(num); 
+		} 
+		else { 
+			$("#textCount").text(200-$("#TextArea1").val().length); 
+		} 
+	} 
+</script> 
+</html>

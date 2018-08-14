@@ -1,0 +1,192 @@
+<?php
+/**
+ * 商品评价表
+ * User: lwh
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class CommentController extends IndexController
+{
+    //评价页面显示
+    public function commentindex()
+    {
+
+        $search = I();
+        // $map['o.pay_status'] = array('eq', 1);
+        $map = array();
+        if ($search['order_number'] != null) {
+            $order_number = $search['order_number'];
+            $map['o.id']  = array("like", "%$order_number%");
+        }
+		
+		if ($search['seller_id'] != null) {
+            $map['o.seller_id'] = $search['seller_id'];
+        }
+
+        if ($search['class_id'] != null) {
+            $map['g.id']     = $search['class_id'];
+            $classid['id']   = array('neq', $search['class_id']);
+            $endclass        = M('goods')->where($classid)->field('id,goods_name as name')->select();
+            $midclass['num'] = array('id' => null, 'name' => "全部商品");
+            $stclass         = M('goods')->where($where = array('id' => $search['class_id']))->field('id,goods_name as name')->select();
+            $class           = array_merge($stclass, $midclass, $endclass);
+        } else {
+            $class = $this->classsearch();
+        }
+		$seller_id=cookie("seller_id");
+          if($seller_id!=0)
+          {
+          	$map['e.is_delete']=array("eq",0);
+            $data = M()->table('__EVALUATION__ e')
+            ->where($map)
+            ->join('left join __GOODS__ g on g.id = e.goods_id ')
+            ->join('left join __USER__ u on u.id = e.user_id')
+            ->join('left join __EVALUATION_REPLY__ er on er.evaluation_id = e.id')
+            ->join('left join __ORDERS__ o on o.id = e.order_id')
+            ->join('left join __SELLER__ s on s.id = o.seller_id')
+			 ->where(array('o.seller_id'=>$seller_id))
+            ->field('e.*,g.goods_name,u.username,er.reply_content as reply,er.admin_id,er.reply_time as replytime,s.name as seller_name,o.order_number')
+            ->page($_GET['p'] . ',20')->order('e.time desc')->select();
+
+        $count = M()->table('__EVALUATION__ e')
+            ->where($map)
+            ->join('left join __GOODS__ g on g.id = e.goods_id ')
+            ->join('left join __USER__ u on u.id = e.user_id')
+            ->join('left join __EVALUATION_REPLY__ er on er.evaluation_id = e.id')
+            ->join('left join __ORDERS__ o on o.id = e.order_id')
+            ->join('left join __SELLER__ s on s.id = o.seller_id')
+			->where(array('o.seller_id'=>$seller_id))
+            ->count();
+         $seller = M('seller')->where(array('id'=>cookie('seller_id')))->field('id,name')->select();
+            }else{
+            	$map['e.is_delete']=array("eq",0);
+        $data = M()->table('__EVALUATION__ e')
+            ->where($map)
+            ->join('left join __GOODS__ g on g.id = e.goods_id ')
+            ->join('left join __USER__ u on u.id = e.user_id')
+            ->join('left join __EVALUATION_REPLY__ er on er.evaluation_id = e.id')
+            ->join('left join __ORDERS__ o on o.id = e.order_id')
+            ->join('left join __SELLER__ s on s.id = o.seller_id')
+            ->field('e.*,g.goods_name,u.username,er.reply_content as reply,er.admin_id,er.reply_time as replytime,s.name as seller_name,o.order_number')
+            ->page($_GET['p'] . ',20')->order('e.time desc')->select();
+
+        $count = M()->table('__EVALUATION__ e')
+            ->where($map)
+            ->join('left join __GOODS__ g on g.id = e.goods_id ')
+            ->join('left join __USER__ u on u.id = e.user_id')
+            ->join('left join __EVALUATION_REPLY__ er on er.evaluation_id = e.id')
+            ->join('left join __ORDERS__ o on o.id = e.order_id')
+            ->join('left join __SELLER__ s on s.id = o.seller_id')
+            ->count();
+			
+			
+        $seller = M('seller')->field('id,name')->select();
+            }
+
+		
+        $Page   = new \Think\Page($count, 20);
+        $show   = $Page->show();
+        $this->assign('page', $show);
+        $this->assign('search', $search);
+        $this->assign('seller', $seller);
+        $this->assign('class', $class);
+        $this->assign('count', $count);
+        $this->assign('data', $data);
+        $this->display();
+    }
+
+    private function classsearch()
+    {
+        $classall['num'] = array('id' => null, 'name' => "全部商品");
+        $class           = M('goods')->field('id,goods_name as name')->select();
+        $class           = array_merge($classall, $class);
+        // /dump($class);
+        return $class;
+    }
+
+    /*评价商品显示*/
+    public function goodsshow()
+    {
+        $data = M('goods')->where($where = array('id' => I('id')))->find();
+        $this->assign('data', $data);
+        $this->display();
+    }
+    //评价回复
+    public function commentreply()
+    {
+        $arr      = I();
+        $admin_id = cookie('admin_id');
+        $reply    = I("reply");
+        if ($reply != null) {
+            $goodsclass                = M('evaluation_reply');
+            $goodsclass->evaluation_id = $arr['id'];
+            $goodsclass->admin_id      = $admin_id;
+            $goodsclass->reply_content = $arr['reply'];
+            $goodsclass->reply_time    = strtotime(date('Y-m-d H:i:s'));
+            $goodsclass->add();
+            $this->success('回复成功！', U('/home/comment/commentindex'));
+        } else {
+            $arr = I("id");
+            $this->assign('id', $arr);
+            $this->display();
+        }
+
+    }
+    public function appeals()
+    {
+        $arr = I();
+        $admin_id = cookie('user_id');
+        $reply    = I("reply");
+        if ($reply != null) {
+            $appeals = M('evaluation_apply');
+            if ($_FILES) {
+                $files = uploadss();
+                \Think\Log::record("===========" . var_export($files, true));
+                if ($files) {
+                    $appeals->main_pic = $files[0];
+                }
+            }
+            $appeals->order_id      = $arr['order_id'];
+            $appeals->seller_id     = $arr['seller_id'];
+            $appeals->evaluation_id = $arr['id'];
+            $appeals->status        = 0;
+            $appeals->reason        = $arr['reply'];
+            $appeals->admin_id      = $admin_id;
+            $appeals->time          = strtotime(date('Y-m-d H:i:s'));
+            // dump($appeals);die;
+            $appeals->add();
+			M("evaluation")->where(array("id"=>I('id')))->setfield("status",3);
+            $this->success('申诉成功！', U('/home/comment/commentindex'));
+        } else {
+            $data = M()->table('__EVALUATION__ e')
+                ->join('left join __ORDERS__ o on o.id = e.order_id')
+                ->join('left join __SELLER__ s on s.id = o.seller_id')
+                ->field('e.id,e.order_id,s.id as seller_id')
+                ->where($where = array('e.id' => $arr['id']))
+                ->find();
+            // dump($data);
+            $this->assign('data', $data);
+            $this->display();
+		}
+
+    }
+public function deletecomn(){
+	M("evaluation")->where(array("id"=>I('id')))->setfield("is_delete",1);
+	$this->success('删除成功！', U('/home/comment/commentindex'));
+}
+
+    public function comshow()
+    {
+        $arr  = I();
+        $data = M()->table('__EVALUATION_REPLY__ er')
+            ->where($where = array('e.id' => $arr['id']))
+            ->join('left join __EVALUATION__ e on e.id = er.evaluation_id')
+			->join('left join admin u on u.admin_id=er.admin_id')
+            ->field('er.*,e.id as evaluation_id,u.user')->select();
+        $this->assign('data', $data);
+        $this->display();
+    }
+
+}

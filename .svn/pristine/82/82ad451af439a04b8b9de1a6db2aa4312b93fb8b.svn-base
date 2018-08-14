@@ -1,0 +1,158 @@
+<?php
+/**
+ *推广工具
+ *author:cyl
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class ExtensionController extends Controller
+{
+    //推广工具列表
+    public function extensionlist()
+    {
+        $data = M()->table('__TOOL__ t')
+            ->where(array('is_on_sale'=>2))
+            ->field('t.id,t.name,t.pic,t.market_price,t.shop_price')
+            ->select();
+        $this->assign('data',$data);
+        $this->display();
+    }
+    //推广工具详情
+    public function details()
+    {
+//        pp(I('id'));
+        $arr['privilege_id'] = I('id');
+        $arr['user_id'] = cookie('user_id');
+        $arr['type'] = 0;
+        $arr['is_pay'] = 1;
+
+        $data = M()->table('__TOOL__ t')
+            ->where(array('id'=>I('id')))
+            ->find();
+        $pic = M()->table('__TOOL_PIC__ tp')
+            ->where(array('tool_id'=>I('id')))
+            ->limit(4)
+            ->select();
+        $isnot = M()->table('__RECORD__ r')
+            ->where($arr)
+            ->select();
+//        pp($isnot);
+        $this->assign('data',$data);
+        $this->assign('pic',$pic);
+        $this->assign('isnot',$isnot);
+        $this->display();
+    }
+    //下载
+    public function download(){
+//        pp(I());
+        $arr['privilege_id'] = I('id');
+        $arr['user_id'] = cookie('user_id');
+        $arr['is_pay'] = 1;
+        $arr['type'] = 0;  //类型为软件
+
+        $res = M()->table('__RECORD__ r')
+            ->where($arr)
+            ->select();
+        $nostock = M('tool')->where(array('id'=>I('id')))->getField('stock');
+//        dump($res);
+        if($res){
+           $json = array(
+               'result'=>1,  //已购买过
+               'msg'=>'已购买过，可以直接下载',
+           ) ;
+        }else{
+            if($nostock>0){
+                $json = array(
+                    'result'=>2,  //未购买
+                ) ;
+            }else{
+                $json = array(
+                    'result'=>3,
+                    'msg'=>'已售罄'
+                );
+            }
+        }
+        $this->ajaxReturn($json);
+    }
+
+    public function toolpay()
+    {
+//        pp(I());
+        $data = M('tool')->where(array('id'=>I('id')))->find();
+
+        $this->assign('data',$data);
+        $this->display();
+    }
+
+    //购买
+    public function buy(){
+//        pp(I());
+        $user_id = cookie('user_id');
+        //获取用户的特权层级
+//        $ph = M('user')->where(array('id'=>$user_id))->getField('privilege_hierarchy_id');
+//        pp($ph);
+        $ph = M('tool')->table('__TOOL__ t')
+            ->join('left join __PRIVILEGE__ p on p.tool_id = t.id')
+            ->where(array('t.id'=>I('id')))
+            ->getField('p.partner_id');
+        //添加特权领取记录表
+        $record = M('record');
+        $tmp                         = "TOOL" . date('YmdHis', time()) . rand(1000, 9999); //订单编号
+        $record->order_number        = $tmp;
+        $record->user_id             = $user_id;
+        $record->privilege_hierarchy = $ph;
+        $record->type                = 0;
+        $record->privilege_id        = I('id');
+        $record->number              = 1;
+        $record->time                = time();
+        $record->paid_price          = I('price');
+        $record->remark              = '软件';
+        $readd = $record->add();
+        //更新推广工具的库存和销量
+        $arr['id'] = I('id');
+        $arr['stock'] = I('stock') - 1;
+        $arr['actual_sales'] = I('as') + 1 ;
+        $arr['virtual_sell_amount'] = I('vsa') + 1 ;
+        $tool = M('tool');
+        $tool->save($arr);
+        if($tool && $readd){
+            $json = array(
+                'result'=>1,
+                'order_number'=>$tmp,
+                'price'=>I('price')
+            );
+        }else{
+            $json = array(
+              'result'=>0,
+              'msg'=>'操作失败'
+            );
+        }
+
+        $this->ajaxReturn($json);
+    }
+
+    public function loadvideo(){
+        /*$filename = I('filename');
+        pp($filename);
+        header('content-disposition:attachment;filename='.basename($filename));
+        header('content-length:'.filesize($filename));
+        readfile($filename);*/
+        $file = I('filename');
+        if (file_exists($file)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="'.basename($file).'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
+            exit;
+        }else{exit($file."文件不存在");}
+
+        download("test.mp4");
+    }
+
+}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>搜索</title>
+        <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="black" name="apple-mobile-web-app-status-bar-style">
+        <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+        <link href="__PUBLIC__/Wx/CSS/BusinessCSS/classification/Commoditydetails.css" rel="stylesheet">
+        <link href="__PUBLIC__/Wx/CSS/BusinessCSS/classification/Threeclassification.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <!--<header class="mui-bar mui-bar-nav header">
+            <a href="{:U('/home/goodsclass/goodsclassindex')}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <h1 class="mui-title">{$classsan_name}</h1>
+        </header>-->
+        <div class="content" id="goods_content">
+        <foreach name="data" item="v">
+            <a href="__ROOT__/wx.php/home/goods/goodsinfo?id={$v['id']}">
+                <div class="list">
+                    <div class="img">
+                        <img src="__PUBLIC__/Uploads/{$v['sm_pic']}" alt="">
+                    </div>
+                    <div class="name" style="width:100%;">
+                        <h5 style="display: block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 75%;color: #444;">{$v['goods_name']}</h5>
+                        <p>￥{$v['shop_price']}</p>
+                        <input type="button" value="购买">
+                    </div>
+                </div>
+            </a>
+        </foreach>
+        </div>
+
+        <script id="tpl" type="text/template">
+        {{each data as v i}}
+            <a href="__ROOT__/wx.php/home/goods/goodsinfo?id={{v.id}}">
+                <div class="list">
+                    <div class="img">
+                        <img src="__PUBLIC__/Uploads/{{v.sm_pic}}" alt="">
+                    </div>
+                    <div class="name" style="width:100%;">
+                        <h5 style="display: block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 75%;color: #444;">{{v.goods_name}}</h5>
+                        <p>￥{{v.min_shop_price}}</p>
+                        <input type="button" value="购买">
+                    </div>
+                </div>
+            </a>
+        {{/each}}
+        </script>
+
+        <div id="finde">
+            <a href="{:U('/home/order/carindex')}"><img src="__PUBLIC__/Wx/img/Classification/classification_btn_shoppingcart.png"></a>
+            <a href="#"><img src="__PUBLIC__/Wx/img/Classification/classification_btn_top.png"></a>
+        </div>
+    </body>
+</html>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/index/js/template.js"></script>
+<script type="text/javascript">
+    var gcs_id = "<?php echo $id ;?>";
+    var count = 0;
+    //排序
+    function change(id){
+        var sort_flag = id; //排序标志
+        if(sort_flag == 'default_sort'){
+            $('#default_sort').attr('class','red');
+            $('#price_sort').removeClass('red');
+            $('#sale_sort').removeClass('red');
+            $('#price_sort_img').css('display','none');
+            $.ajax({
+                url:"{:U('/home/goods/sortgoodslist')}",
+                type:"post",
+                data:{"id":gcs_id,"sort_flag":sort_flag},
+                dataType: "json",
+                success:function(data){
+                    // console.log(data);
+                    if (data.result==1) {
+                        $('#goods_content').html();
+                        var html = template('tpl', data);
+                        $('#goods_content').html(html);
+                    }
+                }
+            });
+        }else if(sort_flag == 'price_sort'){
+            count = count + 1;
+            yushu = count % 2;//取余数
+            //余数为1 升序
+            if(yushu){
+                $('#price_sort_img').css('display','block');
+                $('#price_sort_img').attr('src',"__PUBLIC__/Wx/img/Classification/classification_togglebar_price_2.png");
+                $('#default_sort').removeClass('red');
+                $('#price_sort').attr('class','red');
+                $('#sale_sort').removeClass('red');
+                $.ajax({
+                    url:"{:U('/home/goods/sortgoodslist')}",
+                    type:"post",
+                    data:{"id":gcs_id,"sort_flag":sort_flag,"rand":'asc'},
+                    dataType: "json",
+                    success:function(data){
+                        // console.log(data);
+                        if (data.result==1) {
+                            $('#goods_content').html();
+                            var html = template('tpl', data);
+                            $('#goods_content').html(html);
+                        }
+                    }
+                });
+            }else{ //余数为0 降序
+                $('#price_sort_img').css('display','block');
+                $('#price_sort_img').attr('src',"__PUBLIC__/Wx/img/Classification/classification_togglebar_price_3.png");
+                $('#default_sort').removeClass('red');
+                $('#price_sort').attr('class','red');
+                $('#sale_sort').removeClass('red');
+                $.ajax({
+                    url:"{:U('/home/goods/sortgoodslist')}",
+                    type:"post",
+                    data:{"id":gcs_id,"sort_flag":sort_flag,"rand":'desc'},
+                    dataType: "json",
+                    success:function(data){
+                        // console.log(data);
+                        if (data.result==1) {
+                            $('#goods_content').html();
+                            var html = template('tpl', data);
+                            $('#goods_content').html(html);
+                        }
+                    }
+                });
+            }
+        }else{
+            $('#default_sort').removeClass('red');
+            $('#price_sort').removeClass('red');
+            $('#sale_sort').attr('class','red');
+            $('#price_sort_img').css('display','none');
+            $.ajax({
+                url:"{:U('/home/goods/sortgoodslist')}",
+                type:"post",
+                data:{"id":gcs_id,"sort_flag":sort_flag},
+                dataType: "json",
+                success:function(data){
+                    // console.log(data);
+                    if (data.result==1) {
+                        $('#goods_content').html();
+                        var html = template('tpl', data);
+                        $('#goods_content').html(html);
+                    }
+                }
+            });
+        }
+    }
+
+</script>

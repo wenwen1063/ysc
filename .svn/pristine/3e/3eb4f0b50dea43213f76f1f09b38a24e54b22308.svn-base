@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商家中心</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/BusinessCenter.css" rel="stylesheet">
+    	<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+</head>
+<body>
+<!--<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">商家中心</h1>
+</header>-->
+<div id="classification">
+    <foreach name="data" item="v">
+        <if condition="$key%3 neq 2">
+        <a href="__ROOT__/wx.php/home/seller/sellerinfo?id={$v['id']}">
+            <div class="list">
+                <p style="color:#69c6f3;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{$v['name']}</p>
+                <div class="img">
+                    <img src="__PUBLIC__/Uploads/{$v['logo']}" alt="">
+                </div>
+            </div>
+        </a>
+        <else />
+        <a href="__ROOT__/wx.php/home/seller/sellerinfo?id={$v['id']}">
+            <div class="list" style="border-right:none;">
+                <p style="color:#69c6f3;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{$v['name']}</p>
+                <div class="img">
+                    <img src="__PUBLIC__/Uploads/{$v['logo']}" alt="">
+                </div>
+            </div>
+        </a>
+        </if>
+    </foreach>
+</div>
+
+<div class="button">
+    <a href="{:U('/home/seller/sellerapply')}">
+        <input type="button" value="商家入驻申请">
+    </a>
+</div>
+<script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+</body>
+</html>

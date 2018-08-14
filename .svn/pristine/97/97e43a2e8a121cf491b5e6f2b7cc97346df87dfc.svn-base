@@ -1,0 +1,48 @@
+<?php
+namespace Home\Controller;
+
+use Think\Controller;
+
+class TestController extends Controller
+{
+    public function wxtest()
+    {
+//scope=snsapi_base 实例
+        $appid        = 'wx6df7cb139d86f3e7';
+        $redirect_uri = urlencode('http://www.ysc998.com/wx.php/home/test/wx_callback');
+        $url          = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$appid&redirect_uri=$redirect_uri&response_type=code&scope=snsapi_base&state=1#wechat_redirect";
+        header("Location:" . $url);
+    }
+
+    public function wx_callback()
+    {
+        $appid  = "wx6df7cb139d86f3e7";
+        $secret = "6cb7d92fee9845212040f7097133658d";
+        $code   = $_GET["code"];
+
+//第一步:取全局access_token
+        $url   = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$secret";
+        $token = $this->getJson($url);
+
+//第二步:取得openid
+//		$oauth2Url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$token&openid=OPENID&lang=zh_CN"; 
+        $oauth2Url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appid&secret=$secret&code=$code&grant_type=authorization_code";
+        dump($oauth2Url);
+        $oauth2    = $this->getJson($oauth2Url);
+
+        $openid = $oauth2['openid'];
+        print_r($openid);
+    }
+
+    public function getJson($url)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        return json_decode($output, true);
+    }
+}

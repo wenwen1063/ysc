@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css">
+    <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/Extension.css">
+    <title>推广工具</title>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">推广工具</h1>
+</header>
+
+<div id="content">
+
+    <foreach name="data" item="v">
+        <a href="{:U('/home/extension/details',array('id'=>$v['id']))}">
+            <div class="list">
+                <div class="img">
+                    <img src="__PUBLIC__/Uploads/{$v['pic']}" style="width:80px;height: 80px;">
+                </div>
+                <div class="name">
+                    <span>{$v['name']}</span>
+                </div>
+                <div class="money">
+                    <span>{$v['shop_price']}</span>
+                    <del>{$v['market_price']}</del>
+                    <input type="button" class="red" value="购买">
+                </div>
+            </div>
+        </a>
+    </foreach>
+</div>
+
+
+<script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+</body>
+</html>

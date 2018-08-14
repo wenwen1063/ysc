@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>地址选择</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/ShoppingCart/Addressselection.css" rel="stylesheet">
+</head>
+<style type="text/css">
+.selecteddiv i.active {
+    background: url(__PUBLIC__/Wx/img/ShoppingCart/btn_check.png) no-repeat;
+    background-size: 15px;
+}
+
+.selecteddiv i {
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+    background: url(__PUBLIC__/Wx/img/ShoppingCart/btn_checkoff.png) no-repeat;
+    background-size: 15px;
+    margin-right: 10px;
+    position: relative;
+    top: 1px;
+}
+	.color{
+		background: #f5f5f5;
+	}
+</style>
+<body>
+<!--<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">地址选择</h1>
+</header>-->
+<div class="mui-content">
+    <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+        
+        <foreach name="address" item="vo" >
+	        <li class="mui-table-view-cell">
+	            <div class="mui-table">
+	                <div class="mui-table-cell mui-col-xs-10">
+	                    <h4 class="mui-ellipsis">{$vo['contact']} &numsp;&numsp;&numsp;&numsp;{$vo['phone']}</h4>
+	                    <p class="mui-h6 mui-ellipsis">{$vo['province']}{$vo['city']}{$vo['district']}{$vo['address']}</p>
+	                </div>
+	                <div class="mui-text-right selecteddiv">
+	                   <i class="" id="{$vo['id']}"></i>
+	                </div>
+	            </div>
+	        </li>
+        </foreach>
+    </ul>
+</div>
+</div>
+	<nav class="mui-bar mui-bar-tab">
+    	<input type="button" value="确&numsp;定">
+	</nav>
+</body>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+	$(".mui-table-view .mui-table-view-cell").click(function(){
+		$(".mui-table-view .mui-table-view-cell").removeClass('color');
+		$(".mui-table-view .mui-table-view-cell i").removeClass('active');
+		$(this).addClass('color');
+		$(this).find("i").addClass('active');
+		$c=$(this).find("i").attr('id');
+		mui.openWindow({
+                    url:"__ROOT__/wx.php/home/order/balance?id="+$json+"&type=2",
+                    id: 'balance'
+		    });
+	})
+</script>
+
+</html>

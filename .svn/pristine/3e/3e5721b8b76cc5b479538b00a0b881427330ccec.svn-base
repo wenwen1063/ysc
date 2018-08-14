@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>我的主页</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Mypage/Mypage.css" rel="stylesheet">
+</head>
+
+<body>
+<div id="header">
+    <div class="userimg">
+        <img src="__PUBLIC__/Wx/img/Home/home_pic_2.png" alt="">
+    </div>
+    <a href="{:U('/home/user/userinfo')}">
+        <div class="name">
+            <h4>用户名称</h4>
+            <p>积分:5526134</p>
+        </div>
+    </a>
+    <div class="right">
+        <a href="{:U('/home/rechargecash/recharge')}">
+            <input type="button" value="充值" style="background-color:#49d3ff;">
+        </a>
+        <a href="{:U('/home/rechargecash/cash')}">
+            <input type="button" value="提现" style="background-color:#00ff86;">
+        </a>
+    </div>
+</div>
+<div id="dao">
+    <a href="{:U('/home/wallet/walletindex')}">
+        <div class="list">
+            <img src="__PUBLIC__/Wx/img/My/my_btn_money.png" alt="">
+            <h5>钱包</h5>
+        </div>
+    </a>
+    <a href="{:U('/home/User/mygold')}">
+        <div class="list">
+            <img src="__PUBLIC__/Wx/img/My/my_btn_points.png" alt="">
+            <h5>积分</h5>
+        </div>
+    </a>
+    <a href="{:U('/home/coupon/mycoupon')}">
+        <div class="list">
+            <img src="__PUBLIC__/Wx/img/My/my_btn_coupon.png" alt="">
+            <h5>优惠券</h5>
+        </div>
+    </a>
+</div>
+<div id="dingdan">
+    <div class="title">
+        <img src="__PUBLIC__/Wx/img/My/my_icon_order.png">
+        <h5>订单中心</h5>
+        <p>
+            <a style="color: #909090" onclick="orderinfo(10)">查看全部订单</a> &numsp;></p>
+    </div>
+    <div class="all">
+        <a onclick="orderinfo(0)">
+            <div class="list">
+                <img src="__PUBLIC__/Wx/img/Home/1.png" alt="">
+                <span class="mui-badge mui-badge-danger">{$num['payment']}</span>
+                <h5>待付款</h5>
+            </div>
+        </a>
+        <a onclick="orderinfo(1)">
+            <div class="list" >
+                <img src="__PUBLIC__/Wx/img/Home/2.png" alt="">
+                <span class="mui-badge mui-badge-danger">{$num['delivery']}</span>
+                <h5>待发货</h5>
+            </div>
+        </a>
+        <a onclick="orderinfo(2)">
+            <div class="list" style="bottom: 5px" >
+                <img src="__PUBLIC__/Wx/img/Home/3.png" alt="">
+                <span class="mui-badge mui-badge-danger">{$num['Receiving']}</span>
+                <h5>待收货</h5>
+            </div>
+        </a>
+        <a onclick="orderinfo(3)">
+            <div class="list" style="bottom: 5px" >
+                <img src="__PUBLIC__/Wx/img/Home/4.png" alt="">
+                <span class="mui-badge mui-badge-danger">{$num['evaluate']}</span>
+                <h5>待评价</h5>
+            </div>
+        </a>
+        <a onclick="customer()">
+            <div class="list" style="bottom: 5px" >
+                <img src="__PUBLIC__/Wx/img/Home/4.png" alt="">
+                <span class="mui-badge mui-badge-danger">{$num['customer']}</span>
+                <h5>售后</h5>
+            </div>
+        </a>
+    </div>
+</div>
+<div id="classification">
+    <a href="{:U('/home/partner/partner')}">
+        <div class="list">
+            <img src="__PUBLIC__/Wx/img/My/my_btn_gpdc.png" alt="">
+            <h5>搭档中心</h5>
+        </div>
+    </a>
+    <a href="{:U('/home/User/myattention')}">
+        <div class="list">
+            <img src="__PUBLIC__/Wx/img/My/my_btn_follow.png" alt="">
+            <h5>我的关注</h5>
+        </div>
+    </a>
+    <a href="{:U('/home/User/mycollection')}">
+        <div class="list">
+            <img src="__PUBLIC__/Wx/img/my_btn_collection.png" alt="">
+            <h5>我的收藏</h5>
+        </div>
+    </a>
+    <a href="{:U('/home/Myarticle/myarticle')}">
+        <div class="list">
+            <img src="__PUBLIC__/Wx/img/5.jpg" alt="">
+            <h5>我的文章</h5>
+        </div>
+    </a>
+    <a href="{:U('/home/address/addrmanage')}">
+        <div class="list">
+            <img src="__PUBLIC__/Wx/img/My/my_btn_address.png" alt="">
+            <h5>地址管理</h5>
+        </div>
+    </a>
+    <a href="Attractfansplay/html/attractfansplay.html">
+        <div class="list">
+            <img src="__PUBLIC__/Wx/img/6.jpg" alt="">
+            <h5>吸粉游戏</h5>
+        </div>
+    </a>
+    <!--<a href="Myincome/Myincome.html">-->
+        <!--<div class="list">-->
+            <!--<img src="../../img/My/my_btn_income.png" alt="">-->
+            <!--<h5>我的收益</h5>-->
+        <!--</div>-->
+    <!--</a>-->
+
+
+    <a href="{:U('/home/user/pswupdate')}">
+        <div class="list">
+            <img src="__PUBLIC__/Wx/img/my_btn_modify_password.png" alt="">
+            <h5>密码管理</h5>
+        </div>
+    </a>
+    <a href="http://chat8.live800.com/live800/chatClient/chatbox.jsp?companyID=820706&configID=151385&jid=5530154684">
+        <div class="list">
+            <img src="__PUBLIC__/Wx/img/4.png" alt="">
+            <h5>在线客服</h5>
+        </div>
+    </a>
+    <!--<a href="../BindonAccount/Forgetpassword.html">-->
+        <!--<div class="list">-->
+            <!--<img src="../../img/1.jpg" alt="">-->
+            <!--<h5>忘记密码</h5>-->
+        <!--</div>-->
+    <!--</a>-->
+    <a href="More/More.html">
+        <div class="list">
+            <img src="__PUBLIC__/Wx/img/my_btn_more.png" alt="">
+            <h5>更多</h5>
+        </div>
+    </a>
+</div>
+ <include file="public:nav" />
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+<script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+<script>
+
+
+    function orderinfo(state){
+          mui.openWindow({
+            url: "__ROOT__/wx.php/home/user/orderinfo?state="+state,
+            id: 'orderinfo'
+        });
+    }
+    function customer(){
+    	mui.openWindow({
+            url: "__ROOT__/wx.php/home/customer/index?state="+10,
+            id: 'orderinfo'
+        });
+    }
+
+</script>
+<script language="javascript" src="http://chat8.live800.com/live800/chatClient/monitor.js?jid=5530154684&companyID=820706&configID=151384&codeType=custom"></script>
+
+</body>
+
+</html>

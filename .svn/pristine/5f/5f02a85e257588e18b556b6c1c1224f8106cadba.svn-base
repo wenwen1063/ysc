@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的钱包</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Mywallet/Mywallet.css" rel="stylesheet">
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a href="{:U('/home/user/userindex')}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">我的钱包</h1>
+</header>
+<div class="head">
+    <div class="img">
+        <img src="__PUBLIC__/Uploads/{$user_info['head_img']}">
+        <div class="money">
+            <h5>我的资金</h5>
+            <span>￥{$user_info['balance']}</span>
+        </div>
+    </div>
+</div>
+<div class="chong">
+    <div class="list">
+        <img src="__PUBLIC__/Wx/img/My/my_icon_recharge.png" alt="">
+        <p><a href="{:U('/home/rechargecash/recharge')}" style="color:#8f8f94">充值</a></p>
+    </div>
+    <div class="list">
+        <img src="__PUBLIC__/Wx/img/My/my_icon_recharge.png" alt="">
+        <p><a href="{:U('/home/rechargecash/cash')}" style="color:#8f8f94">提现</a></p>
+    </div>
+</div>
+<div class="mui-content">
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" href="{:U('/home/wallet/bankcard')}">
+                    <span class="mui-badge mui-badge-danger">{$bank_count}张</span>
+                    <img src="__PUBLIC__/Wx/img/My/my_icon_bank_yellow.png" alt="">
+                    银行卡
+                </a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">
+                    <span class="mui-badge mui-badge-danger">{$user_info['gold']}</span>
+                    <img src="__PUBLIC__/Wx/img/My/my_icon_integral.png" alt="">
+                    我的积分
+                </a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" href="{:U('/home/coupon/mycoupon')}" >
+                    <span class="mui-badge mui-badge-danger">{$card_count}张</span>
+                    <img src="__PUBLIC__/Wx/img/My/my_icon_card_ticket.png" alt="">
+                    我的卡券
+                </a>
+            </li>
+            <li class="mui-table-view-cell" style="border-top: 10px solid #e0e0e0;margin-top: -1px">
+                <a href="{:U('/home/wallet/record')}" class="mui-navigate-right">
+                    <span class="mui-badge mui-badge-danger"></span>
+                    <img src="__PUBLIC__/Wx/img/My/my_icon_order.png" alt="">
+                    交易记录
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,690 @@
+<?php
+/**
+ * 支付类
+ * User: cyl
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+// Vendor('Wxpay.WxPay#Api');
+// Vendor('Wxpay.WxPay#JsApiPay');
+class PayController extends Controller
+{
+    /** 链接wechat接口 */
+    public function wxpay()
+    {
+        $moeny        = I('recharge_money'); //充值金额
+        $out_trade_no = I('order_id'); //充值订单id
+        $tal_fee      = $moeny * 100;
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.Api.php";
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.JsApiPay.php";
+        //①、获取用户openid
+        $tools  = new \JsApiPay();
+        $openId = $tools->GetOpenid();
+        //②、统一下单
+        $input = new \WxPayUnifiedOrder();
+        $input->SetBody("充值金额"); //商品描述
+        $input->SetAttach("益商城"); //附加数据
+        $input->SetOut_trade_no($out_trade_no); //充值订单id
+        $input->SetTotal_fee($tal_fee); //总金额
+        $input->SetTime_start(date("YmdHis"));
+        $input->SetTime_expire(date("YmdHis", time() + 600));
+        $input->SetGoods_tag("益商城"); //商品标记
+        $input->SetNotify_url("http://" . $_SERVER['HTTP_HOST'] . "/wx.php/home/pay/wx_notify");
+        $input->SetTrade_type("JSAPI");
+        $input->SetOpenid($openId);
+        $order = \WxPayApi::unifiedOrder($input);
+//         dump($order);die;
+        $jsApiParameters = $tools->GetJsApiParameters($order);
+        $this->assign('jsApiParameters', $jsApiParameters);
+        $this->assign('moeny', $moeny);
+        $this->assign('id', $out_trade_no);
+        $this->display();
+    }
+
+    /* 支付回调地址 只要有数据回来  那说明   肯定是支付成功的   不支付成功不会回调*/
+    public function wx_notify()
+    {
+        $xml       = $GLOBALS["HTTP_RAW_POST_DATA"];
+        $xmlstring = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $xml_array = json_decode(json_encode($xmlstring), true);
+        if (!empty($xml_array['out_trade_no'])) {
+            $note = $xml_array['out_trade_no']; //充值订单id
+            //给用户充值
+            $money = M('rechargecash')->where(array('note' => $note, 'is_ok' => 0))->getField('money');
+            // $test       = M('test');
+            // $test->test = $note;
+            // $test->text = $money;
+            // $test->add();
+            if (!empty($money)) {
+                $user_id = M('rechargecash')->where(array('note' => $note))->getField('user_id');
+                // $test       = M('test');
+                // $test->test = $user_id;
+                // $test->text = $money;
+                // $test->add();
+                M('user')->where(array('id' => $user_id))->setInc('balance', $money);
+                //更新充值记录表信息
+                $data['is_ok'] = 1; //完成
+                $data['time']  = time();
+                M('rechargecash')->where(array('note' => $note, 'is_ok' => 0))->save($data);
+            }
+        }
+        /* 如果不回复这个xml  微信会给我们发送三次xml */
+        echo '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+    }
+
+    //话费充值的wxpay
+    /** 链接wechat接口 */
+    public function hf_wxpay()
+    {
+        $moeny        = I('total_money'); //充值金额
+        $out_trade_no = I('order_number'); //充值订单id
+        $tal_fee      = $moeny * 100;
+        // $tal_fee      = 0.01 * 100;
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.Api.php";
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.JsApiPay.php";
+        //①、获取用户openid
+        $tools  = new \JsApiPay();
+        $openId = $tools->GetOpenid();
+        //②、统一下单
+        $input = new \WxPayUnifiedOrder();
+        $input->SetBody("话费充值"); //商品描述
+        $input->SetAttach("益商城"); //附加数据
+        $input->SetOut_trade_no($out_trade_no); //充值订单id
+        $input->SetTotal_fee($tal_fee); //总金额
+        $input->SetTime_start(date("YmdHis"));
+        $input->SetTime_expire(date("YmdHis", time() + 600));
+        $input->SetGoods_tag("益商城"); //商品标记
+        $input->SetNotify_url("http://" . $_SERVER['HTTP_HOST'] . "/wx.php/home/pay/hf_wx_notify");
+        $input->SetTrade_type("JSAPI");
+        $input->SetOpenid($openId);
+        $order = \WxPayApi::unifiedOrder($input);
+        // dump($order);die;
+        $jsApiParameters = $tools->GetJsApiParameters($order);
+        $this->assign('jsApiParameters', $jsApiParameters);
+        $this->assign('moeny', $moeny);
+        $this->assign('id', $out_trade_no);
+        $this->display();
+    }
+
+    /* 话费充值的支付回调地址 只要有数据回来  那说明   肯定是支付成功的   不支付成功不会回调*/
+    public function hf_wx_notify()
+    {
+        //引入千米sdk
+        header("Content-type:text/html; charset=utf-8");
+        require "./ThinkPHP/Library/Vendor/Qianmi/OpenSdk.php";
+        $loader                = new \QmLoader();
+        $loader->autoload_path = array(CURRENT_FILE_DIR . DS . "client");
+        $loader->init();
+        $loader->autoload();
+        //初始化
+        $client            = new \OpenClient();
+        $client->appKey    = '10001544';
+        $client->appSecret = 'e6L8XM6YcpYeB5NNGsqljuMX62AsaWDR';
+        $accessToken       = 'c03fdca9639e42b4ba6903ea1b86cfbc';
+
+        $xml       = $GLOBALS["HTTP_RAW_POST_DATA"];
+        $xmlstring = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $xml_array = json_decode(json_encode($xmlstring), true);
+        if (!empty($xml_array['out_trade_no'])) {
+            $order_number = $xml_array['out_trade_no']; //充值订单id
+            //查询订单金额
+            $price = M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 0))->getField('price');
+            //查询号码和充值金额
+            $phone  = M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 0))->getField('tel');
+            $amount = M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 0))->getField('number');
+            //更新充值记录表信息
+            if ($price) {
+                $data['is_pay']     = 1; //已支付
+                $data['paid_price'] = $price; //已支付
+                M('telephone_fare_record')->where(array('order_number' => $order_number))->save($data);
+            }
+            //调用话费查询商品接口 返回商品id
+            $req = new \RechargeMobileGetItemInfoRequest();
+            $req->setMobileNo($phone);
+            $req->setRechargeAmount($amount);
+            $res = $client->execute($req, $accessToken);
+            $res = json_decode(json_encode($res), true); //json转为数组
+
+            if ($res) {
+                $itemId = $res['itemId']; //充值系统的商品id
+                $req1   = new \RechargeMobileCreateBillRequest();
+                $req1->setItemId($itemId);
+                $req1->setMobileNo($phone);
+                $req1->setRechargeAmount($amount);
+                $res1 = $client->execute($req1, $accessToken);
+                $res1 = json_decode(json_encode($res1), true); //json转为数组
+
+                if ($res1) {
+                    $billId                  = $res1['billId']; //充值系统的订单号
+                    $data1['feeflow_number'] = $billId;
+                    M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 1))->save($data1);
+                    //查询充值订单的支付状态 payState
+                    $req3 = new \RechargeOrderInfoRequest();
+                    $req3->setBillId($billId);
+                    $res3 = $client->execute($req3, $accessToken);
+                    $res3 = json_decode(json_encode($res3), true); //json转为数组
+
+                    if ($res3) {
+                        $order_payState = $res3['payState']; // 1已付款 0未付款
+
+                        if ($order_payState == 1) {
+                            //充值系统中此订单已付款 等待充值到账
+                            $data2['remark'] = $billId . '的订单系统正在充值中...请等待';
+                            M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 1))->save($data2);
+                        } else {
+                            //调用接口进行话费充值
+                            $req2 = new \RechargeBasePayBillRequest();
+                            $req2->setBillId($billId);
+                            $res2 = $client->execute($req2, $accessToken);
+                            $res2 = json_decode(json_encode($res2), true); //json转为数组
+                            if ($res2) {
+                                $payState = $res2['payState']; // 1已付款 0未付款
+                                // $test['test'] = $res2['payState'];
+                                // $test['text'] = $billId; //(到这边都没问题了)
+                                // M('test')->add($test);
+                                if ($payState == 1) {
+                                    $data2['remark'] = $billId . '的订单系统正在充值中...';
+                                    M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 1))->save($data2);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        /* 如果不回复这个xml  微信会给我们发送三次xml */
+        echo '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+    }
+
+    //流量充值的wxpay
+    /** 链接wechat接口 */
+    public function ll_wxpay()
+    {
+        $moeny        = I('total_money'); //充值金额
+        $out_trade_no = I('order_number'); //充值订单id
+        $tal_fee      = $moeny * 100;
+        // $tal_fee      = 0.01 * 100;
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.Api.php";
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.JsApiPay.php";
+        //①、获取用户openid
+        $tools  = new \JsApiPay();
+        $openId = $tools->GetOpenid();
+        //②、统一下单
+        $input = new \WxPayUnifiedOrder();
+        $input->SetBody("流量充值"); //商品描述
+        $input->SetAttach("益商城"); //附加数据
+        $input->SetOut_trade_no($out_trade_no); //充值订单id
+        $input->SetTotal_fee($tal_fee); //总金额
+        $input->SetTime_start(date("YmdHis"));
+        $input->SetTime_expire(date("YmdHis", time() + 600));
+        $input->SetGoods_tag("益商城"); //商品标记
+        $input->SetNotify_url("http://" . $_SERVER['HTTP_HOST'] . "/wx.php/home/pay/ll_wx_notify");
+        $input->SetTrade_type("JSAPI");
+        $input->SetOpenid($openId);
+        $order = \WxPayApi::unifiedOrder($input);
+        // dump($order);die;
+        $jsApiParameters = $tools->GetJsApiParameters($order);
+        $this->assign('jsApiParameters', $jsApiParameters);
+        $this->assign('moeny', $moeny);
+        $this->assign('id', $out_trade_no);
+        $this->display();
+    }
+
+    /* 流量充值的支付回调地址 只要有数据回来  那说明   肯定是支付成功的   不支付成功不会回调*/
+    public function ll_wx_notify()
+    {
+        //引入千米sdk
+        header("Content-type:text/html; charset=utf-8");
+        require "./ThinkPHP/Library/Vendor/Qianmi/OpenSdk.php";
+        $loader                = new \QmLoader();
+        $loader->autoload_path = array(CURRENT_FILE_DIR . DS . "client");
+        $loader->init();
+        $loader->autoload();
+        //初始化
+        $client            = new \OpenClient();
+        $client->appKey    = '10001544';
+        $client->appSecret = 'e6L8XM6YcpYeB5NNGsqljuMX62AsaWDR';
+        $accessToken       = 'c03fdca9639e42b4ba6903ea1b86cfbc';
+
+        $xml       = $GLOBALS["HTTP_RAW_POST_DATA"];
+        $xmlstring = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $xml_array = json_decode(json_encode($xmlstring), true);
+        if (!empty($xml_array['out_trade_no'])) {
+            $order_number = $xml_array['out_trade_no']; //充值订单id
+            //查询订单金额
+            $price = M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 0))->getField('price');
+            //查询号码和充值数量
+            $phone  = M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 0))->getField('tel');
+            $amount = M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 0))->getField('number');
+            //更新充值记录表信息
+            if ($price) {
+                $data['is_pay']     = 1; //已支付
+                $data['paid_price'] = $price; //已支付
+                M('telephone_fare_record')->where(array('order_number' => $order_number))->save($data);
+            }
+            //调用流量查询商品接口 返回商品id
+            $req = new \MobileFlowItemsList2Request();
+            $req->setMobileNo($phone);
+            $req->setFlow($amount . "M");
+            $res = $client->execute($req, $accessToken);
+            $res = json_decode(json_encode($res), true); //json转为数组
+
+            if ($res) {
+                $itemId = $res['items']['item'][0]['itemId']; //充值系统的商品id
+                $req1   = new \MobileFlowCreateBillRequest();
+                $req1->setItemId($itemId);
+                $req1->setMobileNo($phone);
+                $res1 = $client->execute($req1, $accessToken);
+                $res1 = json_decode(json_encode($res1), true); //json转为数组
+
+                if ($res1) {
+                    $billId                  = $res1['orderDetailInfo']['billId']; //充值系统的订单号
+                    $data1['feeflow_number'] = $billId;
+                    M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 1))->save($data1);
+                    //查询充值订单的支付状态 payState
+                    $req3 = new \RechargeOrderInfoRequest();
+                    $req3->setBillId($billId);
+                    $res3 = $client->execute($req3, $accessToken);
+                    $res3 = json_decode(json_encode($res3), true); //json转为数组
+
+                    if ($res3) {
+                        $order_payState = $res3['payState']; // 1已付款 0未付款
+
+                        // $test['test'] = $res3['payState'];
+                        // $test['text'] = $billId; //(到这边都没问题了)
+                        // M('test')->add($test);
+
+                        if ($order_payState == 1) {
+                            //充值系统中此订单已付款 等待充值到账
+                            $data2['remark'] = $billId . '的订单系统正在充值中...请等待';
+                            M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 1))->save($data2);
+                        } else {
+                            //调用接口进行流量充值
+                            $req2 = new \RechargeBasePayBillRequest();
+                            $req2->setBillId($billId);
+                            $res2 = $client->execute($req2, $accessToken);
+                            $res2 = json_decode(json_encode($res2), true); //json转为数组
+
+                            if ($res2) {
+                                $payState = $res2['payState']; // 1已付款 0未付款
+                                // $test['test'] = $res2['payState'];
+                                // $test['text'] = $billId; //(到这边都没问题了)
+                                // M('test')->add($test);
+                                if ($payState == 1) {
+                                    $data2['remark'] = $billId . '的订单系统正在充值中...';
+                                    M('telephone_fare_record')->where(array('order_number' => $order_number, 'is_pay' => 1))->save($data2);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        /* 如果不回复这个xml  微信会给我们发送三次xml */
+        echo '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+    }
+
+    //购买软件
+    public function tool_wxpay()
+    {
+        $moeny        = I('recharge_money'); //软件金额
+        $out_trade_no = I('order_number'); //订单编号
+        $tal_fee      = $moeny * 100;
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.Api.php";
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.JsApiPay.php";
+        //①、获取用户openid
+        $tools  = new \JsApiPay();
+        $openId = $tools->GetOpenid();
+        //②、统一下单
+        $input = new \WxPayUnifiedOrder();
+        $input->SetBody("购买软件"); //商品描述
+        $input->SetAttach("益商城"); //附加数据
+        $input->SetOut_trade_no($out_trade_no); //订单编号
+        $input->SetTotal_fee($tal_fee); //总金额
+        $input->SetTime_start(date("YmdHis"));
+        $input->SetTime_expire(date("YmdHis", time() + 600));
+        $input->SetGoods_tag("益商城"); //商品标记
+        $input->SetNotify_url("http://" . $_SERVER['HTTP_HOST'] . "/wx.php/home/pay/tool_wx_notify");
+        $input->SetTrade_type("JSAPI");
+        $input->SetOpenid($openId);
+        $order = \WxPayApi::unifiedOrder($input);
+        // dump($order);die;
+        $jsApiParameters = $tools->GetJsApiParameters($order);
+        $this->assign('jsApiParameters', $jsApiParameters);
+        $this->assign('moeny', $moeny);
+        $this->assign('id', $out_trade_no);
+        $this->display();
+
+    }
+    /* 支付回调地址 只要有数据回来  那说明   肯定是支付成功的   不支付成功不会回调*/
+    public function tool_wx_notify()
+    {
+        $xml       = $GLOBALS["HTTP_RAW_POST_DATA"];
+        $xmlstring = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $xml_array = json_decode(json_encode($xmlstring), true);
+        if (!empty($xml_array['out_trade_no'])) {
+            $note = $xml_array['out_trade_no']; //充值订单id
+            //给用户充值
+            $paid_price = M('record')->where(array('order_number' => $note, 'is_pay' => 0))->getField('paid_price');
+            $tool_id    = M('record')->where(array('order_number' => $note, 'is_pay' => 0))->getField('privilege_id');
+            $user_id    = M('record')->where(array('order_number' => $note, 'is_pay' => 0))->getField('user_id');
+            $pos        = M('record')->where(array('order_number' => $note, 'is_pay' => 0))->getField('paid_price');
+//            \Think\Log::record("=======================================" . var_export($paid_price, true));
+            if (!empty($paid_price)) {
+                //更新特权领取记录表
+                $data['is_pay'] = 1; //完成
+                //                $data['time']  = time();
+                M('record')->where(array('order_number' => $note, 'is_pay' => 0))->save($data);
+
+                $oldtype               = M('user')->where(array('id' => $user_id))->getField('privilege_hierarchy_id');
+                $newtype               = M('privilege')->where(array('tool_id' => $tool_id))->getField('partner_id');
+                $upuser                = M('user_upgrade_logs');
+                $upuser->user_id       = $user_id;
+                $upuser->type          = $oldtype;
+                $upuser->upgrade_type  = $newtype;
+                $upuser->condition     = 0;
+                $upuser->payment       = $paid_price;
+                $upuser->time          = time();
+                $upuser->state         = 1;
+                $upuser->auditing_time = time();
+                $upuser->add();
+
+                $uptype['privilege_hierarchy_id'] = $newtype;
+                M('user')->where(array('id' => $user_id))->save($uptype);
+            }
+            //pos机
+            if (!empty($pos)) {
+                //更新特权领取记录表
+                $data['is_pay'] = 1; //完成
+                M('record')->where(array('order_number' => $note, 'is_pay' => 0))->save($data);
+                //更新订单表
+                $arr['pay_status']   = 1;
+                $arr['pay_time']     = time();
+                $arr['order_status'] = 1;
+                M('orders')->where(array('order_number' => $note, 'pay_status' => 0))->save($arr);
+
+            }
+        }
+        /* 如果不回复这个xml  微信会给我们发送三次xml */
+        echo '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+    }
+
+    public function order_wxpay()
+    {
+        $moeny = I('allmoney'); //软件金额
+        //      $moeny=0.01;
+        $out_trade_no = I('id'); //订单编号
+        //      $tal_fee      = $moeny * 100;
+        $tal_fee = 0.01 * 100;
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.Api.php";
+        require_once "./ThinkPHP/Library/Vendor/Wxpay/WxPay.JsApiPay.php";
+        //①、获取用户openid
+        $tools  = new \JsApiPay();
+        $openId = $tools->GetOpenid();
+        //②、统一下单
+        $input = new \WxPayUnifiedOrder();
+        $input->SetBody("购买商品"); //商品描述
+        $input->SetAttach("益商城"); //附加数据
+        $input->SetOut_trade_no($out_trade_no); //订单编号
+        $input->SetTotal_fee($tal_fee); //总金额
+        $input->SetTime_start(date("YmdHis"));
+        $input->SetTime_expire(date("YmdHis", time() + 600));
+        $input->SetGoods_tag("益商城"); //商品标记
+        $input->SetNotify_url("http://" . $_SERVER['HTTP_HOST'] . "/wx.php/home/pay/order_wx_notify");
+        $input->SetTrade_type("JSAPI");
+        $input->SetOpenid($openId);
+        $order = \WxPayApi::unifiedOrder($input);
+        // dump($order);die;
+        $jsApiParameters = $tools->GetJsApiParameters($order);
+        $this->assign('jsApiParameters', $jsApiParameters);
+        $this->assign('moeny', $moeny);
+        $this->assign('id', $out_trade_no);
+        $this->display();
+
+    }
+    /* 支付回调地址 只要有数据回来  那说明   肯定是支付成功的   不支付成功不会回调*/
+    public function order_wx_notify()
+    {
+        $xml       = $GLOBALS["HTTP_RAW_POST_DATA"];
+        $xmlstring = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $xml_array = json_decode(json_encode($xmlstring), true);
+        if (!empty($xml_array['out_trade_no'])) {
+            $note = $xml_array['out_trade_no']; //充值订单id
+            //订单状态修改
+            $this->order_return($note);
+            /* 如果不回复这个xml  微信会给我们发送三次xml */
+            echo '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+        }
+    }
+
+	public function order_return($note){
+		$id = substr($note, 16);
+            if($id){
+                $arr['pay_status'] = 1;
+                $arr['pay_time'] = time();
+                $arr['order_status'] = 1;
+//              订单状态修改
+                M('orders')->where(array('id'=>$id))->save($arr);
+				$order=M('orders')->where(array('id'=>$id))->find();
+//**************************************商家收入表插入记录
+                $seller_revenue            = M('seller_revenue');
+                $seller_revenue->seller_id = $order("seller_id");
+                $seller_revenue->type      = 1;
+                $seller_revenue->order_id  = $id;
+                $seller_revenue_id         = $seller_revenue->add();
+//  返点计算
+                $info=M()->table('orders o')
+                ->join("order_goods og on o.id=og.order_id")
+                ->field("o.*,og.goods_id,og.goods_number,og.price as shop_price,og.id as ogid")
+                ->where(array('o.id'=>$id))->select();
+				
+                foreach($info as $key=>$value){
+                    $goods_id=$value['goods_id'];
+                    $goods_number=$value['goods_number'];
+                    $shop_price=$value['shop_price'];
+                    $user_id=$value['user_id'];
+                    $goods_cj    = M("goods_bouns_info")->where(array('goods_id' => $goods_id, 'state' => 1))->find();
+                $order_goods = M('order_goods');
+                $order_goods->id=$value['ogid'];
+                if ($goods_cj['type'] == 0) {
+//平台返点金额
+                $pingtai = M('update_bonus_set')->where(array("id" => '10'))->find();
+//平台返点
+                $bonus_platform                 = M("bonus_platform");
+                $bonus_platform->seller_id      = $order("seller_id");
+                $bonus_platform->platform_ratio = $pingtai['pingtai_money'];
+                $bonus_platform->platform_total = floatval($shop_price) * intval($goods_number) * (intval($pingtai['pingtai_money']) / 100);
+                $bonus_platform->goods_id=          $goods_id;
+                $bonus_platform->add();
+                $order_goods->platform_bonus = floatval($shop_price) * intval($num) * (intval($pingtai['pingtai_money']) / 100);
+            } else {
+//***********************搭档返点
+                //会员信息
+                $user_id_0 = M('user')->where(array("id" => $user_id))->find();
+//一级会员返点信息
+                $user_id_1 = M('user')->where(array("id" => $user_id_0['introduce']))->find();
+                if ($user_id_1) {
+//商品1层级返点
+                    $goods_cj1     = M("goods_bouns_info")->where(array('goods_id' => $goods_id, 'bonus_level' => 1, 'partner_id' => $user_id_1['privilege_hierarchy_id'], 'state' => 1))->find();
+                    $bonus_consume = M("bonus_consume");
+                    $money1        = floatval($shop_price) * intval($goods_number) * (intval($goods_cj1['bonus_level_ratio']) / 100);
+                    //***********************消费奖励表插入记录
+                    $bonus_consume                 = M('bonus_consume');
+                    $bonus_consume->user_id        = $user_id_1['id'];
+                    $bonus_consume->hierarchy      = 1;
+                    $bonus_consume->order_id       = $order_id;
+                    $bonus_consume->recommend_user = $user_id_1['introduce'];
+                    $bonus_consume->state          = 0;
+                    $bonus_consume->parent_id      = $user_id_1['privilege_hierarchy_id'];
+                    $bonus_consume->money          = $money1;
+                    $bonus_consume->goods_id=          $goods_cj['goods_id'];
+                    $bonus_consume->add();
+                    //***********************会员表修改
+                    $user = M('user');
+                    $user->where(array('id' => $user_id_1['id']))->setInc('reward', floatval($money1)); // 用户的奖励金额加
+                    $user->where(array('id' => $user_id_1['id']))->setInc('reward_freeze', floatval($money1)); // 用户的冻结奖励金额加
+                }
+//二级会员返点信息
+                $user_id_2 = M('user')->where(array("id" => $user_id_1['introduce']))->find();
+                if ($user_id_2) {
+//商品2层级返点
+                    $goods_cj2                     = M("goods_bouns_info")->where(array('goods_id' => $goods_id, 'bonus_level' => 2, 'partner_id' => $user_id_2['privilege_hierarchy_id'], 'state' => 1))->find();
+                    $money2                        = floatval($shop_price) * intval($goods_number) * (intval($goods_cj2['bonus_level_ratio']) / 100);
+                    $bonus_consume                 = M('bonus_consume');
+                    $bonus_consume->user_id        = $user_id_2['id'];
+                    $bonus_consume->hierarchy      = 2;
+                    $bonus_consume->order_id       = $order_id;
+                    $bonus_consume->recommend_user = $user_id_2['introduce'];
+                    $bonus_consume->state          = 0;
+                    $bonus_consume->parent_id      = $user_id_2['privilege_hierarchy_id'];
+                    $bonus_consume->money          = $money2;
+                    $bonus_consume->goods_id=          $goods_cj['goods_id'];
+                    $bonus_consume->add();
+                    $user = M('user');
+                    $user->where(array('id' => $user_id_2['id']))->setInc('reward', floatval($money2)); // 用户的奖励金额加
+                    $user->where(array('id' => $user_id_2['id']))->setInc('reward_freeze', floatval($money2)); // 用户的冻结奖励金额加
+                }
+//3级会员返点信息
+                $user_id_3 = M('user')->where(array("id" => $user_id_2['introduce']))->find();
+                if ($user_id_3) {
+//商品3层级返点
+                    $goods_cj3                     = M("goods_bouns_info")->where(array('goods_id' => $goods_id, 'bonus_level' => 3, 'partner_id' => $user_id_3['privilege_hierarchy_id'], 'state' => 1))->find();
+                    $money3                        = floatval($shop_price) * intval($goods_number) * (intval($goods_cj3['bonus_level_ratio']) / 100);
+                    $bonus_consume                 = M('bonus_consume');
+                    $bonus_consume->user_id        = $user_id_3['id'];
+                    $bonus_consume->hierarchy      = 3;
+                    $bonus_consume->order_id       = $order_id;
+                    $bonus_consume->recommend_user = $user_id_3['introduce'];
+                    $bonus_consume->state          = 0;
+                    $bonus_consume->parent_id      = $user_id_3['privilege_hierarchy_id'];
+                    $bonus_consume->money          = $money3;
+                    $bonus_consume->goods_id=          $goods_cj['goods_id'];
+                    $bonus_consume->add();
+                    $user = M('user');
+                    $user->where(array('id' => $user_id_3['id']))->setInc('reward', floatval($money3)); // 用户的奖励金额加
+                    $user->where(array('id' => $user_id_3['id']))->setInc('reward_freeze', floatval($money3)); // 用户的冻结奖励金额加
+                }
+                $order_goods->bonus_amount = floatval($money1) + floatval($money2) + floatval($money3);
+                $order_goods->save();
+            }
+                }
+
+        }else{
+             //更新订单表
+                $arr['pay_status'] = 1;
+                $arr['pay_time'] = time();
+                $arr['order_status'] = 1;
+                M('orders')->where(array('order_number'=>$note))->save($arr);
+                $order=M('orders')->where(array('order_number'=>$note))->select();
+
+                foreach($order as $k=>$v){
+                    $oid=$v['id'];
+//                  *************************商家收入表插入记录
+                $seller_revenue            = M('seller_revenue');
+                $seller_revenue->seller_id = $v["seller_id"];
+                $seller_revenue->type      = 1;
+                $seller_revenue->order_id  = $oid;
+                $seller_revenue_id         = $seller_revenue->add();
+//  返点计算
+                $info=M()->table('orders o')
+                ->join("order_goods og on o.id=og.order_id")
+                ->field("o.*,og.goods_id,og.goods_number,og.price as shop_price,og.id as ogid")
+                ->where(array('o.id'=>$oid))->select();
+                foreach($info as $key=>$value){
+                    $goods_id=$value['goods_id'];
+                    $goods_number=$value['goods_number'];
+                    $shop_price=$value['shop_price'];
+                    $user_id=$value['user_id'];
+                    $goods_cj    = M("goods_bouns_info")->where(array('goods_id' => $goods_id, 'state' => 1))->find();
+                $order_goods = M('order_goods');
+                $order_goods->id=$value['ogid'];
+                if ($goods_cj['type'] == 0) {
+//平台返点金额
+                $pingtai = M('update_bonus_set')->WHERE(array("id" => 10))->find();
+//平台返点			
+                $bonus_platform                 = M("bonus_platform");
+                $bonus_platform->seller_id      = $v["seller_id"];
+                $bonus_platform->platform_ratio = $pingtai['pingtai_money'];
+                $bonus_platform->platform_total = floatval($shop_price) * intval($goods_number) * (intval($pingtai['pingtai_money']) / 100);
+                $bonus_platform->goods_id=          $goods_id;
+                $bonus_platform->add();
+                $order_goods->platform_bonus = floatval($shop_price) * intval($num) * (intval($pingtai['pingtai_money']) / 100);
+            } else {
+//***********************搭档返点
+                //会员信息
+                $user_id_0 = M('user')->where(array("id" => $user_id))->find();
+//一级会员返点信息
+                $user_id_1 = M('user')->where(array("id" => $user_id_0['introduce']))->find();
+                if ($user_id_1) {
+//商品1层级返点
+                    $goods_cj1     = M("goods_bouns_info")->where(array('goods_id' => $goods_id, 'bonus_level' => 1, 'partner_id' => $user_id_1['privilege_hierarchy_id'], 'state' => 1))->find();
+                    $bonus_consume = M("bonus_consume");
+                    $money1        = floatval($shop_price) * intval($goods_number) * (intval($goods_cj1['bonus_level_ratio']) / 100);
+                    //***********************消费奖励表插入记录
+                    $bonus_consume                 = M('bonus_consume');
+                    $bonus_consume->user_id        = $user_id_1['id'];
+                    $bonus_consume->hierarchy      = 1;
+                    $bonus_consume->order_id       = $order_id;
+                    $bonus_consume->recommend_user = $user_id_1['introduce'];
+                    $bonus_consume->state          = 0;
+                    $bonus_consume->parent_id      = $user_id_1['privilege_hierarchy_id'];
+                    $bonus_consume->money          = $money1;
+                    $bonus_consume->goods_id=          $goods_cj['goods_id'];
+                    $bonus_consume->add();
+                    //***********************会员表修改
+                    $user = M('user');
+                    $user->where(array('id' => $user_id_1['id']))->setInc('reward', floatval($money1)); // 用户的奖励金额加
+                    $user->where(array('id' => $user_id_1['id']))->setInc('reward_freeze', floatval($money1)); // 用户的冻结奖励金额加
+                }
+//二级会员返点信息
+                $user_id_2 = M('user')->where(array("id" => $user_id_1['introduce']))->find();
+                if ($user_id_2) {
+//商品2层级返点
+                    $goods_cj2                     = M("goods_bouns_info")->where(array('goods_id' => $goods_id, 'bonus_level' => 2, 'partner_id' => $user_id_2['privilege_hierarchy_id'], 'state' => 1))->find();
+                    $money2                        = floatval($shop_price) * intval($goods_number) * (intval($goods_cj2['bonus_level_ratio']) / 100);
+                    $bonus_consume                 = M('bonus_consume');
+                    $bonus_consume->user_id        = $user_id_2['id'];
+                    $bonus_consume->hierarchy      = 2;
+                    $bonus_consume->order_id       = $order_id;
+                    $bonus_consume->recommend_user = $user_id_2['introduce'];
+                    $bonus_consume->state          = 0;
+                    $bonus_consume->parent_id      = $user_id_2['privilege_hierarchy_id'];
+                    $bonus_consume->money          = $money2;
+                    $bonus_consume->goods_id=          $goods_cj['goods_id'];
+                    $bonus_consume->add();
+                    $user = M('user');
+                    $user->where(array('id' => $user_id_2['id']))->setInc('reward', floatval($money2)); // 用户的奖励金额加
+                    $user->where(array('id' => $user_id_2['id']))->setInc('reward_freeze', floatval($money2)); // 用户的冻结奖励金额加
+                }
+//3级会员返点信息
+                $user_id_3 = M('user')->where(array("id" => $user_id_2['introduce']))->find();
+                if ($user_id_3) {
+//商品3层级返点
+                    $goods_cj3                     = M("goods_bouns_info")->where(array('goods_id' => $goods_id, 'bonus_level' => 3, 'partner_id' => $user_id_3['privilege_hierarchy_id'], 'state' => 1))->find();
+                    $money3                        = floatval($shop_price) * intval($goods_number) * (intval($goods_cj3['bonus_level_ratio']) / 100);
+                    $bonus_consume                 = M('bonus_consume');
+                    $bonus_consume->user_id        = $user_id_3['id'];
+                    $bonus_consume->hierarchy      = 3;
+                    $bonus_consume->order_id       = $order_id;
+                    $bonus_consume->recommend_user = $user_id_3['introduce'];
+                    $bonus_consume->state          = 0;
+                    $bonus_consume->parent_id      = $user_id_3['privilege_hierarchy_id'];
+                    $bonus_consume->money          = $money3;
+                    $bonus_consume->goods_id=          $goods_cj['goods_id'];
+                    $bonus_consume->add();
+                    $user = M('user');
+                    $user->where(array('id' => $user_id_3['id']))->setInc('reward', floatval($money3)); // 用户的奖励金额加
+                    $user->where(array('id' => $user_id_3['id']))->setInc('reward_freeze', floatval($money3)); // 用户的冻结奖励金额加
+                }
+                $order_goods->bonus_amount = floatval($money1) + floatval($money2) + floatval($money3);
+             
+            }
+  			 $order_goods->save();
+                }
+               }
+        }
+	}
+
+}

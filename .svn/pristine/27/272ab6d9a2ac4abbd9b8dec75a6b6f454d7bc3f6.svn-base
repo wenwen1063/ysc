@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>订单管理</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="../../../CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="../../../CSS/BusinessCSS/Myorder/Myorder.css" rel="stylesheet">
+    <style>
+        .mui-card .mui-control-content {
+            padding: 10px;
+        }
+
+        .mui-control-content {
+            height: 290px;
+        }
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">订单管理</h1>
+</header>
+<div class="mui-content">
+    <div>
+        <div id="segmentedControl" class="mui-segmented-control">
+            <a class="mui-control-item mui-active" href="#item1">
+                全部订单
+            </a>
+            <a class="mui-control-item" href="#item2">
+                待付款
+            </a>
+            <a class="mui-control-item" href="#item3">
+                待发货
+            </a>
+            <a class="mui-control-item" href="#item4">
+                待收货
+            </a>
+            <a class="mui-control-item" href="#item5">
+                已完成
+            </a>
+        </div>
+    </div>
+    <div class="content">
+        <div id="item1" class="mui-control-content mui-active">
+            <div class="list">
+                <div class="title">
+                    <img src="../../../img/Common/pic_3.png">
+                    <p class="mui-ellipsis"><span>商家名称 &nbsp;>&nbsp;</span>订单编号:552456984250233335691</p>
+                    <h5>待付款</h5>
+                </div>
+                <div class="commodity">
+                    <div class="list">
+                        <img src="../../../img/Common/pic_2.png" alt="">
+                        <h5>多肉植物组合盆栽</h5>
+                        <p>￥52 &numsp;&numsp;<span>x3</span></p>
+                    </div>
+                    <div class="list">
+                        <img src="../../../img/Common/pic_2.png" alt="">
+                        <h5>多肉植物组合盆栽</h5>
+                        <p>￥52 &numsp;&numsp;<span>x3</span></p>
+                    </div>
+                </div>
+                <div class="other">
+                    <input class="red" type="button" value="马上付款">
+                    <input type="button" value="取消订单">
+                </div>
+            </div>
+
+            <div class="list top">
+                <div class="title">
+                    <img src="../../../img/Common/pic_3.png">
+                    <p class="mui-ellipsis"><span>商家名称&nbsp;>&nbsp; </span>订单编号:552456984250233335691</p>
+                    <h5>待付款</h5>
+                </div>
+                <div class="commodity">
+                    <div class="list">
+                        <img src="../../../img/Common/pic_2.png" alt="">
+                        <h5>多肉植物组合盆栽</h5>
+                        <p>￥52 &numsp;&numsp;<span>x3</span></p>
+                    </div>
+                    <div class="list">
+                        <img src="../../../img/Common/pic_2.png" alt="">
+                        <h5>多肉植物组合盆栽</h5>
+                        <p>￥52 &numsp;&numsp;<span>x3</span></p>
+                    </div>
+                </div>
+                <div class="other">
+                    <input class="red" type="button" value="马上付款">
+                    <input type="button" value="取消订单">
+                </div>
+            </div>
+            <div class="list top">
+                <div class="title">
+                    <img src="../../../img/Common/pic_3.png">
+                    <p class="mui-ellipsis"><span>商家名称&nbsp;>&nbsp;</span>订单编号:552456984250233335691</p>
+                    <h5>待付款</h5>
+                </div>
+                <div class="commodity">
+                    <div class="list">
+                        <img src="../../../img/Common/pic_2.png" alt="">
+                        <h5>多肉植物组合盆栽</h5>
+                        <p>￥52 &numsp;&numsp;<span>x3</span></p>
+                    </div>
+                    <div class="list">
+                        <img src="../../../img/Common/pic_2.png" alt="">
+                        <h5>多肉植物组合盆栽</h5>
+                        <p>￥52 &numsp;&numsp;<span>x3</span></p>
+                    </div>
+                </div>
+                <div class="other">
+                    <input class="red" type="button" value="马上付款">
+                    <input type="button" value="取消订单">
+                </div>
+            </div>
+        </div>
+        <div id="item2" class="mui-control-content">
+            <div class="img">
+                <img src="../../../img/My/default_noorder.png" alt="">
+                <p>暂无任何订单哦~</p>
+            </div>
+        </div>
+        <div id="item3" class="mui-control-content">
+            <div class="img">
+                <img src="../../../img/My/default_noorder.png" alt="">
+                <p>暂无任何订单哦~</p>
+            </div>
+        </div>
+        <div id="item4" class="mui-control-content">
+            <div class="img">
+                <img src="../../../img/My/default_noorder.png" alt="">
+                <p>暂无任何订单哦~</p>
+            </div>
+        </div>
+        <div id="item5" class="mui-control-content">
+            <div class="img">
+                <img src="../../../img/My/default_noorder.png" alt="">
+                <p>暂无任何订单哦~</p>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../../Script/CommonJS/Base.js"></script>
+<script>
+    mui('#segmentedControl').on('tap', 'a', function () {
+
+//        this.style.display = 'block'
+    })
+</script>
+</body>
+</html>

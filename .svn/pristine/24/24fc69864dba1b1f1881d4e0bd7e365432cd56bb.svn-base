@@ -1,0 +1,6 @@
+<?php
+return array(
+	//'配置项'=>'配置值'
+	 'SMS_un'               => "N9464372",
+    'SMS_pw'               => "zM0uqohcY",
+);

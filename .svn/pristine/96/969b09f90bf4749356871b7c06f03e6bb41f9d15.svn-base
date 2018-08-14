@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>历史记录</title>
+		<meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+		<link href="__PUBLIC__/Wx/CSS/BusinessCSS/Mycoupon/Historyrecord.css" rel="stylesheet">
+		<style>
+			/*优惠券*/
+			
+			.demo {
+				list-style: none;
+				width: 100%;
+				text-align: left !important;
+				padding-left: 1rem;
+				padding-right: 1rem;
+			}
+			
+			.demo li {
+				position: relative;
+				width: 100%;
+				height: 100%;
+				margin-bottom: 0.5rem;
+				display: inline-block;
+				background-color: #FFFFFF;
+			}
+			
+			.demo li:before,
+			.demo li:after {
+				content: "";
+				position: absolute;
+				top: -20px;
+				display: block;
+				width: 10px;
+				height: 100%;
+				margin-top: 20px;
+				background-size: 20px 10px;
+			}
+			
+			.demo li::before {
+				left: -10px;
+				background-color: #EFEFF4;
+				background-position: 100% 35%;
+				background-image: linear-gradient(-45deg, #fff 25%, transparent 25%, transparent), linear-gradient(-135deg, #fff 25%, transparent 25%, transparent), linear-gradient(-45deg, transparent 75%, #fff 75%), linear-gradient(-135deg, transparent 75%, #fff 75%);
+			}
+			
+			.demo li:after {
+				right: -10px;
+				background-color: #C1C3D0;
+				background-position: 100% 15%;
+				background-image: linear-gradient(-45deg, #EFEFF4 25%, transparent 25%, transparent), linear-gradient(-135deg, #EFEFF4 25%, transparent 25%, transparent), linear-gradient(-45deg, transparent 75%, #EFEFF4 75%), linear-gradient(-135deg, transparent 75%, #EFEFF4 75%);
+			}
+			
+			.flex-container {
+				display: -webkit-flex;
+				display: flex;
+				-webkit-flex-direction: row;
+				flex-direction: row;
+				-webkit-justify-content: space-between;
+				justify-content: space-between;
+			}
+			
+			.flex-container .item1 {
+				width: 3.5rem;
+				height: 3.5rem;
+				padding: 0.5rem;
+				padding-left: 0.25rem;
+				box-sizing: content-box;
+			}
+			
+			.flex-container .item1 img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.flex-container .couponname {}
+			
+			.flex-item.item2 {
+				display: -webkit-flex;
+				display: flex;
+				-webkit-flex-direction: column;
+				flex-direction: column;
+				-webkit-align-items: flex-start;
+				align-items: flex-start;
+				-webkit-flex: 1.4;
+				flex: 1.4;
+				padding-top: 0.5rem;
+				padding-bottom: 0.5rem;
+				background: url(quan.png) no-repeat;
+				background-size: 4rem 4rem;
+				background-position: 100% 300%;
+				padding-right: 10px;
+			}
+			
+			.flex-item.item2 .validdate {
+				margin-top: auto;
+				font-size: 0.6rem;
+				color: #9D9FA2;
+			}
+			
+			.flex-item.item3 {
+				display: -webkit-flex;
+				display: flex;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-flex-direction: column-reverse;
+				flex-direction: column;
+				-webkit-flex: 0.9;
+				flex: 0.9;
+				color: #fff;
+				background-color: #C1C3D0;
+				padding-top: 0.5rem;
+				padding-bottom: 0.5rem;
+				max-width: 7.5rem;
+			}
+			
+			.flex-item.item3 .money {
+				margin-top: auto;
+				font-size: 18px;
+			}
+			
+			.flex-item.item3 .condition {
+				margin-bottom: auto;
+				font-size: 12px;
+			}
+			
+			.ellipse_1 {
+				display: -webkit-box;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				word-wrap: break-word;
+				word-break: break-all;
+				white-space: normal !important;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
+			}
+			/*优惠券 结束*/
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">历史记录</h1>
+		</header>
+
+
+			<if condition="count($data) eq 0">
+				<div class="none" style="display:block !important;">
+					<img src="__PUBLIC__/Wx/img/My/default_nocoupon.png">
+					<p>暂无任何优惠卷记录</p>
+				</div>
+			<else />
+					<ul class="demo">
+						<div id="voucher">
+							<foreach name="data" item="v">
+								<li>
+									<div class="flex-container">
+										<div class="item1">
+											<img src="__PUBLIC__/uploads/{$v['logo']}" alt="">
+										</div>
+										<div class="flex-item item2">
+											<div class="couponname ellipse_1">
+												<if condition="$v['seller_name'] neq null">
+													{$v['seller_name']}:{$v['name']}
+													<else />
+													全平台:{$v['name']}
+												</if>
+											</div>
+											<div class="validdate">有效期至:<span>{$v['end_time']}</span></div>
+										</div>
+										<div class="flex-item item3">
+											<div class="money">￥{$v['money']}</div>
+											<div class="condition">满{$v['use_condition']}元使用</div>
+											<img class="guo" src="__PUBLIC__/Wx/img/My/my_icon_already_used.png" alt="">
+										</div>
+									</div>
+
+								</li>
+							</foreach>
+						</div>
+					</ul>
+			</if>
+
+
+			<!--<ul class="demo">
+				<li>
+					<div class="flex-container">
+						<div class="item1">
+							<img src="__PUBLIC__/Wx/img/Common/coupon_icon.png" alt="">
+						</div>
+						<div class="flex-item item2">
+							<div class="couponname ellipse_1">阿玛尼优惠券阿玛尼优惠券阿玛尼优惠券阿玛尼优惠券</div>
+							<div class="validdate">有效期至:<span>2017-02-02</span></div>
+						</div>
+						<div class="flex-item item3">
+							<div class="money">￥800</div>
+							<div class="condition">满2000元</div>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="flex-container">
+						<div class="item1">
+							<img src="__PUBLIC__/Wx/img/Common/coupon_icon.png" alt="">
+						</div>
+						<div class="flex-item item2">
+							<div class="couponname ellipse_1">阿玛尼优惠券阿玛尼优惠券阿玛尼优惠券阿玛尼优惠券</div>
+							<div class="validdate">有效期至:<span>2017-02-02</span></div>
+						</div>
+						<div class="flex-item item3">
+							<div class="money">￥800</div>
+							<div class="condition">满2000元</div>
+						</div>
+					</div>
+				</li>
+			</ul>-->
+
+		<!--<if condition="count($data) eq 0">
+			<div class="none" style="display:none !important;">
+				<img src="__PUBLIC__/Wx/img/My/default_nocoupon.png">
+				<p>暂无任何优惠卷记录</p>
+			</div>
+			<else /> 
+			<div id="voucher">
+				<foreach name="data" item="v">
+					<div class="list">
+						<div class="img">
+							<img src="__PUBLIC__/uploads/{$v['logo']}" alt="">
+						</div>
+						<div class="name">
+							<if condition="$v['seller_name'] neq null">
+								<h4 >{$v['seller_name']}:{$v['name']}</h4>
+								<else />
+								<h4>全平台:{$v['name']}</h4>
+							</if>
+						</div>
+						<div class="time">
+							<p>{$v['start_time']}-{$v['end_time']}</p>
+						</div>
+						<div class="money">
+							<h4>￥{$v['money']}</h4>
+							<p>满{$v['use_condition']}元使用</p>
+							<img class="guo" src="__PUBLIC__/Wx/img/My/my_icon_already_used.png" alt="">
+						</div>
+					</div>
+				</foreach>
+			</div>
+		</if>-->
+		<script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+		<script>
+			function text() {
+				mui('#voucher')[0].style.display = 'block'
+				mui('.none')[0].style.display = 'none'
+				setTimeout(function() {
+					mui('#voucher')[0].style.display = 'none'
+					mui('.none')[0].style.display = 'block'
+					setTimeout(function() {
+						text()
+					}, 1000)
+				}, 1000)
+
+			}
+//			    text()
+		</script>
+
+	</body>
+
+</html>

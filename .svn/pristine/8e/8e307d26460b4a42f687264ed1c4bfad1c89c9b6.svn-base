@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>订单详情</title>
+		<meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+		<link href="__PUBLIC__/Wx/CSS/BusinessCSS/Pos/mui.picker.css" rel="stylesheet">
+		<link href="__PUBLIC__/Wx/CSS/BusinessCSS/Pos/mui.poppicker.css" rel="stylesheet">
+		<link href="__PUBLIC__/Wx/CSS/BusinessCSS/ShoppingCart/Orderdetails.css" rel="stylesheet">
+		<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+	</head>
+	<style>
+		.titlebtn {
+			background: white;
+			padding: 15px 10px;
+			font-size: 14px;
+		}
+		
+		.titlebtn .title {
+			border-bottom: 1px solid #ddd;
+			padding-bottom: 5px;
+		}
+		
+		.titlebtn .btn_div {
+			padding-top: 10px;
+		}
+		
+		.btn_red {
+			border-radius: 3px;
+			display: inline-block;
+			text-align: center;
+			font-size: 14px !important;
+			border: 1px solid #ff5353 !important;
+			background: #ff5353 !important;
+			color: white !important;
+			height: 35px;
+			padding: 5px 10px !important;
+		}
+		
+		.btn_red_outlined {
+			border: 1px solid #ff5353 !important;
+			color: #ff5353 !important;
+			background: white !important;
+		}
+		
+		.checkimg {
+			vertical-align: middle;
+			width: 20px;
+		}
+		
+		.margin_10 {
+			margin: 10px;
+		}
+		
+		.margin_l_10 {
+			margin-left: 10px;
+		}
+		
+		.margin_t_10 {
+			margin-top: 10px;
+		}
+		
+		.margin_r_10 {
+			margin-right: 10px;
+		}
+		
+		.inputtxt {
+			margin-top: 10px;
+		}
+		
+		.redbtn_div {
+			margin-left: 10px;
+			margin-right: 10px;
+			margin-top: 30px;
+		}
+		/*优惠券*/
+		
+		.flex-container {
+			display: -webkit-flex;
+			display: flex;
+			-webkit-justify-content: space-around;
+			justify-content: space-around;
+			width: 100%;
+			/*height: 120px;*/
+			background-color: lightgrey;
+			padding: 0.5rem;
+			background: url(__PUBLIC__/Wx/img/Common/coupon_bg_unused.png) no-repeat;
+			background-size: 100% 120px;
+		}
+		
+		.flex-container h4 {
+			margin: 0;
+		}
+		
+		.item1 {
+			width: 4rem;
+			height: 4rem;
+		}
+		
+		.item1 img {
+			width: 100%;
+			height: 100%;
+		}
+		
+		.item2 {
+			display: -webkit-flex;
+			display: flex;
+			-webkit-flex: 2;
+			flex: 2;
+			-webkit-flex-direction: column;
+			flex-direction: column;
+			-webkit-align-content: flex-end;
+			align-content: flex-end;
+			padding-left: 0.4rem;
+		}
+		
+		.item2 .validdate {
+			margin-top: auto;
+			color: #A2A2A2;
+		}
+		
+		.item3 {
+			display: -webkit-flex;
+			display: flex;
+			-webkit-flex: 1;
+			flex: 1;
+			-webkit-flex-direction: column;
+			flex-direction: column;
+			-webkit-align-items: center;
+			align-items: center;
+		}
+	</style>
+	<style type="text/css">
+		.selecteddiv i.active {
+			background: url(__PUBLIC__/Wx/img/ShoppingCart/btn_check.png) no-repeat;
+			background-size: 15px;
+		}
+		
+		.selecteddiv i {
+			height: 15px;
+			width: 15px;
+			display: inline-block;
+			background: url(__PUBLIC__/Wx/img/ShoppingCart/btn_checkoff.png) no-repeat;
+			background-size: 15px;
+			margin-right: 10px;
+			position: relative;
+			top: 1px;
+		}
+		
+		.color {
+			background: #f5f5f5;
+		}
+		
+		#remark {
+			border: 0px;
+			margin-top: 20px;
+			height: 50px;
+		}
+	</style>
+
+	<body>
+		<div id="all">
+			<!--<header class="mui-bar mui-bar-nav header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">订单详情</h1>
+			</header>-->
+
+			<!--地址显示-->
+			<div class="address">
+				<!--oneress被css隐藏了-->
+				<?php if($address==''||$address==null):?>
+				<div class="oneress">
+					<p>暂无添加收货地址</p>
+					<input type="button" id="addaddress" value="添加">
+				</div>
+				<?php else: ?>
+				<div class="ress">
+					<input type="hidden" name="address_id" id="address_id" value="<?php echo $moadd['id']; ?>" />
+					<h5 id="moname"><?php echo $moadd['contact']; ?>&numsp;&numsp;&numsp;&numsp;<?php echo $moadd['phone']; ?></h5>
+					<p id="moinfo">
+						<?php echo $moadd['province']; ?>
+						<?php echo $moadd['city']; ?>
+						<?php echo $moadd['district']; ?>
+						<?php echo $moadd['address']; ?>
+					</p>
+					<input type="button" id="changeaddress" value="更换地址">
+				</div>
+				<?php endif ?>
+			</div>
+			<div class="border">
+				<img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+				<img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+				<img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+				<img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+				<img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+				<img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+				<img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+				<img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+				<img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+				<img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+				<img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+				<img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+				<img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+				<img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+				<img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+				<img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+				<img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+				<img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+				<img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+				<img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+			</div>
+			<!--商品-->
+
+			<div class="goodsinfo">
+				<div class="content">
+					<div class="list">
+						<div class="name">
+							<img class="userm" src="__PUBLIC__/Uploads/{$data[0]['s_logo']}" alt="">
+							<h5>{$data[0]['s_name']}&numsp;></h5>
+						</div>
+						<div class="commodity">
+							<div class="list">
+								<img class="userm" src="__PUBLIC__/Uploads/{$data[0]['sm_pic']}" alt="">
+								<div class="title">
+									<h5>{$data[0]['goods_name']}</h5>
+									<!--<input type="hidden" name="weight" id="weight" value="{$s['weight']}" />-->
+									<p style="font-size:15px"><img src="__PUBLIC__/Wx//img/Home/home_exchange_icon_yellow.png" style="height: 20px"><span>{$data[0]['gold_price']}</span>&numsp;<span>x<span class="shopnum">1</span></span>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="">
+				<input type="text" name="remark" id="remark" value="" placeholder="备注" />
+			</div>
+			<input type="hidden" value="{$data[0]['goods_id']}" id="goods_id" name="goods_id">
+			<input type="hidden" value="{$data[0]['seller_id']}" id="seller_id" name="seller_id">
+			<input type="hidden" value="{$data[0]['gold_mall_id']}" id="gold_mall_id" name="gold_mall_id">
+			<input type="hidden" value="{$ga_id}" id="ga_id" name="ga_id">
+			<nav class="mui-bar mui-bar-tab">
+				<div class="right">
+					<a><img src="__PUBLIC__/Wx//img/Home/home_exchange_icon_yellow.png" alt=""><span id="gold_price">{$data[0]['gold_price']}</span></a>
+					<input type="button" id="suborder" value="提交订单">
+				</div>
+			</nav>
+		</div>
+
+		<!--地址-->
+		<div id="hideadd" style="z-index: 1000;display: none;">
+			<header class="mui-bar mui-bar-nav header">
+				<a class=" mui-icon mui-icon-left-nav mui-pull-left" style="opacity: .3;" id="hideadda"></a>
+				<h1 class="mui-title">地址选择</h1>
+			</header>
+			<div>
+				<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+					<foreach name="address" item="vo">
+						<li class="mui-table-view-cell">
+							<div class="mui-table">
+								<div class="mui-table-cell mui-col-xs-10">
+									<h4 class="mui-ellipsis addname">{$vo['contact']} &numsp;&numsp;&numsp;&numsp;{$vo['phone']}</h4>
+									<p class="mui-h6 mui-ellipsis addinfo">{$vo['province']}{$vo['city']}{$vo['district']}{$vo['address']}</p>
+								</div>
+								<div class="mui-text-right selecteddiv">
+									<i class="" id="{$vo['id']}"></i>
+								</div>
+							</div>
+						</li>
+					</foreach>
+				</ul>
+			</div>
+			<nav class="mui-bar mui-bar-tab">
+				<div class="right">
+					<input type="button" id="addsure" value="确&numsp;定">
+				</div>
+			</nav>
+		</div>
+
+		<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+		<script src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+		<script src="__PUBLIC__/Wx/Script/ActiveXJS/mui.picker.js"></script>
+		<script src="__PUBLIC__/Wx/Script/ActiveXJS/mui.poppicker.js"></script>
+		<!--<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS//template.js"></script>-->
+		<!--页面开始-->
+		<script type="text/javascript">
+			$("#suborder").click(function() {
+				//		地址id
+				$address_id = $("#address_id").val();
+				if($address_id == '') {
+					mui.toast('收货地址不能为空');
+					return false;
+				}
+				$goods_id = $("#goods_id").val();
+				$seller_id = $("#seller_id").val();
+				$gold_price = $("#gold_price").html();
+				$remark = $("#remark").val();
+				$gold_mall_id = $("#gold_mall_id").val();
+				$ga_id = $("#ga_id").val();
+
+				$.ajax({
+					url: "{:U('/home/Goldmall/pay')}",
+					type: "post",
+					data: {
+						"goods_id": $goods_id,
+						"seller_id": $seller_id,
+						"gold_price": $gold_price,
+						"remark": $remark,
+						"gold_mall_id": $gold_mall_id,
+						"address_id": $address_id,
+						"ga_id": $ga_id
+					},
+					dataType: "json",
+					success: function(data) {
+						if(data['result'] == 1) {
+							mui.toast(data.msg);
+							window.location.href = "{:U('/home/user/userindex')}";
+						};
+					}
+				})
+
+				/*	$.ajax({
+						url: "{:U('/home/order/addorder')}",
+						type: "post",
+						data: {
+							'goods_info': $json,
+							'type': $type,
+							'remark': $remark,
+							'address':$address_id,
+							'total_price':$total_price
+						},
+						dataType: "json",
+						success: function(data) {
+							console.log(data);
+									 mui.openWindow({
+							            url: "__ROOT__/wx.php/home/pay/order_wxpay?id="+data['order_ids']+"&allmoney="+data['allmoney'],
+							            id: 'orderinfo'
+							        });
+						}
+					})*/
+			});
+
+			//二维数组转字符串
+			function getString(objarr) {　　
+				var typeNO = objarr.length;　
+				var tree = "[";　　
+				for(var i = 0; i < typeNO; i++) {
+					tree += "{";
+					tree += objarr[i].join(",");　　　
+					tree += "}";　　　
+					if(i < typeNO - 1) {　　　　
+						tree += ",";　　　
+					}　
+				}　
+				tree += "]";　
+				return tree;
+			};
+		</script>
+
+		<!--地址-->
+		<script>
+			$('#changeaddress').click(function() {
+				$("#all").hide();
+				$("#hideadd").show();
+			})
+
+			$('#hideadda').click(function() {
+				$("#all").show();
+				$("#hideadd").hide();
+			})
+
+			$('#addaddress').click(function() {
+				mui.openWindow({
+					url: "__ROOT__/wx.php/home/address/addrindex",
+					id: 'addaddress'
+				});
+			})
+
+			$(".mui-table-view .mui-table-view-cell").click(function() {
+				$(".mui-table-view .mui-table-view-cell").removeClass('color');
+				$(".mui-table-view .mui-table-view-cell i").removeClass('active');
+				$(this).addClass('color');
+				$(this).find("i").addClass('active');
+				$c = $(this).find("i").attr('id');
+			})
+			$("#addsure").click(function() {
+				$("#hideadd").hide();
+				$('#all').show();
+				$c = $(".active").attr('id');
+				$("#address_id").val($c);
+				$addname = $(".active").parents(".mui-table").find(".addname").html();
+				$("#moname").html($addname);
+				$addinfo = $(".active").parents(".mui-table").find(".addinfo").html();
+				$("#moinfo").html($addinfo);
+
+			})
+		</script>
+	</body>
+
+</html>

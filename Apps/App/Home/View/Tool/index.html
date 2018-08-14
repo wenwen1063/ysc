@@ -1,0 +1,215 @@
+<!--index -->
+  <include file="public:index"   />
+<!--index-->
+
+<title>商品管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+ 系统 <span class="c-gray en">&gt;</span>
+  分销管理 <span class="c-gray en">&gt;</span>
+  推广信息
+   <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20">
+	<form action="{:U('/home/tool/index/search/')}" method="post/get" name="mainform" class="form form-horizontal" id="form-admin-add" style="float:right;">
+		<div class="text-c">
+			<input type="text" id="name" name="name" value="{$search['name']}" class="input-text" style="width:250px" placeholder="输入软件名称">
+			<input type="text" id="number" name="number" value="{$search['number']}" class="input-text" style="width:250px" placeholder="输入软件编号">
+			<span class="select-box inline">
+			<if condition="$search['is_on_sale']==2">	
+				<select name="is_on_sale" class="select">
+					<option value="2">上架中</option>
+					<option value="1">下架中</option>
+					<option value="">全部状态</option>
+				</select>
+			<elseif condition="$search['is_on_sale']==1"/>
+				<select name="is_on_sale" class="select">
+					<option value="1">下架中</option>
+					<option value="2">上架中</option>
+					<option value="">全部状态</option>
+				</select>
+			<else />
+				<select name="is_on_sale" class="select">
+					<option value="">全部状态</option>
+					<option value="1">下架中</option>
+					<option value="2">上架中</option>
+				</select>
+			</if>
+			</span>
+			<button type="submit" class="btn btn-success" onclick="return search()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+		</div>
+	</form>
+	<form action="" method="post/get" name="main_form" id="main_form">
+		<input type="hidden" name="type" id="type" value="" />
+	<div class="text-c"><br></div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l">
+		<a href="{:U('/home/tool/tooladd')}" class="btn btn-primary radius"> 新增 </a></span>&nbsp;
+		<!--<input type="submit" class="btn btn-danger radius" value="删除" onclick="return delgoods()" />-->
+		<input type="submit" class="btn btn-danger radius" value="下架" onclick="return outgoods()" style="background-color: #ead047;border-color: #ead047;" />
+		<input type="submit" class="btn btn-danger radius" value="上架" onclick="return ongoods()" style="background-color: #19d419;border-color: #19d419;" /></span>
+		<span class="r">共有数据：<strong>{$count}</strong> 条</span> </div>
+	<table class="table table-border table-bordered table-bg">
+		<thead>
+			<tr>
+				<th scope="col" colspan="15">推广信息</th>
+			</tr>
+			<tr class="text-c">
+				<th width="25"><input type="checkbox" name="" value=""></th>
+				<!--、软件名称、软件小图、现价、原价、软件图集（多张商品图片）、软件状态（未上架/已上架/已下架）、软件视频、软件详情（图文介绍-富文本）、软件文件、下载地址、虚拟销量、实际销量。-->
+				<th width="40">操作</th>
+				<th width="40">软件编号</th>
+				<th width="40">软件名称</th>
+				<th width="40">软件小图</th>
+				<th width="40">现价</th>
+				<th width="40">原价</th>
+				<th width="40">库存</th>
+				<th width="40">虚拟销量</th>
+				<th width="40">实际销量</th>
+				<th width="40">下载地址</th>
+				<th width="40">软件状态</th>
+				<th width="40">创建时间</th>
+			</tr>
+		</thead>
+		<tbody>
+			<foreach name='data' item='v'>
+				<tr class="text-c">
+					<td><input type="checkbox" value="{$v['id']}" name="id[]"></td>
+					<td class="td-manage">
+						<?php if($v['is_on_sale']==1): ?>
+                    	<a class="btn btn-primary size-MINI radius" href="{:U('/home/tool/toolsale',array('id'=>$v['id'],'type'=>1))}" onclick="return confirm('确认要上架吗？');">上架</a>
+            <?php else: ?>
+                    	<a class="btn btn-primary size-MINI radius" href="{:U('/home/tool/toolsale',array('id'=>$v['id'],'type'=>0))}" onclick="return confirm('确认要下架吗？');">下架</a>
+            <?php endif ?>
+					<a class="btn btn-primary size-MINI radius" href="{:U('/home/tool/toolupdate',array('id'=>$v['id']))}">编辑</a>
+					<a class="btn btn-primary size-MINI radius" href="{:U('/home/tool/tooldel',array('id'=>$v['id']))}" onclick="return confirm('确认要删除吗？');">删除</a>
+					
+					</td>
+					<td>{$v['number']}</td>
+					<td class="text-l"><center><a class="maincolor" href="{:U('/home/tool/toolpic',array('id'=>$v['id']))}">{$v['name']}</a></center></td>
+					<td><img src="__PUBLIC__/Uploads/{$v['pic']}" width="40"></td>
+					<td>{$v['shop_price']}</td>
+					<td>{$v['market_price']}</td>
+					<td>{$v['stock']}</td>
+					<td>{$v['virtual_sell_amount']}</td>
+					<td>{$v['actual_sales']}</td>
+					<td>{$v['download']}</td>
+					<?php if($v['is_on_sale']==1): ?>
+						<td class="td-status"><span class="label radius">下架中</span></td>
+					<?php elseif($v['is_on_sale']==2): ?>
+						<td class="td-status"><span class="label label-success radius">上架中</span></td>
+					<?php endif ?>
+						
+					<td>{$v['addtime']|date='Y-m-d H:i:s',###}</td>
+				</tr>
+			</foreach>
+		</tbody>
+	</table>
+	<div class="pageright">{$page}</div>
+</div>
+</form>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+<script type="text/javascript">
+/*
+	参数解释：
+	title	标题
+	url		请求的url
+	id		需要操作的数据id
+	w		弹出层宽度（缺省调默认值）
+	h		弹出层高度（缺省调默认值）
+*/
+/*用户-查看*/
+function member_show(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+/*管理员-编辑*/
+function admin_edit(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+//批量删除判断是否选择
+function delgoods(){
+	var gnl = confirm('确认要删除吗？');
+	if (gnl==true){
+		var chks=document.getElementsByTagName('input');
+		var bl=true;
+		for(var i=0;i<chks.length;i++)
+		{
+		    if(chks[i].checked)
+		    {
+		        bl=false;
+		        break;
+		    }
+		}
+		if(bl){
+			alert('最少选择一个');
+			return false;
+		}else{
+			document.forms.main_form.action="{:U('/home/goods/goodsdel/del')}";
+	   		document.forms.main_form.submit();
+		}
+	}else{
+		return false;
+	}
+}
+function ongoods(){
+	var gnl = confirm('确认要上架吗？');
+	if (gnl==true){
+		$("#type").val(1);
+		var chks=document.getElementsByTagName('input');
+		var bl=true;
+		for(var i=0;i<chks.length;i++)
+		{
+		    if(chks[i].checked)
+		    {
+		        bl=false;
+		        break;
+		    }
+		}
+		if(bl){
+			alert('最少选择一个');
+			return false;
+		}else{
+		    document.forms.main_form.action="{:U('/home/tool/toolsale/')}";
+		    document.forms.main_form.submit();
+		}
+	}else{
+		return false;
+	}
+}
+function outgoods(){
+	var gnl = confirm('确认要下架吗？');
+	if (gnl==true){
+		$("#type").val(2);
+		var chks=document.getElementsByTagName('input');
+		var bl=true;
+		for(var i=0;i<chks.length;i++)
+		{
+		    if(chks[i].checked)
+		    {
+		        bl=false;
+		        break;
+		    }
+		}
+		if(bl){
+			alert('最少选择一个');
+			return false;
+		}else{
+		    document.forms.main_form.action="{:U('/home/tool/toolsale/')}";
+		    document.forms.main_form.submit();
+		}
+	}else{
+		return false;
+	}
+}
+
+function search(){
+    document.forms.mainform.action="{:U('/home/tool/index/search/')}";
+    document.forms.mainform.submit();
+}
+</script>
+</body>
+</html>

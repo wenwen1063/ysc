@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+            <meta content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no" name="viewport">
+                <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+                    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Prompt.css" rel="stylesheet">
+                        <title>
+                            搭档专享
+                        </title>
+                    </link>
+                </link>
+            </meta>
+        </meta>
+    </head>
+    <body>
+        <!--<header class="mui-bar mui-bar-nav">
+            <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+            </a>
+            <h1 class="mui-title">
+                搭档专享
+            </h1>
+        </header>-->
+        <div id="classification">
+            <div class="list selected">
+                <span style="color: #33e060;">
+                    草根搭档
+                </span>
+                <div class="img">
+                    <!--<img src="../../../../img/Home/home_icon_grassroots.png">-->
+                    </img>
+                </div>
+            </div>
+            <div class="list">
+                <span style="color:#e567d1;">
+                    精英搭档
+                </span>
+                <div class="img">
+                    <!--<img src="../../../../img/Home/home_icon_elite.png">-->
+                    </img>
+                </div>
+            </div>
+            <div class="list">
+                <span style="color:#ffba00;">
+                    贵族搭档
+                </span>
+                <div class="img">
+                    <!--<img src="../../../../img/Home/home_icon_noble.png">-->
+                    </img>
+                </div>
+            </div>
+        </div>
+        <div id="introduce">
+            <div class="pagetitle">
+                <span>
+                    草根搭档
+                </span>
+            </div>
+            <div class="content">
+                <span>
+                    草根搭档的介绍...草根搭档的介绍...草根搭档的介绍...草根搭档的介绍...草根搭档的介绍...草根搭档的介绍...
+                </span>
+            </div>
+        </div>
+
+
+        <div id="popup">
+            <div class="title">
+                <span>系统检测到您暂不满足条件，无法领取，是否马上申请?</span>
+            </div>
+            <div class="button">
+                <a href="{:U('/home/Special/goodspos')}"><input type="button" value="取消"></a>
+                <a href="{:U('/home/Special/partnerspecial')}"><input class="red" type="button" value="申请" ></a>
+            </div>
+
+        </div>
+        <script src="__PUBLIC__/Wx/Script/CommonJS/Base.js">
+        </script>
+    </body>
+</html>

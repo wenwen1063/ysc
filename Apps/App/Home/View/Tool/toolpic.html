@@ -1,0 +1,62 @@
+<!--index -->
+  <include file="public:index"   />
+<!--index-->
+<title>软件详情</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+ 系统 <span class="c-gray en">&gt;</span>
+  分销管理 <span class="c-gray en">&gt;</span>
+   推广信息 <span class="c-gray en">&gt;</span>
+   软件详情 
+   <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);"  title="返回" ><i class="Hui-iconfont">&#xe66b;</i></a><a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20">
+  <table class="table table-border table-bordered table-bg mt-20">
+    <thead>
+      <tr>
+        <th colspan="2" scope="col">商品详情</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>商品名称</td>
+        <td>{$data['name']}</td>
+      </tr>
+      <tr>
+        <td>创建时间</td>
+        <td>{$data['addtime']|date='Y-m-d',###}</td>
+      </tr>
+      <tr>
+      	<td>是否上架</td>
+		<?php if ($data['is_on_sale']==0): ?>
+		    <td class="td-status"><span class="label label-success radius">上架中</span></td>
+		<?php else: ?>
+				<td class="td-status"><span class="label radius">下架中</span></td>	
+		<?php endif ?>
+      </tr>
+      <tr>
+        <td>软件小图</td>
+        <td><img height="100" width="150" src="__PUBLIC__/Uploads/{$data['pic']}"></td>
+      </tr>
+      <tr>
+        <td>详情</td>
+        <td><?php echo htmlspecialchars_decode($data['details']); ?></td>
+      </tr>
+      <tr>
+        <td>软件视频</td>
+        <td><video height="100" controls="controls"  src="__PUBLIC__/Uploads/{$data['video']}"></video></td>
+      </tr>
+      
+		<tr>
+			<td>商品图集</td>
+			<td width="80%">
+			<foreach name='pic' item='v'>
+				<img height="100" width="150" src="__PUBLIC__/Uploads/{$v['pic']}">&nbsp;
+			</foreach>
+			</td>
+		</tr>
+		
+    </tbody>
+</div>
+</body>
+</html>

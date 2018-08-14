@@ -1,0 +1,127 @@
+html {
+    overflow-x: hidden;
+}
+
+.header {
+    position: relative;
+    background-color: #ff5353;
+    height: 45px;
+}
+.mui-fullscreen{
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.mui-title, .mui-action-back {
+    font-weight: 100;
+    color: #FFFFFF;
+}
+
+.mui-row.mui-fullscreen > [class*="mui-col-"] {
+    height: 100%;
+}
+
+.mui-col-xs-3,
+.mui-control-content {
+    overflow-y: auto;
+    height: 100%;
+}
+
+.mui-segmented-control .mui-control-item {
+    line-height: 50px;
+    width: 100%;
+}
+
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+    background-color: #fff;
+}
+
+.mui-table-view-cell {
+    height: 76px;
+}
+
+.mui-table-view-cell {
+    height: 85px;
+}
+
+.mui-table-view-cell img {
+    height: 65px;
+    width: 100px;
+    float: left;
+}
+
+.mui-table-view-cell .mui-media-body {
+    position: relative;
+    left: 10px;
+}
+
+.mui-table-view-cell h4 {
+    font-weight: 100;
+    font-size: 18px;
+    color: #4a4a4a;
+}
+
+#segmentedControls .mui-control-item {
+    border: none;
+    border-bottom: 1px solid #c8c7cc;
+}
+
+#segmentedControls .mui-active {
+    border: none;
+    border-left: 2px solid #fe504f;
+    color: #fe504f;
+}
+
+.mui-input-row {
+    width: 90%;
+    left: 5%;
+    position: relative;
+    top: 10px;
+}
+
+.mui-bar-nav ~ .mui-content {
+    padding-top: 5px;
+}
+
+.mui-content {
+    position: relative;
+}
+
+.mui-placeholder {
+    background-color: #FFFFFF;
+}
+
+.mui-search input[type=search] {
+    background-color: #fff;
+}
+
+.mui-icon-search {
+    color: #a9a9a9;
+    position: relative;
+    right: 65px;
+}
+
+.mui-search .mui-placeholder .mui-icon {
+    color: #a9a9a9;
+}
+#content1{
+    height:100%;
+    width: 100%;
+    background-color: #fff;
+}
+#content1 .img{
+    position: relative;
+    width: 40px;
+    margin: 0 auto;
+    margin-top: 80%;
+    padding-bottom: 150%;
+}
+#content1 .img p{
+    position: relative;
+    right: 40px;
+    width: 200px;
+}
+#content1 .img img {
+    width: 40px;
+    height: 40px;
+}

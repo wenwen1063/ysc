@@ -1,0 +1,108 @@
+body {
+    overflow-x: hidden;
+}
+
+.header {
+    position: relative;
+    background-color: #ff5353;
+    height: 45px;
+}
+
+.mui-title, .mui-action-back {
+    font-weight: 100;
+    color: #FFFFFF;
+}
+
+#info {
+    color: #FFFFFF;
+    font-weight: 100;
+    font-size: 18px;
+}
+
+#info img {
+    position: relative;
+    top: 2px;
+    margin-right: 5px;
+    width: 18px;
+    height: 20px;
+}
+.content{
+    position: relative;
+    top: 10px;
+    background-color: #fff;
+    padding:10px;
+
+}
+.content .list{
+    margin-bottom: 20px;
+    height:100px;
+    background-color: #fff;
+    border-bottom: 1px solid #eeeeee;
+}
+.content .list .img{
+    float: left;
+    width: 80px;
+    height: 80px;
+}
+.content .list img{
+    width: 80px;
+    height: 80px;
+}
+
+.content .list .name{
+    width: 51%;
+    position: relative;
+    left:10px;
+    float: left;
+}
+.content .list .name h4{
+    font-size: 18px;
+    color: #4a4a4a;
+    font-weight: 100;
+}
+.content .list .money img{
+    margin-right: 10px;
+    height: 18px;
+    width: 18px;
+}
+.content .list .money {
+    position: relative;
+    left: 10px;
+    float: left;
+}
+.content .list .money del{
+    font-size: 14px;
+    color: #8f8f94;
+}
+.content .list .money span{
+    position: relative;
+    top:-2px;
+    font-size: 18px;
+    color: #ff8400;
+}
+.content .list .jin{
+    position: relative;
+    left: 10px;
+    width: 200px;
+    float: left;
+}
+.content .list .jin p{
+    float: left;
+}
+.content .list .yue img{
+    position: relative;
+    float: right;
+    bottom: 38px;
+    width: 50px;
+    height: 50px;
+}
+.mui-progressbar{
+    position: relative;
+    top: 11px;
+    left: 10px;
+    float: left;
+    width: 110px;
+}
+.mui-progressbar span{
+    background-color: #ff8400;
+}

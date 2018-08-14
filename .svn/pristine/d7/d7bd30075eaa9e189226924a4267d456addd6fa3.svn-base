@@ -1,0 +1,344 @@
+<?php
+/**
+ *个人中心
+ *author:qql
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class UserController extends Controller
+{
+    public function userindex()
+    {
+        $user_id = cookie('user_id');
+        // dump($user_id);
+        // $user_id = 1;
+        $user = M('user')->where(array('id' => $user_id))->find();
+//         dump($user);
+        $payment   = M('orders')->distinct(true)->field('order_number')->where(array('order_status' => 0, 'user_id' => $user_id, 'order_from' => 0))->select();
+        $delivery  = M('orders')->field('order_number')->where(array('order_status' => 1, 'user_id' => $user_id, 'order_from' => 0))->select();
+        $Receiving = M('orders')->field('order_number')->where(array('order_status' => 2, 'user_id' => $user_id, 'order_from' => 0))->select();
+        $evaluate  = M('orders')->field('order_number')->where(array('order_status' => 3, 'user_id' => $user_id, 'order_from' => 0))->select();
+        $customer  = M()->table('customer_service as c')
+            ->join("left join orders as o on o.id=c.order_id")
+            ->field("c.*")
+            ->where(array('o.user_id' => $user_id, 'o.order_from' => 0, 'c.status' => array("neq", 8)))->count();
+        $num = array(
+            "payment"   => count($payment), //待支付
+            "delivery"  => count($delivery), //待发货
+            "Receiving" => count($Receiving), //待收货
+            "evaluate"  => count($evaluate), //待评价
+            "customer"  => $customer, //售后
+        );
+        $test = I('test');
+        $this->assign('user', $user);
+        $this->assign('test', $test);
+        $this->assign("num", $num);
+        $this->display();
+    }
+    public function orderinfo()
+    {
+        $user_id             = cookie('user_id');
+        $map['order_status'] = array("neq", 5);
+        if (I("state") == 10) {
+            $info = M()->table('orders as o')
+                ->where($map)
+                ->join('left join order_goods as og on o.id=og.order_id')
+                ->join('left join goods as g on og.goods_id=g.id')
+                ->join('left join seller as s on o.seller_id=s.id')
+                ->field("g.goods_name,o.*,s.name as sname,s.logo,og.price as shop_price,og.goods_number,g.sm_pic")
+                ->order("o.pay_time desc")
+                ->where(array('user_id' => $user_id, 'order_from' => 0))->select();
+        } else {
+            $info = M()->table('orders as o')
+                ->where($map)
+                ->join('left join order_goods as og on o.id=og.order_id')
+                ->join('left join goods as g on og.goods_id=g.id')
+                ->join('left join seller as s on o.seller_id=s.id')
+                ->field("g.goods_name,o.*,s.name as sname,s.logo,og.price as shop_price,og.goods_number,g.sm_pic")
+                ->order("o.pay_time desc")
+                ->where(array('user_id' => $user_id, 'order_status' => I("state"), 'order_from' => 0))->select();
+        }
+        $res = array();
+        foreach ($info as $key => $value) {
+            $res[$value['id']][] = $value;
+        }
+//      dump($res);
+        $this->assign("type", I("state"));
+        $this->assign("data", $res);
+        $this->display('orderinfo');
+    }
+
+    public function userinfo()
+    {
+        $user_id = cookie('user_id');
+        // if ($user_id != null) {
+        $data = M()->table("__USER__ u")
+            ->join('left join __PARTNER__ p on p.id = u.privilege_hierarchy_id')
+            ->where((array('u.id' => $user_id)))
+            ->field('u.id,u.userphone,u.username,u.email,u.avatar,p.name as p_name,u.is_xg')
+            ->find();
+        $this->assign('data', $data);
+        // }
+//         dump($data);
+
+        $this->display();
+    }
+    public function orderdetails()
+    {
+        $order_id = I('order_no');
+        $info     = M()->table('orders as o')
+            ->where($map)
+            ->join('left join order_goods as og on o.id=og.order_id')
+            ->join('left join goods as g on og.goods_id=g.id')
+            ->join('left join seller as s on o.seller_id=s.id')
+            ->field("g.goods_name,o.*,s.name as sname,s.logo,og.price as shop_price,og.goods_number,g.sm_pic,og.is_shouhou as og_is_shouhou,og.status as og_status")
+            ->where(array('o.id' => $order_id))->select();
+
+        $map['order_id'] = array('eq', $order_id);
+        $con             = M()->table("coupon_user as cu")->join('left join coupon as c on cu.discount_id=c.id')
+            ->field("c.money")
+            ->where($map)->find();
+        $this->assign('info', $info);
+        $this->assign("order_no", $order_number);
+        $this->assign("con", $con['money']);
+        $this->display();
+    }
+//  确认收货
+    public function suregoods()
+    {
+        $id = I("order_no");
+        M("orders")->where(array("id" => $id))->setField("order_status", 3);
+        $this->redirect('user/orderinfo', array('state' => 3));
+    }
+//取消，删除订单
+    public function cancelorder()
+    {
+        $id            = I("order_no");
+        $data          = M('orders')->where(array("id" => $id, "order_status" => 4))->find();
+        $bonus_consume = M("bonus_consume")->where(array("order_id" => $data['id']))->select();
+        foreach ($goods as $key => $value) {
+            $user->where(array('id' => $bonus_consume['user_id']))->setDec('reward_freeze', floatval($bonus_consume['money'])); // 用户的冻结奖励减少
+            $user->where(array('id' => $bonus_consume['user_id']))->setInc('reward_receive', floatval($bonus_consume['money'])); //可领取奖励加
+        }
+        M("orders")->where(array("id" => $id))->setField("order_status", 5);
+        $this->redirect('user/orderinfo', array('state' => 10));
+    }
+    //我的积分
+    public function mygold()
+    {
+        $user_id = cookie('user_id');
+        $gold    = M('user')->where(array('id' => $user_id))->getField('gold');
+        $data    = M('gold_user')
+            ->where(array('user_id' => $user_id))
+            ->select();
+
+        $this->assign('gold', $gold);
+        $this->assign('data', $data);
+        $this->display();
+    }
+    //我的收藏
+    public function mycollection()
+    {
+        $data = M()->table('__MYCOLECTION__ myc')
+            ->join('left join __GOODS__ g on g.id = myc.goods_id')
+            ->join('left join __GOODS_ATTRIBUTE_INFO__ gai on gai.goods_id = g.id')
+            ->where(array('myc.user_id' => cookie('user_id')))
+            ->group('gai.goods_id')
+            ->field('myc.*,g.goods_name,g.sm_pic,min(gai.shop_price) as shop_price')
+            ->select();
+//        dump($data);
+        $this->assign('data', $data);
+        $this->display();
+    }
+    //删除我的收藏
+    public function delcollection()
+    {
+        $arr = I();
+
+        $map['user_id'] = cookie('user_id');
+        for ($i = 0; $i < count($arr['id']); $i++) {
+            $map['goods_id'] = $arr['id'][$i];
+            $data            = M('mycolection')->where($map)->delete();
+        }
+        if ($data) {
+            $json = array(
+                'result' => 1,
+                'msg'    => '取消成功',
+            );
+        } else {
+            $json = array(
+                'result' => 0,
+                'msg'    => '取消失败！',
+            );
+        }
+        $this->ajaxReturn($json);
+//        pp($arr['id']);
+    }
+    //我的关注
+    public function myattention()
+    {
+        $data = M()->table('__MYATTENTION__ m')
+            ->join('left join __SELLER__ s on s.id = m.seller_id')
+            ->where(array('m.user_id' => cookie('user_id')))
+            ->field('s.id,s.number,s.name,s.logo')
+            ->select();
+//        pp($data);
+        $this->assign('data', $data);
+        $this->display();
+    }
+    //删除我的关注
+    public function delattention()
+    {
+        $arr = I();
+
+        $map['user_id'] = cookie('user_id');
+        for ($i = 0; $i < count($arr['id']); $i++) {
+            $map['seller_id'] = $arr['id'][$i];
+            $data             = M('myattention')->where($map)->delete();
+        }
+        if ($data) {
+            $json = array(
+                'result' => 1,
+                'msg'    => '取消成功',
+            );
+        } else {
+            $json = array(
+                'result' => 0,
+                'msg'    => '取消失败！',
+            );
+        }
+        $this->ajaxReturn($json);
+//        pp($arr['id']);
+    }
+
+    public function updatepsw()
+    {
+        $user_id = cookie("user_id");
+        $npsd    = md5(I('npsd') . C('MD5_KEY'));
+        $psd     = md5(I('psd') . C('MD5_KEY'));
+        $info    = M("user")->where(array("id" => $user_id))->find();
+        if ($psd != $info['password']) {
+            $json = array(
+                'result' => 0,
+                'msg'    => '原密码错误！',
+                'ss'     => $psd,
+            );
+        } else {
+            $user = M("user")->where(array("id" => $user_id))->setfield('password', $npsd);
+            if ($user) {
+                $json = array(
+                    'result' => 1,
+                    'msg'    => '修改成功！',
+
+                );
+            } else {
+                $json = array(
+                    'result' => 2,
+                    'msg'    => '修改失败！',
+                );
+            }
+        }
+        $this->ajaxReturn($json);
+    }
+    //吸粉游戏
+    public function attractfansplay()
+    {
+        $this->display();
+    }
+
+//售后判断
+    public function havecustomer()
+    {
+        $order_id = I("order_id");
+        $id       = M("customer_service")->where(array('order_id' => $order_id))->find();
+        if ($user) {
+            $json = array(
+                'result' => 1,
+            );
+        } else {
+            $json = array(
+                'result' => 2,
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+    //更多
+    public function more()
+    {
+        $this->display();
+    }
+    //协议
+    public function xieyi()
+    {
+        $data = M('base')->getField('protocol');
+        $this->assign('data', $data);
+        $this->display();
+    }
+    //隐私
+    public function yinsi()
+    {
+        $data = M('base')->getField('private');
+        $this->assign('data', $data);
+        $this->display();
+    }
+    //版权
+    public function about()
+    {
+        $data = M('base')->getField('copyright');
+        $this->assign('data', $data);
+        $this->display();
+    }
+    //修改个人信息
+    public function userupdate()
+    {
+        $arr              = I();
+        $upload           = new \Think\Upload(); // 实例化上传类
+        $upload->maxSize  = 3145728; // 设置附件上传大小
+        $upload->exts     = array('jpg', 'gif', 'png', 'jpeg'); // 设置附件上传类型
+        $upload->rootPath = './Public/Uploads/'; // 设置附件上传根目录
+        $upload->savePath = ''; // 设置附件上传（子）目录
+        // 上传文件
+        $info = $upload->upload();
+//        $avatar = $info['id_front']['savepath'] . $info['id_front']['savename'];
+        //        pp($avatar);
+        $user     = M('user');
+        $user->id = $arr['u_id'];
+        if ($arr['r_name'] != $arr['name']) {
+            $user->username = $arr['name'];
+        }
+        if ($arr['r_email'] != $arr['email']) {
+            $user->email = $arr['email'];
+        }
+        if ($info) {
+            $user->avatar = $info['headimg']['savepath'] . $info['headimg']['savename'];
+            $user->is_xg  = 1;
+
+        }
+        $res = $user->save();
+        if ($res) {
+            $this->success('修改成功！', U('/home/User/userindex'));
+        }
+
+//        pp($arr);
+    }
+    public function evaluate()
+    {
+        $this->assign('order_id', I("order_no"));
+        $this->display();
+    }
+
+    public function subevaluate()
+    {
+        M("orders")->where(array("id" => I("order_id")))->setField("order_status", 4);
+        $evaluation           = M("evaluation");
+        $evaluation->order_id = I("order_id");
+        $evaluation->user_id  = cookie("user_id");
+        $evaluation->score    = I("start");
+        $evaluation->content  = I("content");
+        $evaluation->add();
+        $this->success('评价成功', U('/home/user/orderinfo', array("state" => 4)));
+    }
+
+}

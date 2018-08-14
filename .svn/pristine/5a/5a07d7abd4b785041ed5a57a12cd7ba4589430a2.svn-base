@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/Wx/CSS/Bankcard/api.css" />
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/Wx/CSS/Bankcard/aui.css" />
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/Wx/CSS/Bankcard/aui-flex.css"/>
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/Wx/CSS/Bankcard/access.css" />
+        <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+        <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Mywallet/Transactionrecord.css" rel="stylesheet">
+        <title></title>
+    </head>
+
+    <body>
+        <header class="mui-bar mui-bar-nav header">
+            <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="{:U('/home/wallet/walletindex')}"></a>
+            <h1 class="mui-title">我的银行卡</h1>
+            <a class="mui-pull-right" href="{:U('/home/wallet/addbankcard')}">
+                <i class="mui-icon mui-icon-plus" style="color:#fff;"></i>
+            </a>
+        </header>
+
+        <div class="body aui-padded-10">
+            <section class="aui-content">
+                <ul class="aui-list aui-media-list bank_li">
+                <foreach name="data" item="v">
+                    <li class="aui-list-item aui-list-item-arrow" onclick="delbankcard({$v['id']})">
+                        <div class="aui-media-list-item-inner">
+                            <div class="aui-list-item-inner">
+                                <div class="aui-list-item-text">
+                                    <div class="aui-list-item-title clofe5">{$v['bank_name']}</div>
+                                </div>
+                                <div class="aui-list-item-text aui-ellipsis-1">
+                                    <small>{$v['open_address']}</small>
+                                </div>
+                                <div class="aui-list-item-text aui-ellipsis-1">
+                                    <big>{$v['open_account']}</big>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </foreach>
+                </ul>
+            </section>
+        </div>
+        <!--无信息时显示-->
+        <!--显示请用display:flex;-->
+<!--         <div class="aui-flex-col aui-flex-row aui-flex-middle nostate">
+            <img src="../../../image/KONGKONG.png"/>
+            <p class="aui-margin-t-15">暂无银行卡</p>
+            <div class="bag_button aui-margin-t-15" onclick="openWin('add_bankcard_win')">
+                添加银行卡
+            </div>
+        </div> -->
+    </body>
+
+</html>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+    //添加银行卡
+    function delbankcard(id){
+        if(!confirm('确定要删除该银行卡吗？')){
+            return false;
+        }
+        // alert(id);
+        $.ajax({
+            url:"{:U('/home/wallet/delbankcard')}",
+            type:"post",
+            data:{"id":id},
+            dataType: "json",
+            success:function(data){
+                if(data.result == 1){
+                    alert(data.msg);
+                    window.location.href = "{:U('/home/wallet/Bankcard')}"; //跳转到我的银行卡界面
+                }
+            }
+        });
+    }
+</script>

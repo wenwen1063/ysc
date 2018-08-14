@@ -1,0 +1,152 @@
+body {
+    overflow-x: hidden;
+}
+#user,
+#introduce,
+#allshop{
+    width: 100%;
+    overflow-x: hidden;
+}
+.header {
+    position: relative;
+    background-color: #ff5353;
+    height: 45px;
+}
+
+.mui-title, .mui-action-back {
+    font-weight: 100;
+    color: #FFFFFF;
+}
+
+#user {
+    position: relative;
+    background-color: #FFFFFF;
+    width: 100%;
+}
+
+#user .header {
+    width: 100%;
+    height: 100px;
+    background-size: 100% 100%;
+    background-image: url(../../img/Home/home_extensiontool_pic.png);
+}
+
+#user .header .userm {
+    height: 60px;
+    position: relative;
+    top: 30px;
+    left: 5%;
+
+}
+
+#user .header img {
+    float: left;
+    width: 60px;
+    height: 60px;
+}
+
+#user .header h5 {
+    color: #FFFFFF;
+    position: relative;
+    left: 10px;
+    top: 30px;
+    float: left;
+}
+
+#introduce {
+    background-color: #fff;
+    top: 10px;
+    height: 100px;
+    width: 100%;
+    position: relative;
+    padding: 0 5%;
+}
+
+#introduce span {
+    position: relative;
+    top: 10px;
+    font-size: 16px;
+    font-weight: 100;
+}
+
+#introduce p {
+    position: relative;
+    top: 15px;
+}
+
+#introduce img {
+    width: 12px;
+    height: 14px;
+    margin-right: 20px;
+}
+
+#allshop {
+    position: relative;
+    top: 20px;
+    background-color: #efefef;
+    padding: 0 10px;
+}
+
+#allshop .right {
+    float: right;
+}
+
+#allshop .list {
+    float: left;
+    width: 49%;
+    border: 2px solid #FFFFFF;
+    position: relative;
+    height: 240px;
+    top: 5px;
+    background-color: #fff;
+}
+
+#allshop .right {
+    float: right;
+}
+
+#allshop .list .img img {
+    width: 100%;
+    height: 177px;
+}
+
+#allshop .title {
+    width: 100%;
+    height: 40px;
+    position: relative;
+    background-color: #fff;
+}
+
+#allshop h4 {
+    padding-bottom: 8px;
+    padding-top: 8px;
+    font-weight: 100;
+    width: 72px;
+    margin: 0 auto;
+    border-bottom: 3px solid #fe504f;
+}
+
+#allshop .list .name h5 {
+    font-size: 14px;
+    color: #4a4a4a;
+}
+
+#allshop .list .money span {
+    font-weight: 100;
+    font-size: 14px;
+    color: #fe504f;
+    float: left;
+    position: relative;
+    top: 5px;
+}
+
+#allshop .list .money input {
+    padding-top: 3px;
+    padding-left: 10px;
+    height: 25px;
+    width: 50px;
+    right: 5px;
+    background-color: #fe504f;
+    color: #FFFFFF;
+    float: right;
+}

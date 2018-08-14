@@ -1,0 +1,120 @@
+<?php
+/**
+ *个人中心
+ *author:qql
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class CustomerController extends Controller
+{
+	public function index(){
+		
+		$user_id = cookie('user_id');
+		$map['o.order_status']=array("neq",5);
+		if (I("state") == 10) {
+			$info=M()->table('customer_service as c')
+				->join("left join orders as o on o.id=c.order_id")
+				->field("c.*")
+                ->where(array('o.user_id' => $user_id,'o.order_from'=>0,'c.status'=>array("neq",8)))->select();
+        }else {
+        	$info=M()->table('customer_service as c')
+				->join("left join orders as o on o.id=c.order_id")
+				->field("c.*")
+                ->where(array('o.user_id' => $user_id,'o.order_from'=>0,'c.type'=>I('state'),'c.status'=>array("neq",8)))->select();
+        }
+		$res = array();
+        foreach ($info as $k => $v) {
+            $res[$v['order_id']]['info'] = $v;
+			$goods = M()->table('orders as o')
+			->where($map)
+            ->join('left join order_goods as og on o.id=og.order_id')
+			->join('left join goods as g on og.goods_id=g.id')
+			->join('left join seller as s on o.seller_id=s.id')
+			->field("g.goods_name,o.*,s.name as sname,s.logo,og.price as shop_price,og.goods_number,g.sm_pic")
+            ->where(array('o.id' => $v['order_id'],'o.order_from'=>0,'g.id'=>array("in",$v['goods_id'])))->select();
+			$res[$v['order_id']]['goods']= $goods;
+        }
+		$this->assign("type", I("state"));
+		$this->assign("data", $res);
+		$this->display();
+	}
+    public function customer()
+    {
+    	$order_id=I('order_no');
+//		所有信息
+		$info = M()->table('orders as o')
+			->where($map)
+            ->join('left join order_goods as og on o.id=og.order_id')
+			->join('left join goods as g on og.goods_id=g.id')
+			->join('left join seller as s on o.seller_id=s.id')
+			->field("g.goods_name,o.*,s.name as sname,s.logo,og.price as shop_price,og.goods_number,g.sm_pic,g.id as goods_id")
+            ->where(array('o.id'=>$order_id))->select();
+			
+		$map['order_id']=array('eq',$order_id);
+//		优惠券
+		$con=M()->table("coupon_user as cu")->join('left join coupon as c on cu.discount_id=c.id')
+		->field("c.money")
+		->where($map)->find();
+		
+		$this->assign('info',$info);
+		$this->assign("order_no",$order_number);
+		$this->assign("con",$con['money']);
+        $this->display();
+    }
+
+
+
+    public function  customerinfo(){
+    	$id=I('order_no');
+    	$data=M()->table('customer_service as c')
+				->join("left join orders as o on o.id=c.order_id")
+				->field("c.*")
+                ->where(array('c.id'=>$id))->find();
+	    $info = M()->table('orders as o')
+			->where($map)
+            ->join('left join order_goods as og on o.id=og.order_id')
+			->join('left join goods as g on og.goods_id=g.id')
+			->join('left join seller as s on o.seller_id=s.id')
+			->field("g.goods_name,o.*,s.name as sname,s.logo,og.price as shop_price,og.goods_number,g.sm_pic")
+            ->where(array('o.id' =>$data['order_id'],'g.id'=>array("in",$data['goods_id'])))->select();
+		$this->assign('info',$info);
+		$this->assign('data',$data);
+    	$this->display();
+    }
+	
+	public function apply(){
+		
+		    $customer_service=M("customer_service");
+		    $upload           = new \Think\Upload(); // 实例化上传类
+            $upload->maxSize  = 3145728; // 设置附件上传大小
+            $upload->exts     = array('jpg', 'gif', 'png', 'jpeg'); // 设置附件上传类型
+            $upload->rootPath = './Public/Uploads/'; // 设置附件上传根目录
+            $upload->savePath = ''; // 设置附件上传（子）目录
+            // 上传文件
+            $info = $upload->upload();
+            //图片1
+            if ($info['id_front']['savepath'] . $info['id_front']['savename'] != null) {
+                $customer_service->pic1 = $info['id_front']['savepath'] . $info['id_front']['savename'];
+            }
+            //图片2
+            if ($info['id_back']['savepath'] . $info['id_back']['savename'] != null) {
+                $customer_service->pic2 = $info['id_back']['savepath'] . $info['id_back']['savename'];
+            }
+			$customer_service->service_number='S' . date('YmdHis', time()) . rand(1000, 9999);
+			$customer_service->order_id=I("order_id");
+			$customer_service->seller_id=I("seller_id");
+			$customer_service->type=I("type");
+			$customer_service->goods_id=I("goodsid");
+			$customer_service->remark=I("remark");
+			$customer_service->apply_time= strtotime(date('Y-m-d H:i:s', time()));
+			$customer_service->apply_time= strtotime(date('Y-m-d H:i:s', time()));
+			$customer_service->user_id=cookie("user_id");
+			$customer_service->money=I("cummoney");
+			M("order_goods")->where(array("order_id"=>I("order_id"),'goods_id'=>array("in",I("goodsid"))))->setfield('is_shouhou',1);
+			M("orders")->where(array("order_id"=>I("order_id")))->setfield('is_shouhou',1);
+			$customer_service->add();
+			$this->redirect('customer/index',array('state' =>10));
+	} 
+}

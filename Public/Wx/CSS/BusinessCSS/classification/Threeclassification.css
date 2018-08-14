@@ -1,0 +1,76 @@
+.title{
+    width: 100%;
+    height:45px;
+    position: relative;
+    background-color: #fff;
+    text-align: center;
+}
+
+.title .list{
+    width: 33%;
+    height:45px;
+    float: left;
+}
+.title .list h5{
+    padding-top: 10px;
+    color: #4a4a4a;
+}
+.title .list .red{
+    color: #fe504f;
+}
+
+.title .list .red img{
+    position: relative;
+    bottom:13px;
+    left:25px;
+    width: 8px;
+    height:13px;
+}
+
+.content{
+    padding: 10px;
+}
+.content .list{
+    border: 2px solid #FFFFFF;
+    height:225px;
+    float: left;
+    width: 48%;
+    margin-bottom: 10px;
+    background-color: #fff;
+}
+.content .list .img img{
+    width: 100%;
+    height:170px;
+
+}
+.content .list .name{
+    float: left;
+}
+.content .list .name h5{
+    font-size: 16px;
+    color: #4a4a4a;
+
+    width: 80%;
+    float: left;
+
+}
+.content .list .name p{
+    color: #fe504f;
+    width: 51%;
+    float: left;
+}
+
+.content .list .name input{
+    position: relative;
+    bottom:10px;
+    float: right;
+    margin: 0;
+    padding: 0;
+    height:25px;
+    background-color: #fe504f;
+    color: #FFFFFF;
+    width: 50px;
+    border-radius: 5px;
+    right: 10px;
+    border: none;
+}

@@ -1,0 +1,89 @@
+<!--index -->
+<include file="public:index"   />
+<!--index-->
+<title>话费流量管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+ 系统 <span class="c-gray en">&gt;</span>
+  话费流量管理 <span class="c-gray en">&gt;</span>
+   话费流量列表
+   <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20">
+    <form action="{:U('/home/feeflow/feeflowindex/search/')}" method="post/get" name="main_form" class="form form-horizontal" id="form-admin-add" style="float:right;">
+        <div class="text-c">
+            <input type="text" name="number_l" value="{$search['number_l']}" class="input-text" style="width:250px" placeholder="输入充值数量或金额下限">-
+            <input type="text" name="number_h" value="{$search['number_h']}" class="input-text" style="width:250px" placeholder="输入充值数量或金额上限">
+            <span class="select-box inline">
+            <select name="type" class="select">
+                <if condition="$search['type'] eq null">
+                    <option value="">全部类型</option>
+                    <option value="0">话费</option>
+                    <option value="1">流量</option>
+                <elseif condition="$search['type'] eq 0"/>
+                    <option value="0">话费</option>
+                    <option value="1">流量</option>
+                    <option value="">全部类型</option>
+                <else />
+                    <option value="1">流量</option>
+                    <option value="">全部类型</option>
+                    <option value="0">话费</option>
+                </if>
+            </select>
+            </span>
+            <button type="submit" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+        </div>
+    </form>
+    <div class="text-c"><br></div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l">
+        <a href="{:U('/home/feeflow/feeflowadd')}" class="btn btn-primary radius"> 新增 </a></span>&nbsp;
+        <span class="r">共有数据：<strong>{$count}</strong> 条</span> </div>
+    <table class="table table-border table-bordered table-bg">
+        <thead>
+            <tr>
+                <th scope="col" colspan="8">话费流量列表</th>
+            </tr>
+            <tr class="text-c">
+                <th width="40">操作</th>
+                <th width="40">名称</th>
+                <th width="40">类型</th>
+                <th width="40">流量类型</th>
+                <th width="120">充值数量(金额)</th>
+                <th width="40">原价</th>
+                <th width="40">售价</th>
+                <th width="40">备注</th>
+            </tr>
+        </thead>
+        <tbody>
+            <foreach name='data' item='v'>
+                <tr class="text-c">
+                    <td class="td-manage">
+                    <a class="btn btn-primary size-MINI radius" href="{:U('/home/feeflow/feeflowupdate',array('id'=>$v['id']))}">编辑</a>
+                    <a class="btn btn-primary size-MINI radius" href="{:U('/home/feeflow/feeflowdel',array('id'=>$v['id']))}" onclick="return confirm('确认要删除吗？');">删除</a>
+                    </td>
+                    <td>{$v['name']}</td>
+                    <td><if condition="$v['type'] eq 0">话费<else />流量</if></td>
+                    <td>
+                        <if condition="$v['type'] neq 0">
+                            <if condition="$v['flow_type'] eq 0">省内
+                            <else />国内
+                            </if>
+                        <else />
+                        </if>
+                    </td>
+                    <td>{$v['number']}<if condition="$v['unit'] eq 0">元<else />兆</if></td>
+                    <td>{$v['old_price']}元</td>
+                    <td>{$v['price']}元</td>
+                    <td>{$v['remark']}</td>
+                </tr>
+            </foreach>
+        </tbody>
+    </table>
+    <div class="pageright">{$page}</div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+</script>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>积分管理</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Mypoints/Mypoints.css" rel="stylesheet">
+    <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+</head>
+<body>
+<!--<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">积分管理</h1>
+</header>-->
+<div class="title">
+    <p>当前积分</p>
+    <h1>{$gold}</h1>
+</div>
+<div class="mingxi">
+    <span>
+        <img src="__PUBLIC__/Wx/img/My/my_icon_detail.png" alt="">
+        赚积分明细
+    </span>
+</div>
+<?php if($data != null): ?>
+<foreach name="data" item="v">
+    <div class="list" style="display: block">
+        <h5>{$v['credits_source']}</h5>
+        <p>{$v['create_time']|date='Y-m-d H:i:s',###}</p>
+        <h3>
+            <php>
+                if($v['source_type']==1){echo "+";}else{echo "-";}
+            </php>
+            {$v['credits_number']}</h3>
+    </div>
+</foreach>
+<?php else: ?>
+<div class="backm">
+    <img src="__PUBLIC__/Wx/img/My/default_nodetail.png" alt="">
+    <h5>暂无任何积分明细</h5>
+</div>
+<?php endif ?>
+
+
+
+<script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+<script>
+ /*   function text() {
+        for (var i = 0;i<mui('.list').length;i++){
+            mui('.list')[i].style.display = 'block'
+        }
+        setTimeout(function () {
+            for (var i = 0;i<mui('.list').length;i++){
+                mui('.list')[i].style.display = 'none'
+            }
+            setTimeout(function () {
+                text()
+            },1000)
+        },1000)
+
+    }*/
+//    text()
+</script>
+</body>
+</html>

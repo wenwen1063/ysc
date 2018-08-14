@@ -1,0 +1,77 @@
+<!--index -->
+<include file="public:index" />
+<!--index-->
+<script type="text/javascript" charset="gbk" src="__PUBLIC__/admin/js/ueditor.config.js"></script>
+<script type="text/javascript" charset="gbk" src="__PUBLIC__/admin/js/ueditor.all.js">
+</script>
+<script type="text/javascript" charset="gbk" src="__PUBLIC__/admin/js/lang/zh-cn/zh-cn.js"></script>
+<title>公告编辑</title>
+</head>
+
+<body>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 系统 <span class="c-gray en">&gt;</span> 公告通知 <span class="c-gray en">&gt;</span> 公告信息<span class="c-gray en">&gt;</span> 编辑 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回"><i class="Hui-iconfont">&#xe66b;</i></a><a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="pd-20">
+        <div class="pd-20">
+            <form action="{:U('/home/Notice/noticeupdate')}" method="post" name="main_form" class="form form-horizontal" id="form-admin-add">
+                <div class="row cl">
+                    <label class="form-label col-3"><span class="c-red">*</span>标题：</label>
+                    <div class="formControls col-5">
+                        <input type="text" class="input-text" value="{$data['title']}" placeholder="请输入标题" id="title" name="title" datatype="*2-16">
+                    </div>
+                    <div class="col-4"> </div>
+                </div>
+                <input type="hidden" name="id" id="id" value="{$data['id']}" />
+                <input type="hidden" name="retitle" value="{$data['title']}">
+                <div class="row cl">
+                    <label class="form-label col-3"><span class="c-red">*</span>内容：</label>
+                    <div class="formControls col-5">
+                        <textarea type='text' class="content" value='' id="data" name="content" style="height: 200px;width: 680px;resize: none;">{$data['content']}</textarea>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <div class="col-9 col-offset-3">
+                        <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;" onclick="return check()">
+                        <input class="btn btn-primary radius" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/admin/lib/icheck/jquery.icheck.min.js"></script>
+        <script type="text/javascript">
+        // var ue = UE.getEditor('editor');
+        function check() {
+            if ($('#title').val() == "") {
+                alert("标题不能为空!");
+                return false;
+            }
+            if ($('#data').val() == "") {
+                alert("内容不为空!");
+                return false;
+            }
+        }
+
+        // function trim(s) {
+        //    var count = s.length;
+        //    var st    = 0;       // start
+        //    var end   = count-1; // end
+
+        //    if (s == "") return s;
+        //    while (st < count) {
+        //      if (s.charAt(st) == " ")
+        //        st ++;
+        //      else
+        //        break;
+        //    }
+        //    while (end > st) {
+        //      if (s.charAt(end) == " ")
+        //        end --;
+        //      else
+        //        break;
+        //    }
+        //    return s.substring(st,end + 1);
+        //  }
+        </script>
+</body>
+
+</html>

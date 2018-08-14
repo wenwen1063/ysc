@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>资讯消息</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../CSS/CommonCSS/Base.css">
+    <link href="../../../CSS/BusinessCSS/Informationsearch.css" rel="stylesheet">
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <input class="mui-title" type="text" placeholder="搜索资讯关键词">
+    <button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">取消</button>
+</header>
+<div class="title">
+    <h5>搜索历史</h5>
+</div>
+<div class="content">
+    <div class="list">
+        <span class="mui-icon mui-icon-search">&numsp;&numsp;钟爱一生</span>
+    </div>
+    <div class="list">
+        <span class="mui-icon mui-icon-search">&numsp;&numsp;钟爱一生</span>
+    </div>
+    <div class="list">
+        <span class="mui-icon mui-icon-search">&numsp;&numsp;钟爱一生</span>
+    </div>
+    <div class="list">
+        <span class="mui-icon mui-icon-search">&numsp;&numsp;钟爱一生</span>
+    </div>
+    <div class="list">
+        <span class="mui-icon mui-icon-search">&numsp;&numsp;钟爱一生</span>
+    </div>
+    <div class="list">
+        <span class="mui-icon mui-icon-search">&numsp;&numsp;钟爱一生</span>
+    </div>
+</div>
+</body>
+</html>

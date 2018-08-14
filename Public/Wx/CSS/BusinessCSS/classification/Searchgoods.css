@@ -1,0 +1,69 @@
+body{
+    background-color: #fff;
+}
+.mui-bar input {
+    background-color: #d74342;
+    border: none;
+    color: #FFFFFF;
+    border-radius: 50px;
+    height: 35px;
+    position: relative; 
+    width: 100%;
+}
+
+.mui-bar .mui-btn-link {
+    color: #FFFFFF;
+}
+
+.title{
+    position: relative;
+    top:10px;
+    border-bottom: 10px;
+    padding-left: 10px;
+    border-left: 2px solid #fe504f;
+    color: #4a4a4a;
+}
+
+.content{
+    border-top: 1px solid #e0e0e0;
+    position: relative;
+    top:20px;
+}
+.mui-table-view-cell:after{
+    background-color: #fff;
+}
+
+.mui-table-view:after{
+    background-color: #fff;
+}
+
+.mui-table-view li{
+    color: #4a4a4a;
+}
+
+.input input {
+    top:80px;
+    width: 90%;
+    position: relative;
+    left:5%;
+    background-color: #fe504f;
+    color: #FFFFFF;
+    height:45px;
+    border-radius: 50px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

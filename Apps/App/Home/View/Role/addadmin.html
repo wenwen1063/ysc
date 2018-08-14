@@ -1,0 +1,103 @@
+<include file="public:index"/>
+
+<style type="text/css">
+    .col-2{
+        width: 15%;
+    }
+    .col-10{
+        width: 45%;
+    }
+</style>
+<title>用户新增</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+ 系统 <span class="c-gray en">&gt;</span>
+  角色管理 <span class="c-gray en">&gt;</span>
+   角色信息 <span class="c-gray en">&gt;</span>
+   用户新增
+   <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回" ><i class="Hui-iconfont">&#xe66b;</i></a><a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20">
+    <form action="{:U('/home/role/addadmin',array('typerole'=>2))}" method="post/get" name="main_form" class="form form-horizontal" id="form-admin-add">
+        <input type="hidden" value="{$role['role_id']}" name="role_id" id="role_id" >
+        <div class="row cl">
+            <label class="form-label col-3">角色编号：</label>
+            <div class="formControls col-2">
+                <input type="text" class="input-text" value="{$role['id']}" placeholder="" id="id" name="id" readOnly="true">
+            </div>
+            <label class="form-label col-1">角色名称：</label>
+            <div class="formControls col-2">
+                <input type="text" class="input-text" value="{$role['role_name']}" placeholder="" id="" name="role_name" readOnly="true">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-3">描述：</label>
+            <div class="formControls col-10">
+                <input type="text" class="input-text" value="{$role['role_remark']}" style="width:92.5%;"  placeholder="" id="" name="" readOnly="true">
+            </div>
+        </div>
+
+        <div class="row cl">
+                <div class="text-c" style="padding-left:15%;">
+                    <input type="text" name="user" id="user" class="input-text" style="width:350px" placeholder="输入用户账号(直接点搜索查看所有满足条件的会员)">
+                    <input type="button" class="btn btn-success" id="" onclick="return search()" value="搜索" />
+                </div><br>
+            <label class="form-label col-3"></label>
+            <div class="formControls col-5" id="div">
+            </div>
+        <br>
+
+        <div class="row cl">
+            <div class="col-9 col-offset-3">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;" onclick="return check()">
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+<script type="text/javascript">
+    function DoCheck(){
+        var ch=document.getElementsByName("choose[]");
+        if(document.getElementsByName("allChecked")[0].checked==true)
+        {
+            for(var i=0;i<ch.length;i++)
+            {
+            ch[i].checked=true;
+            }
+        }else{
+            for(var i=0;i<ch.length;i++)
+            {
+            ch[i].checked=false;
+            }
+        }
+    }
+    function search(){
+        var user = $("#user").val();
+        var role_id = $("#role_id").val();
+        $.ajax({
+            type: "get",
+            url: "{:U('/home/search/adminsearch')}",
+            async: false,
+            data: {"user":user,"role_id":role_id},
+            dataType: "json",
+            success: function(data){
+                //console.log(data)
+                var str = "<table class='table table-border table-bordered table-hover table-bg'><tr class='text-c'><th width='25'><input type='checkbox' name='allChecked' id='allChecked' onclick='DoCheck()'></th><th width='40'>编号</th><th width='150'>账号</th></tr> ";
+                for (var i = 0; i < data.length; i++) {
+                    str += "<tr class='text-c'>"+"<td><input type='checkbox' value="+data[i]['admin_id']+" name='choose[]'></td>"+"<td>"+data[i]['id']+"</td><td>"+data[i]['user']+"</td></tr>";
+                }
+                str +="</table>";
+                document.getElementById("div").innerHTML = str;
+            },
+        });
+        return false;
+    }
+</script>
+</body>
+</html>

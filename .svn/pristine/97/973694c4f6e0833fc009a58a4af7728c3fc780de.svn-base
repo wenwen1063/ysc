@@ -1,0 +1,278 @@
+<?php
+/**
+ *搭档中心
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class PartnerController extends Controller
+{
+    public function partner()
+    {
+        $user_id = cookie('user_id');
+//        $user_id = 1;
+        //搭档中心--今日信息-推荐奖励
+        $dayinfo = D('Partner')->dayinfo();
+//        dump($dayinfo);
+        //搭档中心-今日信息-消费奖励
+        $dayinfoc = D('Partner')->dayinfoc();
+//        pp($dayinfoc);
+        //搭档中心--分销汇总
+        $totalr = D('Partner')->total(); //推荐
+        $totalc = D('Partner')->totalc(); //消费
+
+        //特权领取
+        $res = D('Partner')->record();
+        //我推荐的会员
+        $myrmd = M()->table('__USER__ u')
+            ->where(array('u.introduce' => $user_id))
+            ->join('left join __PARTNER__ p on p.id = u.privilege_hierarchy_id')
+            ->field('u.avatar,u.username,p.name as p_name,u.is_xg')
+            ->select();
+
+        //推广信息
+        $user = M('user')->where(array('id' => cookie('user_id')))->field('username,avatar')->find();
+        $bg   = M('base')->field('bg_img')->find();
+        //我的收益
+        $myprofit = M('user')->where(array('id' => cookie('user_id')))->field('gold,gold_receive,gold_freeze,reward,reward_receive,reward_freeze')->find();
+//        pp($myprofit);
+
+        $this->assign('myprofit', $myprofit);
+        $this->assign('user', $user);
+        $this->assign('bg', $bg);
+        $this->assign('dayinfo', $dayinfo);
+        $this->assign('dayinfoc', $dayinfoc);
+        $this->assign('record', $res);
+        $this->assign('myrmd', $myrmd);
+        $this->assign('totalr', $totalr);
+        $this->assign('totalc', $totalc);
+        $this->display();
+    }
+    //分销汇总-更多
+    public function distributionmore()
+    {
+        $search  = I();
+        $user_id = cookie('user_id');
+        if ($search != null) {
+//            pp($search);
+            $map['bc.recommend_user'] = $user_id;
+            $name                     = $search['name'];
+            $startime                 = strtotime($search['start_time']);
+            $endtime                  = strtotime($search['end_time']);
+            if ($startime != null && $endtime != null) {
+                $map['o.pay_time'] = array('between', array($startime, $endtime));
+            }
+            $map['u.username']   = array("like", "%$name%");
+            $map['o.pay_status'] = 1;
+
+            $data = M()->table('__BONUS_CONSUME__ bc')
+                ->join('left join __ORDERS__ o on o.id = bc.order_id and o.pay_status = 1')
+                ->join('left join __ORDER_GOODS__ og on og.order_id = o.id')
+                ->join('left join __USER__ u on u.id = o.user_id')
+                ->where($map)
+                ->group('og.order_id')
+                ->field('o.order_number,o.total_price,sum(og.bonus_amount) as totalm,sum(og.score_number) as totalg,u.username,u.avatar,bc.state,u.is_xg')
+                ->select();
+
+        } else {
+            $data = M()->table('__BONUS_CONSUME__ bc')
+                ->where(array('bc.recommend_user' => $user_id))
+                ->join('left join __ORDERS__ o on o.id = bc.order_id')
+                ->join('left join __ORDER_GOODS__ og on og.order_id = o.id')
+                ->join('left join __USER__ u on u.id = o.user_id')
+                ->where(array('o.pay_status' => 1))
+                ->group('og.order_id')
+                ->field('o.order_number,o.total_price,sum(og.bonus_amount) as totalm,sum(og.score_number) as totalg,u.username,u.avatar,bc.state,u.is_xg')
+                ->select();
+        }
+
+//        pp($data);
+        $this->assign('data', $data);
+        $this->assign('search', $search);
+        $this->display();
+    }
+    /**
+     * 生成二维码
+     * @param  string  $url  url连接
+     * @param  integer $size 尺寸 纯数字
+     */
+    public function qrcode($level = 3, $size = 4)
+    {
+        $user_id = cookie('user_id');
+        $url     = "http://www.dadangsc.com/wx.php?&user_code=$user_id";
+        Vendor('phpqrcode.phpqrcode');
+        $errorCorrectionLevel = intval($level); //容错级别
+        $matrixPointSize      = intval($size); //生成图片大小
+        //生成二维码图片
+        $object = new \QRcode();
+        $object->png($url, false, $errorCorrectionLevel, $matrixPointSize, 2);
+    }
+    //下载二维码
+    public function download_qrcode()
+    {
+        $user_id = cookie('user_id');
+//        $username = M('user')->where(array('id' => $user_id))->getField('username'); //用户名
+        $head  = M('user')->where(array('id' => $user_id))->getField('avatar');
+        $heads = M('user')->where(array('id' => $user_id))->find();
+        if ($heads['is_xg'] == 0) {
+            $head_img = $head; //用户头像
+        } else {
+            $head_img = "Public/Uploads/" . $head; //用户头像
+        }
+//        $head_img = "Public/Uploads/" . $head; //用户头像
+        if (strpos($head_img, '://')) {
+            $head_img = $head;
+        }
+        $bg = M('base')->where(array('id' => 1))->getField('b_pic');
+        // $bg     = M('base')->where(array('id' => 1))->getField('bg_img');
+        $bg_img = "Public/Uploads/" . $bg; //背景图
+
+        ob_clean();
+        header('Content-type:image/png');
+//11111111111111如果遇到问题需要找bug，把header放最后
+        //二维码
+        // $path_1 = 'qrcode.png';
+        $url = "http://www.dadangsc.com/wx.php?&user_code=$user_id";
+        Vendor('phpqrcode.phpqrcode');
+        $errorCorrectionLevel = intval(3); //容错级别
+        $matrixPointSize      = intval(4); //生成图片大小
+        //生成二维码图片
+        $object = new \QRcode();
+        $object->png($url, 'qrcode.png', $errorCorrectionLevel, $matrixPointSize, 2);
+        $path_1 = 'qrcode.png';
+//背景图片
+        $path_2 = $bg_img;
+
+        $image_1 = imagecreatefromstring(file_get_contents($path_2));
+        // $image_2 = imagecreatefrompng($path_1);
+        $image_2 = imagecreatefromstring(file_get_contents($path_1));
+//创建一个和bg图片一样大小的真彩色画布（ps：只有这样才能保证后面copy二维码图片的时候不会失真）
+        $image_3 = imageCreatetruecolor(imagesx($image_1), imagesy($image_1));
+//为真彩色画布创建白色背景，再设置为透明
+        $color = imagecolorallocate($image_3, 255, 255, 255);
+        imagefill($image_3, 0, 0, $color);
+        imageColorTransparent($image_3, $color);
+//首先将二维码画布采样copy到真彩色画布中，不会失真
+        imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
+//再将背景图片copy到已经具有二维码图像的真彩色画布中，同样也不会失真
+        //        imagecopyresampled($image_3, $image_2, 225, 290, 0, 0, imagesx($image_2) * 2, imagesy($image_2) * 2, imagesx($image_2), imagesy($image_2));
+        imagecopyresampled($image_3, $image_2, 285, 780, 0, 0, imagesx($image_2), imagesy($image_2), imagesx($image_2), imagesy($image_2));
+//将画布保存到指定的png文件
+        imagepng($image_3, 'bg_erweima.png');
+
+//2222222222222222新背景图
+        $dst_path = 'bg_erweima.png';
+        //创建图片的实例
+        $dst = imagecreatefromstring(file_get_contents($dst_path));
+
+//打上文字
+        // $font = 'Arial.ttf';//字体路径
+
+        $black = imagecolorallocate($dst, 0x00, 0x00, 0x00); //字体颜色
+        imagettftext($dst, 16, 0, 280, 120, $black, 'simkai.ttf', $username);
+        //输出图片
+        imagepng($dst, 'word_bg_erweima.png'); //文字生成的图片
+
+//3333333333333333头像
+        $path_1 = $head_img;
+        //背景图片
+        $path_2 = "word_bg_erweima.png";
+
+        $image_1 = imagecreatefrompng($path_2);
+        // $image_2 = imagecreatefrompng($path_1);
+        $image_2 = imagecreatefromstring(file_get_contents($path_1));
+        //创建一个和bg图片一样大小的真彩色画布（ps：只有这样才能保证后面copy二维码图片的时候不会失真）
+        $image_3 = imageCreatetruecolor(imagesx($image_1), imagesy($image_1));
+        //为真彩色画布创建白色背景，再设置为透明
+        $color = imagecolorallocate($image_3, 255, 255, 255);
+        imagefill($image_3, 0, 0, $color);
+        imageColorTransparent($image_3, $color);
+        //首先将二维码画布采样copy到真彩色画布中，不会失真
+        imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
+        //再将背景图片copy到已经具有二维码图像的真彩色画布中，同样也不会失真
+        //        imagecopyresampled($image_3, $image_2, 150, 50, 0, 0, 100, 100, imagesx($image_2), imagesy($image_2));
+        imagecopyresampled($image_3, $image_2, 285, 780, 0, 0, imagesx($image_2), imagesy($image_2), imagesx($image_2), imagesy($image_2));
+
+        //将画布保存到指定的png文件
+        imagepng($image_3, 'head_word_bg_erweima.png');
+
+//44444444444444444头像
+        $path_1 = $head_img;
+        //背景图片
+        $path_2 = "head_word_bg_erweima.png";
+
+        $image_1 = imagecreatefrompng($path_2);
+        // $image_2 = imagecreatefrompng($path_1);
+        $image_2 = imagecreatefromstring(file_get_contents($path_1));
+        //创建一个和bg图片一样大小的真彩色画布（ps：只有这样才能保证后面copy二维码图片的时候不会失真）
+        $image_3 = imageCreatetruecolor(imagesx($image_1), imagesy($image_1));
+        //为真彩色画布创建白色背景，再设置为透明
+        $color = imagecolorallocate($image_3, 255, 255, 255);
+        imagefill($image_3, 0, 0, $color);
+        imageColorTransparent($image_3, $color);
+        //首先将二维码画布采样copy到真彩色画布中，不会失真
+        imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
+        //再将背景图片copy到已经具有二维码图像的真彩色画布中，同样也不会失真
+        //        imagecopyresampled($image_3, $image_2, 340, 400, 0, 0, 100, 100, imagesx($image_2), imagesy($image_2));
+        imagecopyresampled($image_3, 150, 50, 0, 0, 100, 100);
+
+        //将画布保存到指定的png文件
+        // imagepng($image_3, 'head_word_bg_erweima.png');
+        imagepng($image_3);
+    }
+
+    //提取收益
+    public function extractearnings()
+    {
+        $arr = I();
+//        pp($arr);
+        if ($arr['money'] != null) {
+            $data = M('user')->where(array('id' => cookie('user_id')))->field('balance,reward_receive')->find();
+            if ($arr['money'] >= $data['reward_receive']) {
+                //提取金额大于可提取金额
+            } else {
+                $rm      = $data['reward_receive'] - $arr['money'];
+                $balance = $data['balance'] + $arr['money'];
+//                pp($balance);
+                $user                 = M('user');
+                $user->id             = cookie('user_id');
+                $user->balance        = $balance;
+                $user->reward_receive = $rm;
+                $user->save();
+                $this->success('提取成功', U('/home/Partner/Partner'), 2);
+            }
+
+        } else {
+            $rr = M('user')->where(array('id' => cookie('user_id')))->getField('reward_receive');
+        }
+
+        $this->assign('rr', $rr);
+        $this->display();
+    }
+
+    public function earnings_details()
+    {
+        /*$data = M()->table('__USER__ u')
+        ->join('left join __ORDERS__ o on o.user_id = u.id')
+        ->join('left join __ORDER_GOODS__ og on og.order_id = o.id and og.type = 1')
+        ->join('left join __GOODS__ g on g.id = og.goods_id')
+        ->where(array('u.introduce'=>cookie('user_id')))
+        ->field('u.username,u.avatar,o.order_number,og.goods_id,og.bonus_amount as money,og.score_number as gold,g.goods_name,og.price,o.total_price,o.order_status')
+        ->select();*/
+        $data = M()->table('__BONUS_CONSUME__ bc')
+            ->join('left join __ORDERS__ o on o.id = bc.order_id')
+            ->join('left join __ORDER_GOODS__ og on og.order_id = o.id and og.type = 1')
+            ->join('left join __SELLER__ s on s.id = o.seller_id')
+            ->join('left join __GOODS__ g on g.id = og.goods_id')
+            ->join('left join __USER__ u on u.id = bc.user_id')
+            ->join('left join __PARTNER__ par on par.id = bc.parent_id')
+            ->where(array('recommend_user' => cookie('user_id')))
+            ->field('par.name as bcname,bc.hierarchy,bc.state,o.order_number,o.total_price,og.bonus_amount as bmoney,og.score_number as bgold,s.name as s_name,og.price,g.goods_name,u.username,u.avatar,u.is_xg')
+            ->select();
+
+//        pp($data);
+        $this->assign('data', $data);
+        $this->display();
+    }
+}

@@ -1,0 +1,28 @@
+.mui-bar-nav ~ .mui-content{
+    padding-top: 0px;
+}
+.mui-ellipsis{
+    font-size: 16px;
+    font-weight: 100;
+
+}
+.mui-h6{
+    font-size: 14px;
+    color: #909090;
+}
+.mui-text-right{
+    /*position: relative;
+    top:10px;*/
+    float: right;
+    /*border: 1px solid #909090;
+    height:20px;
+    width: 20px;*/
+}
+
+.mui-bar-tab input{
+    width: 100%;border: none;
+    height:48px;
+    background-color: #fe504f;
+    color: #FFFFFF;
+    font-size: 18px;
+}

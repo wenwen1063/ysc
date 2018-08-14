@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../css/public.css" />
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/Wx/CSS/new_file.css" />
+		<title>评分</title>
+		<style>
+			html,
+			body {
+				height: 100%;
+				background: #fff;
+				overflow-y: hidden;
+			}
+			
+			body {
+				margin: 15px;
+			}
+			
+			.eva_indi {
+				width: auto;
+			}
+			
+			.eva_eva_p {
+				margin: 0;
+			}
+			
+			.eva_text {
+				box-sizing: border-box;
+				border: 1px solid #ccc;
+				width: 100%;
+				box-shadow: none;
+				resize: none; 
+			}
+			
+			.all_main {
+				float: none;
+				padding: 0;
+			}
+			
+			.eva_button.margin {
+				margin-left: 0;
+			}
+			
+			.text_align_center {
+				text-align: center;
+			}
+			
+			.eva_mes {
+				width: 100%;
+			}
+			
+			.eva_button.conf {
+				background: #2577E3;
+				display: inline-block;
+				height: 35px;
+				line-height: 35px;
+				margin-right: 10px;
+			}
+			
+			.eva_button.canc {
+				margin-left: 20px;
+				background: #CECABF;
+				display: inline-block;
+				height: 35px;
+				line-height: 35px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="all_main">
+			<div id="rating-star" class="eva_eva_p">
+				<span class="eva_indi">评分：</span>
+				<a href="#" style="background-position:0 0">0</a>
+				<a href="#" style="background-position:0 0">1</a>
+				<a href="#" style="background-position:0 0">2</a>
+				<a href="#" style="background-position:0 0">3</a>
+				<a href="#" style="background-position:0 0">4</a>
+				<!--<div class="hint_i">
+					<img src="i.png">
+					<div>
+						<p>注：1星代表非常不满意</p>
+						<p>2星代表差评</p>
+						<p>3星代表一般</p>
+						<p>4星代表满意</p>
+						<p>5星代表非常满意</p>
+					</div>
+				</div>-->
+			</div>
+			<form action="{:U('/home/user/subevaluate')}" method="post">
+				<input type="hidden" name="order_id" id="order_id" value="{$order_id}" />
+				<input type="hidden" name="start" id="start" value="5" />
+				<div class="eva_eva_p eva_mes">
+					<span class="eva_indi">内容：</span>
+					<textarea class="eva_text" maxlength="200" name="content" rows="" cols=""></textarea>
+					<!--<span class="length"><span id="length">0</span>/200</span>-->
+					<!--<p class="text_align_center">
+						<input class="eva_button conf margin" type="submit" name="" id="" value="提  交">
+						<input class="eva_button canc" type="button" name="" id="" value="取  消">
+					</p>-->
+					<p class="text_align_center">
+						<span class="eva_button conf">提 交</span>
+						<span class="eva_button canc">取 消</span>
+					</p>
+				</div>
+			</form>
+		</div>
+	</body>
+
+</html>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+	//星星评价
+	$('#rating-star').on('click', 'a', function() {
+
+		$start = parseInt($(this).html()) + 1;
+		$("start").val($start);
+		$('#rating-star').data('star', this.innerHTML);
+	}).on('mouseenter', 'a', function() {
+		setStar(this);
+	}).on('mouseleave', 'a', function() {
+		var $r_star = $('#rating-star');
+		var level = $r_star.data('star');
+		var $stars = $r_star.find('a');
+		if(level) {
+			setStar($stars[level]);
+
+		} else {
+			$stars.css('background-position', '0 -24px');
+		}
+	});
+
+	function setStar(star) {
+		var $this = $(star);
+		var level = $this.html();
+		var n;
+		//          if (level == '2') {
+		//              n = '0 0';
+		//          } else if (level == '1') {
+		//              n = '0 0';
+		//          } else {
+		//              n = '0 -60px';
+		//          }
+		$this.prevAll().andSelf().css('background-position', "0 0");
+		$this.nextAll().css('background-position', '0 -24px');
+	}
+</script>

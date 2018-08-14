@@ -1,0 +1,8 @@
+<?php
+$arr  = include './config.php';
+$arr2 = array(
+    'URL_MODEL'     => 1, //启动路由功能
+    'URL_ROUTER_ON' => true,
+    'URL'           => '/xlj/index.php/home/index/index',
+);
+return array_merge($arr, $arr2);

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=NO" />
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">-->
+        <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css">
+        <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/index.css">
+        <!-- <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/kefandtop.css"> -->
+        <!--<title>首页</title>-->
+        <style>
+            .mui-bar-tab .mui-tab-item.mui-active {
+                color: #fe504f;
+            }
+
+            .ellipsis {
+                display: block;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 100%;
+                color: #444;
+            }
+
+            #shop_notice {
+                height: 50px;
+            }
+
+            #shop_notice .fonst {
+                width: 100px;
+                padding: 0 10px;
+            }
+
+            #shop_notice .fonst img {
+                left: 0;
+                position: none;
+                width: 100%;
+            }
+
+            #shop_notice .content {
+                left: 8px;
+            }
+
+            #shop_notice .content .content_fonst {
+                top: 10px;
+                left: 8px;
+                height: 30px;
+            }
+
+            #shop_notice .content .more {
+                border: none;
+                right: 15px;
+            }
+
+            #shops {
+                height: auto;
+                top: 0;
+                margin-top: 10px;
+            }
+
+            #shops .lists {
+                padding-top: 0;
+                padding: 15px 10px;
+                width: 33.3333%;
+                height: auto;
+            }
+
+            #shops .lists:nth-child(n+3) {
+                border-right: 0;
+            }
+
+            #shops .lists .names {
+                padding-bottom: 10px;
+            }
+
+            #shops .lists h5 {
+                margin: 0;
+                color: #444;
+            }
+
+            #shops .lists img {
+                top: 0;
+                width: 100%;
+            }
+
+            #commodity_name {
+                padding: 10px;
+                height: auto;
+                color: red;
+                font-size: 16px;
+                top: 0px;
+                margin-top: 10px;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            #commodity_name .more {
+                top: 0;
+                border: none;
+                right: 0;
+                padding: 0;
+            }
+            #shopcontent{
+                top: 0;
+                height: auto;
+                padding: 0;
+            }
+            #shopcontent .list{
+                border: 1px solid #F0F0F0;
+                padding: 10px;
+                width: 50%;
+                height: auto;
+                margin-bottom: 0px;
+            }
+            #shopcontent .list h5{
+                margin: 5px 0;
+                font-size: 15px;
+            }
+            #shopcontent .list img{
+                height: auto;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header class="mui-bar mui-bar-nav header" style="background-color:#E6E6FA;">
+            <!-- <a id="info" class="mui-icon mui-icon-search mui-pull-right" href="classification/Searchgoods.html"></a> -->
+            <h1 class="mui-title" style="color:red;">首页</h1>
+        </header>
+        <div>
+            <div class="mui-slider">
+                <div class="mui-slider-group mui-slider-loop" id="adverinfo">
+                    <foreach name='picinfo' item='v' key='k'>
+                        <if condition="$k eq 0">
+                            <div class="mui-slider-item mui-slider-item-duplicate">
+                                <a href="#"><img src=" __PUBLIC__/Uploads/{$v['img']}" /></a>
+                            </div>
+                        </if>
+                        <div class="mui-slider-item">
+                            <?php if ($v['ad_type']==1): ?>
+                            <a href="#">
+                                <?php elseif ($v['ad_type']==2): ?>
+                                <a href="{$v['ad_link']}">
+                                    <?php else : ?>
+                                    <a href="{:U('/home/goods/goodsinfo',array('id'=>$v['ad_goods']))}">
+                                        <?php endif ?>
+                                        <img src=" __PUBLIC__/Uploads/{$v['img']}" /></a>
+                        </div>
+                        <if condition="$k eq count($picinfo)">
+                            <div class="mui-slider-item mui-slider-item-duplicate">
+                                <a href="#"> <img src=" __PUBLIC__/Uploads/{$v['img']}" /></a>
+                            </div>
+                        </if>
+                    </foreach>
+                </div>
+            </div>
+        </div>
+        <div class="navigation">
+            <div class="navigation_one">
+                <a href="{:U('/home/partners/index')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_partners.png">
+                        </div>
+                        <span class="list_span">成为搭档</span>
+                    </div>
+                </a>
+                <a href="{:U('/home/Special/partnerspecial')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_exclusive.png">
+                        </div>
+                        <span class="list_span">搭档福利</span>
+                    </div>
+                </a>
+                <a href="{:U('/home/extension/extensionlist')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_extensiontool.png">
+                        </div>
+                        <span class="list_span">推广工具</span>
+                    </div>
+                </a>
+                <a href="{:U('/home/teacher/index')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_mentor.png">
+                        </div>
+                        <span class="list_span">创业社区</span>
+                    </div>
+                </a>
+                <!-- <a href="{:U('/home/seller/sellercenter')}"> -->
+                <a href="{:U('/home/seller/sellerapply')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_bc.png">
+                        </div>
+                        <span class="list_span">商家入驻</span>
+                    </div>
+                </a>
+            </div>
+            <div class="navigation_two">
+                <a href="{:U('/home/feeflow/feeflow')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_vc.png">
+                        </div>
+                        <span class="list_span">话费流量</span>
+                    </div>
+                </a>
+                <a href="{:U('/home/goldmall/goldmallindex')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_exchange.png">
+                        </div>
+                        <span class="list_span">积分换购</span>
+                    </div>
+                </a>
+                <a href="{:U('/home/coupon/couponindex')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_lc.png">
+                        </div>
+                        <span class="list_span">领券中心</span>
+                    </div>
+                </a>
+                <a href="{:U('/home/information/index')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_consulting.png">
+                        </div>
+                        <span class="list_span">精品资讯</span>
+                    </div>
+                </a>
+                <a href="{:U('/home/goodsclass/goodsclassindex')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_goods.png">
+                        </div>
+                        <span class="list_span">全部商品</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div id="shop_notice">
+            <div class="fonst">
+                <img src="__PUBLIC__/Wx/img/Home/shop_fonst.png">
+            </div>
+            <div class="content">
+                <div class="circular">
+                </div>
+                <div class="content_fonst">
+                    <marquee direction="up" scrollDelay="190" height="30px" loop="-1" scrollamount="3">
+                        <foreach name='notic' item='vb'>
+                            <p class="ellipsis" style="color:#000">{$vb['content']}</p>
+                        </foreach>
+                    </marquee>
+                </div>
+                <div class="more">
+                    <a href="{:U('/home/index/notice')}">
+                        <span style="color: red;font-size:12px">更多</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="shops">
+            <foreach name='shop' item='vi'>
+                <a href="{:U('/home/seller/sellerinfo',array('id'=>$vi['id']))}">
+                    <div class="lists" style="border-bottom: 1px solid #e0e0e0">
+                        <div class="names">
+                            <h5 class="ellipsis" style="color:#414141!important;">{$vi['forshort']}
+                        </h5>
+                        </div>
+                        <img src="__PUBLIC__/Uploads/{$vi['logo']}">
+                    </div>
+                </a>
+            </foreach>
+        </div>
+        <div style="clear: both;"></div>
+        <?php if ($activity != null): ?>
+        <div id="advertisements">
+            <foreach name='activity' item='a'>
+                <div class="lists" style="margin-bottom: 5px">
+                    <img src="__PUBLIC__/Uploads/{$a['pic']}">
+                </div>
+            </foreach>
+        </div>
+        <!--   <div class="contentmores">
+        <div class="more">
+            <a href="__PUBLIC__/Wx/Html/homepage/marketingActive/html/activecenter.html">
+                <span style="color: red;font-size:12px">更多></span>
+            </a>
+        </div>
+    </div> -->
+        <?php endif ?>
+        <foreach name='arr' item='as' key='k'>
+
+            <div id="commodity_name">
+                <!-- <img src="__PUBLIC__/Wx/img/Home/1F.png"> -->
+                {$k}
+                <!-- <span>{$k}</span> -->
+                <div class="more">
+                    <a href="{:U('/home/goodsclass/goodsclassindex')}">
+                        <span style="color: red;font-size:12px">更多</span>
+                    </a>
+                </div>
+            </div>
+            <div id="shopcontent">
+                <foreach name='as' item='vl' key="key">
+                    <if condition="$key lt 4">
+                        <a href="{:U('/home/goods/goodsinfo',array('id'=>$vl['goods_id']))}">
+                            <div class="list">
+                                <img src="__PUBLIC__/Uploads/{$vl['sm_pic']}">
+                                <h5 class="ellipsis" style="color:#414141!important;">{$vl['goods_name']}</h5>
+                                <div class="money">
+                                    <span>￥{$vl['price']}</span>
+                                    <input type="button" value="购买">
+                                </div>
+                            </div>
+                        </a>
+                    </if>
+                </foreach>
+            </div>
+
+        </foreach>
+        <!--客服和回到顶部-->
+        <include file="public:kfandtop" />
+        <!--nav底部导航-->
+        <include file="public:nav" />
+        <!--nav底部导航结束-->
+    </body>
+    <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/index/js/template.js"></script>
+    <script language="javascript" src="http://chat8.live800.com/live800/chatClient/monitor.js?jid=5530154684&companyID=820706&configID=151384&codeType=custom"></script>
+    <script type="text/javascript">
+    </script>
+
+</html>

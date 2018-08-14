@@ -1,0 +1,60 @@
+body {
+    overflow-x: hidden;
+}
+
+.header {
+    position: relative;
+    background-color: #ff5353;
+    height: 45px;
+}#classification{
+    width: 100%;
+    overflow-x: hidden;
+ }
+
+.mui-title, .mui-action-back {
+    font-weight: 100;
+    color: #FFFFFF;
+}
+
+#classification {
+    top:10px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0 10px;
+    background-color: #fff;
+}
+
+#classification .list {
+    border-right: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    height: 120px;
+    width: 33%;
+    float: left;
+}
+#classification .list p{
+    position: relative;
+    text-align: center;
+    top: 12px;
+    font-weight: 100;
+}
+#classification .list img {
+    position: relative;
+    top: 15px;
+    width: 70px;
+}
+
+#classification .list .img{
+    width: 70px;
+    margin: 0 auto;
+}
+.button input{
+    border-radius: 5px;
+    position: fixed;
+    height: 40px;
+    background-color: #fe504f;
+    color: #FFFFFF;
+    width: 100%;
+    left:0;
+    bottom:0;
+}

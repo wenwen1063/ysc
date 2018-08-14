@@ -1,0 +1,9 @@
+[ 2018-08-14T14:06:48+08:00 ] 127.0.0.1 /ysc2/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000758s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001115s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001155s ]
+ERR: SQLSTATE[HY000] [1049] Unknown database 'ysc'
+

@@ -1,0 +1,283 @@
+<head>
+	<meta charset="utf-8">
+	<title>
+		创业导师
+	</title>
+	<meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<link href="../../../CSS/CommonCSS/Base.css" rel="stylesheet">
+	<link href="../../../CSS/BusinessCSS/Entrepreneurship.css" rel="stylesheet">  
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+			</a>
+			<h1 class="mui-title">
+        创业导师
+    </h1>
+		</header>
+		<div class="mui-slider">
+			<div class="mui-slider-group">
+				<div class="mui-slider-item">
+					<a href="TutorHomepage.html">
+						<img src="../../../img/banner_1.png" />
+					</a>
+				</div>
+				<div class="mui-slider-item">
+					<a href="TutorHomepage.html">
+						<img src="2.jpg" />
+					</a>
+				</div>
+				<div class="mui-slider-item">
+					<a href="TutorHomepage.html">
+						<img src="3.jpg" />
+					</a>
+				</div>
+				<div class="mui-slider-item">
+					<a href="TutorHomepage.html">
+						<img src="4.jpg" />
+					</a>
+				</div>
+			</div>
+		</div>
+		<div id="search">
+			<input placeholder="搜索文章" type="text">
+			</input>
+		</div>
+		<div class="mui-content mui-row mui-fullscreen">
+			<div class="mui-col-xs-3">
+				<div class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical" id="segmentedControls">
+					<a class="mui-control-item mui-active" href="#content1">
+						文章分类
+					</a>
+					<a class="mui-control-item" href="#content2">
+						文章分类
+					</a>
+					<a class="mui-control-item" href="#content3">
+						文章分类
+					</a>
+					<a class="mui-control-item" href="#content4">
+						文章分类
+					</a>
+					<a class="mui-control-item" href="#content5">
+						文章分类
+					</a>
+					<a class="mui-control-item" href="#content6">
+						文章分类
+					</a>
+					<a class="mui-control-item" href="#content7">
+						文章分类
+					</a>
+				</div>
+			</div>
+			<div class="mui-col-xs-9" id="segmentedControlContents" style="border-left: 1px solid #c8c7cc;">
+				<div class="mui-control-content mui-active" id="content1">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell">
+							<a href="ArticleDetails.html">
+								<div class="mui-card">
+									<div class="mui-card-content">
+										<div class="mui-card-content-inner">
+											<h4 class="mui-ellipsis">文章标题</h4>
+											<h5>发布者:xxx &numsp;2017.01.12</h5>
+											<p class="mui-h6 mui-ellipsis">文章标题..文章标题..文章标题..文章标题..文章标题..</p>
+										</div>
+									</div>
+									<div class="mui-card-footer">
+										<div class="Fabulous">
+											<img style="position: relative;top: 2px;" src="../../../img/Home/home_icon_praise_gray.png" alt="">
+											<span>2222</span>
+										</div>
+										<div class="see">
+											<img src="../../../img/Home/home_icon_eye.png" alt="">
+											<span>2222</span>
+										</div>
+
+										<div class="right">
+											<img style="position: relative;top: 3px;margin-left: 1px" src="../../../img/Home/home_icon_message.png" alt="">
+											<span>2222</span>
+										</div>
+									</div>
+								</div>
+							</a>
+							<a href="ArticleDetails.html">
+								<div class="mui-card">
+									<div class="mui-card-content">
+										<div class="mui-card-content-inner">
+											<h4 class="mui-ellipsis">文章标题</h4>
+											<h5>发布者:xxx &numsp;2017.01.12</h5>
+											<p class="mui-h6 mui-ellipsis">文章标题..文章标题..文章标题..文章标题..文章标题..</p>
+										</div>
+									</div>
+									<div class="mui-card-footer">
+										<div class="Fabulous">
+											<img style="position: relative;top: 2px;" src="../../../img/Home/home_icon_praise_gray.png" alt="">
+											<span>2222</span>
+										</div>
+										<div class="see">
+											<img src="../../../img/Home/home_icon_eye.png" alt="">
+											<span>2222</span>
+										</div>
+
+										<div class="right">
+											<img style="position: relative;top: 3px;margin-left: 1px" src="../../../img/Home/home_icon_message.png" alt="">
+											<span>2222</span>
+										</div>
+									</div>
+								</div>
+							</a>
+							<a href="ArticleDetails.html">
+								<div class="mui-card">
+									<div class="mui-card-content">
+										<div class="mui-card-content-inner">
+											<h4 class="mui-ellipsis">文章标题</h4>
+											<h5>发布者:xxx &numsp;2017.01.12</h5>
+											<p class="mui-h6 mui-ellipsis">文章标题..文章标题..文章标题..文章标题..文章标题..</p>
+										</div>
+									</div>
+									<div class="mui-card-footer">
+										<div class="Fabulous">
+											<img style="position: relative;top: 2px;" src="../../../img/Home/home_icon_praise_gray.png" alt="">
+											<span>2222</span>
+										</div>
+										<div class="see">
+											<img src="../../../img/Home/home_icon_eye.png" alt="">
+											<span>2222</span>
+										</div>
+
+										<div class="right">
+											<img style="position: relative;top: 3px;margin-left: 1px" src="../../../img/Home/home_icon_message.png" alt="">
+											<span>2222</span>
+										</div>
+									</div>
+								</div>
+							</a>
+							<a href="ArticleDetails.html">
+								<div class="mui-card">
+									<div class="mui-card-content">
+										<div class="mui-card-content-inner">
+											<h4 class="mui-ellipsis">文章标题</h4>
+											<h5>发布者:xxx &numsp;2017.01.12</h5>
+											<p class="mui-h6 mui-ellipsis">文章标题..文章标题..文章标题..文章标题..文章标题..</p>
+										</div>
+									</div>
+									<div class="mui-card-footer">
+										<div class="Fabulous">
+											<img style="position: relative;top: 2px;" src="../../../img/Home/home_icon_praise_gray.png" alt="">
+											<span>2222</span>
+										</div>
+										<div class="see">
+											<img src="../../../img/Home/home_icon_eye.png" alt="">
+											<span>2222</span>
+										</div>
+
+										<div class="right">
+											<img style="position: relative;top: 3px;margin-left: 1px" src="../../../img/Home/home_icon_message.png" alt="">
+											<span>2222</span>
+										</div>
+									</div>
+								</div>
+							</a>
+							<a href="ArticleDetails.html">
+								<div class="mui-card">
+									<div class="mui-card-content">
+										<div class="mui-card-content-inner">
+											<h4 class="mui-ellipsis">文章标题</h4>
+											<h5>发布者:xxx &numsp;2017.01.12</h5>
+											<p class="mui-h6 mui-ellipsis">文章标题..文章标题..文章标题..文章标题..文章标题..</p>
+										</div>
+									</div>
+									<div class="mui-card-footer">
+										<div class="Fabulous">
+											<img style="position: relative;top: 2px;" src="../../../img/Home/home_icon_praise_gray.png" alt="">
+											<span>2222</span>
+										</div>
+										<div class="see">
+											<img src="../../../img/Home/home_icon_eye.png" alt="">
+											<span>2222</span>
+										</div>
+
+										<div class="right">
+											<img style="position: relative;top: 3px;margin-left: 1px" src="../../../img/Home/home_icon_message.png" alt="">
+											<span>2222</span>
+										</div>
+									</div>
+								</div>
+							</a>
+							<a href="ArticleDetails.html">
+								<div class="mui-card">
+									<div class="mui-card-content">
+										<div class="mui-card-content-inner">
+											<h4 class="mui-ellipsis">文章标题</h4>
+											<h5>发布者:xxx &numsp;2017.01.12</h5>
+											<p class="mui-h6 mui-ellipsis">文章标题..文章标题..文章标题..文章标题..文章标题..</p>
+										</div>
+									</div>
+									<div class="mui-card-footer">
+										<div class="Fabulous">
+											<img style="position: relative;top: 2px;" src="../../../img/Home/home_icon_praise_gray.png" alt="">
+											<span>2222</span>
+										</div>
+										<div class="see">
+											<img src="../../../img/Home/home_icon_eye.png" alt="">
+											<span>2222</span>
+										</div>
+
+										<div class="right">
+											<img style="position: relative;top: 3px;margin-left: 1px" src="../../../img/Home/home_icon_message.png" alt="">
+											<span>2222</span>
+										</div>
+									</div>
+								</div>
+							</a>
+							<a href="ArticleDetails.html">
+								<div class="mui-card">
+									<div class="mui-card-content">
+										<div class="mui-card-content-inner">
+											<h4 class="mui-ellipsis">文章标题</h4>
+											<h5>发布者:xxx &numsp;2017.01.12</h5>
+											<p class="mui-h6 mui-ellipsis">文章标题..文章标题..文章标题..文章标题..文章标题..</p>
+										</div>
+									</div>
+									<div class="mui-card-footer">
+										<div class="Fabulous">
+											<img style="position: relative;top: 2px;" src="../../../img/Home/home_icon_praise_gray.png" alt="">
+											<span>2222</span>
+										</div>
+										<div class="see">
+											<img src="../../../img/Home/home_icon_eye.png" alt="">
+											<span>2222</span>
+										</div>
+
+										<div class="right">
+											<img style="position: relative;top: 3px;margin-left: 1px" src="../../../img/Home/home_icon_message.png" alt="">
+											<span>2222</span>
+										</div>
+									</div>
+								</div>
+							</a>
+
+						</li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+		<script src="../../../Script/CommonJS/Base.js">
+		</script>
+		<script>
+			var gallery = mui('.mui-slider');
+			gallery.slider({
+				interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+
+			});
+		</script>
+	</body>
+	</link>
+	</link>
+	</meta>
+	</meta>
+	</meta>
+	</meta>
+</head>

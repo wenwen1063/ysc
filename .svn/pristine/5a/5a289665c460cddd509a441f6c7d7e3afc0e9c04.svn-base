@@ -1,0 +1,152 @@
+<?php
+/*
+ *优惠券管理
+ *author:cyl
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class CouponController extends Controller
+{
+    //优惠券列表
+    public function couponindex()
+    {
+        $time                = time(); //当前时间
+        $map['c.start_time'] = array('ELT', $time);
+        $map['c.end_time']   = array('EGT', $time);
+        //优惠券数据
+        $data = M()->table('__COUPON__ c')
+            ->join('left join __SELLER__ s on s.id=c.seller_id')
+            ->where(array('c.is_disable' => 0))
+            ->where($map)
+            ->field('c.*,s.name as seller_name,s.logo')
+            ->select();
+        // pp($data);
+        foreach ($data as $key => $value) {
+            $data[$key]['start_time'] = date('Y.m.d', $value['start_time']);
+            $data[$key]['end_time']   = date('Y.m.d', $value['end_time']);
+        }
+//        pp($data);
+        $this->assign('data', $data);
+        $this->display();
+    }
+
+    //用户领取优惠券
+    public function getcoupon()
+    {
+        $c_id          = I('c_id'); // 优惠券id
+        $user_id       = cookie('user_id'); //当前登录用户id
+        $user_reg_time = M('user')->where(array('id' => $user_id))->getField('addtime'); //当前登录用户的注册时间
+        $get_user      = M('coupon')->where(array('id' => $c_id))->getField('get_user'); //领取用户 0新用户 1普通用户
+        $start_time    = M('coupon')->where(array('id' => $c_id))->getField('start_time'); //起始时间
+        $end_time      = M('coupon')->where(array('id' => $c_id))->getField('end_time'); //截止时间
+        //先判断用户有没有领取过该优惠券
+        $is_not = M('coupon_user')->where(array('discount_id' => $c_id, 'user_id' => $user_id))->find();
+        if ($is_not) {
+            $json = array(
+                'result' => 0,
+                'msg'    => '您已领取过该优惠券！',
+            );
+            $this->ajaxReturn($json);
+            exit;
+        }
+        //新用户
+        if ($get_user == 0) {
+            //注册时间小于起始时间或者大于截止时间（不满足新用户领取条件）
+            if ($user_reg_time < $start_time || $user_reg_time > $end_time) {
+                $json = array(
+                    'result' => 0,
+                    'msg'    => '十分抱歉，您不满足新用户领取条件！',
+                );
+            } else {
+                //写入领取记录表
+                $coupon_user              = M('coupon_user');
+                $coupon_user->discount_id = $c_id; //优惠券id
+                $coupon_user->user_id     = $user_id; //用户id
+                $coupon_user->got_time    = time(); //领取时间
+                $coupon_user->add();
+                //更新优惠券的库存信息
+                M('coupon')->where(array('id' => $c_id))->setInc('out_number'); //发行量加1
+                M('coupon')->where(array('id' => $c_id))->setDec('remain_number'); //剩余量加1
+                M('coupon')->where(array('id' => $c_id))->setInc('got_number'); //已领取量加1
+                $json = array(
+                    'result' => 1,
+                    'msg'    => '恭喜您，领取成功！',
+                );
+            }
+        } else {
+            //写入领取记录表(普通用户)
+            $coupon_user              = M('coupon_user');
+            $coupon_user->discount_id = $c_id; //优惠券id
+            $coupon_user->user_id     = $user_id; //用户id
+            $coupon_user->got_time    = time(); //领取时间
+            $coupon_user->add();
+            //更新优惠券的库存信息
+            M('coupon')->where(array('id' => $c_id))->setInc('out_number'); //发行量加1
+            M('coupon')->where(array('id' => $c_id))->setDec('remain_number'); //剩余量加1
+            M('coupon')->where(array('id' => $c_id))->setInc('got_number'); //已领取量加1
+            $json = array(
+                'result' => 1,
+                'msg'    => '恭喜您，领取成功！',
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+
+    //我的优惠券
+    public function mycoupon()
+    {
+        $user_id = cookie('user_id'); //当前登录用户的Id
+        //我的优惠券数据
+        $data = M()->table('__COUPON__ c')
+            ->where(array('cu.user_id' => $user_id, 'c.is_disable' => 0))
+            ->join('left join __COUPON_USER__ cu on cu.discount_id=c.id')
+            ->join('left join __SELLER__ s on s.id=c.seller_id')
+            ->field('c.*,s.name as seller_name,s.logo')
+            ->select();
+        // pp($data);
+        foreach ($data as $key => $value) {
+            $data[$key]['start_time'] = date('Y.m.d', $value['start_time']);
+            $data[$key]['end_time']   = date('Y.m.d', $value['end_time']);
+        }
+        $this->assign('data', $data);
+        $this->display();
+    }
+
+    //优惠券详情
+    public function couponinfo()
+    {
+        $id   = I('id'); //优惠券id
+        $data = M()->table('__COUPON__ c')
+            ->where(array('c.id' => $id))
+            ->join('left join __SELLER__ s on s.id=c.seller_id')
+            ->field('c.*,s.name as seller_name,s.logo')
+            ->find();
+        $data['start_time'] = date('Y.m.d', $data['start_time']);
+        $data['end_time']   = date('Y.m.d', $data['end_time']);
+        $this->assign('data', $data);
+        $this->display();
+    }
+
+    //我的优惠券历史记录
+    public function couponhistory()
+    {
+        $user_id = cookie('user_id'); //当前登录用户的Id
+        //我的优惠券数据
+        $data = M()->table('__COUPON__ c')
+            ->where(array('cu.user_id' => $user_id, 'c.is_disable' => 0, 'cu.use_status' => 2))
+            ->join('left join __COUPON_USER__ cu on cu.discount_id=c.id')
+            ->join('left join __SELLER__ s on s.id=c.seller_id')
+            ->field('c.*,s.name as seller_name,s.logo')
+            ->select();
+        // pp($data);
+        foreach ($data as $key => $value) {
+            $data[$key]['start_time'] = date('Y.m.d', $value['start_time']);
+            $data[$key]['end_time']   = date('Y.m.d', $value['end_time']);
+        }
+        $this->assign('data', $data);
+        $this->display();
+    }
+
+}

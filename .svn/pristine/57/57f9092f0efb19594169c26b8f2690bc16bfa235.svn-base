@@ -1,0 +1,332 @@
+<head>
+	<meta charset="utf-8">
+	<title>
+		创业社区
+	</title>
+	<meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+	<link href="__PUBLIC__/Wx/CSS/BusinessCSS/Entrepreneurship.css" rel="stylesheet">
+	<style type="text/css">
+		.ellipsis {
+			display: block;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			width: 100%;
+			color: #444;
+		}
+		
+		.wen img {
+			max-width: 100%;
+			width: auto;
+		}
+		
+		.searchbar_wrapper {
+			padding: 10px;
+		}
+		
+		.searchbar {
+			width: 100%;
+			padding-right: 40px;
+			position: relative;
+			height: 35px;
+			background: #fff;
+			border-radius: 5px;
+			padding-right: 60px;
+		}
+		
+		.searchbar .searchimg {
+			position: absolute;
+			right: 10px;
+			top: 10px;
+			width: 20px;
+			height: 20px;
+		}
+		
+		.searchbar input[type='search'] {
+			margin: 0;
+			display: inline-block;
+			border: none;
+			height: 35px;
+			padding: 5px 10px;
+			padding-right: 0;
+			font-size: 14px;
+			background: #fff;
+			text-align: left;
+		}
+		
+		.searchbar .imgdiv {
+			width: 50px;
+			height: 100%;
+			text-align: center;
+			display: inline-block;
+			position: absolute;
+			top: 0;
+			right: 0px;
+			background: #FE504F;
+			border-radius: 0 5px 5px 0;
+		}
+		
+		.searchbar .imgdiv span {
+			vertical-align: middle;
+			/* width: 20px; */
+			position: absolute;
+			font-size: 15px;
+			/* top: 7.5px; */
+			width: 100%;
+			display: inline-block;
+			line-height: 35px;
+			right: 0px;
+			color: #fff;
+		}
+		
+		.mui-table-view-cell> a {
+			margin: 0 !important;
+		}
+		.mui-table-view-cell:after{
+			height: 0 !important;
+		}
+		.mui-card{
+			margin: 0;
+			border-bottom: 1px solid #E2E2E2;
+		}
+		.mui-card-footer{
+			float: none;
+		}
+	</style>
+
+	<body>
+		<!--<header class="mui-bar mui-bar-nav">
+            <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+            </a>
+            <h1 class="mui-title">
+        创业社区
+    </h1>
+        </header>-->
+		<div class="mui-slider">
+			<div class="mui-slider-group">
+				<foreach name='pic' item='vp'>
+					<div class="mui-slider-item">
+						<a href="{$vp['link']}">
+							<img src="__PUBLIC__/Uploads/{$vp['pic']}" />
+						</a>
+					</div>
+				</foreach>
+			</div>
+		</div>
+		<div class="searchbar_wrapper">
+			<div class="searchbar">
+				<input type="search" id="searchtext" placeholder="输入搜索关键字" />
+				<div class="imgdiv">
+					<span id="searchtextbutton">搜索</span>
+				</div>
+			</div>
+		</div>
+		<div class="mui-content mui-row mui-fullscreen " style="border-top: 1px solid #e2e2e2;top: 0;">
+			<div class="mui-col-xs-3">
+				<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical clacc">
+						<!-- <a class="mui-control-item mui-active" href="#content1">资讯分类</a> -->
+						<input type="hidden" class="class_id" name="type" value="">
+						<a class="mui-control-item mui-active" id="alltext">全部文章</a>
+					</div>
+				<foreach name='classs' item='vi'>
+					<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical clacc">
+						<!-- <a class="mui-control-item mui-active" href="#content1">资讯分类</a> -->
+						<input type="hidden" class="class_id" name="type" value="{$vi['id']}">
+						<a class="mui-control-item">{$vi['name']}</a>
+					</div>
+				</foreach>
+			</div>
+			<div class="mui-col-xs-9 " id="segmentedControlContents " style="border-left: 1px solid #c8c7cc; ">
+				<if condition="$text eq null">
+					<div id="content1" class="mui-control-content mui-active">
+						<div class="img">
+							<img src="__PUBLIC__/Wx/img/Home/default_noconsulting.png" alt="">
+							<p>暂无任何资讯消息哦~</p>
+						</div>
+					</div>
+				</if>
+				
+				<div class="mui-control-content mui-active " id="content2" style="display: block">
+					<ul class="mui-table-view ">
+						<foreach name='text' item='bp'>
+							<li class="mui-table-view-cell ">
+								<a href="{:U('/home/teacher/wzinfo',array('a_id'=>$bp['a_id']))}">
+									<div class="mui-card">
+										<!--页眉，放置标题-->
+										<div class="mui-card-header  mui-card-media">
+											<div class="mui-media-body"  style="margin-left: 0;">
+												<h4 class="mui-ellipsis">{$bp['title']}</h4>
+												<h5 class="mui-ellipsis">发布者:{$bp['username']}</h5>
+												<h5 class="mui-ellipsis">发布日期:{$bp['times']}.{$bp['addtime']}.{$bp['addtimes']}</h5>
+											</div>
+										</div>
+										<!--内容区-->
+										<div class="mui-card-content">
+											<!--<div style="width: 100%;height:auto;">-->
+												<img src="__PUBLIC__/Uploads/{$bp['video']}" style="width: 100%;vertical-align: middle;height: auto;max-height: 200px;">
+											<!--</div>--> 
+										</div>
+										<!--页脚，放置补充信息或支持的操作-->
+										<div class="mui-card-footer ">
+											<div class="Fabulous ">
+												<img style="position: relative;top: 2px; " src="__PUBLIC__/Wx/img/Home/home_icon_praise_gray.png " alt=" ">
+												<span>{$bp['nice_num']}</span>
+											</div>
+											<div class="see ">
+												<img src="__PUBLIC__/Wx/img/Home/home_icon_eye.png " alt=" ">
+												<span>{$bp['look_num']}</span>
+											</div>
+											<div class="right ">
+												<img style="position: relative;top: 3px;margin-left: 1px " src="__PUBLIC__/Wx/img/Home/home_icon_message.png " alt=" ">
+												<span>{$bp['numbers']}</span>
+											</div>
+										</div>
+									</div>
+								</a>
+							</li>
+						</foreach>
+					</ul>
+				</div>
+				<div id="content4" class="mui-control-content mui-active" style="display: none">
+					<div class="img">
+						<img src="__PUBLIC__/Wx/img/Home/default_noconsulting.png" alt="">
+						<p>暂无任何资讯消息哦~</p>
+					</div>
+				</div>
+				
+				<div class="mui-control-content mui-active " id="content3" style="display: none">
+					<ul class="mui-table-view " id="content">
+						<script id="tpl" type="text/template">
+							<!-- <foreach name='text' item='bp'> -->
+							{{each data as v i}}
+							<li class="mui-table-view-cell ">
+								<a href="__MODULE__/teacher/wzinfo/?a_id={{v.a_id}}">
+									<div class="mui-card">
+										<!--页眉，放置标题-->
+										<div class="mui-card-header  mui-card-media">
+											<div class="mui-media-body"  style="margin-left: 0;">
+												<h4 class="mui-ellipsis">{{v['title']}}</h4>
+												<h5 class="mui-ellipsis">发布者:{{v['username']}}</h5>
+												<h5 class="mui-ellipsis">发布日期:{{v['times']}}.{{v['addtime']}}.{{v['addtimes']}}</h5>
+											</div>
+										</div>
+										<!--内容区-->
+										<div class="mui-card-content">
+											<!--<div style="width: 100%;height:auto;">-->
+												<img src="__PUBLIC__/Uploads/{{v['video']}}" style="width: 100%;vertical-align: middle;height: auto;max-height: 200px;">
+											<!--</div>--> 
+										</div>
+										<!--页脚，放置补充信息或支持的操作-->
+										<div class="mui-card-footer ">
+											<div class="Fabulous ">
+												<img style="position: relative;top: 2px; " src="__PUBLIC__/Wx/img/Home/home_icon_praise_gray.png " alt=" ">
+												<span>{{v['nice_num']}}</span>
+											</div>
+											<div class="see ">
+												<img src="__PUBLIC__/Wx/img/Home/home_icon_eye.png " alt=" ">
+												<span>{{v['look_num']}}</span>
+											</div>
+											<div class="right ">
+												<img style="position: relative;top: 3px;margin-left: 1px " src="__PUBLIC__/Wx/img/Home/home_icon_message.png " alt=" ">
+												<span>{{v['numbers']}}</span>
+											</div>
+										</div>
+									</div>
+								</a>
+							</li>
+							{{/each}}
+						</script>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/index/js/template.js"></script>
+		<script>
+			var gallery = mui('.mui-slider');
+			gallery.slider({
+				interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+
+			});
+		</script>
+		<script type="text/javascript">
+			$('.mui-col-xs-3 #segmentedControls .mui-control-item').click(function() {
+				$('.mui-col-xs-3 #segmentedControls .mui-control-item').removeClass('mui-active');
+				$(this).addClass('mui-active');
+			});
+			$('#searchtextbutton').click(function(){
+				$('.mui-col-xs-3 #segmentedControls .mui-control-item').removeClass('mui-active');
+				$("#alltext").addClass('mui-active');
+				$text=$("#searchtext").val();
+				$.ajax({
+					url: "{:U('/home/teacher/clacc')}",
+					type: "post",
+					data: {
+						"type": 2,
+						"text":$text
+					},
+					dataType: "json",
+					success: function(data) {
+						$text=$("#searchtext").val('');
+						console.log(data);
+						if(data['result'] == 0) {
+							var html = template('tpl', data);
+							$('#content').html(html);
+							$("#content2").css('display', 'none');
+							$("#content3").css('display', 'block');
+							$("#content4").css('display', 'none');
+						}
+						if(data['result'] == 1) {
+							$("#content2").css('display', 'none');
+							$("#content3").css('display', 'none');
+							$("#content4").css('display', 'block');
+							// mui.toast('该分类暂无文章！');
+						}
+						$("#content").find(".inn").html($("#content").find(".inn").attr('oid'));
+					}
+				})
+			});
+			
+			$(".clacc").click(function() {
+				var class_id = $(this).find('.class_id').val();
+//				            alert(class_id);
+				$.ajax({
+					url: "{:U('/home/teacher/clacc')}",
+					type: "post",
+					data: {
+						"type": 1,
+						"class_id": class_id
+					},
+					dataType: "json",
+					success: function(data) {
+						console.log(data);
+						if(data['result'] == 0) {
+							var html = template('tpl', data);
+							$('#content').html(html);
+							$("#content2").css('display', 'none');
+							$("#content3").css('display', 'block');
+							$("#content4").css('display', 'none');
+						}
+						if(data['result'] == 1) {
+							$("#content2").css('display', 'none');
+							$("#content3").css('display', 'none');
+							$("#content4").css('display', 'block');
+							// mui.toast('该分类暂无文章！');
+						}
+						$("#content").find(".inn").html($("#content").find(".inn").attr('oid'));
+					}
+				})
+			});
+		</script>
+	</body>
+	</link>
+	</link>
+	</meta>
+	</meta>
+	</meta>
+	</meta>
+</head>

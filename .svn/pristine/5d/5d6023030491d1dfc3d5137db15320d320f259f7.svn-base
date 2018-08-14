@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>新增地址</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Pos/mui.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Myaddress/Addressmanagement.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Pos/mui.picker.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Pos/mui.poppicker.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Myaddress/Myaddress.css" rel="stylesheet">
+    </head>
+	<style type="text/css">
+		.dis{
+			display: none;
+		}
+	</style>
+    <body>
+        <!--<header class="mui-bar mui-bar-nav header">
+            <a href="../Mypage.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <h1 class="mui-title">新增地址</h1>
+        </header>-->
+        <div class="input">
+            <input class="dizhi" type="button" value="+新增地址">
+        </div>
+        <div class="xin">
+            <div class="mui-input-row">
+                <label>收货人</label>
+                <input type="text" id="name" placeholder="请输入收货人姓名">
+            </div>
+            <div class="mui-input-row">
+                <label>手机号</label>
+                <input type="text" id="phone" placeholder="请输入收货人手机号">
+            </div>
+            <div class="mui-input-row">
+                <label>区域</label>
+                <div id="showCityPicker" class="cer_connew"><small id="cityResult"></small>
+                    <span style="color: #909090;float:right;margin-top: 10px;margin-right: 10px">请选择 ></span>
+                </div>
+            </div>
+            <div class="mui-input-row">
+                <label>详细地址</label>
+                <input type="text" id="address" placeholder="请输入收货人详细地址">
+            </div>
+            <div class="mui-input-row">
+            </div>
+            <div class="moren">
+            <!-- <img src="__PUBLIC__/Wx/img/My/my_icon_checkoff.png" alt="">
+            <i style="color: #1E88EC;" moren="1" id="moren" class="fa fa-check-circle" aria-hidden="true"></i>
+            <p>设为默认收货地址</p> -->
+            <input type="hidden" name="addmoren" id="addmoren" value="0" />
+            <div class="radio-box">
+                    <input style="color: #1E88EC;" type="radio" class="fa fa-check-circle"   id="moren" >
+                    <input style="color: #1E88EC;" type="radio" class="fa fa-check-circle dis"  id="moren1" checked="checked"  >
+                    <label>设为默认收货地址</label>
+            </div>
+        </div>
+            <div class="baocun">
+                <input type="button" value="保存" onclick="check()">
+            </div>
+        </div>
+
+        <script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+    <!-- <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script> -->
+    <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/city.data-3.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/city.data.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.picker.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.poppicker.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+    <!-- <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script> -->
+    
+    <script type="text/javascript">
+    	$("#moren").click(function(){
+    		$("#moren").hide();
+    		$("#moren1").show();
+    		$("#addmoren").val(1);
+    		$("#moren").removeAttr("checked");
+    	})
+    	
+    	$("#moren1").click(function(){
+    		$("#addmoren").val(0);
+    		$("#moren1").hide();
+    		$("#moren").show();
+    	})
+    </script>
+    
+    
+    <script>
+    // mui('.xin')[0].style.display = 'block';
+    mui(".input").on('tap', '.dizhi', function() {
+        this.style.display = "none";
+        var xin = mui('.xin')[0];
+        xin.style.display = 'block';
+    })
+    </script>
+    <script>
+    (function($, doc) {
+        $.init();
+        $.ready(function() {
+            //普通示例
+            var userPicker = new $.PopPicker();
+            var showUserPickerButton = doc.getElementById('showUserPicker');
+            //-----------------------------------------
+            //                  //级联示例
+            var cityPicker3 = new $.PopPicker({
+                layer: 3
+            });
+            cityPicker3.setData(cityData3);
+            var showCityPickerButton = doc.getElementById('showCityPicker');
+            var cityResult3 = doc.getElementById('cityResult');
+            showCityPickerButton.addEventListener('tap', function(event) {
+                cityPicker3.show(function(items) {
+                    cityResult3.innerText = (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+                    //返回 false 可以阻止选择框的关闭
+                    //return false;
+                });
+            }, false);
+        });
+    })(mui, document);
+    </script>
+    <script type="text/javascript">
+    function check() {
+        // alert('111');
+        var is_moren;
+        var name = $("#name").val();
+        var phone = $("#phone").val();
+        var address = $("#address").val();
+        var quyu = $("#cityResult").text();
+        is_moren = $("#addmoren").val();
+               // $(".fa-check-circle").click(function() {
+
+               //  });
+           // alert(is_moren);
+        // alert(is_moren);
+        if (name == '' || phone == '' || quyu == '' || address == '') {
+            mui.toast('请检查收货信息是否填写完整！');
+            return false;
+        };
+        if (phone.length != 11) {
+             // alert('333');
+            mui.toast('请输入正确手机号码！');
+            return false;
+        };
+        $.ajax({
+            type: "post",
+            url: "{:U('/home/address/addradd')}",
+            async: false,
+            data: {
+                "name": name,
+                "phone": phone,
+                "quyu": quyu,
+                "address": address,
+                "is_moren": is_moren
+            },
+            dataType: "json",
+            success: function(data) {
+                //              console.log(data);
+                if (data.result == 0) {
+                    mui.toast('新增成功！');
+                    window.location.href = "{:U('home/address/addrmanage')}";
+                } else if(data.result == 1) {
+                    mui.toast('新增失败！');
+                }else{
+                	mui.toast('收货地址最多只能添加5个，超出的部分请先删除一个！');
+                }
+            },
+        });
+    }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!--index -->
+<include file="public:index" />
+<!--index-->
+<title>积分设置</title>
+<link href="__PUBLIC__/assets/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="pd-20">
+        <form id="form1" method="post" action="{:U('edit_gold')}" role="form" class="form-inline">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    积分设置
+                </div>
+                <div class="panel-body">
+                    <div class="row cl">
+                        <label class="form-label col-2">新注册会员奖励：</label>
+                        <div class="formControls col-10">
+                            <input type="text" name="new_member" class="form-control pd-20" size="3"  ignore="ignore" datatype="n" errormsg="请输入数字" placeholder="" value="{$info.new_member}">积分
+                        </div>
+                    </div>
+                    <!-- <div class="row cl">
+                        <label class="form-label col-2">第一次购买满：</label>
+                        <div class="formControls col-10">
+                            <input type="text" name="first_buy_lowest" class="form-control pd-20" size="3"  ignore="ignore" datatype="/^\d+(\.\d+)?$/" errormsg="请输入数字"  placeholder="" value="{$info.first_buy_lowest}">元，奖励
+                            <input type="text" name="first_buy" class="form-control pd-20" size="3" ignore="ignore" datatype="n" errormsg="请输入数字"  placeholder="" value="{$info.first_buy}">积分
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-2">每次购买消费：</label>
+                        <div class="formControls col-10">
+                            <input type="text" name="every_buy_lowest" class="form-control pd-20" size="3" ignore="ignore" datatype="/^\d+(\.\d+)?$/" errormsg="请输入数字"  placeholder="" value="{$info.every_buy_lowest}">元，奖励
+                            <input type="text" name="every_buy" class="form-control pd-20" size="3" ignore="ignore" datatype="n" errormsg="请输入数字"  placeholder="" value="{$info.every_buy}">积分
+                        </div>
+                    </div> -->
+                    <!-- <div class="row cl">
+                        <label class="form-label col-2">首次评价奖励：</label>
+                        <div class="formControls col-10">
+                            <input type="text" name="first_comment" class="form-control pd-20" size="3" ignore="ignore" datatype="n" errormsg="请输入数字"  placeholder="" value="{$info.first_comment}">积分
+                        </div>
+                    </div> -->
+                    <!-- <div class="row cl">
+                        <label class="form-label col-2">每次评价奖励：</label>
+                        <div class="formControls col-10">
+                            <input type="text" name="every_comment" class="form-control pd-20" size="3" ignore="ignore" datatype="n" errormsg="请输入数字"  placeholder="" value="{$info.every_comment}">积分
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-2">每次签到奖励：</label>
+                        <div class="formControls col-10">
+                            <input type="text" name="everyday_sign" class="form-control pd-20" size="3" ignore="ignore" datatype="n" errormsg="请输入数字"  placeholder="" value="{$info.everyday_sign}">积分
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-2">每次充值：</label>
+                        <div class="formControls col-10">
+                            <input type="text" name="every_account_lowest" class="form-control pd-20" size="3" ignore="ignore" datatype="/^\d+(\.\d+)?$/" errormsg="请输入数字"  placeholder="" value="{$info.every_account_lowest}">元，奖励
+                            <input type="text" name="every_account" class="form-control pd-20" size="3" ignore="ignore" datatype="n" errormsg="请输入数字"  placeholder="" value="{$info.every_account}">积分
+                        </div>
+                    </div> -->
+                    <!-- <div class="row cl">
+                        <label class="form-label col-2">邀请好友奖励：</label>
+                        <div class="formControls col-10">
+                            <input type="text" name="invite_friend" class="form-control pd-20" size="3" ignore="ignore" datatype="n" errormsg="请输入数字"  placeholder="" value="{$info.invite_friend}">积分
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    兑换设置
+                </div>
+                <div class="panel-body">
+                    <div class="row cl">
+                        <div class="formControls col-10">
+                            使用<input type="text" name="change_gold" class="form-control pd-20" size="3" ignore="ignore" datatype="n" errormsg="请输入数字"  placeholder="" value="{$info.change_gold}">积分，兑换
+                            <input type="text" name="change_money" class="form-control pd-20" size="3" ignore="ignore" datatype="/^\d+(\.\d+)?$/" errormsg="请输入数字"  placeholder="" value="{$info.change_money}">元<!--兑换最少需
+                            <input type="text" name="change_lowest" class="form-control pd-20" size="3" ignore="ignore" datatype="n" errormsg="请输入数字"  placeholder="" value="{$info.change_lowest}">积分，一次最多兑换
+                            <input type="text" name="limit_highest" class="form-control pd-20" size="3" ignore="ignore" datatype="n" errormsg="请输入数字"  placeholder="" value="{$info.change_lowest}">积分-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row cl">
+                <div class="col-9 col-offset-3">
+                    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+                    <input class="btn btn-default radius" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;">
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="__PUBLIC__/assets/js/jquery.min.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/Validform/5.3.2/Validform.min.js"></script>
+	<script type="text/javascript">
+	$(function() {
+	  $("#form1").Validform({
+	    tiptype:1,
+	    callback:function(form){
+	      form[0].submit();
+	      var index = parent.layer.getFrameIndex(window.name);
+	      parent.$('.btn-refresh').click();
+	      parent.layer.close(index);
+	    }
+	  });
+	});
+	</script>
+</body>
+
+</html>

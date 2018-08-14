@@ -1,0 +1,128 @@
+<!--index -->
+  <include file="public:index"   />
+<!--index-->
+<title>售后服务换货</title>
+</head>
+<body>
+<div class="pd-20">
+  <form action="{:U('/home/search/servicereceipt')}" method="post" name="main_form" class="form form-horizontal" id="form-admin-add">
+  <input type="hidden" name="id" value="{$id}">
+    <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>订单编号：</label>
+      <div class="formControls col-5">
+        <input type="text" class="input-text" value="{$order['order_number']}" placeholder="请输入订单编号" id="order_number" name="order_number" datatype="*2-16" readOnly="true">
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>物流单号：</label>
+      <div class="formControls col-5">
+        <input type="text" class="input-text" value="" placeholder="请输物流单号" id="logistics_id" name="logistics_id" datatype="*2-16">
+      </div>
+      <div class="col-4"> </div>
+    </div>
+
+    <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>收货人：</label>
+      <div class="formControls col-5">
+        <input type="text" class="input-text" value="{$order['contact']}" id="consignee" name="consignee" datatype="*2-16" readOnly="true">
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>售后地址：</label>
+      <div class="formControls col-5">
+        <input type="text" class="input-text" value="{$order['province']}-{$order['city']}-{$order['district']}-{$order['address']}" id="address" name="address" datatype="*2-16" readOnly="true">
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>联系电话：</label>
+      <div class="formControls col-5">
+        <input type="text" class="input-text" value="{$order['phone']}" maxlength="11" placeholder="请输入电话" id="tel" name="tel" datatype="*2-16" onkeyup="value=value.replace(/[\W]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" ID="Text1" readOnly="true">
+      </div>
+      <div class="col-4"> </div>
+    </div>
+
+    <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>物流类型：</label>
+      <div class="formControls col-5">
+      <span class="select-box">
+        <select class="select" size="1" name="class_id">
+            <foreach name='class' item='v'>
+              <option value="{$v['id']}">{$v['l_name']}</option>
+            </foreach>
+        </select>
+      </span>
+      </div>
+    </div>
+
+    <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>物流动态信息：</label>
+      <div class="formControls col-5">
+        <textarea name="dynamic" cols="" rows="" class="textarea"  placeholder="描述...请输入字符" datatype="*10-100" dragonfly="true" onKeyUp="textarealength(this,200)"></textarea>
+        <p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+      </div>
+      <div class="col-4"> </div>
+    </div>
+
+    <div class="row cl">
+      <div class="col-9 col-offset-3">
+        <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;" onclick="return check()">
+        <input class="btn btn-primary radius" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;">
+      </div>
+    </div>
+  </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/icheck/jquery.icheck.min.js"></script>
+<script type="text/javascript">
+function check(){
+    //form1是form中的name属性
+    var _form = document.main_form;
+    if(trim(_form.order_number.value)==""){
+        alert("订单编号不能为空!");
+        return false;
+    }
+    if(trim(_form.logistics_id.value)==""){
+        alert("物流单号不能为空!");
+        return false;
+    }
+    if(trim(_form.contact.value)==""){
+        alert("收货人不能为空!");
+        return false;
+    }
+    if(trim(_form.address.value)==""){
+        alert("售后地址不能为空!");
+        return false;
+    }
+    if(trim(_form.tel.value)==""){
+        alert("电话不能为空!");
+        return false;
+    }
+    return true;
+}
+
+function trim(s) {
+   var count = s.length;
+   var st    = 0;       // start
+   var end   = count-1; // end
+
+   if (s == "") return s;
+   while (st < count) {
+     if (s.charAt(st) == " ")
+       st ++;
+     else
+       break;
+   }
+   while (end > st) {
+     if (s.charAt(end) == " ")
+       end --;
+     else
+       break;
+   }
+   return s.substring(st,end + 1);
+ }
+</script>
+</body>
+</html>

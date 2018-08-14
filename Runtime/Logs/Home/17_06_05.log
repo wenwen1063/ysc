@@ -1,0 +1,538 @@
+[ 2017-06-05T14:16:45+08:00 ] ::1 /ysc2/wx.php/home/index/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.005000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+
+[ 2017-06-05T14:17:05+08:00 ] ::1 /ysc2/wx.php/home/index/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ad` [ RunTime:0.0710s ]
+SQL: SELECT `id`,`ad_sort`,`img`,`img2`,`ad_type`,`ad_link` FROM `ad` WHERE `ad_position` = 1 ORDER BY ad_sort asc LIMIT 6   [ RunTime:0.0600s ]
+SQL: SHOW COLUMNS FROM `seller` [ RunTime:0.1430s ]
+SQL: SELECT `id`,`sort`,`forshort`,`logo` FROM `seller` WHERE `is_recommend` = 1 AND `is_disable` = 0 AND `sort` <> 0 ORDER BY sort asc LIMIT 6   [ RunTime:0.1580s ]
+SQL: SHOW COLUMNS FROM `notice` [ RunTime:0.0520s ]
+SQL: SELECT * FROM `notice` ORDER BY id desc LIMIT 5   [ RunTime:0.0500s ]
+SQL: SHOW COLUMNS FROM `activity_img` [ RunTime:0.0370s ]
+SQL: SELECT * FROM activity_img a WHERE `is_recommend` = 1  [ RunTime:0.0380s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0370s ]
+SQL: SELECT gc.id as class_id,gc.name as class_name,gc.sort,g.id as goods_id,g.goods_name,g.v_sale,g.sm_pic,min(shop_price)as price FROM goods g left join goods_and_class gac on gac.goods_id = g.id left join goods_class_san gcs on gcs.id = gac.gcs_id left join goods_class_two gct on gct.id = gcs.gct_id left join goods_class gc on gc.id = gct.goods_class_id left join goods_attribute_info gai on gai.goods_id = g.id  WHERE gc.is_disable = 0 AND gcs.is_disable = 0 AND gct.is_disable = 0 AND g.is_delete = 0 AND g.is_on_sale = 1 AND g.is_recommend = 1 AND gc.is_recommend = 1 GROUP BY gc.name,g.id ORDER BY sort asc,goods_id desc  [ RunTime:0.0660s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined index: ad_goods D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 264 行.
+NOTIC: [8] Undefined index: ad_goods D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 264 行.
+NOTIC: [8] Undefined index: ad_goods D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 264 行.
+NOTIC: [8] Undefined index: ad_goods D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 264 行.
+NOTIC: [8] Undefined variable: as D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 397 行.
+NOTIC: [8] Undefined index: pic D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 423 行.
+NOTIC: [8] Undefined variable: test D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 551 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.039002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.040002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2017-06-05T14:17:07+08:00 ] ::1 /ysc2/wx.php/home/feeflow/feeflow.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `telephone_fare` [ RunTime:0.0470s ]
+SQL: SELECT * FROM `telephone_fare` WHERE `type` = 0  [ RunTime:0.0410s ]
+SQL: SELECT * FROM `telephone_fare` WHERE `type` = 1  [ RunTime:0.0430s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2017-06-05T17:05:48+08:00 ] ::1 /ysc2/wx.php/home/index/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.006000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+
+[ 2017-06-05T17:07:13+08:00 ] ::1 /ysc2/wx.php/home/index/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `ad` [ RunTime:0.0450s ]
+SQL: SELECT `id`,`ad_sort`,`img`,`img2`,`ad_type`,`ad_link` FROM `ad` WHERE `ad_position` = 1 ORDER BY ad_sort asc LIMIT 6   [ RunTime:0.0840s ]
+SQL: SHOW COLUMNS FROM `seller` [ RunTime:0.0730s ]
+SQL: SELECT `id`,`sort`,`forshort`,`logo` FROM `seller` WHERE `is_recommend` = 1 AND `is_disable` = 0 AND `sort` <> 0 ORDER BY sort asc LIMIT 6   [ RunTime:0.0350s ]
+SQL: SHOW COLUMNS FROM `notice` [ RunTime:0.0680s ]
+SQL: SELECT * FROM `notice` ORDER BY id desc LIMIT 5   [ RunTime:0.0430s ]
+SQL: SHOW COLUMNS FROM `activity_img` [ RunTime:0.0480s ]
+SQL: SELECT * FROM activity_img a WHERE `is_recommend` = 1  [ RunTime:0.0400s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0670s ]
+SQL: SELECT gc.id as class_id,gc.name as class_name,gc.sort,g.id as goods_id,g.goods_name,g.v_sale,g.sm_pic,min(shop_price)as price FROM goods g left join goods_and_class gac on gac.goods_id = g.id left join goods_class_san gcs on gcs.id = gac.gcs_id left join goods_class_two gct on gct.id = gcs.gct_id left join goods_class gc on gc.id = gct.goods_class_id left join goods_attribute_info gai on gai.goods_id = g.id  WHERE gc.is_disable = 0 AND gcs.is_disable = 0 AND gct.is_disable = 0 AND g.is_delete = 0 AND g.is_on_sale = 1 AND g.is_recommend = 1 AND gc.is_recommend = 1 GROUP BY gc.name,g.id ORDER BY sort asc,goods_id desc  [ RunTime:0.0390s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: ad_goods D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 264 行.
+NOTIC: [8] Undefined index: ad_goods D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 264 行.
+NOTIC: [8] Undefined index: ad_goods D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 264 行.
+NOTIC: [8] Undefined index: ad_goods D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 264 行.
+NOTIC: [8] Undefined variable: as D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 397 行.
+NOTIC: [8] Undefined index: pic D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 423 行.
+NOTIC: [8] Undefined variable: test D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 551 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.056003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.056003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.005000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.005000s ]
+
+[ 2017-06-05T17:07:19+08:00 ] ::1 /ysc2/wx.php/home/user/userindex/test/four.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0700s ]
+SQL: SELECT * FROM `user` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0440s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0680s ]
+SQL: SELECT DISTINCT  `order_number` FROM `orders` WHERE `order_status` = 0 AND `user_id` = 1 AND `order_from` IN ('0','3')  [ RunTime:0.2370s ]
+SQL: SELECT `order_number` FROM `orders` WHERE `order_status` = 1 AND `user_id` = 1 AND `order_from` IN ('0','3')  [ RunTime:0.1110s ]
+SQL: SELECT `order_number` FROM `orders` WHERE `order_status` = 2 AND `user_id` = 1 AND `order_from` IN ('0','3')  [ RunTime:0.0470s ]
+SQL: SELECT `order_number` FROM `orders` WHERE `order_status` = 3 AND `user_id` = 1 AND `order_from` IN ('0','3')  [ RunTime:0.0410s ]
+SQL: SHOW COLUMNS FROM `customer_service` [ RunTime:0.0580s ]
+SQL: SELECT COUNT(*) AS tp_count FROM customer_service as c left join orders as o on o.id=c.order_id  WHERE o.user_id = '1' AND o.order_from = 0 AND c.status <> 8 LIMIT 1   [ RunTime:0.0500s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.020001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.020001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2017-06-05T17:07:21+08:00 ] ::1 /ysc2/wx.php/home/partner/partner.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `partner` [ RunTime:0.0540s ]
+SQL: SHOW COLUMNS FROM `bonus_recommend` [ RunTime:0.0670s ]
+ERR: 1054:Unknown column 'br.addtime' in 'where clause'
+ [ SQL语句 ] : SELECT sum(br.bonus_amount) as brmoney,sum(br.integral) as brgold FROM bonus_recommend br left join user u on u.id = br.recommend_user  WHERE br.addtime BETWEEN 1496592000 AND 1496653641 AND br.user_id = '1' 
+ERR: 1054:Unknown column 'br.addtime' in 'where clause'
+ [ SQL语句 ] : SELECT sum(br.bonus_amount) as brmoney,sum(br.integral) as brgold FROM bonus_recommend br left join user u on u.id = br.recommend_user  WHERE br.addtime BETWEEN 1496592000 AND 1496653641 AND br.user_id = '1' 
+
+[ 2017-06-05T17:07:27+08:00 ] ::1 /ysc2/wx.php/home/partner/partner.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `partner` [ RunTime:2.1251s ]
+SQL: SHOW COLUMNS FROM `bonus_recommend` [ RunTime:0.0380s ]
+ERR: 1054:Unknown column 'br.addtime' in 'where clause'
+ [ SQL语句 ] : SELECT sum(br.bonus_amount) as brmoney,sum(br.integral) as brgold FROM bonus_recommend br left join user u on u.id = br.recommend_user  WHERE br.addtime BETWEEN 1496592000 AND 1496653647 AND br.user_id = '1' 
+ERR: 1054:Unknown column 'br.addtime' in 'where clause'
+ [ SQL语句 ] : SELECT sum(br.bonus_amount) as brmoney,sum(br.integral) as brgold FROM bonus_recommend br left join user u on u.id = br.recommend_user  WHERE br.addtime BETWEEN 1496592000 AND 1496653647 AND br.user_id = '1' 
+
+[ 2017-06-05T17:44:44+08:00 ] ::1 /ysc2/wx.php/home/partner/partner.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.006001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+SQL: SHOW COLUMNS FROM `partner` [ RunTime:0.0410s ]
+SQL: SHOW COLUMNS FROM `bonus_recommend` [ RunTime:0.0630s ]
+ERR: 1054:Unknown column 'br.addtime' in 'where clause'
+ [ SQL语句 ] : SELECT sum(br.bonus_amount) as brmoney,sum(br.integral) as brgold FROM bonus_recommend br left join user u on u.id = br.recommend_user  WHERE br.addtime BETWEEN 1496592000 AND 1496655884 AND br.recommend_user = '1' 
+ERR: 1054:Unknown column 'br.addtime' in 'where clause'
+ [ SQL语句 ] : SELECT sum(br.bonus_amount) as brmoney,sum(br.integral) as brgold FROM bonus_recommend br left join user u on u.id = br.recommend_user  WHERE br.addtime BETWEEN 1496592000 AND 1496655884 AND br.recommend_user = '1' 
+
+[ 2017-06-05T17:44:45+08:00 ] ::1 /ysc2/wx.php/home/partner/partner.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `partner` [ RunTime:0.1440s ]
+SQL: SHOW COLUMNS FROM `bonus_recommend` [ RunTime:0.1160s ]
+ERR: 1054:Unknown column 'br.addtime' in 'where clause'
+ [ SQL语句 ] : SELECT sum(br.bonus_amount) as brmoney,sum(br.integral) as brgold FROM bonus_recommend br left join user u on u.id = br.recommend_user  WHERE br.addtime BETWEEN 1496592000 AND 1496655885 AND br.recommend_user = '1' 
+ERR: 1054:Unknown column 'br.addtime' in 'where clause'
+ [ SQL语句 ] : SELECT sum(br.bonus_amount) as brmoney,sum(br.integral) as brgold FROM bonus_recommend br left join user u on u.id = br.recommend_user  WHERE br.addtime BETWEEN 1496592000 AND 1496655885 AND br.recommend_user = '1' 
+
+[ 2017-06-05T18:23:54+08:00 ] ::1 /ysc2/wx.php/home/index/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.009001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `ad` [ RunTime:0.0520s ]
+SQL: SELECT `id`,`ad_sort`,`img`,`img2`,`ad_type`,`ad_link` FROM `ad` WHERE `ad_position` = 1 ORDER BY ad_sort asc LIMIT 6   [ RunTime:0.0520s ]
+SQL: SHOW COLUMNS FROM `seller` [ RunTime:0.0490s ]
+SQL: SELECT `id`,`sort`,`forshort`,`logo` FROM `seller` WHERE `is_recommend` = 1 AND `is_disable` = 0 AND `sort` <> 0 ORDER BY sort asc LIMIT 6   [ RunTime:0.0490s ]
+SQL: SHOW COLUMNS FROM `notice` [ RunTime:0.0510s ]
+SQL: SELECT * FROM `notice` ORDER BY id desc LIMIT 5   [ RunTime:0.0420s ]
+SQL: SHOW COLUMNS FROM `activity_img` [ RunTime:0.0420s ]
+SQL: SELECT * FROM activity_img a WHERE `is_recommend` = 1  [ RunTime:0.0440s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0440s ]
+SQL: SELECT gc.id as class_id,gc.name as class_name,gc.sort,g.id as goods_id,g.goods_name,g.v_sale,g.sm_pic,min(shop_price)as price FROM goods g left join goods_and_class gac on gac.goods_id = g.id left join goods_class_san gcs on gcs.id = gac.gcs_id left join goods_class_two gct on gct.id = gcs.gct_id left join goods_class gc on gc.id = gct.goods_class_id left join goods_attribute_info gai on gai.goods_id = g.id  WHERE gc.is_disable = 0 AND gcs.is_disable = 0 AND gct.is_disable = 0 AND g.is_delete = 0 AND g.is_on_sale = 1 AND g.is_recommend = 1 AND gc.is_recommend = 1 GROUP BY gc.name,g.id ORDER BY sort asc,goods_id desc  [ RunTime:0.1180s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: ad_goods D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 264 行.
+NOTIC: [8] Undefined index: ad_goods D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 264 行.
+NOTIC: [8] Undefined index: ad_goods D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 264 行.
+NOTIC: [8] Undefined index: ad_goods D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 264 行.
+NOTIC: [8] Undefined variable: as D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 397 行.
+NOTIC: [8] Undefined index: pic D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 423 行.
+NOTIC: [8] Undefined variable: test D:\WWW\ysc2\Runtime\Cache\Home\ebc2ced9f9fc5316d4374de9d5af1d26.php 第 551 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.134008s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.134008s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.003000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.003000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.005001s ]
+INFO: [ app_end ] --END-- [ RunTime:0.005001s ]
+
+[ 2017-06-05T18:23:59+08:00 ] ::1 /ysc2/wx.php/home/goods/goodsinfo/id/27.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.004001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.006000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.006000s ]
+SQL: SHOW COLUMNS FROM `pic` [ RunTime:0.0520s ]
+SQL: SELECT * FROM `pic` WHERE `goods_id` = 27 LIMIT 4   [ RunTime:0.0550s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0500s ]
+SQL: SELECT `id`,`goods_name`,`r_sale`,`goods_introduce`,`is_seven`,`is_baoyou`,`v_sale` FROM `goods` WHERE `id` = 27 LIMIT 1   [ RunTime:0.0500s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0490s ]
+SQL: SELECT min(market_price) as min_market_price,min(shop_price) as min_shop_price FROM `goods_attribute_info` WHERE `goods_id` = 27  [ RunTime:0.0610s ]
+SQL: SHOW COLUMNS FROM `evaluation` [ RunTime:0.0670s ]
+SQL: SELECT o.id FROM evaluation e left join orders o on e.order_id=o.id left join order_goods og on og.order_id=o.id  WHERE og.goods_id = '27'  [ RunTime:0.0450s ]
+SQL: SHOW COLUMNS FROM `evaluation` [ RunTime:0.0410s ]
+SQL: SELECT u.username,u.avatar,e.score,e.content,u.is_xg FROM evaluation e left join user u on u.id=e.user_id  WHERE e.order_id IN (0) AND e.is_disable = 0 AND e.is_delete = 0  [ RunTime:0.0420s ]
+SQL: SHOW COLUMNS FROM `evaluation` [ RunTime:0.0520s ]
+SQL: SELECT COUNT(*) AS tp_count FROM evaluation e WHERE e.order_id IN (0) AND e.is_disable = 0 AND e.is_delete = 0 AND e.score IN (4,5) LIMIT 1   [ RunTime:0.0610s ]
+SQL: SHOW COLUMNS FROM `evaluation` [ RunTime:0.4260s ]
+SQL: SELECT COUNT(*) AS tp_count FROM evaluation e WHERE e.order_id IN (0) AND e.is_disable = 0 AND e.is_delete = 0 AND e.score IN (2,3) LIMIT 1   [ RunTime:0.0410s ]
+SQL: SHOW COLUMNS FROM `evaluation` [ RunTime:0.0540s ]
+SQL: SELECT COUNT(*) AS tp_count FROM evaluation e WHERE e.order_id IN (0) AND e.is_disable = 0 AND e.is_delete = 0 AND e.score IN (0,1) LIMIT 1   [ RunTime:0.0410s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0410s ]
+SQL: SELECT gai.goods_attribute_id as ga_id,ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock,gai.weight FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '27' ORDER BY gai.id desc  [ RunTime:0.0800s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.0520s ]
+SQL: SELECT a.name,ad.after_type FROM activity a INNER JOIN activity_goods ag on ag.activity_id=a.id INNER JOIN activity_discount ad on ad.activity_id=a.id  WHERE ( a.end_time>'1496658239' ) AND ag.goods_id = '27' LIMIT 1   [ RunTime:0.0420s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: is_xg D:\WWW\ysc2\Runtime\Cache\Home\f9ecef47ceccf31a7599db78be8e2af9.php 第 377 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.029001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.029001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2017-06-05T18:24:00+08:00 ] ::1 /ysc2/wx.php/home/jsdk/getjsdk.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.005000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.006000s ]
+
+[ 2017-06-05T18:24:09+08:00 ] ::1 /ysc2/wx.php/home/order/balance?id=27&num=1&type=1&guige=11&money=20.00
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0350s ]
+SQL: SELECT * FROM `user` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0350s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0570s ]
+SQL: SELECT g.goods_name as gname,g.invoice,g.sm_pic,s.name as sname,s.logo,g.seller_id,g.id as goods_id,ga.weight,ga.market_price,ga.shop_price FROM goods as g left join seller as s on g.seller_id=s.id left join goods_attribute_info as ga on g.id=ga.goods_id  WHERE g.id = '27' AND ga.goods_attribute_id = '11'  [ RunTime:0.0460s ]
+NOTIC: [8] Undefined index: seller D:\WWW\ysc2\Apps\Wx\Home\Controller\OrderController.class.php 第 175 行.
+NOTIC: [2] Invalid argument supplied for foreach() D:\WWW\ysc2\Apps\Wx\Home\Controller\OrderController.class.php 第 175 行.
+SQL: SHOW COLUMNS FROM `user_addr` [ RunTime:0.0360s ]
+SQL: SELECT * FROM `user_addr` WHERE `default_address` = 1 AND `user_id` = 1 AND `is_delete` = 0 LIMIT 1   [ RunTime:0.0340s ]
+SQL: SELECT * FROM `user_addr` WHERE `user_id` = 1 AND `is_delete` = 0  [ RunTime:0.0350s ]
+NOTIC: [2] Missing argument 1 for I(), called in D:\WWW\ysc2\Apps\Wx\Home\Controller\OrderController.class.php on line 197 and defined D:\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name D:\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name D:\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: id D:\WWW\ysc2\Runtime\Cache\Home\f96ebb79aa7ca80efa84c24e70cfd6f9.php 第 341 行.
+NOTIC: [8] Undefined index: seller D:\WWW\ysc2\Runtime\Cache\Home\f96ebb79aa7ca80efa84c24e70cfd6f9.php 第 364 行.
+NOTIC: [8] Undefined index: seller D:\WWW\ysc2\Runtime\Cache\Home\f96ebb79aa7ca80efa84c24e70cfd6f9.php 第 366 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.030002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.030002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2017-06-05T18:24:13+08:00 ] ::1 /ysc2/wx.php/home/order/addorder.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user_addr` [ RunTime:0.0650s ]
+SQL: SELECT * FROM `user_addr` WHERE `id` = 5 LIMIT 1   [ RunTime:0.8330s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0430s ]
+SQL: SELECT * FROM `goods_attribute_info` WHERE `goods_id` = 27 AND `goods_attribute_id` = 11 LIMIT 1   [ RunTime:0.0420s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0430s ]
+SQL: INSERT INTO `orders` (`user_id`,`order_number`,`addtime`,`total_price`,`paid_price`,`note`,`seller_id`,`invoice_goods_id`,`province`,`city`,`district`,`address`,`contact`,`phone`) VALUES ('1','G605582528474044','1496658252','20','20.00','','1','','北京市北京市西城区',NULL,NULL,'12121','122222打得去','12345678988') [ RunTime:0.0510s ]
+SQL: SHOW COLUMNS FROM `goods_bouns_info` [ RunTime:0.0450s ]
+SQL: SELECT * FROM `goods_bouns_info` WHERE `goods_id` = 27 AND `state` = 1 LIMIT 1   [ RunTime:0.0500s ]
+SQL: SHOW COLUMNS FROM `order_goods` [ RunTime:0.0580s ]
+SQL: INSERT INTO `order_goods` (`goods_id`,`goods_number`,`price`,`type`,`goods_attribute_id`,`order_id`) VALUES ('27','1','20.00',NULL,'11','185') [ RunTime:0.0970s ]
+SQL: UPDATE `goods_attribute_info` SET `stock`=stock-1 WHERE `goods_id` = 27 AND `goods_attribute_id` = 11 [ RunTime:0.0690s ]
+
+[ 2017-06-05T18:24:47+08:00 ] ::1 /ysc2/wx.php/home/order/balance?id=27&num=1&type=1&guige=11&money=20.00
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0750s ]
+SQL: SELECT * FROM `user` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0340s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0360s ]
+SQL: SELECT g.goods_name as gname,g.invoice,g.sm_pic,s.name as sname,s.logo,g.seller_id,g.id as goods_id,ga.weight,ga.market_price,ga.shop_price FROM goods as g left join seller as s on g.seller_id=s.id left join goods_attribute_info as ga on g.id=ga.goods_id  WHERE g.id = '27' AND ga.goods_attribute_id = '11'  [ RunTime:0.0330s ]
+NOTIC: [8] Undefined index: seller D:\WWW\ysc2\Apps\Wx\Home\Controller\OrderController.class.php 第 175 行.
+NOTIC: [2] Invalid argument supplied for foreach() D:\WWW\ysc2\Apps\Wx\Home\Controller\OrderController.class.php 第 175 行.
+SQL: SHOW COLUMNS FROM `user_addr` [ RunTime:0.0340s ]
+SQL: SELECT * FROM `user_addr` WHERE `default_address` = 1 AND `user_id` = 1 AND `is_delete` = 0 LIMIT 1   [ RunTime:0.0480s ]
+SQL: SELECT * FROM `user_addr` WHERE `user_id` = 1 AND `is_delete` = 0  [ RunTime:0.0330s ]
+NOTIC: [2] Missing argument 1 for I(), called in D:\WWW\ysc2\Apps\Wx\Home\Controller\OrderController.class.php on line 197 and defined D:\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name D:\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name D:\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: id D:\WWW\ysc2\Runtime\Cache\Home\f96ebb79aa7ca80efa84c24e70cfd6f9.php 第 341 行.
+NOTIC: [8] Undefined index: seller D:\WWW\ysc2\Runtime\Cache\Home\f96ebb79aa7ca80efa84c24e70cfd6f9.php 第 364 行.
+NOTIC: [8] Undefined index: seller D:\WWW\ysc2\Runtime\Cache\Home\f96ebb79aa7ca80efa84c24e70cfd6f9.php 第 366 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.029002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.029002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2017-06-05T18:24:50+08:00 ] ::1 /ysc2/wx.php/home/order/addorder.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user_addr` [ RunTime:0.0510s ]
+SQL: SELECT * FROM `user_addr` WHERE `id` = 5 LIMIT 1   [ RunTime:0.0410s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0420s ]
+SQL: SELECT * FROM `goods_attribute_info` WHERE `goods_id` = 27 AND `goods_attribute_id` = 11 LIMIT 1   [ RunTime:0.0690s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0470s ]
+SQL: INSERT INTO `orders` (`user_id`,`order_number`,`addtime`,`total_price`,`paid_price`,`note`,`seller_id`,`invoice_goods_id`,`province`,`city`,`district`,`address`,`contact`,`phone`) VALUES ('1','G605582899625203','1496658290','20','20.00','','1','','北京市北京市西城区',NULL,NULL,'12121','122222打得去','12345678988') [ RunTime:0.0510s ]
+SQL: SHOW COLUMNS FROM `goods_bouns_info` [ RunTime:0.0490s ]
+SQL: SELECT * FROM `goods_bouns_info` WHERE `goods_id` = 27 AND `state` = 1 LIMIT 1   [ RunTime:0.0410s ]
+SQL: SHOW COLUMNS FROM `order_goods` [ RunTime:0.0520s ]
+SQL: INSERT INTO `order_goods` (`goods_id`,`goods_number`,`price`,`type`,`goods_attribute_id`,`order_id`) VALUES ('27','1','20.00',NULL,'11','186') [ RunTime:0.0500s ]
+SQL: UPDATE `goods_attribute_info` SET `stock`=stock-1 WHERE `goods_id` = 27 AND `goods_attribute_id` = 11 [ RunTime:0.0630s ]
+
+[ 2017-06-05T18:24:54+08:00 ] ::1 /ysc2/wx.php/home/order/orderpay?id=G605582899625203&allmoney=20.00
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0900s ]
+SQL: UPDATE `user` SET `balance`=balance-20.00 WHERE `id` = 1 [ RunTime:0.0440s ]
+SQL: SHOW COLUMNS FROM `rechargecash` [ RunTime:0.0480s ]
+SQL: INSERT INTO `rechargecash` (`type`,`apply_time`,`is_time`,`is_ok`) VALUES ('4','1496658291','1496658291','1') [ RunTime:0.0520s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.1010s ]
+SQL: UPDATE `orders` SET `pay_status`='1',`pay_time`='1496658291',`order_status`='1' WHERE `order_number` = 'G605582899625203' [ RunTime:0.0430s ]
+SQL: SELECT * FROM `orders` WHERE `order_number` = 'G605582899625203'  [ RunTime:0.0480s ]
+SQL: SHOW COLUMNS FROM `seller_revenue` [ RunTime:0.0370s ]
+SQL: INSERT INTO `seller_revenue` (`seller_id`,`type`,`order_id`) VALUES ('1','1','186') [ RunTime:0.0700s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.2900s ]
+SQL: SELECT o.*,og.goods_id,og.goods_number,og.price as shop_price,og.id as ogid FROM orders o INNER JOIN order_goods og on o.id=og.order_id  WHERE o.id = '186'  [ RunTime:0.0400s ]
+SQL: SHOW COLUMNS FROM `goods_bouns_info` [ RunTime:0.0640s ]
+SQL: SELECT * FROM `goods_bouns_info` WHERE `goods_id` = 27 AND `state` = 1 LIMIT 1   [ RunTime:0.0630s ]
+SQL: SHOW COLUMNS FROM `order_goods` [ RunTime:0.0770s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.1060s ]
+SQL: SELECT * FROM `goods` WHERE `id` = 27 LIMIT 1   [ RunTime:0.2970s ]
+SQL: SHOW COLUMNS FROM `bonus_platform` [ RunTime:0.0440s ]
+SQL: INSERT INTO `bonus_platform` (`seller_id`,`platform_ratio`,`platform_total`,`goods_id`,`order_id`) VALUES ('1','0','0','27','186') [ RunTime:0.0580s ]
+NOTIC: [8] Undefined variable: num D:\WWW\ysc2\Apps\Wx\Home\Controller\OrderController.class.php 第 751 行.
+SQL: SELECT * FROM `user` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0760s ]
+SQL: SELECT * FROM `user` WHERE `id` = 2 LIMIT 1   [ RunTime:0.0360s ]
+SQL: SHOW COLUMNS FROM `sale_bonus_set` [ RunTime:0.0350s ]
+SQL: SELECT * FROM `sale_bonus_set` WHERE `partner_level` = 1 AND `partner_id` = 1 AND `seller_id` = 1 LIMIT 1   [ RunTime:0.0710s ]
+SQL: SHOW COLUMNS FROM `bonus_consume` [ RunTime:0.0580s ]
+SQL: INSERT INTO `bonus_consume` (`user_id`,`hierarchy`,`order_id`,`recommend_user`,`state`,`parent_id`,`money`,`goods_id`) VALUES ('2','1','186','3','0','2','0.2',NULL) [ RunTime:0.0650s ]
+SQL: UPDATE `user` SET `reward`=reward+0.2 WHERE `id` = 2 [ RunTime:0.0610s ]
+SQL: UPDATE `user` SET `reward_freeze`=reward_freeze+0.2 WHERE `id` = 2 [ RunTime:0.0560s ]
+SQL: SELECT * FROM `user` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0490s ]
+SQL: SELECT * FROM `sale_bonus_set` WHERE `partner_level` = 2 AND `partner_id` = 1 LIMIT 1   [ RunTime:0.0640s ]
+SQL: INSERT INTO `bonus_consume` (`user_id`,`hierarchy`,`order_id`,`recommend_user`,`state`,`parent_id`,`money`,`goods_id`) VALUES ('3','2','186','29','0','2','0',NULL) [ RunTime:0.0650s ]
+SQL: UPDATE `user` SET `reward`=reward+0 WHERE `id` = 3 [ RunTime:0.0730s ]
+SQL: UPDATE `user` SET `reward_freeze`=reward_freeze+0 WHERE `id` = 3 [ RunTime:0.3290s ]
+SQL: SELECT * FROM `user` WHERE `id` = 29 LIMIT 1   [ RunTime:0.0810s ]
+SQL: SELECT * FROM `sale_bonus_set` WHERE `partner_level` = 3 AND `partner_id` = 1 LIMIT 1   [ RunTime:0.0410s ]
+SQL: INSERT INTO `bonus_consume` (`user_id`,`hierarchy`,`order_id`,`recommend_user`,`state`,`parent_id`,`money`,`goods_id`) VALUES ('29','3','186','0','0','2','0',NULL) [ RunTime:0.0400s ]
+SQL: UPDATE `user` SET `reward`=reward+0 WHERE `id` = 29 [ RunTime:0.0560s ]
+SQL: UPDATE `user` SET `reward_freeze`=reward_freeze+0 WHERE `id` = 29 [ RunTime:0.0370s ]
+SQL: UPDATE `order_goods` SET `platform_bonus`='0',`bonus_amount`='0.2' WHERE `id` = 132 [ RunTime:0.0410s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.010001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.010001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2017-06-05T18:24:56+08:00 ] ::1 /ysc2/wx.php/home/user/orderinfo?state=1
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0520s ]
+SQL: SELECT g.goods_name,o.*,s.name as sname,s.logo,og.price as shop_price,og.goods_number,g.sm_pic FROM orders as o left join order_goods as og on o.id=og.order_id left join goods as g on og.goods_id=g.id left join seller as s on o.seller_id=s.id  WHERE `order_status` = '1' AND `user_id` = '1' AND `order_from` IN ('0','3') ORDER BY o.pay_time desc  [ RunTime:0.0640s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.031002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.032002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2017-06-05T18:29:38+08:00 ] ::1 /ysc2/wx.php/home/user/orderinfo?state=1
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.4550s ]
+SQL: SELECT g.goods_name,o.*,s.name as sname,s.logo,og.price as shop_price,og.goods_number,g.sm_pic FROM orders as o left join order_goods as og on o.id=og.order_id left join goods as g on og.goods_id=g.id left join seller as s on o.seller_id=s.id  WHERE `order_status` = '1' AND `user_id` = '1' AND `order_from` IN ('0','3') ORDER BY o.pay_time desc  [ RunTime:0.2080s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.024002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.024002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2017-06-05T18:30:02+08:00 ] ::1 /ysc2/wx.php/home/user/orderinfo?state=1
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.1020s ]
+SQL: SELECT g.goods_name,o.*,s.name as sname,s.logo,og.price as shop_price,og.goods_number,g.sm_pic FROM orders as o left join order_goods as og on o.id=og.order_id left join goods as g on og.goods_id=g.id left join seller as s on o.seller_id=s.id  WHERE `order_status` = '1' AND `user_id` = '1' AND `order_from` IN ('0','3') ORDER BY o.pay_time desc  [ RunTime:0.0470s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.027001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.027001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.002001s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002001s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2017-06-05T19:06:21+08:00 ] ::1 /ysc2/wx.php/home/user/orderinfo?state=1
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.008001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0400s ]
+SQL: SELECT g.goods_name,o.*,s.name as sname,s.logo,og.price as shop_price,og.goods_number,g.sm_pic FROM orders as o left join order_goods as og on o.id=og.order_id left join goods as g on og.goods_id=g.id left join seller as s on o.seller_id=s.id  WHERE `order_status` = '1' AND `user_id` = '1' AND `order_from` IN ('0','3') ORDER BY o.pay_time desc  [ RunTime:0.0360s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.002000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.032002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.032002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+

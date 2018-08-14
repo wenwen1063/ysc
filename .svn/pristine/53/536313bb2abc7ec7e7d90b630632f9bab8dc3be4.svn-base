@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no" name="viewport">
+		<link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+		<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+		<link href="__PUBLIC__/Wx/CSS/BusinessCSS/payment.css" rel="stylesheet">
+		<title>
+			支付
+		</title>
+		</link>
+		</link>
+		</meta>
+		</meta>
+	</head>
+
+	<body>
+		<!--<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+			</a>
+			<h1 class="mui-title">
+            搭档专享
+        </h1>
+		</header>-->
+		<div id="popup">
+			<div class="name">
+				<span>支付运费</span>
+			</div>
+			<div class="money">
+				<span>全国统一价 <a style="color: #ff5053">￥{$data['shop_price']}</a></span>
+			</div>
+			<div class="name" style="top: 28px;">
+				<span>支付方式</span>
+			</div>
+			<div class="paymentmethod">
+				<span>微信支付</span>
+			</div>
+			<div class="button">
+				<a href="{:U('/home/extension/details',array('id'=>$data['id']))}"><input type="button" value="取消" style="border:1px solid #909090 "></a>
+				<input class="red" type="button" value="提交" onclick="buy({$data[id]},{$data['stock']},{$data['actual_sales']},{$data['virtual_sell_amount']},{$data['shop_price']})">
+			</div>
+
+		</div>
+		<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+		<script src="__PUBLIC__/Wx/Script/CommonJS/Base.js">
+		</script>
+	</body>
+
+	<script>
+		function buy(id, stock, as, vsa, price) {
+			$.ajax({
+				url: "{:U('/home/extension/buy')}",
+				type: "post",
+				data: {
+					'id': id,
+					'stock': stock,
+					'as': as,
+					'vsa': vsa,
+					'price': price
+				},
+				dataType: "json",
+				success: function(data) {
+					console.log(data)
+					if(data['result'] == 1) {
+						window.location.href = "__ROOT__/wx.php/home/pay/tool_wxpay?recharge_money=" + price + "&order_number=" + data.order_number;
+					}
+					if(data['result'] == 0) {
+						mui.toast(data['msg'])
+					}
+				}
+			});
+		}
+	</script>
+
+</html>

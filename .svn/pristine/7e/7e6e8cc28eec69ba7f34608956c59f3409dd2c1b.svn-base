@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>余额支付</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/ShoppingCart/Addressselection.css" rel="stylesheet">
+</head>
+<style type="text/css">
+.selecteddiv i.active {
+    background: url(__PUBLIC__/Wx/img/ShoppingCart/btn_check.png) no-repeat;
+    background-size: 15px;
+}
+
+.selecteddiv i {
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+    background: url(__PUBLIC__/Wx/img/ShoppingCart/btn_checkoff.png) no-repeat;
+    background-size: 15px;
+    margin-right: 10px;
+    position: relative;
+    top: 1px;
+}
+	.color{
+		background: #f5f5f5;
+	}
+</style>
+<body>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		mui.toast('支付成功',setTimeout(function(){
+//			alert("asa");
+		mui.openWindow({
+					url: "__ROOT__/wx.php/home/user/orderinfo?state=" + 1,
+					id: 'orderinfo'
+				});
+		},1000));
+	})
+</script>
+
+</html>

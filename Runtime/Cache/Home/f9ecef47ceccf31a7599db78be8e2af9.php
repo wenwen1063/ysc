@@ -1,0 +1,748 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>商品详情</title>
+		<meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		
+		
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<link href="/ysc2/Public/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+		<link href="/ysc2/Public/Wx/CSS/BusinessCSS/classification/Commoditydetails.css" rel="stylesheet">
+		<script type="text/javascript" src="/ysc2/Public/Wx/Script/ActiveXJS/mui.min.js"></script>
+		<style type="text/css">
+			#goods_introduce_style p {
+				margin: 0 !important;
+				line-height: 0!important;
+			}
+			
+			#goods_introduce_style img {
+				margin: 0 !important;
+				line-height: 0!important;
+			}
+			
+			.mui-bar-tab a {
+				width: 50%;
+				float: left;
+				display: inline-block;
+				height: 100%;
+				text-align: center;
+				box-sizing: border-box;
+				font-size: 15px;
+			}
+			
+			.mui-bar-tab a:nth-child(1) {
+				width: 60px;
+				position: absolute;
+				left: 0;
+			}
+			
+			.mui-bar-tab a:nth-child(2) {
+				width: 60px;
+				position: absolute;
+				left: 60px;
+			}
+			
+			.mui-bar-tab a:nth-child(1) .mui-icon {
+				background: url(/ysc2/Public/Wx/img/Common/classification_btn_collection_normal.png) no-repeat;
+				background-size: 20px 20px;
+				background-position: 50% 100%;
+				width: 20px;
+				display: block;
+				margin: auto;
+				top: 5px;
+			}
+			
+			.mui-bar-tab a:nth-child(1) .mui-tab-label,
+			.mui-bar-tab a:nth-child(2) .mui-tab-label {
+				position: relative;
+				top: 5px;
+				color: #444;
+			}
+			
+			.mui-bar-tab a:nth-child(2) .mui-icon {
+				background: url(/ysc2/Public/Wx/img/shoppingcart.png) no-repeat;
+				background-size: 20px 20px;
+				background-position: 50% 100%;
+				width: 20px;
+				display: block;
+				margin: auto;
+				top: 5px;
+			}
+			
+			.btn_yellow {
+				background: #FFC100;
+				color: #fff !important;
+				font-size: 15px;
+				border: 1px solid #FFC100;
+				line-height: 50px;
+			}
+			
+			.btn_red {
+				background: #FF5353;
+				color: #fff !important;
+				font-size: 15px;
+				border: 1px solid #FF5353;
+				line-height: 50px;
+			}
+			
+			.mui-bar-tab .mui-tab-item.mui-active {
+				color: #929292;
+			}
+			
+			.mui-bar-tab .mui-tab-item.mui-active .mui-icon {
+				background-image: transparent;
+			}
+			
+			.mui-slider {
+				height: auto;
+			}
+			
+			.content .shoptitle .list {
+				width: 50%;
+				margin: 0;
+				text-align: center;
+				float: left;
+				height: 42px;
+			}
+			
+			.content .shoptitle .list .red {
+				margin: 0;
+				width: auto;
+				text-align: center;
+				padding: 0 10px;
+				display: inline-block;
+				line-height: 44px;
+			}
+			
+			.content .shoptitle .list span {
+				width: 100%;
+				display: inline-block;
+				line-height: 44px;
+			}
+			
+			.content .xiang {
+				padding: 10px 0;
+			}
+			
+			.clear_both {
+				clear: both;
+			}
+			
+			.title .you .right .list img {
+				height: auto;
+			}
+			
+			#muibar {
+				display: block;
+				position: fixed;
+				padding-left: 120px;
+			}
+			
+			.sure_btn {
+				height: 35px;
+				line-height: 5px;
+			}
+			
+			.fixedbox_body .floatattr .active .spanclass {
+				background: #FF5353;
+				border: 1px solid #FF5353;
+				font-size: 15px;
+				padding: 0;
+				height: 30px;
+				line-height: 30px;
+			}
+			
+			.fixedbox_body {
+				bottom: 40px;
+			}
+			
+			.bottom_btndiv {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+			}
+			
+			.bottom_btndiv .sure_btn {
+				height: 40px;
+				margin-bottom: 0;
+				line-height: 10px;
+			}
+			
+			#num {
+				margin-bottom: 0;
+				text-align: center;
+			}
+			
+			.count span {
+				font-size: 15px;
+			}
+			
+			.cutadd_div {
+				display: inline-block;
+				margin-left: 10px;
+			}
+			
+			.cutadd_div img {
+				width: 20px;
+			}
+			
+			.count .price {
+				margin-bottom: 0;
+				display: inline-block;
+			}
+			
+			.fixedbox_body .floatattr .spanclass {
+				padding: 0;
+				height: 30px;
+				line-height: 30px;
+			}
+			
+			.first {
+				padding-bottom: 10px;
+				border-bottom: 1px solid #e0e0e0;
+			}
+			
+			.second {
+				padding: 5px 0;
+				border-bottom: 1px solid #e0e0e0;
+			}
+			
+			.third {
+				padding-top: 5px;
+			}
+			
+			.title .bao {
+				border-top: 0;
+			}
+			
+			.title .you {
+				border-top: 0;
+			}
+			
+			.content {
+				top: -10px;
+			}
+			
+			.floatbtn {
+				float: left;
+				width: 50%;
+				margin: 0;
+				height: 40px;
+				line-height: 10px;
+				border-radius: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--<div style='margin:0 auto;display:none;'>
+				<img src='http://www.dadangsc.com/Public/Uploads/2017-05-25/59267b2ea3a1d.jpg'/>
+		</div>-->
+		<!--<header class="mui-bar mui-bar-nav header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">商品详情</h1>
+		</header>-->
+
+		<div class="mui-slider">
+			<div class="mui-slider-group">
+				<?php if(is_array($slider_pics)): foreach($slider_pics as $key=>$v): ?><div class="mui-slider-item">
+						<a href="#"><img src="/ysc2/Public/Uploads/<?php echo ($v['pic']); ?>" /></a>
+					</div><?php endforeach; endif; ?>
+			</div>
+			<div class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+			</div>
+		</div>
+		<div class="title">
+			<div class="first">
+				<h5 class="name"><?php echo ($goods_base_info['goods_name']); ?></h5>
+
+				<p class="xiao">销量：<?php echo ($goods_base_info['v_sale']); ?></p>
+				<div class="money">
+					<h5>￥<label id="change_shop_info"><?php echo ($market_shop[0]['min_shop_price']); ?></label></h5>
+					<small class="delmoney" style="color: #8f8f94;"><del>￥<label id="change_market_info"><?php echo ($market_shop[0]['min_market_price']); ?></label></del></small>
+				</div>
+			</div>
+			<div class="second">
+				<div class="attr" id="chooseattr"><span class="chooseattr">选择商品规格</span><img class="rightbtn" src="/ysc2/Public/Wx/img/Classification/XY.png" alt=""></div>
+			</div>
+			<div class="third">
+				<div class="bao">
+					<?php if($goods_base_info['is_baoyou'] == 1): ?><div class="list">
+							<img src="/ysc2/Public/Wx/img/Classification/classification_icon_check.png" alt="">
+							<p>包邮</p>
+						</div>
+						<?php else: endif; ?>
+
+					<div class="list">
+						<img src="/ysc2/Public/Wx/img/Classification/classification_icon_check.png" alt="">
+						<p>正品保证</p>
+					</div>
+
+					<div class="list">
+						<img src="/ysc2/Public/Wx/img/Classification/classification_icon_check.png" alt="">
+						<p>极速发货</p>
+					</div>
+
+					<?php if($goods_base_info['is_seven'] == 1): ?><div class="list">
+							<img src="/ysc2/Public/Wx/img/Classification/classification_icon_check.png" alt="">
+							<p>七天退换</p>
+						</div>
+						<?php else: endif; ?>
+				</div>
+				<div class="you">
+					<div class="left">
+						<h5>优惠方案</h5>
+					</div>
+					<div class="right">
+						<div class="list">
+							<h5><?php if($goods_act['after_type']==1){echo "优惠";}else if($goods_act['after_type']==2){echo "折扣";}else if($goods_act['after_type']==3){echo "买赠";}else if($goods_act['after_type']==4){echo "包邮";}else{echo "&nbsp;&nbsp;无&nbsp;&nbsp;";}?></h5>
+							<img src="/ysc2/Public/Wx/img/Classification/classification_icon_voucher.png">
+							<p>
+								<?php if($goods_act['name'] != null): echo ($goods_act['name']); ?>
+									<?php else: ?><i>该商品暂无优惠</i><?php endif; ?>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clear_both"></div>
+		<div class="content">
+			<div class="shoptitle">
+				<div class="list shop">
+					<span class="red">商品详情</span>
+				</div>
+				<div class="list pingj">
+					<span>评价(<?php echo ($all_comment_number); ?>)</span>
+				</div>
+			</div>
+
+			<div class="shopcontent">
+				<div class="xiang" id="goods_introduce_style"><?php echo ($goods_base_info['goods_introduce']); ?></div>
+
+				<div class="ping">
+					<div class="all" id="comment_sort">
+						<div class="list red">
+							<input type="button" id="all" value="全部(<?php echo ($all_comment_number); ?>)">
+						</div>
+						<div class="list">
+							<input type="button" id="good" value="好评(<?php echo ($good_comment_number); ?>)">
+						</div>
+						<div class="list">
+							<input type="button" id="mid" value="中评(<?php echo ($mid_comment_number); ?>)">
+						</div>
+						<div class="list">
+							<input type="button" id="bad" value="差评(<?php echo ($bad_comment_number); ?>)">
+						</div>
+					</div>
+
+					<div class="detailed" id="comment_con">
+						<?php if(is_array($comment)): foreach($comment as $key=>$v): ?><div class="list">
+								<!--<img src="/ysc2/Public/Uploads/<?php echo ($v['avatar']); ?>" alt="">-->
+								<?php if ($v['is_xg']==0): ?>
+						                <img src="<?php echo ($v['avatar']); ?>" alt="">
+						            <?php else : ?>
+						                <img src="/ysc2/Public/Uploads/<?php echo ($v['avatar']); ?>" alt="">
+						            <?php endif ?>
+								<h5><?php echo ($v['username']); ?></h5>
+								<?php if($v['score'] == 0): ?><a><span>☆☆☆☆☆</span></a>
+									<?php elseif($v['score'] == 1): ?>
+									<a>★<span>☆☆☆☆</span></a>
+									<?php elseif($v['score'] == 2): ?>
+									<a>★★<span>☆☆☆</span></a>
+									<?php elseif($v['score'] == 3): ?>
+									<a>★★★<span>☆☆</span></a>
+									<?php elseif($v['score'] == 4): ?>
+									<a>★★★★<span>☆</span></a>
+									<?php else: ?>
+									<a>★★★★★<span></span></a><?php endif; ?>
+								<p class="mui-ellipsis"><?php echo ($v['content']); ?></p>
+							</div><?php endforeach; endif; ?>
+					</div>
+
+					<script id="tpl" type="text/template">
+						{{each data as v i}}
+						<div class="list">
+							<?php if ($v['is_xg']==0): ?>
+						                <img src="{{v['avatar']}}" alt="">
+						            <?php else : ?>
+						                <img src="/ysc2/Public/Uploads/{{v['avatar']}}" alt="">
+						            <?php endif ?>
+							<h5>{{v.username}}</h5> {{if v.score == 0}}
+							<a><span>☆☆☆☆☆</span></a>
+							{{else if v.score == 1}}
+							<a>★<span>☆☆☆☆</span></a>
+							{{else if v.score == 2}}
+							<a>★★<span>☆☆☆</span></a>
+							{{else if v.score == 3}}
+							<a>★★★<span>☆☆</span></a>
+							{{else if v.score == 4}}
+							<a>★★★★<span>☆</span></a>
+							{{else}}
+							<a>★★★★★<span></span></a>
+							{{/if}}
+							<p class="mui-ellipsis">{{v.content}}</p>
+						</div>
+						{{/each}}
+					</script>
+
+				</div>
+			</div>
+		</div>
+		<div id="finde">
+			<a href="http://chat8.live800.com/live800/chatClient/chatbox.jsp?companyID=820706&amp;configID=151385&amp;jid=5530154684">
+				<img src="/ysc2/Public/Wx/img/KFRK.png" alt="">
+			</a>
+			<!--<a href="<?php echo U('/home/order/carindex');?>"><img src="/ysc2/Public/Wx/img/Classification/classification_btn_shoppingcart.png"></a>-->
+			<a href="#"><img src="/ysc2/Public/Wx/img/Classification/classification_btn_top.png"></a>
+		</div>
+		<nav id="muibar" class="mui-bar mui-bar-tab">
+			<a class="" onclick="into_mycolection(<?php echo ($goods_base_info['id']); ?>)">
+				<span class="mui-icon"></span>
+				<span class="mui-tab-label">收藏</span>
+			</a>
+			<a class="">
+				<span class="mui-icon"></span>
+				<span class="mui-tab-label carindex">购物车</span>
+			</a>
+			<a class="btn_yellow into_cart" id="into_cart">
+				加入购物车
+			</a>
+			<a class="btn_red buy_now" id="buy_now">
+				立即购买
+			</a>
+		</nav>
+
+		<div class="fixedbox" style="display: none;" id="chooseattrbox">
+			<div class="fixedbox_body closefun m_f_vote">
+				<img class="closebtn " src="/ysc2/Public/Wx/img/Classification/closebtn.png" alt="" id="closebtn">
+				<div style="text-align: left;">
+					<h5>请选择规格</h5>
+					<div class="floatattr">
+						<ul>
+							<?php if(is_array($attr)): foreach($attr as $key=>$v): if($key == 0): ?><li class="active" id="<?php echo ($v['ga_id']); ?>"><span class="spanclass"><?php echo ($v['ga_name']); ?></span></li>
+									<?php else: ?>
+									<li class="" id="<?php echo ($v['ga_id']); ?>"><span class="spanclass"><?php echo ($v['ga_name']); ?></span></li><?php endif; endforeach; endif; ?>
+						</ul>
+					</div>
+					<div style="clear: both;"></div>
+					<div class="count">
+						<span>数量 :</span>
+						<div class="cutadd_div">
+							<img id="reduce" src="/ysc2/Public/Wx/img/Classification/cut.png" alt="">
+							<input type="text" id="num" value="1" />
+							<img id="add" src="/ysc2/Public/Wx/img/Classification/add.png" alt="" />
+						</div>
+					</div>
+					<div class="count" style="margin:10px 0;">
+						<span>库存 :</span><span id="change_stock" style="margin-left: 5px;"><?php echo ($attr[0]['stock']); ?></span>
+						<?php if($attr[0]['weight'] != 0.000): ?><span style="margin-left:10px;" id="label_con"><h5 style="display:inline;">重量 :</h5></span>
+							<span id="change_weight_con" style="margin-left: 5px;"><label id="change_weight"><?php echo ($attr[0]['weight']); ?></label>kg</span>
+							<?php else: ?>
+							<span style="margin-left:10px;display:none" id="label_con"><h5 style="display:inline;">重量 :</h5></span>
+							<span id="change_weight_con" style="display:none;margin-left: 5px;"><label id="change_weight"><?php echo ($attr[0]['weight']); ?></label>kg</span><?php endif; ?>
+					</div>
+					<div class="count">
+						<span>金额 :</span>
+						<p class="price">￥<label id="change_shop"><?php echo ($attr[0]['shop_price']); ?></label><small class="delmoney" style="color: #8f8f94;margin-left:10px;"><del>￥<label id="change_market"><?php echo ($attr[0]['market_price']); ?></label></del></small></p>
+					</div>
+					<!--<div class="mui-text-center">
+						<div class="mui-btn mui-btn-warning into_cart">加入购物车</div>
+						<div class="mui-btn mui-btn-danger buy_now" style="margin-left: 10px;">立即购买</div>
+					</div>-->
+				</div>
+			</div>
+			<div class="bottom_btndiv mui-text-center">
+				<div class="mui-btn mui-btn-warning  mui-btn-block floatbtn " id="ggaddcar">加入购物车</div>
+				<div class="mui-btn mui-btn-danger  mui-btn-block floatbtn" id="ggaddorder">立即购买</div>
+				<div class="mui-btn mui-btn-block mui-btn-danger sure_btn hidebtn" oid="" style="display: none;">确定</div>
+			</div>
+		</div>
+		<script src="/ysc2/Public/Wx/Script/CommonJS/Base.js"></script>
+		<script>
+			var gallery = mui('.mui-slider');
+			gallery.slider({
+				interval: 3000
+			});
+
+			mui('.shoptitle').on('tap', '.shop', function() {
+				mui('.shop span')[0].className = 'red'
+				mui('.pingj span')[0].className = ''
+					// console.log('商品')
+				mui('.xiang')[0].style.display = 'block'
+				mui('.ping')[0].style.display = 'none'
+			});
+			mui('.shoptitle').on('tap', '.pingj', function() {
+				// console.log('评价');
+				mui('.xiang')[0].style.display = 'none'
+				mui('.ping')[0].style.display = 'block'
+				mui('.shop span')[0].className = ''
+				mui('.pingj span')[0].className = 'red'
+			});
+		</script>
+	</body>
+
+</html>
+<script type="text/javascript" src="/ysc2/Public/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="/ysc2/Public/index/js/template.js"></script>
+<script type="text/javascript">
+	//评价的切换
+	var id = "<?php echo $id;?>"; //商品id
+	$('#comment_sort input').click(function() {
+		//		alert('aa');
+		var flag = $(this).attr('id'); //筛选标志位
+		$('#comment_sort div').removeClass('red'); //清空样式
+		$(this).parent().addClass('red'); //当前点击的添加样式
+		$.ajax({
+			url: "<?php echo U('/home/goods/commentchange');?>",
+			type: "post",
+			data: {
+				"id": id,
+				"flag": flag
+			},
+			dataType: "json",
+			success: function(data) {
+				console.log(data);
+//				alert(data.data);
+				//				 $('#comment_con').html();
+				if(data.result == 1) {
+					$('#comment_con').html(''); //清空评论的容器
+					var html = template('tpl', data);
+					$('#comment_con').html(html);
+				} else {
+					$('#comment_con').html('');
+				}
+			}
+		});
+	});
+
+	//选择商品规格
+	$('#chooseattr').click(function() {
+		$('#chooseattrbox').css('display', 'block');
+		$('.hidebtn').hide();
+		$('.floatbtn').show();
+	});
+	$('.buy_now').click(function() {
+		$('#chooseattrbox').show();
+		$('.hidebtn').show();
+		$('.floatbtn').hide();
+		$(".hidebtn").attr('oid', 2);
+	});
+	$(".closebtn").click(function() {
+		$('#chooseattrbox').css('display', 'none');
+	})
+	$('.hidebtn').click(function() {
+		$type = $(this).attr('oid');
+		if($type == 1) {
+			intocart();
+			$('#chooseattrbox').css('display', 'none');
+		} else if($type == 2) {
+			$num = $("#num").val();
+			$guige = $(".active").attr("id");
+			$money = $("#change_shop").html();
+			mui.openWindow({
+				url: "/ysc2/wx.php/home/order/balance?id=" + id + "&num=" + $num + "&type=1&guige=" + $guige + "&money=" + $money,
+				id: 'balance'
+			});
+		} 
+	});
+	$("#ggaddcar").click(function(){
+		intocart();
+		$('#chooseattrbox').css('display', 'none');
+	})
+	$("#ggaddorder").click(function(){
+		$num = $("#num").val();
+			$guige = $(".active").attr("id");
+			$money = $("#change_shop").html();
+			mui.openWindow({
+				url: "/ysc2/wx.php/home/order/balance?id=" + id + "&num=" + $num + "&type=1&guige=" + $guige + "&money=" + $money,
+				id: 'balance'
+		});
+	})
+	var cid = "<?php echo $id;?>";
+	$(".carindex").click(function() {
+		mui.openWindow({
+			url: "<?php echo U('/home/order/carindex');?>",
+			id: 'carindex'
+		});
+	})
+
+	function intocart() {
+		$user_id = "<?php echo cookie('user_id')?>";
+		console.log($user_id);
+		if($user_id == '' || $user_id == undefined) {
+			mui.toast('系统出现错误', setTimeout(function() {
+//				mui.openWindow({
+//					url: "<?php echo U('/home/login/login');?>",
+//					id: 'login'
+//				});
+			}, 1000));
+			return false;
+		}
+
+		$num = $("#num").val();
+		$guige = $(".active").attr("id");
+		$money = $("#change_shop").html();
+		$.ajax({
+			url: "<?php echo U('/home/Order/addcar');?>",
+			type: "post",
+			data: {
+				"id": cid,
+				'user_id': $user_id,
+				'num': $num,
+				'guige': $guige,
+				'money': $money
+			},
+			dataType: "json",
+			success: function(data) {
+				console.log(data);
+				if(data.result == 1) {
+					$('#chooseattrbox').css('display', 'none');
+					mui.toast('成功加入购物车！');
+				} else {
+					mui.toast('加入购物车失败');
+				}
+			}
+		})
+	}
+	$(".into_cart").click(function() {
+		$('#chooseattrbox').show();
+		$('.hidebtn').show();
+		$('.floatbtn').hide();
+		$(".hidebtn").attr('oid', 1);
+	});
+	$("#reduce").click(function() {
+		$num = parseInt($("#num").val());
+		if($num > 1) {
+			$c = $num - 1;
+			$("#num").val($c);
+		} else {
+
+		}
+	})
+	$("#add").click(function() {
+		$num = parseInt($("#num").val());
+		$change_stock = parseInt($("#change_stock").text());
+		if($num < $change_stock) {
+			$c = $num + 1;
+			$("#num").val($c);
+		} else {
+
+		}
+
+	})
+
+	$('.floatattr ul li').click(function() {
+		$('.floatattr ul li').removeClass('active');
+		$(this).addClass('active');
+		var ga_id = $(this).attr('id'); //点击的规格id
+		$.ajax({
+			url: "<?php echo U('/home/goods/attrchange');?>",
+			type: "post",
+			data: {
+				"id": id,
+				"ga_id": ga_id
+			},
+			dataType: "json",
+			success: function(data) {
+				// console.log(data);
+				if(data.result == 1) {
+					if(data.data.weight == '' || data.data.weight == 0) {
+						$('#label_con').css('display', 'none');
+						$('#change_weight_con').css('display', 'none');
+					} else {
+						$('#label_con').css({
+							'display': 'inline-block'
+						});
+						// $('#label_con h5').css({'display':'inline'});
+						$('#change_weight_con').css('display', 'inline-block');
+						$('#change_weight').html(data.data.weight);
+					}
+					$('#change_stock').html(data.data.stock);
+					$('#change_market').html(data.data.market_price);
+					$('#change_shop').html(data.data.shop_price);
+					$('#change_market_info').html(data.data.market_price);
+					$('#change_shop_info').html(data.data.shop_price);
+				}
+			}
+		});
+	});
+</script>
+<script type="text/javascript">
+	function into_mycolection(id) {
+		$.ajax({
+			url: "<?php echo U('/home/goods/mycolection');?>",
+			type: "post",
+			data: {
+				"id": id
+			},
+			dataType: "json",
+			success: function(data) {
+				// console.log(data);
+				mui.toast(data.msg);
+			}
+		});
+	}
+</script>
+<script type="text/javascript" src="/ysc2/Public/admin/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript">
+//$(function(){
+$link = window.location.href;
+$.ajax({
+        url:"<?php echo U('/home/jsdk/getjsdk');?>",//后台给你提供的接口
+        type:"post",
+        data:{"url":$link},
+        async:true,
+        dataType:"json",
+        success:function (data){
+//      	alert(JSON.stringify(data));
+            wx.config({
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来
+                appId: data.appid, // 必填，公众号的唯一标识
+                timestamp: data.timestamp, // 必填，生成签名的时间戳
+                nonceStr: data.noncestr, // 必填，生成签名的随机串
+                signature: data.signature,// 必填，签名，见附录1
+                jsApiList: [
+                    "onMenuShareTimeline",
+                    "onMenuShareAppMessage"
+                ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            });
+            wx.error(function (res) {
+//              mui.toast('');
+            });
+        },
+        error:function (error){
+//          alert(2)
+        }
+   });
+//})
+wx.ready(function(){
+$name=$(".name").html();
+$url="<?php echo C('URL_IP');?>"+$(".mui-slider-item img:first-child").attr("src");
+//
+		wx.onMenuShareTimeline({
+                 title:'', // 分享标题
+                 link:'',
+                 imgUrl:$url, // 分享图标
+             });
+            // 获取“分享给朋友”按钮点击状态及自定义分享内容接口
+        wx.onMenuShareAppMessage({
+                 title:'', // 分享标题
+                 desc: $name, // 分享描述
+               	 link:'',
+                 imgUrl:$url, // 分享图标
+                 type: '' // 分享类型,music、video或link，不填默认为link
+            });
+})
+</script>

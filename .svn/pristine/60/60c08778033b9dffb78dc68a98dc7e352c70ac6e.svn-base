@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>收益详情</title>
+        <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="black" name="apple-mobile-web-app-status-bar-style">
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/Wx/CSS/BusinessCSS/Myarticle/mui.min.css" />
+        <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+        <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/Mypage/distribution.css">
+        <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+    </head>
+<style type="text/css">
+         .ellipsis {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        color: #444;
+    }
+    </style>
+    <body>
+        <!--<header class="mui-bar mui-bar-nav header">
+            <a href="../../../mypage/Mypage.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <h1 class="mui-title">收益详情</h1>
+        </header>-->
+        <div class="distribution earnings">
+                <foreach name="data" item="v">
+                    <div class="distribution_details earnings_details">
+                    <div class="details_bg">
+                        <div class="details_top">
+                            <?php if ($user['is_xg']==0): ?>
+                            <img src="{$v['avatar']}" alt="" style="width: 50px;height: 50px">
+                            <?php else : ?>
+                            <img src="__PUBLIC__/Uploads/{$v['avatar']}" alt="" style="width: 50px;height: 50px">
+                            <?php endif ?>
+                            <!--<img src="__PUBLIC__/Uploads/{$v['avatar']}" alt="" style="width: 50px;">-->
+                            {$v['username']}
+                            <p class="display_inline margin_l_10">订单编号:<span>{$v['order_number']}</span></p>
+                        </div>
+                        <div class="details_content">
+                            <div>
+                                <p>搭档级别:<span>{$v['bcname']}</span></p>
+                                <p>奖金层级:<span>{$v['hierarchy']}级</span></p>
+                            </div>
+                            <div>
+                                <!--<p>奖金积分:<span>{$v['bgold']}</span></p>-->
+                                <p>奖金金额:<span>￥{$v['bmoney']}</span></p>
+                            </div>
+                            <div class="margin_t_15">
+                                <p>商品名称:<span class="ellipsis">{$v['goods_name']}</span></p>
+                            </div>
+                            <div>
+                                <p>所有商家:<span>{$v['s_name']}</span></p>
+                            </div>
+                            <div>
+                                <p>商品金额:<span>￥{$v['price']}</span></p>
+                                <p>订单金额:<span>￥{$v['total_price']}</span></p>
+                            </div>
+                            <div>
+                                <p>奖励状态:<span>
+                                    <php>
+                                        if($v['state']==1){echo "正常";}else{echo "冻结";}
+                                    </php>
+                                </span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </foreach>
+            </div>
+        </div>
+    </body>
+
+</html>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>

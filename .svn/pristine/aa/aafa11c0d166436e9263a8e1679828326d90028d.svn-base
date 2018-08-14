@@ -1,0 +1,324 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Administrator
+ * Date: 2017/4/14
+ * Time: 18:02
+ */
+
+namespace Home\Controller;
+
+use Think\Controller;
+
+class SpecialController extends Controller
+{
+    public function partnerspecial()
+    {
+        $partner = M()->table('__PARTNER__ p')
+            ->select();
+        $power = M('privilege')->where(array('partner_id' => $partner[0]['id']))->select();
+
+        for ($i = 0; $i < count($power); $i++) {
+            if ($power[$i]['type'] == 0) {
+                $power[$i]['tool']   = M('tool')->where(array('id' => $power[$i]['tool_id']))->getField('shop_price');
+                $data[$i]['tool_id'] = M('tool')->where(array('id' => $power[$i]['tool_id']))->getField('id');
+            }
+            if ($power[$i]['type'] == 1) {
+                $power[$i]['insurance'] = M('insurance')->where(array('id' => $power[$i]['insurance_id']))->getField('shop_price');
+            }
+            if ($power[$i]['type'] == 4) {
+                $power[$i]['shop_price'] = M('goods_attribute_info')->where(array('goods_id' => $power[$i]['goods_id']))->getField('shop_price');
+            }
+        }
+
+//                pp($power);
+        $this->assign('partner', $partner);
+        $this->assign('power', $power);
+        $this->display();
+    }
+    public function power()
+    {
+        $id   = I('id');
+        $pa   = M('partner')->where(array('id' => $id))->find();
+        $data = M('privilege')->where(array('partner_id' => $id))->select();
+//        $pa = M()->table('__PARTNER__ pa')
+        //            ->where(array('pa.id'=>$id))
+        //            ->join('left join __PRIVILEGE__ pr on pr.partner_id = pa.id')
+        //            ->field('pa.name as paname,pa.introduce as paintroduce,pr.*')
+        //            ->select();
+        for ($i = 0; $i < count($data); $i++) {
+            if ($data[$i]['type'] == 0) {
+                $data[$i]['tool']    = M('tool')->where(array('id' => $data[$i]['tool_id']))->getField('shop_price');
+                $data[$i]['tool_id'] = M('tool')->where(array('id' => $data[$i]['tool_id']))->getField('id');
+            }
+            if ($data[$i]['type'] == 1) {
+                $data[$i]['insurance'] = M('insurance')->where(array('id' => $data[$i]['insurance_id']))->getField('shop_price');
+            }
+            if ($data[$i]['type'] == 4) {
+                $data[$i]['shop_price'] = M('goods_attribute_info')->where(array('goods_id' => $data[$i]['goods_id']))->getField('shop_price');
+            }
+        }
+
+//        pp($data);
+        $json = array(
+            'paname'      => $pa['name'],
+            'paintroduce' => $pa['introduce'],
+            'data2'       => $data,
+        );
+//        pp($json);
+        $this->ajaxReturn($json);
+    }
+
+    //线下培训和POS机
+    public function goodspos()
+    {
+        $id = I('id');
+//        pp(I());
+        //        $partner_id = 1;
+        $data = M()->table('__PRIVILEGE__ p')
+            ->join('left join __GOODS__ g on g.id = p.goods_id')
+            ->join('left join __GOODS_ATTRIBUTE_INFO__ gai on gai.goods_id = g.id')
+            ->where(array('p.id' => $id))
+            ->field('p.name,gai.market_price,gai.shop_price,g.goods_introduce,p.goods_id,p.id')
+            ->select();
+        $pic = M('pic')->where(array('goods_id' => $data[0]['goods_id']))->select();
+//        pp($data);
+        $this->assign('pic', $pic);
+        $this->assign('data', $data);
+        $this->display();
+    }
+    //购买
+    public function check()
+    {
+        $id = I('id');
+//        pp($id);
+        $user_id   = cookie('user_id');
+        $privilege = M('user')->where(array('id' => $user_id))->getField('privilege_hierarchy_id');
+//        pp($privilege);
+        if (!$privilege) {
+//            $this->error('您不是搭档，请先升级为搭档',U('/home/Special/prompt'));
+            $json = array(
+                'result' => 0,
+            );
+        } else {
+//            $this->success('请填写地址', U('/home/Special/address',array('id'=>$id)));
+            $json = array(
+                'result' => 1,
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+    public function posbuy()
+    {
+        $arr = I();
+
+    }
+    public function payment()
+    {
+        $arr      = I();
+        $str      = explode(" ", $arr['cityinfo']);
+        $province = $str[0];
+        $city     = $str[1];
+        $district = $str[2];
+//        pp($arr);
+        $price = M()->table('__PRIVILEGE__ p')
+            ->where(array('p.id' => $arr['id']))
+            ->join('left join __GOODS__ g on g.id = p.goods_id')
+            ->join('left join __LOGISTICS_SELLER__ ls on ls.seller_id = g.seller_id and ls.logistics_id = g.default_express')
+            ->field('ls.ykg_cost as carriage')
+            ->find();
+//        pp($price);
+        $privilege_hierarchy = M('user')->where(array('id' => cookie('user_id')))->getField('privilege_hierarchy_id');
+        //更新特权领取记录表
+        $data                      = M('record');
+        $tmp                       = "POS" . date('YmdHis', time()) . rand(1000, 9999); //订单编号
+        $data->order_number        = $tmp;
+        $data->user_id             = cookie('user_id');
+        $data->privilege_hierarchy = $privilege_hierarchy;
+        $data->type                = 4;
+        $data->number              = 1;
+        $data->privilege_id        = $arr['id'];
+        $data->time                = time();
+        $data->name                = $arr['name'];
+        $data->tel                 = $arr['tel'];
+        $data->city                = $arr['cityinfo'];
+        $data->addr                = $arr['addr'];
+        $data->paid_price          = $price['carriage'];
+        $data->is_pay              = 0;
+        $data->remark              = 'pos机';
+        $res                       = $data->add();
+
+        //更新订单表
+        $order               = M('orders');
+        $order->order_number = $tmp;
+        $order->user_id      = cookie('user_id');
+        $order->addtime      = time();
+        $order->pay_status   = 0;
+        $order->total_price  = $price['carriage'];
+        $order->post_way     = 1;
+        $order->order_status = 0;
+        $order->freight      = $price['carriage'];
+        $order->note         = 'POS机';
+        $order->order_from   = 4;
+        $order->province     = $province;
+        $order->city         = $city;
+        $order->district     = $district;
+        $order->address      = $arr['addr'];
+        $order->contact      = $arr['name'];
+        $order->phone        = $arr['tel'];
+        $or                  = $order->add();
+
+        $goods_id      = M('privilege')->where(array('id' => $arr['id']))->getField('goods_id');
+        $order_id      = M('orders')->where(array('order_number' => $tmp))->getField('id');
+        $goods_attr_id = M('goods_attribute_info')->where(array('goods_id' => $goods_id))->getField('goods_attribute_id');
+
+        //更新订单商品表
+        $or_goods                = M('order_goods');
+        $or_goods->order_id      = $order_id;
+        $or_goods->goods_id      = $goods_id;
+        $or_goods->goods_attr_id = $goods_attr_id;
+        $or_goods->goods_number  = 1;
+        $or_goods->activity_type = 0;
+        $org                     = $or_goods->add();
+
+        if ($res && $or && $org) {
+            $this->assign('id', $arr['id']);
+            $this->assign('price', $price['carriage']);
+            $this->assign('order_number', $tmp);
+            $this->display();
+        } else {
+            $this->error('操作失败', U('/home/Special/address'));
+        }
+    }
+
+    public function prompt()
+    {
+        $this->display();
+    }
+
+    public function test()
+    {
+        $this->display();
+    }
+
+    public function address()
+    {
+        $id = I('id');
+//        pp($id);
+        $this->assign('id', $id);
+        $this->display();
+    }
+
+    //线下培训
+    public function goodsline()
+    {
+        $id   = I('id');
+        $data = M()->table('__PRIVILEGE__ p')
+            ->join('left join __GOODS__ g on g.id = p.goods_id')
+            ->join('left join __GOODS_ATTRIBUTE_INFO__ gai on gai.goods_id = g.id')
+            ->where(array('p.id' => $id))
+            ->field('p.name,gai.market_price,gai.shop_price,g.goods_introduce,p.goods_id,p.id')
+            ->select();
+        $pic = M('pic')->where(array('goods_id' => $data[0]['goods_id']))->select();
+//        pp($data);
+        $this->assign('pic', $pic);
+        $this->assign('data', $data);
+        $this->display();
+    }
+    public function linepay()
+    {
+        $arr = I();
+//        pp($arr);
+        $price = M()->table('__PRIVILEGE__ p')
+            ->where(array('p.id' => $arr['id']))
+            ->join('left join __GOODS__ g on g.id = p.goods_id')
+            ->join('left join __LOGISTICS_SELLER__ ls on ls.seller_id = g.seller_id and ls.logistics_id = g.default_express')
+            ->field('ls.ykg_cost as carriage')
+            ->find();
+        $this->assign('id', $arr['id']);
+        $this->assign('price', $price['carriage']);
+        $this->display();
+    }
+    public function linebuy()
+    {
+        $arr = I();
+//        pp($arr);
+        $privilege_hierarchy       = M('user')->where(array('id' => cookie('user_id')))->getField('privilege_hierarchy_id');
+        $data                      = M('record');
+        $tmp                       = "LINE" . date('YmdHis', time()) . rand(1000, 9999); //订单编号
+        $data->order_number        = $tmp;
+        $data->user_id             = cookie('user_id');
+        $data->privilege_hierarchy = $privilege_hierarchy;
+        $data->type                = 4;
+        $data->number              = 1;
+        $data->privilege_id        = $arr['id'];
+        $data->time                = time();
+        $data->paid_price          = $arr['money'];
+        $data->is_pay              = 1;
+        $data->remark              = "线下培训";
+        $res                       = $data->add();
+
+        if ($res) {
+            /*$this->assign('id',$arr['id']);
+            $this->assign('price',$price['carriage']);
+            $this->assign('order_number',$tmp);*/
+            $this->success('操作成功', U('/home/Special/partnerspecial'));
+        } else {
+            $this->error('操作失败', U('/home/Special/linepay'));
+        }
+
+    }
+    public function checks()
+    {
+        // $id = I('post.id');
+        // $id = 1;
+        // $map['p.id'] = $id;
+        // p($id);
+        $mapp['pv.partner_id'] = I('post.id');
+        // $mapp['pv.partner_id'] = 1;
+        $user_id   = cookie('user_id');
+        $privilege = M('user')->where(array('id' => $user_id))->getField('privilege_hierarchy_id');
+//        pp($privilege);
+        if (!$privilege) {
+            $json = array(
+                'result' => 0,
+            );
+        } else {
+            // $two = M()->table('__PRIVILEGE__ p')
+            //     ->where($map)
+            //     ->join('left join __PRIVILEGE__ pv on pv.partner_id = p.id')
+            //     ->join('left join __INSURANCE__ i on i.id = pv.insurance_id')
+            //     ->field('i.id as i_id,i.qr_code')
+            //     ->find();
+
+            $two = M()->table('__PRIVILEGE__ pv')
+                ->where($mapp)
+                ->join('left join __INSURANCE__ i on i.id = pv.insurance_id')
+                ->field('i.id as i_id,i.qr_code')
+                ->find();
+            $img  = $two['qr_code'];
+            $i_id = $two['i_id'];
+            $json = array(
+                'result' => 1,
+                'two'    => $img,
+                'i_id'   => $i_id,
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+    public function insurance()
+    {
+        // $id = I('');
+        // $mapp['pv.partner_id'] = $id;
+        $mapp['pv.partner_id'] = 1;
+        $data                  = M()->table('__INSURANCE__ i')
+            ->where($mapp)
+            ->join('left join __PRIVILEGE__ pv on pv.insurance_id = i.id')
+            ->field('i.*,pv.id as p_id')
+            ->find();
+        $this->assign('data', $data);
+        $this->display();
+
+    }
+
+}

@@ -1,0 +1,269 @@
+<!--index -->
+<include file="public:index" />
+<!--index-->
+<title>角色管理-编辑角色</title>
+</head>
+
+<body>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 系统 <span class="c-gray en">&gt;</span> 角色管理 <span class="c-gray en">&gt;</span> 角色信息 <span class="c-gray en">&gt;</span> 编辑
+        <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回"><i class="Hui-iconfont">&#xe66b;</i></a><a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="pd-20">
+        <form action="{:U('/home/role/roleupdate')}" name="main_form" method="post" class="form form-horizontal" id="form-user-character-add">
+            <input type="hidden" name="user_id" value="{$user['id']}">
+            <input type="hidden" name="role_id" value="{$user['role_id']}">
+            <input type="hidden" name="rename" value="{$user['role_name']}">
+            <div class="row cl">
+                <label class="form-label col-2"><span class="c-red">*</span>角色名称：</label>
+                <div class="formControls col-10">
+                    <input type="text" class="input-text" value="{$user['role_name']}" placeholder="" id="name" name="name" datatype="*4-16" nullmsg="用户账户不能为空">
+                </div>
+            </div>
+<!--             <div class="row cl">
+                <label class="form-label col-2">
+                    是否为分店管理员：
+                </label>
+                <div class="formControls col-5 skin-minimal">
+                    <if condition="$user['is_depart_admin'] eq 0">
+                        <div class="radio-box">
+                            <input type="radio" id="depart_admin" name="depart_admin" value="1">
+                            <label>是</label>
+                        </div>
+                        <div class="radio-box">
+                            <input type="radio" id="depart_admin" name="depart_admin" value="0" checked="true">
+                            <label>否</label>
+                        </div>
+                        <else />
+                        <div class="radio-box">
+                            <input type="radio" id="depart_admin" name="depart_admin" value="1" checked="true">
+                            <label>是</label>
+                        </div>
+                        <div class="radio-box">
+                            <input type="radio" id="depart_admin" name="depart_admin" value="0">
+                            <label>否</label>
+                        </div>
+                    </if>
+                </div>
+                <div class="col-4"> </div>
+            </div> -->
+            <div class="row cl">
+                <label class="form-label col-2">备注：</label>
+                <div class="formControls col-10">
+                    <input type="text" class="input-text" value="{$user['role_remark']}" placeholder="" id="" name="remark">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-2">用户信息：</label>
+                <div class="formControls col-10">
+                    <?php if ($adminin!=null): ?>
+                    <dl class="permission-list">
+                        <dt>
+                            <label>
+                                <input type="checkbox" value="" name="adminid" id="user-Character-0" checked> 已拥有权限的用户
+                            </label>
+                        </dt>
+                        <dd>
+                            <dl class="cl permission-list2">
+                                <foreach name='adminin' item='v'>
+                                    <dd style="display:inline; margin-left:0px;">
+                                        <label class="">
+                                            <input type="checkbox" value="{$v['admin_id']}" name="lvadminid[]" id="user-Character-0-0-0" checked>{$v['user']}
+                                        </label>
+                                    </dd>
+                                </foreach>
+                            </dl>
+                        </dd>
+                    </dl>
+                    <?php endif ?>
+                    <?php if ($adminnot!=null): ?>
+                    <dl class="permission-list">
+                        <dt>
+                            <label>
+                                <input type="checkbox" value="" name="adminid" id="user-Character-0"> 未拥有权限的用户
+                            </label>
+                        </dt>
+                        <dd>
+                            <dl class="cl permission-list2">
+                                <foreach name='adminnot' item='v'>
+                                    <dd style="display:inline; margin-left:0px;">
+                                        <label class="">
+                                            <input type="checkbox" value="{$v['admin_id']}" name="lvadminid[]" id="user-Character-0-0-0">{$v['user']}
+                                        </label>
+                                    </dd>
+                                </foreach>
+                            </dl>
+                        </dd>
+                    </dl>
+                    <?php endif ?>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-2">权限节点：</label>
+                <div class="formControls col-10">
+                    <foreach name='data' item='v'>
+                        <dl class="permission-list">
+                            <dt>
+                                <?php if (in_array($v['id'],$rabc)): ?>
+                                <label>
+                                    <input type="checkbox" value="{$v['id']}" id1="{$v['id']}" name="lvidd[]" id="user-Character-0" checked="checked"> {$v['controllername']}
+                                </label>
+                                <?php else: ?>
+                                <label>
+                                    <input type="checkbox" value="{$v['id']}" id1="{$v['id']}" name="lvidd[]" id="user-Character-0"> {$v['controllername']}
+                                </label>
+                                <?php endif ?>
+                            </dt>
+                            <dd>
+                                <foreach name="v['child']" item="vo">
+                                    <dl class="cl permission-list2">
+                                        <dt>
+                                            <if condition="in_array($vo['id'],$rabc)">
+                                                <label class="">
+                                                    <input type="checkbox" value="{$vo['id']}" id2="{$vo['t_id']}" class="checkboxid" name="lvidd[]" id="user-Character-0-0-0" checked="checked">{$vo['controllername']}
+                                                </label>
+                                                <else />
+                                                <label>
+                                                    <input type="checkbox" value="{$vo['id']}" id2="{$vo['t_id']}" name="lvidd[]" id="user-Character-0"> {$vo['controllername']}
+                                                </label>
+                                            </if>
+                                        </dt>
+                                        <dd>
+                                            <foreach name="vo['child']" item="voo">
+                                                <if condition="in_array($voo['id'],$rabc)">
+                                                    <label class="">
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <input type="checkbox" value="{$voo['id']}" class="checkboxid" name="lvidd[]" id3="{$voo['t_id']}" id="user-Character-0-0-0" checked="checked">{$voo['controllername']}
+                                                    </label>
+                                                    <else />
+                                                    <label class="">
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <input type="checkbox" value="{$voo['id']}" name="lvidd[]" class="checkboxid" id3="{$voo['t_id']}" id="user-Character-0-0-0">{$voo['controllername']}
+                                                    </label>
+                                                </if>
+                                            </foreach>
+                                        </dd>
+                                    </dl>
+                                </foreach>
+                            </dd>
+                        </dl>
+                    </foreach>
+                </div>
+            </div>
+            <div class="row cl">
+                <div class="col-10 col-offset-2">
+                    <button type="submit" onclick="return check()" class="btn btn-primary radius" id="admin-role-save"><i class="icon-ok"></i>保存</button>
+                    <input class="btn btn-primary radius" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;">
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript">
+    function check() {
+        //form1是form中的name属性
+        var _form = document.main_form;
+        if (trim(_form.name.value) == "") {
+            alert("名字不能为空!");
+            return false;
+        }
+        /*document.write("<div id='showtime'style='font-size:9pt;color:#598F03;'></div><br><div align=center style='font-size:9pt;color:#598F03;'>loading...</div><div align=center style='font-size:9pt;color:#598F03;'>数据处理请等待...</div>")*/
+        return true;
+    }
+
+    function trim(s) {
+        var count = s.length;
+        var st = 0; // start
+        var end = count - 1; // end
+
+        if (s == "") return s;
+        while (st < count) {
+            if (s.charAt(st) == " ")
+                st++;
+            else
+                break;
+        }
+        while (end > st) {
+            if (s.charAt(end) == " ")
+                end--;
+            else
+                break;
+        }
+        return s.substring(st, end + 1);
+    }
+    </script>
+    <script>
+    // $(function(){
+
+    //  $(".permission-list dt input:checkbox").click(function(){
+    //      //$(this).closest("dl").find("dd input:checkbox").prop("checked",$(this).prop("checked"));
+    //      var adminid=$(this).attr('adminid');
+    //      if (adminid)
+    //      {
+    //          if ($(this).prop("checked")) {
+    //              $(this).closest(".permission-list").find("input:checkbox").prop("checked",true);
+    //          }else{
+    //              $(this).closest(".permission-list").find("input:checkbox").prop("checked",false);
+    //          }
+    //      }
+    //      var id1=$(this).attr('id1');
+    //      if(id1)
+    //      {
+    //          if ($(this).prop("checked")) {
+    //              $(this).closest(".permission-list").find("input:checkbox").prop("checked",true);
+    //          }else{
+    //              $(this).closest(".permission-list").find("input:checkbox").prop("checked",false);
+    //          }
+    //      }
+    //      var l =$(this).parent().parent().find("input:checked").length;
+    //      if ($(this).prop("checked")) {
+    //          $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",true);
+    //      }
+    //      if(l==0){
+    //          $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",false);
+    //      }
+    //  });
+    //  $(".permission-list2 dd input:checkbox").click(function(){
+    //      var l =$(this).parent().parent().find("input:checked").length;
+    //      var l2=$(this).parents(".permission-list").find(".permission-list2 dd").find("input:checked").length;
+    //      if($(this).prop("checked")){
+    //          $(this).closest("dl").find("dt input:checkbox").prop("checked",true);
+    //          $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",true);
+    //      }
+    //      else{
+    //          if(l==0){
+    //              $(this).closest("dl").find("dt input:checkbox").prop("checked",false);
+    //          }
+    //          if(l2==0){
+    //              $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",false);
+    //          }
+    //      }
+    //  });
+    // });
+    $(function() {
+
+        $(".permission-list dt input:checkbox").click(function() {
+            $(this).closest("dl").find("dd input:checkbox").prop("checked", $(this).prop("checked"));
+        });
+
+        $(".permission-list2 dd input:checkbox").click(function() {
+            var l = $(this).parent().parent().find("input:checked").length;
+            var l2 = $(this).parents(".permission-list").find(".permission-list2 dd").find("input:checked").length;
+            if ($(this).prop("checked")) {
+                $(this).closest("dl").find("dt input:checkbox").prop("checked", true);
+                $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked", true);
+            } else {
+                // if (l2 == 0) {
+                //     $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked", false);
+                // }
+            }
+
+        });
+    });
+    </script>
+</body>
+
+</html>

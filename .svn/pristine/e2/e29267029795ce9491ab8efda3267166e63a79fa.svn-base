@@ -1,0 +1,150 @@
+<!--index -->
+<include file="public:index" />
+<!--index-->
+<title>返佣默认设置</title>
+</head>
+
+<body>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 系统 <span class="c-gray en">&gt;</span> 系统设置 <span class="c-gray en">&gt;</span> 搭档福利设置<span class="c-gray en">&gt;</span> 新增 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回"><i class="Hui-iconfont">&#xe66b;</i></a><a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="pd-20">
+        <form action="{:U('/home/bonusdefaultset/bonusdefaultsetparnter')}" method="post" enctype="multipart/form-data" name="main_form" class="form form-horizontal" id="form-admin-add">
+            <div class="row cl">
+                <label class="form-label col-2">搭档福利：</label>
+            </div>
+            <input type="hidden" name="id" id="id" value="{$info['id']}" />
+            <div class="row cl" id="">
+                <label class="form-label col-3">软件使用(年)：</label>
+                <label class="form-label col-0">草根搭档</label>
+                <div class="formControls col-1">
+                    <input type="text" class="input-text" value="{$info['rcg']}"  name="rcg" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                </div>
+                <label class="form-label col-0">精英搭档</label>
+                <div class="formControls col-1">
+                    <input type="text" class="input-text" value="{$info['rjy']}"  name="rjy" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                </div>
+                <label class="form-label col-0">贵族搭档</label>
+                <div class="formControls col-1">
+                    <input type="text" class="input-text" value="{$info['rgz']}"  name="rgz" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                </div>
+            </div>
+            
+             <div class="row cl" id="">
+                <label class="form-label col-3">交通意外险(年)：</label>
+                <label class="form-label col-0">草根搭档</label>
+                <div class="formControls col-1">
+                	<input type="text" class="input-text" value="{$info['jcg']}"  name="jcg" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                </div>
+                <label class="form-label col-0">精英搭档</label>
+                <div class="formControls col-1">
+                	<input type="text" class="input-text" value="{$info['jjy']}"  name="jjy" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                </div>
+                <label class="form-label col-0">贵族搭档</label>
+                <div class="formControls col-1">
+                	<input type="text" class="input-text" value="{$info['jgz']}"  name="jgz" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                </div>
+            </div>
+            
+             <div class="row cl" id="">
+                <label class="form-label col-3">线上培训(次)：</label>
+                <label class="form-label col-0">草根搭档</label>
+                <div class="formControls col-1">
+                	<input type="text" class="input-text" value="{$info['xcg']}"  name="xcg" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                </div>
+                <label class="form-label col-0">精英搭档</label>
+                <div class="formControls col-1">
+                	<input type="text" class="input-text" value="{$info['xjy']}"  name="xjy" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" >
+                </div>
+                <label class="form-label col-0">贵族搭档</label>
+                <div class="formControls col-1">
+                	<input type="text" class="input-text" value="{$info['xgz']}"  name="xgz" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                </div>
+            </div>
+            
+             <div class="row cl" id="">
+                <label class="form-label col-3">收款工具(个)：</label>
+                <label class="form-label col-0">草根搭档</label>
+                <div class="formControls col-1">
+                	<input type="text" class="input-text" value="{$info['scg']}"  name="scg" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                </div>
+                <label class="form-label col-0">精英搭档</label>
+                <div class="formControls col-1">
+                	<input type="text" class="input-text" value="{$info['sjy']}"  name="sjy" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                </div>
+                <label class="form-label col-0">贵族搭档</label>
+                <div class="formControls col-1">
+                	<input type="text" class="input-text" value="{$info['sgz']}"  name="sgz" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                </div>
+            </div>
+            
+             <div class="row cl" id="">
+                <label class="form-label col-3">话费折扣(折)：</label>
+                <label class="form-label col-0">草根搭档</label>
+                <div class="formControls col-1">
+					<input type="text" class="input-text" value="{$info['hcg']}"  name="hcg" onkeypress = "return event.keyCode>=48&&event.keyCode<=57||event.keyCode==46"
+    onpaste = "return !clipboardData.getData('text').match(/\D/)">
+                </div>
+                <label class="form-label col-0">精英搭档</label>
+                <div class="formControls col-1">
+                	<input type="text" class="input-text" value="{$info['hjy']}"  name="hjy" onkeypress = "return event.keyCode>=48&&event.keyCode<=57||event.keyCode==46"
+    onpaste = "return !clipboardData.getData('text').match(/\D/)">
+                </div>
+                <label class="form-label col-0">贵族搭档</label>
+                <div class="formControls col-1">
+                    <input type="text" class="input-text" value="{$info['hgz']}"  name="hgz" oonkeypress = "return event.keyCode>=48&&event.keyCode<=57||event.keyCode==46"
+    onpaste = "return !clipboardData.getData('text').match(/\D/)">
+                </div>
+            </div>
+            
+             <div class="row cl" id="">
+                <label class="form-label col-3">流量折扣(折)：</label>
+                <label class="form-label col-0">草根搭档</label>
+                <div class="formControls col-1">
+                    <input type="text" class="input-text" value="{$info['lcg']}"  name="lcg" onkeypress = "return event.keyCode>=48&&event.keyCode<=57||event.keyCode==46"
+    onpaste = "return !clipboardData.getData('text').match(/\D/)">
+                </div>
+                <label class="form-label col-0">精英搭档</label>
+                <div class="formControls col-1">
+                    <input type="text" class="input-text" value="{$info['ljy']}"  name="ljy" onkeypress = "return event.keyCode>=48&&event.keyCode<=57||event.keyCode==46"
+    onpaste = "return !clipboardData.getData('text').match(/\D/)">
+                </div>
+                <label class="form-label col-0">贵族搭档</label>
+                <div class="formControls col-1">
+                    <input type="text" class="input-text" value="{$info['lgz']}"  name="lgz" onkeypress = "return event.keyCode>=48&&event.keyCode<=57||event.keyCode==46"
+    onpaste = "return !clipboardData.getData('text').match(/\D/)">
+                </div>
+            </div>
+
+            <div class="row cl">
+                <div class="col-9 col-offset-3">
+                    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;" onclick="return check()"> &nbsp;&nbsp;
+                    <!-- <input class="btn btn-primary radius" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;" > -->
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script language="JavaScript" type="text/javascript">      
+    function clearNoNum(obj){  
+        //修复第一个字符是小数点 的情况.  
+        if(obj.value !=''&& obj.value.substr(0,1) == '.'){  
+            obj.value="";  
+        }  
+          
+        obj.value = obj.value.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符  
+        obj.value = obj.value.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的       
+        obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");      
+        obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');//只能输入两个小数       
+        if(obj.value.indexOf(".")< 0 && obj.value !=""){//以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额  
+            if(obj.value.substr(0,1) == '0' && obj.value.length == 2){  
+                obj.value= obj.value.substr(1,obj.value.length);      
+            }  
+        }      
+    }      
+</script>  
+<script type="text/javascript">
+function check() {
+    return true;
+}
+</script>

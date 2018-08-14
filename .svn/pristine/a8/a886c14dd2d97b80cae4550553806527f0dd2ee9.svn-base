@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+        <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css">
+        <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/partnerspecial.css">
+        <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/PartnerSpecial/partnerspecial.css">
+        <!--<title>搭档专享</title>-->
+    </head>
+    <style>
+        .introduce {
+            position: relative;
+            top: 65px;
+            height: 136px;
+            width: 100%;
+            margin: 0 auto;
+            background-color: #FFFFFF;
+            overflow-x: hidden;
+        }
+
+        .bgm {
+            background-size: 100% 100%;
+            background-image: url(__PUBLIC__/Wx/img/Common/tick_btn_select.png);
+            /*color: #FF5353 !important;*/
+        }
+
+        .float_div {
+            width: 100%;
+            background: #fff;
+            float: left;
+            position: relative;
+            top: 55px;
+        }
+
+        .float_div .width_33 {
+            width: 33.33333%;
+            float: left;
+            display: inline-block;
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        .float_div .width_33:not(:last-child) {
+            border-right: 1px solid #eee;
+        }
+
+        .float_div .width_33 h5 {
+            color: #33e060;
+            font-size: 15px;
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        .float_div .width_33:nth-child(2) h5 {
+            color: #E567D2;
+        }
+
+        .float_div .width_33:nth-child(3) h5 {
+            color: #FEBA00;
+        }
+
+        .float_div .width_33 img {
+            width: 100%;
+            width: 60px;
+        }
+        /*搭档福利*/
+
+        #privilege .content {
+            top: 0;
+            height: auto;
+            padding: 10px;
+            float: left;
+            background: #F1F2F6;
+        }
+
+        #privilege .content .list {
+            width: 33.3333%;
+            padding: 5px;
+            float: left;
+            text-align: center;
+            position: relative;
+            margin-left: 0;
+            height: auto;
+            background: transparent;
+        }
+
+        #privilege .content .list .border_div {
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #e2e2e2;
+        }
+
+        #privilege .content .list .img {
+            position: relative;
+            top: 0;
+            width: 100%;
+            height: auto;
+            margin: 0 auto;
+            padding: 0;
+            border-top: none;
+        }
+
+        #privilege .content .list .img img {
+            width: 30px;
+            height: auto;
+            margin-top: 0;
+        }
+
+        #privilege .content .list .name {
+            position: relative;
+            width: 100%;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        #privilege .content .list span {
+            position: relative;
+            top: 0;
+            color: #393939;
+            font-size: 10px;
+        }
+
+        #privilege .content .list .money {
+            color: #fe504f;
+            position: relative;
+            left: 0;
+            top: 0px;
+            width: 100%;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        #privilege .content .list .Receive {
+            top: 0;
+            height: 22px;
+            line-height: 22px;
+        }
+
+        #privilege .pagetitle {
+            top: 0;
+            height: 40px;
+            line-height: 40px;
+        }
+        #privilege{
+            height: auto;
+        }
+        #classification .list{
+            width: 33.3333%;
+        }
+    </style>
+
+    <body>
+        <header class="mui-bar mui-bar-nav">
+            <a href="{:U('/home/index/index')}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <h1 class="mui-title">搭档福利</h1>
+        </header>
+        <div class="float_div" id="classification">
+            <foreach name="partner" item="k">
+                <if condition="$k['id'] eq $part">
+                    <div class="list  power  bgm">
+                        <span style="color: #33e060;">{$k['name']}</span>
+                        <div class="img">
+                            <img src="__PUBLIC__/Uploads/{$k['ico']}" alt="">
+                        </div>
+                        <input type="hidden" value="{$k['id']}" class="input11">
+                     </div>
+                <else/><!---->
+                <div class="list  power">
+                    <span style="color: #33e060;">{$k['name']}</span>
+                    <div class="img">
+                    <img src="__PUBLIC__/Uploads/{$k['ico']}" alt="">
+                </div>
+                    <input type="hidden" value="{$k['id']}" class="input11">
+                </div>
+            </if>
+            </foreach>
+        </div>
+        <!--<div id="classification">
+        <foreach name="partner" item="k">
+            <div class="list power ">
+                <span style="color: #33e060;">{$k['name']}</span>
+                <div class="img">
+                    <img src="__PUBLIC__/Uploads/{$k['ico']}" alt="">
+                </div>
+                <input type="hidden" value="{$k['id']}" class="input11">
+            </div>
+        </foreach>
+    </div>-->
+        <div id="introduce">
+            <div class="pagetitle">
+                <span id="pname">{$partner[$part-1]['name']}</span>
+            </div>
+            <div class="content">
+                <span id="pcontent"><?php echo htmlspecialchars_decode($partner[$part-1]['introduce']); ?></span>
+            </div>
+        </div>
+        <div id="privilege" style="top: 80px">
+            <div class="pagetitle">
+                <span>搭档福利</span>
+            </div>
+            <div class="content" id="content">
+                <foreach name="power" item="v">
+                    <if condition="$v['type'] eq 0">
+                        <div class="list">
+                            <div class="border_div">
+                                <a href="{:U('/home/extension/details',array('id'=>$v['tool_id']))}">
+                                    <div class="img" style="">
+                                        <img src="__PUBLIC__/Uploads/{$v['ico']}">
+                                    </div>
+                                    <div class="name">
+                                        <span>推广工具</span>
+                                    </div>
+                                    <div class="money">
+                                        <span>￥{$v['tool']}</span>
+                                    </div>
+                                </a>
+                                <div class="Receive">
+                                    <a href="{:U('/home/extension/details',array('id'=>$v['tool_id']))}"><span>免费领取</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </if>
+                    <if condition="$v['type'] eq 1">
+                        <div class="list">
+                            <div class="border_div">
+                                <a href="{:U('/home/special/insurance',array('id'=>$v['insurance_id']))}">
+                                    <div class="img" style="">
+                                        <img src="__PUBLIC__/Uploads/{$v['ico']}">
+                                    </div>
+                                    <div class="name" style="width: 65px">
+                                        <span>交通意外险</span>
+                                    </div>
+                                    <div class="money">
+                                        <span>￥{$v['insurance']}</span>
+                                    </div>
+                                </a>
+                                <div class="Receive">
+                                    <a href="{:U('/home/special/insurance')}"><span>免费领取</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </if>
+                    <if condition="$v['type'] eq 2">
+                        <div class="list">
+                            <div class="border_div">
+                                <div class="img" style="">
+                                    <img src="__PUBLIC__/Uploads/{$v['ico']}">
+                                </div>
+                                <div class="name">
+                                    <span>话费充值</span>
+                                </div>
+                                <div class="money">
+                                    <span style="">{$v['rebate']}折</span>
+                                </div>
+                                <div class="Receive" style="width: 38px">
+                                    <a href="{:U('/home/feeflow/feeflow')}"><span>前往</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </if>
+                    <if condition="$v['type'] eq 3">
+                        <div class="list">
+                            <div class="border_div">
+                                <div class="img" style="">
+                                    <img src="__PUBLIC__/Uploads/{$v['ico']}">
+                                </div>
+                                <div class="name">
+                                    <span>流量充值</span>
+                                </div>
+                                <div class="money">
+                                    <span style="">{$v['rebate']}折</span>
+                                </div>
+                                <div class="Receive" style="width: 38px">
+                                    <a href="{:U('/home/feeflow/feeflow')}"><span>前往</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </if>
+                    <if condition="$v['type'] eq 4">
+                        <div class="list">
+                            <div class="border_div">
+                                <a href="{:U('/home/Special/goodsline',array('id'=>$v['id']))}">
+                                    <div class="img" style="">
+                                        <img src="__PUBLIC__/Uploads/{$v['ico']}">
+                                    </div>
+                                    <div class="name" style="width: 65px">
+                                        <span>线上培训</span>
+                                    </div>
+                                    <div class="money">
+                                        <span>￥{$v['xsshop_price']}</span>
+                                    </div>
+                                </a>
+                                <div class="Receive">
+                                    <a href="{:U('/home/Special/goodsline',array('id'=>$v['id']))}"><span>免费领取</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </if>
+                    <if condition="$v['type'] eq 5">
+                        <div class="list">
+                            <div class="border_div">
+                                <a href="{:U('/home/Special/goodspos',array('id'=>$v['id']))}">
+                                    <div class="img" style="">
+                                        <img src="__PUBLIC__/Uploads/{$v['ico']}">
+                                    </div>
+                                    <div class="name" style="width: 65px">
+                                        <span>收款工具</span>
+                                    </div>
+                                    <div class="money">
+                                        <span>￥{$v['posshop_price']}</span>
+                                    </div>
+                                </a>
+                                <div class="Receive">
+                                    <a href="{:U('/home/Special/goodspos',array('id'=>$v['id']))}"><span>免费领取</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </if>
+                </foreach>
+            </div>
+        </div>
+        <script id="tpl" type="text/template">
+            {{each data2 as v i}} {{if v.type == 0}}
+            <div class="list ">
+                <div class="border_div">
+                    <!--<a href="{:U('/home/extension/extensionlist')}">-->
+                    <a href="__MODULE__/extension/details/?id={{v.tool_id}}">
+                        <div class="img" style="">
+                            <img src="__PUBLIC__/Uploads/{{v.ico}}">
+                        </div>
+                        <div class="name" style="width: 70px">
+                            <span>推广工具</span>
+                            <!--<span>{{v.type}}</span>-->
+                        </div>
+                        <div class="money">
+                            <span>￥{{v.tool}}</span>
+                        </div>
+                    </a>
+                    <div class="Receive">
+                        <a href="__MODULE__/extension/details/?id={{v.tool_id}}"><span>免费领取</span></a>
+                    </div>
+                </div>
+            </div>
+            {{/if}} {{if v.type == 1}}
+            <div class="list ">
+                <div class="border_div">
+                    <a href="__MODULE__/special/insurance/?id={{v.insurance_id}}">
+                        <div class="img" style="">
+                            <img src="__PUBLIC__/Uploads/{{v.ico}}">
+                        </div>
+                        <div class="name" style="width: 70px">
+                            <span>交通意外险</span>
+                        </div>
+                        <div class="money">
+                            <span>￥{{v.insurance}}</span>
+                        </div>
+                    </a>
+                    <div class="Receive ince">
+                        <a><span>免费领取</span></a>
+                    </div>
+                </div>
+            </div>
+            {{/if}} {{if v.type == 2}}
+            <div class="list">
+                <div class="border_div">
+                    <div class="img" style="">
+                        <img src="__PUBLIC__/Uploads/{{v.ico}}">
+                    </div>
+                    <div class="name">
+                        <span>话费充值</span>
+                    </div>
+                    <div class="money">
+                        <span>{{v.rebate}}折</span>
+                    </div>
+                    <div class="Receive" style="width: 38px">
+                        <a href="{:U('/home/feeflow/feeflow')}"><span>前往</span></a>
+                    </div>
+                </div>
+            </div>
+            {{/if}} {{if v.type == 3}}
+            <div class="list">
+                <div class="border_div">
+                    <div class="img" style="">
+                        <img src="__PUBLIC__/Uploads/{{v.ico}}">
+                    </div>
+                    <div class="name">
+                        <span>流量充值</span>
+                    </div>
+                    <div class="money">
+                        <span>{{v.rebate}}折</span>
+                    </div>
+                    <div class="Receive" style="width: 38px">
+                        <a href="{:U('/home/feeflow/feeflow')}"><span>前往</span></a>
+                    </div>
+                </div>
+            </div>
+            {{/if}}{{if v.type == 4}}
+                <div class="list ">
+                    <div class="border_div">
+                        <!--<a href="{:U('/home/Special/goodsline')}">-->
+                        <a href="__MODULE__/Special/goodsline/?id={{v.id}}">
+                            <div class="img" style="">
+                                <img src="__PUBLIC__/Uploads/{{v.ico}}">
+                            </div>
+                            <div class="name" style="width: 70px">
+                                <span>线上培训</span>
+                            </div>
+                            <div class="money">
+                                <span>￥{{v.xsshop_price}}</span>
+                            </div>
+                        </a>
+                        <div class="Receive">
+                            <a href="__MODULE__/Special/goodsline/?id={{v.id}}"><span>免费领取</span></a>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+            {{if v.type == 5}}
+                <div class="list ">
+                    <div class="border_div">
+                        <!--<a href="{:U('/home/Special/goodspos',array('id'=>1))}">-->
+                        <a href="__MODULE__/Special/goodspos/?id={{v.id}}">
+                            <div class="img" style="">
+                                <img src="__PUBLIC__/Uploads/{{v.ico}}">
+                            </div>
+                            <div class="name" style="width: 70px">
+                                <span>收款工具</span>
+                            </div>
+                            <div class="money">
+                                <span>￥{{v.posshop_price}}</span>
+                            </div>
+                        </a>
+                        <div class="Receive">
+                            <a href="__MODULE__/Special/goodspos/?id={{v.id}}"><span>免费领取</span></a>
+                        </div>
+                    </div>
+                </div>
+            {{/if}} {{/each}}
+        </script>
+        <div id="two_img" class="fixedbox img" style="display: none;">
+            <div class="fixedbox_zxxq">
+                <img src="__PUBLIC__/Wx/img/hx.png" class="close">
+                <div class="article ince">
+                    <img src="" alt="">
+                    <p class="mui-text-center">扫码领取奖励</p>
+                </div>
+            </div>
+        </div>
+        <script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+    </body>
+
+</html>
+<script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/index/js/template.js"></script>
+<script type="text/javascript">
+    // $(".fixedbox .close").click(function() {
+    //     $(".fixedbox.img").hide();
+    // });
+
+    // function insuranceQr(obj) {
+    //     $('.fixedbox').show();
+    // }
+</script>
+<script>
+    $(".power").click(function() {
+        var id = $(this).children("input").val();
+        //显示效果
+        $('#classification .list').removeClass('bgm');
+        //      $('#item3 .liu_list').removeClass('bgm');
+        $(this).addClass('bgm');
+
+        $.ajax({
+            url: "{:U('/home/Special/power')}",
+            type: "post",
+            data: {"id": id},
+            dataType: "json",
+            success: function(data) {
+//                            console.log(data);
+                $('#pname').html(data['paname']);
+                $('#pcontent').html(data['paintroduce']);
+                //              $('#pcontent').html(data.paintroduce);
+
+                //              for(var i=0;i<data.data2.length;i++){
+                //                  if(data['data2'][i]['type'] == 2){
+                //                      $("#flow2").html(data['data2'][i]["rebate"]);
+                //                  };
+                //                  if(data['data2'][i]['type'] == 3){
+                //                      $("#dataflow").html(data['data2'][i]["rebate"]);
+                //                  }
+                //              }
+                $('#content').html();
+                var html = template('tpl', data);
+                document.getElementById('content').innerHTML = html;
+                $(".ince").click(function() {
+                    // var id = $(this).children("input").val();
+
+                    $.ajax({
+                        url: "{:U('/home/Special/checks')}",
+                        type: "post",
+                        data: {
+                            "id": id
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            console.log(data);
+                            if(data['result'] == 0) {
+                                mui.toast('您不是搭档，请先升级为搭档');
+                            }
+                            if(data['result'] == 1) {
+                                $(".ince img").attr("src", "__PUBLIC__/Uploads/" + data['two']);
+                                $("#two_img").css('display', 'block');
+                            }
+                            $(".close").click(function() {
+                                $("#two_img").css('display', 'none');
+                            });
+                        }
+                    })
+                });
+            }
+        })
+    })
+</script>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/Wx/CSS/Bankcard/api.css" />
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/Wx/CSS/Bankcard/aui.css" />
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/Wx/CSS/Bankcard/aui-flex.css"/>
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/Wx/CSS/Bankcard/access.css" />
+        <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+        <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Mywallet/Transactionrecord.css" rel="stylesheet">
+        <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+        <title></title>
+    </head>
+
+    <body>
+
+        <!--<header class="mui-bar mui-bar-nav header">
+            <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="{:U('/home/wallet/walletindex')}"></a>
+            <h1 class="mui-title">添加银行卡</h1>
+        </header>-->
+
+        <div class="body">
+            <ul class="aui-content text_model">
+                <li class="aui-flex-item-12">
+                    <div class="aui-flex-item-3 aui-text-center">
+                        开户姓名
+                    </div>
+                    <div class="aui-flex-item-9">
+                        <input type="text" name="open_name" id="open_name" placeholder="请输入开户姓名" value="" />
+                    </div>
+                </li>
+                <li id="bankname" class="aui-flex-item-12">
+                    <div class="aui-flex-item-3 aui-text-center">
+                        银行名称
+                    </div>
+                    <div class="aui-flex-item-9">
+                        <select name="bank_type" id="bank_type">
+                            <option value="">请选择</option>
+                            <foreach name="bank" item="v">
+                                <option value="{$v['id']}">{$v['bank_name']}</option>
+                            </foreach>
+                        </select>
+                    </div>
+                    <div class="aui-pull-right acc_go">
+                        <i class="aui-iconfont aui-icon-right"></i>
+                    </div>
+                </li>
+                <li class="aui-flex-item-12">
+                    <div class="aui-flex-item-3 aui-text-center">
+                        开户账户
+                    </div>
+                    <div class="aui-flex-item-9">
+                        <input type="text" name="open_account" id="open_account" placeholder="请输入开户账户" value="" />
+                    </div>
+                </li>
+                <li class="aui-flex-item-12">
+                    <div class="aui-flex-item-3 aui-text-center">
+                        开户地址
+                    </div>
+                    <div class="aui-flex-item-9">
+                        <input type="text" name="open_address" id="open_address" placeholder="请输入开户地址" value="" />
+                    </div>
+                </li>
+            </ul>
+            <div class="bag_button aui-text-center" onclick="addbankcard()">保 存</div>
+        </div>
+    </body>
+
+</html>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+    function check(){
+        if($("#bank_type").val() == ''){
+            alert('请选择银行卡类型');
+            return false;
+        }
+        if($("#open_name").val() == ''){
+            alert('请输入开户姓名');
+            return false;
+        }
+        if($("#open_account").val() == ''){
+            alert('请输入开户账户');
+            return false;
+        }
+        if($("#open_address").val() == ''){
+            alert('请输入开户地址');
+            return false;
+        }
+        return true;
+    }
+    //添加银行卡
+    function addbankcard(){
+        $is_pass = check();
+        if(!$is_pass){
+            return false;
+        }
+        $.ajax({
+            url:"{:U('/home/wallet/addbankcard')}",
+            type:"post",
+            data:{"bank_type":$("#bank_type").val(),"open_name":$("#open_name").val(),"open_account":$("#open_account").val(),"open_address":$("#open_address").val()},
+            dataType: "json",
+            success:function(data){
+                // console.log(data.result);
+                alert(data.msg);
+                window.location.href = "{:U('/home/wallet/Bankcard')}"; //跳转到我的银行卡界面
+            }
+        });
+    }
+</script>

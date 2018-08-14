@@ -1,0 +1,42 @@
+.all img{
+    width: 19px;
+    height:19px;
+    float: left;
+    margin-right: 10px;
+}
+
+.all {
+    position: relative;
+    top:15px;
+    left:15px;
+    width:60px;
+    float: left;
+    height:15px;
+}
+
+.mui-bar .quxiao{
+    float: right;
+}
+
+.mui-bar .quxiao input{
+    position: relative;
+    top:8px ;
+    height:35px;
+    width: 100px;
+    background-color: #fe504f;
+    opacity: 0.5;
+    color: #FFFFFF;
+    right:15px;
+    border-radius: 5px;
+}
+.body img{
+    width: 50px;
+    height:50px;
+    margin-bottom: 20px;
+}
+.body{
+    position: relative;
+    margin-top: 50%;
+    width: 100%;
+    text-align: center;
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="../../../../CSS/CommonCSS/Base.css">
+		<link rel="stylesheet" href="../css/partnerspecial.css">
+		<title>商品详情</title>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header">
+			<a href="partnerspecial.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">商品详情</h1>
+		</header>
+		<div>
+			<!--商品轮播-->
+			<div class="mui-slider">
+				<div class="mui-slider-group">
+					<div class="mui-slider-item">
+						<a href="#"><img src="../img/l2.png" alt="" /></a>
+					</div>
+					<div class="mui-slider-item">
+						<a href="#"><img src="../img/l3.png" alt="" /></a>
+					</div>
+				</div>
+			</div>
+			<!--收款工具/xxx培训-->
+			<div class="insuranceAll goodsdetails">
+				<p class="title">收款工具/xxx培训</p>
+				<p><span class="mui-badge mui-badge-danger mui-badge-inverted">￥4245</span><small>￥5246</small></p>
+			</div>
+			<!--商品详情-->
+			<div id="content">
+				<div class="title">
+					<h4>商品详情</h4>
+				</div>
+				<div class="img">
+					<img src="../../../../img/Home/home_exchange_pic.png" alt="">
+					<img src="../../../../img/Home/home_exchange_pic.png" alt="">
+					<img src="../../../../img/Home/home_exchange_pic.png" alt="">
+				</div>
+			</div>
+		</div>
+		<div class="imgTopDiv">
+			<img src="../img/btn_top.png" alt="">
+		</div>
+		<nav class="mui-bar mui-bar-tab">
+			<input type="button" value="立即领取">
+		</nav>
+		<script src="../../../../Script/CommonJS/Base.js"></script>
+	</body>
+
+</html>
+<script type="text/javascript" src="../../../../Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+	//获得slider插件对象
+	var gallery = mui('.mui-slider');
+	gallery.slider({
+		interval: 2000 //自动轮播周期，若为0则不自动播放，默认为0；
+	});
+</script> 

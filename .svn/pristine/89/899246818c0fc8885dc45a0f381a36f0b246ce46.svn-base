@@ -1,0 +1,265 @@
+<?php
+namespace Home\Controller;
+
+use Think\Controller;
+
+class OrderController extends OrderBaseController
+{
+    /**
+     * order订单支付
+     * @access public
+     * @param 1.用户余额判断（线上支付  线下支付）
+     * @param 2.（线上支付(个人信息变动)  线下支付）-返回支付的状态
+     * @param 3.array(3.1订单以及订单明细)
+     * @param 支付类型  0 余额不足 1 支付宝 2 微信 3银联 pay_type
+     * @param 支付状态return   0 余额不足 1 支付宝 2余额成功 3 微信 4 银联 5异常订单
+     * @param 支付成功之后- 3.2积分变动 - 3.3个人信息变动 - 3.4分销计算)
+     */
+    public function init()
+    {
+        $user_id         = I('user_id');
+        $sub_adderss_id  = I('sub_adderss_id');
+        $change_couponid = I('change_couponid');
+        $pay_type        = I('pay_type');
+        $order_code      = I('order_code');
+        $time            = time();
+        $user_id         = 1;
+        $order_code      = 'on,77,78';
+        $sub_adderss_id  = 1;
+        $change_couponid = 1;
+        $pay_type        = 1;
+
+        $user_info      = D('Users')->getUserById($user_id); //获取用户信息
+        $cartid_arr     = OrderBaseController::cart_explode($order_code, 2, ',', 'on'); //购物车信息转sql查询需要的数组
+        $o_g_num_price  = D('Cart')->o_g_num_price($cartid_arr); //通过购物获取总金额 总数量
+        $goods_array    = D('Cart')->getCartgoods($cartid_arr); //通过购物购买的商品id集合
+        $goods_act      = D('Activity')->goods_act($goods_array); //商品活动-信息
+        $ordergoodsinfo = D('Cart')->cart_goods($cartid_arr); //通过购物车结合购买的商品信息集合
+        $freight        = D('Freight')->getFreight(); //邮费设置信息
+        $order_c_info   = OrderBaseController::orderCalculation($goods_act, $ordergoodsinfo, $freight); //订单计算信息-针对有活动的订单
+        $coupon_price   = D('Discount')->getDiscount($change_couponid); //计算优惠券-返回的金额
+        $order_info     = OrderBaseController::orderIfno($order_c_info, $coupon_price, $o_g_num_price); //订单明细-存储(订单总额计算，邮费，优惠金额)
+        // import("Org.Util.Utils");//第三方载入
+        // $obj = new \Org\Util\Utils;//第三方实例化类
+        // $orderNo = $obj->orderNo();
+        // $orderNo =\Org\Util\Utils::orderNo();
+        $data['order_number']   = \Org\Util\Utils::orderNo();
+        $data['create_time']    = time();
+        $data['order_status']   = 1;
+        $data['address_id']     = $sub_adderss_id;
+        $data['all_price']      = $order_info['total_price'];
+        $data['freight']        = $order_info['freight'];
+        $data['discount_price'] = $order_info['discount_price'];
+        //$order_add_id = D('Order')->addData($data);//生成未付款的订单并获取订单唯一id->code
+        $update_coupon = D('Discount')->save_o_Discount($change_couponid, $user_info['id'], $order_add_id); //其他1 优惠券-使用过状态变化
+        $dataList      = OrderBaseController::orderGoodsInfo($ordergoodsinfo, $order_add_id); //订单明细信息-库存变动
+        D('Base')->addAlldata($dataList); //批量操作
+        $c_del_map['id'] = array('in', $cartid_arr);
+        //D('Base')->where($c_del_map)->deleteData();//删除购物车
+    }
+
+    public function orderindex()
+    {
+        $search = I();
+        // $map['o.pay_status'] = array('eq', 1);
+        if ($search['seller_id'] != null) {
+            $map['o.seller_id'] = $search['seller_id'];
+        }
+        if ($search['shr_tel'] != null) {
+            $tel            = $search['shr_tel'];
+            $map['o.phone'] = array("like", "%$tel%");
+        }
+
+        if ($search['username'] != null) {
+            $username          = $search['username'];
+            $map['o.username'] = array("like", "%$username%");
+        }
+
+        if ($search['order_number'] != null) {
+            $order_number          = $search['order_number'];
+            $map['o.order_number'] = array("like", "%$order_number%");
+        }
+        if ($search['class_id'] != null) {
+            $map['o.order_status'] = $search['class_id'];
+            // $where['id']               = array('not in', '1,2');
+            $classid['id']   = array('neq', $search['class_id']);
+            $endclass        = M('order_status')->where($classid)->field('id as class_id,type as class_name')->select();
+            $midclass['num'] = array('id' => null, 'class_name' => "全部分类");
+            $stclass         = M('order_status')->where($where = array('id' => $search['class_id']))->where($where)->field('id as class_id,type as class_name')->select();
+            $class           = array_merge($stclass, $midclass, $endclass);
+        } else {
+            $class = $this->classsearch();
+        }
+
+        if (($search['time'] != null) && ($search['time2'] != null)) {
+            $stime   = str_replace('+', '', $search['time']);
+            $etime   = str_replace('+', '', $search['time2']);
+            $timearr = array(strtotime($stime), strtotime($etime));
+            // $timearr          = array(strtotime($search['time']), strtotime($search['time2']));
+            $map['o.addtime'] = array('between', $timearr);
+        }
+
+        $data = M()->table('__ORDERS__ o')
+            ->where($map)
+            ->join('left join __USER__ u on u.id = o.user_id')
+            ->join('left join __SELLER__ s on s.id = o.seller_id')
+            ->join('left join __ORDER_GOODS__ og on og.order_id = o.id')
+            ->join('left join __GOODS__ g on g.id = og.goods_id')
+            ->field('
+                o.*,
+                u.username,
+                s.id as seller_id,
+                s.name as seller_name,
+                group_concat(og.goods_number) as allnum,
+                group_concat(og.price) as allprice,
+                group_concat(g.goods_name) as goods_names
+                ')
+        // ->order('order_status')
+            ->order('o.pay_time  desc')
+            ->group('o.id')
+            ->page($_GET['p'] . ',20')
+            ->select();
+
+        $seller = M('seller')->field('id,name')->select();
+
+        $count = M()->table('__ORDERS__ o')
+            ->where($map)
+            ->join('left join __USER__ u on u.id = o.user_id')
+            ->join('left join __SELLER__ s on s.id = o.seller_id')
+            ->count();
+
+        foreach ($data as $key => $value) {
+            $goods_name_arr = explode(',', $value['goods_names']);
+            foreach ($goods_name_arr as $k => $v) {
+                $goods_name_arr[$k] = '<li>' . $v . '</li>';
+            }
+            $data[$key]['goods_names'] = implode('', $goods_name_arr);
+        }
+        // dump($data);die;
+        $Page      = new \Think\Page($count, 20);
+        $show      = $Page->show();
+        $seller_id = $search['seller_id'];
+        $this->assign('seller_id', $seller_id);
+        $this->assign('page', $show);
+        $this->assign('class', $class);
+        $this->assign('seller', $seller);
+        $this->assign('data', $data);
+        $this->assign('count', $count);
+        $this->assign('search', $search);
+        $this->display();
+    }
+
+    private function classsearch()
+    {
+        // $where['id']     = array('not in', '1,2');
+        $classall['num'] = array('id' => null, 'class_name' => "全部分类");
+        $class           = M('order_status')->field('id as class_id,type as class_name')->select();
+        $class           = array_merge($classall, $class);
+        // /dump($class);
+        return $class;
+    }
+
+    public function orderinfo()
+    {
+
+        $order = M()->table('__ORDERS__ o')->where($where = array('o.id' => I('id')))
+            ->join('left join __USER__ u on o.user_id = u.id')
+            ->join('left join __SELLER__ s on o.seller_id = s.id')
+        // ->order('order_status')
+            ->field('
+                o.*,
+                u.username,
+                u.userphone,
+                s.name as seller_name
+                ')->find();
+
+        $data = M()->table('__ORDER_GOODS__ og')
+        // ->where($map)
+            ->where($where = array('og.order_id' => I('id')))
+            ->join('left join __ORDERS__ o on o.id = og.order_id ')
+            ->join('left join __GOODS__ g on g.id = og.goods_id')
+            ->field('og.*,o.order_number,o.is_invoice,g.goods_name')->select();
+
+        $fap = M()->table('__INVOICE__ i')
+            ->join('left join __ORDERS__ o on o.id = i.order_id')
+            ->where($where = array('i.order_id' => I('id')))
+            ->field('i.*,o.order_number')
+            ->find();
+
+        // dump($order);
+        // dump($data);die;
+        $this->assign('order', $order);
+        $this->assign('data', $data);
+        $this->assign('fap', $fap);
+
+        $this->display();
+    }
+    public function orderpost()
+    {
+        $arr = I();
+        if ($arr['order_id'] != null) {
+            D('orders')->orderpost($arr);
+            $this->success('发货成功！', U('/home/order/orderindex'));
+        } else {
+            $orderid = I('id');
+            $class   = M('logistics')->where($where = array('is_disable' => 0))->order('id')->select();
+            $order   = M()->table('__ORDERS__ O')
+                ->where($where = array('O.id' => $orderid))
+                ->find();
+            $this->assign('order', $order);
+            $this->assign('class', $class);
+            $this->assign('orderid', $orderid);
+            $this->display();
+        }
+    }
+
+    public function updateorder()
+    {
+        $arr = I();
+        if ($arr['order_id'] != null) {
+            D('orders')->updateorder($arr);
+            $this->success('修改成功！', U('/home/order/orderindex'));
+        } else {
+            $orderid = I('id');
+            $order   = M()->table('__ORDERS__ o')
+                ->where($where = array('o.id' => $orderid))->field('
+                o.id,
+                o.contact,
+                o.province,
+                o.city,
+                o.district,
+                o.address,
+                o.phone  ')->find();
+            $this->assign('order', $order);
+            $this->assign('orderid', $orderid);
+            $this->display();
+        }
+    }
+
+    public function orderclose()
+    {
+        $arr = I();
+        set_time_limit(0);
+        if ($arr['type'] == 2) {
+            //逐个点击
+            $data               = M('orders');
+            $data->id           = I('id');
+            $data->order_status = 5;
+            $data->save();
+        } else {
+            // for ($i = 0; $i < count($arr['id']); $i++) {
+            //     $order = M('order')->where($where = array('id' => $arr['id'][$i], 'post_status' => 0))->field('id,post_status')->find();
+            //     if ($order != null) {
+            //         $data              = M('order');
+            //         $data->id          = $order['id'];
+            //         $data->post_status = 4;
+            //         $data->save();
+            //     } else {
+            $this->error('待付款订单才可以关闭！', U('/home/order/orderindex'));
+
+            // }
+            // }
+        }
+        $this->success('关闭成功！', U('/home/order/orderindex'));
+    }
+}

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>资讯消息</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css">
+        <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Selectinformation.css" rel="stylesheet">
+        <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+        <style type="text/css">
+            .clearfloat:after {
+                display: block;
+                clear: both;
+                content: "";
+                visibility: hidden;
+                height: 0
+            }
+
+            .clearfloat {
+                zoom: 1
+            }
+
+            .ellipsis {
+                display: block;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 100%;
+                color: #444;
+            }
+
+            .ellipsis_2 {
+                display: -webkit-box;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                word-wrap: break-word;
+                word-break: break-all;
+                white-space: normal !important;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+
+            .searchPanel {
+                position: absolute;
+                top: 45px;
+                height: 55px;
+                width: 100%;
+                background: #f1f2f6;
+                padding: 10px;
+            }
+
+            .searchdiv {
+                text-align: left;
+                background: #fff;
+                border-radius: 25px;
+                width: 100%;
+                height: 35px;
+                position: relative;
+                padding-left: 20px;
+                padding-right: 60px;
+            }
+
+            .searchdiv .imgdiv {
+                width: 50px;
+                height: 100%;
+                text-align: center;
+                display: inline-block;
+                position: absolute;
+                top: 0;
+                right: 0px;
+                background: #FE504F;
+                border-radius: 0 25px 25px 0;
+            }
+
+            .searchdiv input[type='search'] {
+                display: inline-block;
+                width: 100%;
+                /* padding-left: 3px; */
+                padding: 0;
+                height: 35px;
+                text-align: left;
+                margin: 0;
+                background: #fff;
+                font-size: 14px;
+                border-radius: 25px;
+                color: #444;
+            }
+
+            .searchdiv .imgdiv span {
+                vertical-align: middle;
+                /* width: 20px; */
+                position: absolute;
+                font-size: 15px;
+                /* top: 7.5px; */
+                width: 100%;
+                display: inline-block;
+                line-height: 35px;
+                right: 0px;
+                color: #fff;
+            }
+
+            .mui-content {
+                top: 100px;
+                /*height: 100px;*/
+                position: absolute !important;
+            }
+
+            .mui-fullscreen {}
+
+            html,
+            body {
+                height: 100%;
+                background: #F1F2F6 !important;
+                color: #444 !important;
+                font-family: sans-serif !important;
+            }
+
+            .mui-table-view-cell p {
+                display: -webkit-box;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                word-wrap: break-word;
+                word-break: break-all;
+                white-space: normal !important;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                color: #444;
+            }
+
+            .mui-table-view-cell {
+                height: auto;
+            }
+
+            .mui-table-view-cell h4 {
+                margin-top: 0;
+                font-size: 15px;
+                color: #444;
+                font-weight: bold;
+            }
+
+            .mui-table-view:before,
+            .mui-table-view:after {
+                height: 0;
+            }
+
+            .mui-table-view {
+                border-bottom: 1px solid #e2e2e2;
+            }
+
+            .mui-bar-nav~ .mui-content {
+                padding-top: 0;
+                border-top: 1px solid #e2e2e2;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!--<header class="mui-bar mui-bar-nav header">
+            <a href="{:U('/home/index/index')}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <h1 class="mui-title">资讯消息</h1>
+        </header>-->
+        <!--<div class="mui-input-row mui-search">
+            <input type="search" class="mui-input-clear" placeholder="搜索资讯关键词" data-input-clear="1" data-input-search="1">
+            <span class="mui-placeholder">
+        <span class="mui-icon mui-icon-search"></span>
+            </span>
+        </div>-->
+        <!-- <div class="mui-content mui-row mui-fullscreen clearfloat">
+      <div class="mui-col-xs-3 ">
+                <foreach name='class' item='vi'>
+                    <div class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical claname" id="segmentedControls ">
+                        <input type="hidden" class="class_id" name="type" value="{$vi['id']}">
+                        <a class="mui-control-item mui-active ">
+                        {$vi['name']}
+                    </a>
+                    </div>
+                </foreach>
+            </div>
+        <div id="segmentedControlContents" class="mui-col-xs-9" style="background:red;height:100%">
+            <?php if ($info == null): ?>
+            <div class="mui-control-content mui-active">
+                <div class="img">
+                    <img src="__PUBLIC__/Wx/img/Home/default_noconsulting.png" alt="">
+                    <p>暂无任何资讯消息哦~</p>
+                </div>
+            </div>
+            <?php endif ?>
+            <div class="mui-control-content clearfloat" style="background:red;height:100%;display:block">
+                <ul class="mui-table-view" id="content" style="background:red;height:100%">
+                        <script id="tpl" type="text/template">
+                        {{each data as v i}}
+                        <a href="{:U('/home/information/infor')}">
+                            <li class="mui-table-view-cell mui-media">
+                                <img style="height: 65px;width: 100px;float: left" src="__PUBLIC__/Uploads/{{v.pic}}">
+                                <div class="mui-media-body">
+                                    <h4>{{v.title}}</h4>
+                                    <h6>{{v.times}}.{{v.addtime}}.{{v.addtimes}}</h6>
+                                    <p class="mui-ellipsis">{{v.content}}</p>
+                                </div>
+                            </li>
+                        </a>
+                        {{/each}}
+                    </script>
+                </ul>
+            </div>
+        </div>
+    </div> -->
+        <div class="searchPanel">
+            <form>
+                <div id="searchdiv" class="searchdiv">
+                    <input id="search" type="search" placeholder="输入搜索关键字" />
+                    <div class="imgdiv">
+                        <!--<img src="__PUBLIC__/Wx/img/SSSS.png" alt="">-->
+                        <span>搜索</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="mui-content mui-row mui-fullscreen">
+            <div class="mui-col-xs-3">
+                <foreach name='class' item='vi'>
+                    <div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical claname">
+                        <!-- <a class="mui-control-item mui-active" href="#content1">资讯分类</a> -->
+                        <input type="hidden" class="class_id" name="type" value="{$vi['id']}">
+                        <a class="mui-control-item">{$vi['name']}</a>
+                    </div>
+                </foreach>
+            </div>
+            <div id="segmentedControlContents" class="mui-col-xs-9">
+                <if condition="$info eq null">
+                    <div id="content1" class="mui-control-content mui-active">
+                        <div class="img">
+                            <img src="__PUBLIC__/Wx/img/Home/default_noconsulting.png" alt="">
+                            <p>暂无任何资讯消息哦~</p>
+                        </div>
+                    </div>
+                </if>
+                <div id="content2" class="mui-control-content" style="display:block">
+                    <foreach name="info" item='va'>
+                        <ul class="mui-table-view">
+                            <a href="{:U('home/information/infor',array('id'=>$va['id']))}">
+                                <li class="mui-table-view-cell mui-media">
+                                    <img style="height: 65px;width: 100px;float: left" src="__PUBLIC__/Uploads/{$va['pic']}">
+                                    <div class="mui-media-body">
+                                        <h4>{$va['title']}</h4>
+                                        <h6>{$va['times']}.{$va['addtime']}.{$va['addtimes']}</h6>
+                                        <p class="ellipsis" style="color:#414141!important;">{$va['content']}</p>
+                                    </div>
+                                </li>
+                            </a>
+                        </ul>
+                    </foreach>
+                </div>
+                <div id="content3" class="mui-control-content" style="display:none">
+                    <ul class="mui-table-view" id="content">
+                        <script id="tpl" type="text/template">
+                            {{each data as v i}}
+                            <a href="{:U('home/information/infor',array('id'=>v.i_id))}">
+                                <li class="mui-table-view-cell mui-media">
+                                    <img style="height: 65px;width: 100px;float: left" src="__PUBLIC__/Uploads/{{v.pic}}">
+                                    <div class="mui-media-body">
+                                        <h4>{{v.title}}</h4>
+                                        <h6>{{v.times}}.{{v.addtime}}.{{v.addtimes}}</h6>
+                                        <p class="ellipsis" oid="{{v.content}}" style="color:#414141!important;">
+                                        </p>
+                                    </div>
+                                </li>
+                            </a>
+                            {{/each}}
+                        </script>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/index/js/template.js"></script>
+    <script type="text/javascript">
+        $('.mui-col-xs-3 #segmentedControls .mui-control-item').click(function() {
+            $('.mui-col-xs-3 #segmentedControls .mui-control-item').removeClass('mui-active');
+            $(this).addClass('mui-active');
+        });
+        $('#search').submit(function() {
+        });
+        $(".claname").click(function() {
+            var class_id = $(this).find('.class_id').val();
+            $.ajax({
+                url: "{:U('/home/information/classinfo')}",
+                type: "post",
+                data: {
+                    "class_id": class_id
+                },
+                dataType: "json",
+                success: function(data) {
+                    console.log(data);
+                    if(data['result'] == 0) {
+                        var html = template('tpl', data);
+                        $('#content').html(html);
+                        $("#content2").css('display', 'none');
+                        $("#content3").css('display', 'block');
+                    }
+                    if(data['result'] == 1) {
+                        mui.toast('该分类暂无资讯！');
+                    }
+                    $("#content").find(".ellipsis").html($("#content").find(".ellipsis").attr('oid'));
+                }
+            })
+        });
+    </script>
+
+</html>

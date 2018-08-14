@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>交易记录</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="../../../CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="../../../CSS/BusinessCSS/Mywallet/Transactionrecord.css" rel="stylesheet">
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">交易记录</h1>
+</header>
+<div class="list">
+    <h5>银行卡充值</h5>
+    <p>01月11日</p>
+    <h4>+200</h4>
+</div>
+<div class="list">
+    <h5>银行卡充值</h5>
+    <p>01月11日</p>
+    <h4>+200</h4>
+</div>
+<div class="list">
+    <h5>银行卡充值</h5>
+    <p>01月11日</p>
+    <h4>+200</h4>
+</div>
+<div class="list">
+    <h5>银行卡充值</h5>
+    <p>01月11日</p>
+    <h4>+200</h4>
+</div>
+<div class="list">
+    <h5>银行卡充值</h5>
+    <p>01月11日</p>
+    <h4>+200</h4>
+</div>
+<div class="list">
+    <h5>银行卡充值</h5>
+    <p>01月11日</p>
+    <h4>+200</h4>
+</div>
+<div class="backm">
+    <img src="../../../img/My/default_notransaction.png" alt="">
+    <h5>暂无任何交易记录</h5>
+</div>
+<script src="../../../Script/CommonJS/Base.js"></script>
+<script>
+    function text() {
+        for (var i = 0;i<mui('.list').length;i++){
+            mui('.list')[i].style.display = 'block'
+
+        }
+        mui('.backm')[0].style.display = 'none'
+        setTimeout(function () {
+            for (var i = 0;i<mui('.list').length;i++){
+                mui('.list')[i].style.display = 'none'
+            }
+            mui('.backm')[0].style.display = 'block'
+            setTimeout(function () {
+                text()
+            },1000)
+        },1000)
+
+    }
+//    text()
+</script>
+</body>
+</html>

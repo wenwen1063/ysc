@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>商品详情</title>
+		<meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+		<link href="__PUBLIC__/Wx/CSS/BusinessCSS/classification/Commoditydetails.css" rel="stylesheet">
+		<style type="text/css">
+			#goods_introduce_style p {
+				margin: 0 !important;
+				line-height: 0!important;
+			}
+			
+			#goods_introduce_style img {
+				margin: 0 !important;
+				line-height: 0!important;
+			}
+			
+			.mui-bar-tab .mui-tab-item:nth-child(1) .mui-icon {
+				background: url(__PUBLIC__/Wx/img/Common/classification_btn_collection_normal.png) no-repeat;
+				background-size: 20px 20px;
+				background-position: 50% 100%;
+			}
+			.mui-bar-tab .mui-tab-item:nth-child(2) .mui-icon {
+				background: url(__PUBLIC__/Wx/img/shoppingcart.png) no-repeat;
+				background-size: 20px 20px;
+				background-position: 50% 100%;
+			} 
+			.btn_yellow {
+				background: #FFC100;
+				color: #fff !important;
+				font-size: 15px;
+				border: 1px solid #FFC100;
+			}
+			
+			.btn_red {
+				background: #FF5353;
+				color: #fff !important;
+				font-size: 15px;
+				border: 1px solid #FF5353;
+			}
+			
+			.mui-bar-tab .mui-tab-item.mui-active {
+				color: #929292;
+				
+			}
+			.mui-bar-tab .mui-tab-item.mui-active .mui-icon{
+				background-image: transparent;
+			}
+			.mui-slider {
+				height: auto;
+			}
+			
+			.content .shoptitle .list {
+				width: 50%;
+				margin: 0;
+				text-align: center;
+				float: left;
+				height: 42px;
+			}
+			
+			.content .shoptitle .list .red {
+				margin: 0;
+				width: auto;
+				text-align: center;
+				padding: 0 10px;
+				display: inline-block;
+				line-height: 44px;
+			}
+			
+			.content .shoptitle .list span {
+				width: 100%;
+				display: inline-block;
+				line-height: 44px;
+			} 
+			.content .xiang {
+				padding: 10px 0;
+			}
+			
+			.clear_both {
+				clear: both;
+			}
+			.title .you .right .list img{
+				height: auto;
+			}
+			#muibar{
+				display: block;
+			}
+			.sure_btn{
+				height: 35px;
+				line-height: 5px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">商品详情</h1>
+		</header>
+
+		<div class="mui-slider">
+			<div class="mui-slider-group">
+				<foreach name="slider_pics" item="v">
+					<div class="mui-slider-item">
+						<a href="#"><img src="__PUBLIC__/Uploads/{$v['pic']}" /></a>
+					</div>
+				</foreach>
+			</div>
+			<div class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+			</div>
+		</div>
+		<div class="title">
+			<h5 class="name">{$goods_base_info['goods_name']}</h5>
+			<p class="xiao">销量：{$goods_base_info['r_sale']}</p>
+			<div class="money">
+				<h5>￥<label id="change_shop_info">{$market_shop[0]['min_shop_price']}</label></h5>
+				<small class="delmoney" style="color: #8f8f94;"><del>￥<label id="change_market_info">{$market_shop[0]['min_market_price']}</label></del></small>
+			</div>
+			<div class="attr" id="chooseattr"><span class="chooseattr">选择商品规格</span><img class="rightbtn" src="__PUBLIC__/Wx/img/Classification/XY.png" alt=""></div>
+			<div class="bao">
+				<if condition="$goods_base_info['is_baoyou'] eq 1">
+					<div class="list">
+						<img src="__PUBLIC__/Wx/img/Classification/classification_icon_check.png" alt="">
+						<p>包邮</p>
+					</div>
+					<else />
+				</if>
+
+				<div class="list">
+					<img src="__PUBLIC__/Wx/img/Classification/classification_icon_check.png" alt="">
+					<p>正品保证</p>
+				</div>
+
+				<div class="list">
+					<img src="__PUBLIC__/Wx/img/Classification/classification_icon_check.png" alt="">
+					<p>极速发货</p>
+				</div>
+
+				<if condition="$goods_base_info['is_seven'] eq 1">
+					<div class="list">
+						<img src="__PUBLIC__/Wx/img/Classification/classification_icon_check.png" alt="">
+						<p>七天退换</p>
+					</div>
+					<else />
+				</if>
+			</div>
+			<div class="you">
+				<div class="left">
+					<h5>优惠方案</h5>
+				</div>
+				<div class="right">
+					<div class="list">
+						<h5><?php if($goods_act['after_type']==1){echo "优惠";}else if($goods_act['after_type']==2){echo "折扣";}else if($goods_act['after_type']==3){echo "买赠";}else if($goods_act['after_type']==4){echo "包邮";}else{echo "&nbsp;&nbsp;无&nbsp;&nbsp;";}?></h5>
+						<img src="__PUBLIC__/Wx/img/Classification/classification_icon_voucher.png">
+						<p>
+							<if condition="$goods_act['name'] neq null">{$goods_act['name']}
+								<else /><i>该商品暂无优惠</i>
+							</if>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clear_both"></div>
+		<div class="content">
+			<div class="shoptitle">
+				<div class="list shop">
+					<span class="red">商品详情</span>
+				</div>
+				<div class="list pingj">
+					<span>评价({$all_comment_number})</span>
+				</div>
+			</div>
+
+			<div class="shopcontent">
+				<div class="xiang" id="goods_introduce_style">{$goods_base_info['goods_introduce']}</div>
+
+				<div class="ping">
+					<div class="all" id="comment_sort">
+						<div class="list red">
+							<input type="button" id="all" value="全部({$all_comment_number})">
+						</div>
+						<div class="list">
+							<input type="button" id="good" value="好评({$good_comment_number})">
+						</div>
+						<div class="list">
+							<input type="button" id="mid" value="中评({$mid_comment_number})">
+						</div>
+						<div class="list">
+							<input type="button" id="bad" value="差评({$bad_comment_number})">
+						</div>
+					</div>
+
+					<div class="detailed" id="comment_con">
+						<foreach name="comment" item="v">
+							<div class="list">
+								<img src="__PUBLIC__/Uploads/{$v['avatar']}" alt="">
+								<h5>{$v['username']}</h5>
+								<if condition="$v['score'] eq 0">
+									<a><span>☆☆☆☆☆</span></a>
+									<elseif condition="$v['score'] eq 1" />
+									<a>★<span>☆☆☆☆</span></a>
+									<elseif condition="$v['score'] eq 2" />
+									<a>★★<span>☆☆☆</span></a>
+									<elseif condition="$v['score'] eq 3" />
+									<a>★★★<span>☆☆</span></a>
+									<elseif condition="$v['score'] eq 4" />
+									<a>★★★★<span>☆</span></a>
+									<else />
+									<a>★★★★★<span></span></a>
+								</if>
+								<p class="mui-ellipsis">{$v['content']}</p>
+							</div>
+						</foreach>
+					</div>
+
+					<script id="tpl" type="text/template">
+						{{each data as v i}}
+						<div class="list">
+							<img src="__PUBLIC__/Uploads/{{v.avatar}}" alt="">
+							<h5>{{v.username}}</h5> {{if v.score == 0}}
+							<a><span>☆☆☆☆☆</span></a>
+							{{else if v.score == 1}}
+							<a>★<span>☆☆☆☆</span></a>
+							{{else if v.score == 2}}
+							<a>★★<span>☆☆☆</span></a>
+							{{else if v.score == 3}}
+							<a>★★★<span>☆☆</span></a>
+							{{else if v.score == 4}}
+							<a>★★★★<span>☆</span></a>
+							{{else}}
+							<a>★★★★★<span></span></a>
+							{{/if}}
+							<p class="mui-ellipsis">{{v.content}}</p>
+						</div>
+						{{/each}}
+					</script>
+
+				</div>
+			</div>
+		</div>
+		<div id="finde">
+			<!--<a href="{:U('/home/order/carindex')}"><img src="__PUBLIC__/Wx/img/Classification/classification_btn_shoppingcart.png"></a>-->
+			<a href="#"><img src="__PUBLIC__/Wx/img/Classification/classification_btn_top.png"></a>
+		</div>
+		<nav id="muibar" class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item" onclick="into_mycolection({$goods_base_info['id']})">
+				<span class="mui-icon"></span>
+				<span class="mui-tab-label">收藏</span>
+			</a>
+			<a class="mui-tab-item">
+				<span class="mui-icon"></span>
+				<span class="mui-tab-label carindex">购物车</span>
+			</a>
+			<a class="mui-tab-item btn_yellow into_cart" id="into_cart">
+				加入购物车
+			</a>
+			<a class="mui-tab-item btn_red buy_now" id="buy_now">
+				立即购买
+			</a>
+		</nav>
+		<!--<nav class="mui-bar mui-bar-tab">
+            <img src="__PUBLIC__/Wx/img/Common/classification_btn_collection_normal.png">
+            <p onclick="into_mycolection({$goods_base_info['id']})">收藏</p>
+            <div class="input">
+                <input type="button" value="加入购物车" id="into_cart" class="into_cart">
+                <input class="red buy_now" type="button" value="立即购买" id="buy_now">
+            </div>
+        </nav>-->
+		<!--查看属性-->
+		<div class="fixedbox" style="display: none;" id="chooseattrbox">
+			<div class="fixedbox_body closefun m_f_vote">
+				<img class="closebtn hidebtn" src="__PUBLIC__/Wx/img/Classification/closebtn.png" alt="" id="closebtn">
+				<div style="text-align: left;">
+					<h5>请选择规格</h5>
+					<div class="floatattr">
+						<ul>
+							<foreach name="attr" item="v">
+								<if condition="$key eq 0">
+									<li class="active" id="{$v['ga_id']}"><span class="spanclass">{$v['ga_name']}</span></li>
+									<else />
+									<li class="" id="{$v['ga_id']}"><span class="spanclass">{$v['ga_name']}</span></li>
+								</if>
+							</foreach>
+						</ul>
+					</div>
+					<h5 style="clear: both;">数量</h5>
+					<div class="count">
+						<img id="reduce" src="__PUBLIC__/Wx/img/Classification/cut.png" alt="">
+						<input type="text" id="num" value="1" />
+						<img id="add" src="__PUBLIC__/Wx/img/Classification/add.png" alt="" />
+						<span style="margin-left:10px;"><h5 style="display:inline;">库存:</h5></span><span id="change_stock">{$attr[0]['stock']}</span>
+						<if condition="$attr[0]['weight'] neq 0.000">
+							<span style="margin-left:10px;" id="label_con"><h5 style="display:inline;">重量:</h5></span>
+							<span id="change_weight_con"><label id="change_weight">{$attr[0]['weight']}</label>kg</span>
+							<else />
+							<span style="margin-left:10px;display:none" id="label_con"><h5 style="display:inline;">重量:</h5></span>
+							<span id="change_weight_con" style="display:none"><label id="change_weight">{$attr[0]['weight']}</label>kg</span>
+						</if>
+					</div>
+					<h5>金额</h5>
+					<p class="price">￥<label id="change_shop">{$attr[0]['shop_price']}</label><small class="delmoney" style="color: #8f8f94;margin-left:5px;"><del>￥<label id="change_market">{$attr[0]['market_price']}</label></del></small></p>
+					<!--<div class="mui-text-center">
+						<div class="mui-btn mui-btn-warning into_cart">加入购物车</div>
+						<div class="mui-btn mui-btn-danger buy_now" style="margin-left: 10px;">立即购买</div>
+					</div>-->
+					<div class="mui-text-center"> 
+						<div class="mui-btn mui-btn-block mui-btn-danger sure_btn hidebtn">确定</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+		<script>
+			var gallery = mui('.mui-slider');
+			gallery.slider({
+				interval: 3000
+			});
+
+			mui('.shoptitle').on('tap', '.shop', function() {
+				mui('.shop span')[0].className = 'red'
+				mui('.pingj span')[0].className = ''
+					// console.log('商品')
+				mui('.xiang')[0].style.display = 'block'
+				mui('.ping')[0].style.display = 'none'
+			});
+			mui('.shoptitle').on('tap', '.pingj', function() {
+				// console.log('评价');
+				mui('.xiang')[0].style.display = 'none'
+				mui('.ping')[0].style.display = 'block'
+				mui('.shop span')[0].className = ''
+				mui('.pingj span')[0].className = 'red'
+			});
+		</script>
+	</body>
+
+</html>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/index/js/template.js"></script>
+<script type="text/javascript">
+	//评价的切换
+	var id = "<?php echo $id;?>"; //商品id
+	$('#comment_sort input').click(function() {
+		var flag = $(this).attr('id'); //筛选标志位
+		$('#comment_sort div').removeClass('red'); //清空样式
+		$(this).parent().addClass('red'); //当前点击的添加样式
+		$.ajax({
+			url: "{:U('/home/goods/commentchange')}",
+			type: "post",
+			data: {
+				"id": id,
+				"flag": flag
+			},
+			dataType: "json",
+			success: function(data) {
+				// console.log(data);
+				if(data.result == 1) {
+					$('#comment_con').html(); //清空评论的容器
+					var html = template('tpl', data);
+					$('#comment_con').html(html);
+				}
+			}
+		});
+	});
+
+	//选择商品规格
+	$('#chooseattr').click(function() {
+		$('#chooseattrbox').css('display', 'block');
+	});
+	$('.buy_now').click(function() {
+		$num = $("#num").val();
+		$guige = $(".active").attr("id");
+		$money = $("#change_shop").html();
+		mui.openWindow({
+			url: "__ROOT__/wx.php/home/order/balance?id=" + id + "&num=" + $num + "&type=1&guige=" + $guige + "&money=" + $money,
+			id: 'balance'
+		});
+	});
+	$('.hidebtn').click(function() {
+		$('#chooseattrbox').css('display', 'none');
+	});
+	$('.floatattr ul li').click(function() {
+		$('.floatattr ul li').removeClass('active');
+		$(this).addClass('active');
+		var ga_id = $(this).attr('id'); //点击的规格id
+		$.ajax({
+			url: "{:U('/home/goods/attrchange')}",
+			type: "post",
+			data: {
+				"id": id,
+				"ga_id": ga_id
+			},
+			dataType: "json",
+			success: function(data) {
+				// console.log(data);
+				if(data.result == 1) {
+					// alert(data.data.weight)
+					if(data.data.weight == '' || data.data.weight == 0) {
+						$('#label_con').css('display', 'none');
+						$('#change_weight_con').css('display', 'none');
+					} else {
+						$('#label_con').css({
+							'display': 'inline-block'
+						});
+						// $('#label_con h5').css({'display':'inline'});
+						$('#change_weight_con').css('display', 'inline-block');
+						$('#change_weight').html(data.data.weight);
+					}
+					$('#change_stock').html(data.data.stock);
+					$('#change_market').html(data.data.market_price);
+					$('#change_shop').html(data.data.shop_price);
+					$('#change_market_info').html(data.data.market_price);
+					$('#change_shop_info').html(data.data.shop_price);
+				}
+			}
+		});
+	});
+</script>
+<script type="text/javascript">
+	function into_mycolection(id) {
+		$.ajax({
+			url: "{:U('/home/goods/mycolection')}",
+			type: "post",
+			data: {
+				"id": id
+			},
+			dataType: "json",
+			success: function(data) {
+				// console.log(data);
+				//                alert(data.msg);
+				mui.toast(data.msg);
+			}
+		});
+	}
+</script>
+<script>
+	var id = "<?php echo $id;?>";
+	$(".carindex").click(function(){
+		mui.openWindow({
+					url: "{:U('/home/order/carindex')}",
+					id: 'carindex'
+				});
+	})
+	$(".into_cart").click(function() {
+		$user_id = "<?php echo cookie('user_id')?>";
+		console.log($user_id);
+		if($user_id == '' || $user_id == undefined) {
+			mui.toast('请登录', setTimeout(function() {
+				mui.openWindow({
+					url: "{:U('/home/login/login')}",
+					id: 'login'
+				});
+			}, 1000));
+			return false;
+		}
+
+		$num = $("#num").val();
+		$guige = $(".active").attr("id");
+		$money = $("#change_shop").html();
+		$.ajax({
+			url: "{:U('/home/Order/addcar')}",
+			type: "post",
+			data: {
+				"id": id,
+				'user_id': $user_id,
+				'num': $num,
+				'guige': $guige,
+				'money': $money
+			},
+			dataType: "json",
+			success: function(data) {
+				console.log(data);
+				if(data.result == 1) {
+					$('#chooseattrbox').css('display', 'none');
+					mui.toast('成功加入购物车！');
+				} else {
+					mui.toast('加入购物车失败');
+				}
+			}
+		})
+	});
+	$("#reduce").click(function() {
+		$num = parseInt($(this).parent().find("#num").val());
+		if($num > 1) {
+			$c = $num - 1;
+			$(this).parent().find("#num").val($c);
+		} else {
+
+		}
+	})
+	$("#add").click(function() {
+		$num = parseInt($(this).parent().find("#num").val());
+		$change_stock = parseInt($(this).parent().find("#change_stock").text());
+		if($num < $change_stock) {
+			$c = $num + 1;
+			$(this).parent().find("#num").val($c);
+		} else {}
+
+	})
+</script>

@@ -1,0 +1,252 @@
+<?php
+/**
+ * 营销管理
+ * User: lwh
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class BonusmanageController extends IndexController
+{
+    public function recommendindex()
+    {
+        $arr = I();
+        if($arr!=null){
+//            pp($arr);
+            if($arr['username'] != null){
+                $search['U.username'] = $arr['username'];
+            }
+            if($arr['partner'] != null){
+                $search['BR.name'] = $arr['partner'];
+            }
+            if($arr['r_partner'] != null){
+                $search['BR.recommend_name'] = $arr['r_partner'];
+            }
+            $data = M()->table('__BONUS_RECOMMEND__ BR')
+                ->join('left join __USER__ U on U.id = BR.user_id')
+                ->where($search)
+                ->select();
+            for ($i=0;$i<count($data);$i++) {  //获取推荐会员名称
+                $data[$i]['recommend_username'] = M('user')
+                    ->where(array('id' => $data[$i]['recommend_user']))
+                    ->field('username')
+                    ->select();
+            }
+            if($arr['r_username'] != null){   //按推荐会员名称查找
+
+                $search['r_username'] = $arr['r_username'];
+
+                $search2 = M('user')->where(array('username'=>$arr['r_username']))->select();
+//pp($search2);
+                for($k=0;$k<count($search2);$k++){
+                    $data = M()->table('__BONUS_RECOMMEND__ BR')
+                        ->join('left join __USER__ U on U.id = BR.user_id')
+                        ->where(array('recommend_user'=>$search2[$k]['id']))
+                        ->select();
+                }
+
+                for ($i=0;$i<count($data);$i++) {  //获取推荐会员名称
+                    $data[$i]['recommend_username'] = M('user')
+                        ->where(array('id' => $data[$i]['recommend_user']))
+                        ->field('username')
+                        ->select();
+                }
+//                pp($data);
+
+        }
+        }else{
+            $data= M()->table('__BONUS_RECOMMEND__ BR')
+                ->join('left join __USER__ U on U.id = BR.user_id')
+                ->field('BR.*,U.username')
+                ->page($_GET['p'] . ',20')
+                ->select();
+            $count = M()->table('__BONUS_RECOMMEND__ BR')->count();
+            for ($i=0;$i<count($data);$i++){  //获取推荐会员名称
+                $data[$i]['recommend_username'] = M('user')
+                    ->where(array('id'=>$data[$i]['recommend_user']))
+                    ->field('username')
+                    ->select();
+                }
+        }
+        $Page = new \Think\Page($count, 20);
+        $show = $Page->show();
+        $this->assign('page', $show);
+        $this->assign('count', $count);
+        $this->assign('data',$data);
+        $this->assign('arr',$arr);
+//        pp($arr);
+
+        $this->display();
+    }
+  /*
+   *  消费奖励
+   * */
+    public function consume()
+    {
+        $search = I();
+        if($search !=null){
+            $username   = $search['username'];
+            $partner    = $search['partner'];
+            $orderno    = $search['orderno'];
+            $r_username = $search['r_username']; //订单会员名称
+            $goodsname  = $search['goodsname'];
+            $sellername = $search['sellername'];
+
+            $map['U.username']            = array("like","%$username%");
+            $map['BC.name']               = array("like","%$partner%");
+            $map['O.order_number']        = array("like","%$orderno%");
+            $map['BC.recommend_username'] = array("like","%$r_username%");
+            $map['G.goods_name']          = array("like","%$goodsname%");
+            $map['S.name']                = array("like","%$sellername%");
+
+            $data = M()->table('__BONUS_CONSUME__ BC')
+                ->join('left join __ORDERS__ O on O.id = BC.order_id')
+                ->join('left join __ORDER_GOODS__ OG on OG.order_id = O.id')
+                ->join('left join __GOODS__ G on G.id = OG.goods_id')
+                ->join('left join __SELLER__ S on S.id = G.seller_id')
+                ->join('left join __USER__ U on U.id = BC.user_id')
+                ->field('BC.*,O.order_number,O.total_price,S.name as s_name,G.goods_name,U.username as u_name,OG.price')
+                ->order('BC.id desc')
+                ->where($map)
+                ->page($_GET['p'] . ',20')
+                ->select();
+//            pp($data);
+            $count = M()->table('__BONUS_CONSUME__ BC')
+                ->join('left join __ORDERS__ O on O.id = BC.order_id')
+                ->join('left join __ORDER_GOODS__ OG on OG.order_id = O.id')
+                ->join('left join __GOODS__ G on G.id = OG.goods_id')
+                ->join('left join __SELLER__ S on S.id = G.seller_id')
+                ->join('left join __USER__ U on U.id = BC.user_id')
+                ->where($map)
+                ->count();
+        }else{
+        $data = M()->table('__BONUS_CONSUME__ BC')
+            ->join('left join __PARTNER__ P on P.id = BC.parent_id')
+            ->join('left join __ORDERS__ O on O.id = BC.order_id')
+            ->join('left join __ORDER_GOODS__ OG on OG.order_id = O.id')
+            ->join('left join __GOODS__ G on G.id = OG.goods_id')
+            ->join('left join __SELLER__ S on S.id = G.seller_id')
+            ->join('left join __USER__ U on U.id = BC.user_id')
+            ->join('left join __USER__ U2 on U2.id = O.user_id')
+            ->field('BC.*,O.order_number,O.total_price,S.name as s_name,G.goods_name,U.username as u_name,OG.price,P.name as p_name,U2.username as o_name')
+            ->order('BC.id desc')
+            ->page($_GET['p'] . ',20')
+            ->select();
+        $count = M()->table('__BONUS_CONSUME__ BC')
+            ->join('left join __ORDERS__ O on O.id = BC.order_id')
+            ->join('left join __ORDER_GOODS__ OG on OG.order_id = O.id')
+            ->join('left join __GOODS__ G on G.id = OG.goods_id')
+            ->join('left join __SELLER__ S on S.id = G.seller_id')
+            ->join('left join __USER__ U on U.id = BC.user_id')
+            ->count();
+        }
+//pp($data);
+        $seller = M()->table('seller')->field('id,name')->select();
+        $Page = new \Think\Page($count, 20);
+        $show = $Page->show();
+        $this->assign('page', $show);
+        $this->assign('count', $count);
+        $this->assign('data', $data);
+        $this->assign('seller', $seller);
+        $this->assign('search', $search);
+        $this->display();
+    }
+    /*
+     * 平台奖励
+     * */
+    public function platform()
+    {
+        $search = I();
+        if($search != null){
+//            PP($search);
+            if($search['s_name'] != null){
+                $sname            = $search['s_name'];
+                $map['S.name'] = array("like", "%$sname%");
+            }
+            if($search['time'] != null && $search['time2'] !=null){
+                $stime               = strtotime($search['time']);
+                $etime               = strtotime($search['time2']);
+                $map['O.pok_time'] = array('between',array($stime,$etime));
+            }
+            $data = M()->table('__ORDERS__ O')
+                ->join('left join __ORDER_GOODS__ OG on OG.order_id = O.id and OG.type = 0')   //商品单价  奖励金额 奖励积分 平台奖励总额
+                ->join('left join __GOODS_ATTRIBUTE_INFO__ GAI on GAI.goods_id = OG.goods_id and OG.goods_attr_id = GAI.goods_attribute_id ' )   //type=0  商品现价
+                ->join('left join __GOODS__ G on G.id = GAI.goods_id')     //商品名称和实际销量
+                ->join('left join __SELLER__ S on S.id = G.seller_id')   //商家名称
+                ->where($map)
+                ->field(
+                    'OG.price,
+                    OG.platform_bonus,
+                    OG.score_number,
+                    OG.bonus_amount,
+                    O.pok_time,
+                    O.order_number,
+                    GAI.shop_price,
+                    G.goods_name,G.r_sale,
+                    S.name as s_name
+                    ')
+                ->select();
+            $count = M()->table('__ORDERS__ O')
+                ->join('left join __ORDER_GOODS__ OG on OG.order_id = O.id and OG.type = 0')   //商品单价  奖励金额 奖励积分 平台奖励总额
+                ->join('left join __GOODS_ATTRIBUTE_INFO__ GAI on GAI.goods_id = OG.goods_id and OG.goods_attr_id = GAI.goods_attribute_id ' )   //type=0  商品现价
+                ->join('left join __GOODS__ G on G.id = GAI.goods_id')     //商品名称和实际销量
+                ->join('left join __SELLER__ S on S.id = G.seller_id')
+                ->where($map)
+                ->count();
+
+
+        }else{
+            $data = M()->table('__ORDERS__ O')
+                ->join('left join __ORDER_GOODS__ OG on OG.order_id = O.id and OG.type = 0')   //商品单价  奖励金额 奖励积分 平台奖励总额
+                ->join('left join __GOODS_ATTRIBUTE_INFO__ GAI on GAI.goods_id = OG.goods_id ' )   //type=0  商品现价
+                ->join('left join __GOODS__ G on G.id = OG.goods_id')     //商品名称和实际销量
+                ->join('left join __SELLER__ S on S.id = O.seller_id')   //商家名称
+//                ->where(array('O.order_status'=>1))
+                ->page($_GET['p'] . ',20')
+                ->field(
+                    'OG.price,
+                    OG.platform_bonus,
+                    OG.score_number,
+                    OG.bonus_amount,
+                    O.pok_time,
+                    O.order_number,
+                    G.goods_name,
+                    G.r_sale,
+                    S.name as s_name,
+                    GAI.shop_price
+                    ')
+                ->select();
+            $count = M()->table('__ORDERS__ O')
+                ->join('left join __ORDER_GOODS__ OG on OG.order_id = O.id and OG.type = 0')   //商品单价  奖励金额 奖励积分 平台奖励总额
+                ->join('left join __GOODS_ATTRIBUTE_INFO__ GAI on GAI.goods_id = OG.goods_id and OG.goods_attr_id = GAI.goods_attribute_id ' )   //type=0  商品现价
+                ->join('left join __GOODS__ G on G.id = GAI.goods_id')     //商品名称和实际销量
+                ->join('left join __SELLER__ S on S.id = G.seller_id')
+                ->count();
+        }
+        $seller = M()->table('__ORDERS__ O')
+            ->join('left join __ORDER_GOODS__ OG on OG.order_id = O.id and OG.type = 0')
+//            ->join('left join __GOODS_ATTRIBUTE_INFO__ GAI on GAI.goods_id = OG.goods_id and OG.goods_attr_id = GAI.goods_attribute_id ' )
+//            ->join('left join __GOODS__ G on G.id = GAI.goods_id')
+            ->join('left join __SELLER__ S on S.id = O.seller_id')
+            ->group('S.name')
+            ->field('S.name as s_name,S.number,S.name,sum(OG.platform_bonus) as platform_bonus')
+            ->select();
+        $bonuscount1 = 0;
+        for ($i=0;$i<(count($seller));$i++){
+            $bonuscount1 += $seller[$i]['platform_bonus'];
+        }
+        $bonuscount = number_format($bonuscount1, 2);  //奖金总额保留两位小数
+
+//        pp($seller);
+        $Page = new \Think\Page($count, 20);
+        $show = $Page->show();
+        $this->assign('page', $show);
+        $this->assign('count', $count);
+        $this->assign('data',$data);
+        $this->assign('seller',$seller);
+        $this->assign('search',$search);
+        $this->assign('bonuscount',$bonuscount);
+        $this->display();
+    }
+}

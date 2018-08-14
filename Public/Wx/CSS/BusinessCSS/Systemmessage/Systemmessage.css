@@ -1,0 +1,48 @@
+.list {
+    display: none;
+    background-color: #fff;
+    width: 100%;
+    height: 95px;
+    padding: 0 15px;
+    padding-top: 10px;
+    position: relative;
+    top: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.list img {
+    height: 20px;
+    height: 20px;
+    float: left;
+}
+
+.list .title h5 {
+    margin-left: 10px;
+    float: left;
+    width: 150px;
+    font-size: 16x;
+    color: #4a4a4a;
+}
+
+.list .title p {
+    float: right;
+
+}
+
+.list .coontent {
+    padding-left: 30px;
+    float: left;
+    width: 100%;
+
+}
+.none{
+    width: 100%;
+    text-align: center;
+}
+.none img {
+    margin-top: 50%;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 20px;
+}
+

@@ -1,0 +1,153 @@
+<!--index -->
+<include file="public:index"   />
+<!--index-->
+<title>话费流量编辑</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+ 系统 <span class="c-gray en">&gt;</span>
+  话费流量管理 <span class="c-gray en">&gt;</span>
+   话费流量 <span class="c-gray en">&gt;</span>
+   编辑
+   <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回" ><i class="Hui-iconfont">&#xe66b;</i></a><a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20">
+    <form action="{:U('/home/feeflow/feeflowupdate')}" method="post" enctype="multipart/form-data" name="main_form" class="form form-horizontal" id="form-admin-add">
+      <input type="hidden" name="id" value="{$data['id']}">
+        <div class="row cl">
+            <label class="form-label col-3"><span class="c-red">*</span>名称：</label>
+            <div class="formControls col-5">
+                <input type="text" class="input-text" value="{$data['name']}" placeholder="请输入名称" id="name" name="name" datatype="*2-16">
+            </div>
+            <div class="col-4"> </div>
+        </div>
+
+        <div class="row cl" id="type_con">
+            <label class="form-label col-3"><span class="c-red">*</span>类型：</label>
+            <div class="formControls col-5 skin-minimal">
+            <if condition="$data['type'] eq 1">
+                <div class="radio-box">
+                    <input type="radio" name="type" value="1" checked="true">
+                    <label>流量</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" name="type" value="0">
+                    <label>话费</label>
+                </div>
+              <else />
+                <div class="radio-box">
+                    <input type="radio" name="type" value="1">
+                    <label>流量</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" name="type" value="0" checked="true">
+                    <label>话费</label>
+                </div>
+              </if>
+            </div>
+            <div class="col-4"> </div>
+        </div>
+
+      <if condition="$data['type'] eq 1">
+        <div class="row cl" id="flow_type_con">
+            <label class="form-label col-3"><span class="c-red">*</span>流量类型：</label>
+            <div class="formControls col-5 skin-minimal">
+              <if condition="$data['flow_type'] eq 0">
+                  <div class="radio-box">
+                      <input type="radio" name="flow_type" value="0" checked="true">
+                      <label>省内</label>
+                  </div>
+                  <div class="radio-box">
+                      <input type="radio" name="flow_type" value="1">
+                      <label>国内</label>
+                  </div>
+              <else />
+                  <div class="radio-box">
+                      <input type="radio" name="flow_type" value="0">
+                      <label>省内</label>
+                  </div>
+                  <div class="radio-box">
+                      <input type="radio" name="flow_type" value="1" checked="true">
+                      <label>国内</label>
+                  </div>
+              </if>
+            </div>
+            <div class="col-4"> </div>
+        </div>
+      </if>
+
+      <div class="row cl">
+          <label class="form-label col-3"><span class="c-red">*</span>充值数量(M)或金额(元)：</label>
+          <div class="formControls col-5">
+              <input type="text" class="input-text" value="{$data['number']}" placeholder="请输入充值数量或金额" id="number" name="number" datatype="*2-16">
+          </div>
+          <div class="col-4"> </div>
+      </div>
+
+      <div class="row cl">
+          <label class="form-label col-3"><span class="c-red">*</span>原价：</label>
+          <div class="formControls col-5">
+              <input type="text" class="input-text" value="{$data['old_price']}" placeholder="请输入原价" id="old_price" name="old_price" datatype="*2-16">
+          </div>
+          <div class="col-4"> </div>
+      </div>
+
+      <div class="row cl">
+          <label class="form-label col-3"><span class="c-red">*</span>售价：</label>
+          <div class="formControls col-5">
+              <input type="text" class="input-text" value="{$data['price']}" placeholder="请输入售价" id="price" name="price" datatype="*2-16">
+          </div>
+          <div class="col-4"> </div>
+      </div>
+
+      <div class="row cl">
+          <label class="form-label col-3"><span class="c-red">*</span>备注</label>
+          <div class="formControls col-5">
+              <textarea id="remark" name="remark" cols="50" rows="10">{$data['remark']}</textarea>
+          </div>
+          <div class="col-4"> </div>
+      </div>
+
+        <div class="row cl">
+            <div class="col-9 col-offset-3">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;" onclick="return check()">
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+var tmp = "<div class='row cl' id='flow_type_con'><label class='form-label col-3'><span class='c-red'>*</span>流量类型：</label><div class='formControls col-5 skin-minimal'><div class='radio-box'><input type='radio' name='flow_type' value='0' checked='true'><label>省内</label></div><div class='radio-box'><input type='radio' name='flow_type' value='1'><label>国内</label></div></div><div class='col-4'></div></div>";
+
+$("#type_con input[type='radio']").click(function(){
+    var click_type = $(this).val();
+    if(click_type == 1){
+        $('#flow_type_con').remove();
+        $('#type_con').after(tmp);
+    }else{
+      $('#flow_type_con').html('');
+      $('#flow_type_con').css('display','none');
+    }
+});
+
+function check(){
+    if($('#name').val()==""){
+        alert("名称不能为空!");
+        return false;
+    }
+    if($('#number').val()==""){
+        alert("充值数量或金额不能为空!");
+        return false;
+    }
+    if($('#old_price').val()==""){
+        alert("原价不能为空!");
+        return false;
+    }
+    if($('#price').val()==""){
+        alert("售价不能为空!");
+        return false;
+    }
+    return true;
+}
+</script>

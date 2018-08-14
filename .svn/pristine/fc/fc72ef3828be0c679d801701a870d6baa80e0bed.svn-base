@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!--<meta charset="utf-8">
+            <meta content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no" name="viewport">
+                <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+                    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/address.css" rel="stylesheet">
+                        <title>
+                            搭档专享
+                        </title>
+                    </link>
+                </link>
+            </meta>
+        </meta>-->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+        <title>搭档专享</title>
+        <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css">
+        <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/partnerspecial.css">
+        <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/PartnerSpecial/partnerspecial.css">
+        <!--<link href="__PUBLIC__/Wx/CSS/BusinessCSS/address.css" rel="stylesheet">-->
+
+        <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Pos/mui.css" rel="stylesheet">
+        <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Pos/mui.picker.css" rel="stylesheet">
+        <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Pos/mui.poppicker.css" rel="stylesheet">
+
+        <!--<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>-->
+        <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/fastclick.js"></script>
+        <style>
+            .cer_connew{
+                /*border: 1px solid red;*/
+                height: 30px;
+                margin-left: 5%;
+            }
+            .cer_connew img{
+                position: absolute;right: 10%;width: 10px;
+            }
+            div{
+                opacity: 1;
+            }
+            #popup{
+                border-radius: 5px;
+                left: 15%;
+                position: absolute;
+                top: 30%;
+                width: 70%;
+                height: 246px;
+                background-color: #FFFFFF
+            }
+            .name{
+                color: #3f3f3f;
+                position: relative;
+                top: 14px;
+                left: 5%;
+                border-left: 2px solid #23d251;
+                padding-left: 5%;
+            }
+            .input {
+                position: relative;
+                top: 22px;
+            }
+            .input input{
+                font-size: 14px;
+                width: 90%;
+                position: relative;
+                left: 5%;
+                height: 26px;
+            }
+            #popup .button {
+                left: 15%;
+                position: relative;
+                top: 22px;
+            }
+            #popup .button input {
+                border-radius: 5px;
+                padding-top: 2px;
+                height: 26px;
+                width: 71px;
+            }
+            #popup .button .red{
+                position: relative;
+                float: right;
+                right: 30%;
+                background-color: #fe504f;
+                color: #fff;
+            }
+            .mui-bar {
+                background-color: #ff5353;
+                height: 45px;
+            }
+            .mui-action-back, .mui-title {
+                font-weight: 100;
+                color: #FFFFFF;
+            }
+        </style>
+        <script type="text/javascript">
+            if('addEventListener' in document) {
+                document.addEventListener('DOMContentLoaded', function() {
+                    FastClick.attach(document.body);
+                }, false);
+            }
+        </script>
+    </head>
+
+    <body>
+    <header class="mui-bar mui-bar-nav">
+        <a href="../../index.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">搭档专享</h1>
+    </header>
+
+        <div id="popup">
+            <div class="name" >
+                <span>填写收货地址</span>
+            </div>
+            <form action="{:U('/home/Special/payment',array('id'=>$id))}">
+            <div class="input" >
+                <input type="text" placeholder="收货人姓名" id="name" name="name">
+                <input type="text" placeholder="收货人电话" id="tel" name="tel">
+                <!--<input type="text" placeholder="收货区域(省市区)" id="city" name="city">-->
+                <div id="showCityPicker" class="cer_connew">区域: <small id="cityResult"></small>
+                    <img src="__PUBLIC__/Wx/img/go.png"></div>
+
+                <input type="text" placeholder="收货详细地址" id="addr" name="addr">
+            </div>
+            <div class="button">
+                <a href="{:U('/home/Special/goodspos')}"><input type="button" value="取消"></a>
+                <input class="red" type="submit" value="提交" onclick="return check()">
+            </div>
+                <input type="hidden" name="cityinfo" id="cityinfo" value="">
+            </form>
+        </div>
+        <script src="__PUBLIC__/Wx/Script/CommonJS/Base.js">
+        </script>
+        <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/city.data-3.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/city.data.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.picker.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.poppicker.js"></script>
+    </body>
+
+    <script>
+
+        (function($, doc) {
+            $.init();
+            $.ready(function() {
+                //普通示例
+                var userPicker = new $.PopPicker();
+                var showUserPickerButton = doc.getElementById('showUserPicker');
+                //-----------------------------------------
+                //					//级联示例
+                var cityPicker3 = new $.PopPicker({
+                    layer: 3
+                });
+                cityPicker3.setData(cityData3);
+                var showCityPickerButton = doc.getElementById('showCityPicker');
+                var cityResult3 = doc.getElementById('cityResult');
+                showCityPickerButton.addEventListener('tap', function(event) {
+                    cityPicker3.show(function(items) {
+                        cityResult3.innerText =(items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+                        //返回 false 可以阻止选择框的关闭
+//                        return false;
+                    });
+                }, false);
+            });
+        })(mui, document);
+    </script>
+
+
+<script>
+    function check(){
+//        $("#address").val($('#cityResult').html())
+        if($('#name').val() == null || $('#name').val() == ''){
+            alert('收货人姓名不能为空');
+            return false;
+        }
+        if($('#tel').val() == null || $('#tel').val() == ''){
+            alert('收货人电话不能为空');
+            return false;
+        }
+        var cityinfo = $("#cityResult").text();
+        if (cityinfo==""){
+            alert("区域不能为空");
+            return false;
+        }else{
+            $("#cityinfo").val(cityinfo);
+        }
+        if($('#addr').val() == null || $('#addr').val() == ''){
+            alert('详细地址不能为空');
+            return false;
+        }
+    }
+</script>
+</html>

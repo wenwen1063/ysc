@@ -1,0 +1,17 @@
+<header class="Hui-header cl"> <a class="Hui-logo l" title="H-ui.admin v2.3" href="{:U('/home/index/index')}">益商城后台管理系统</a>
+    <div id="rightMenu">
+        <ul>
+            <a href="{:U('/home/index/index')}"><li>关闭全部页面</li></a>
+        </ul>
+    </div>
+    <ul class="Hui-userbar">
+        <li>管理员</li>
+        <li class="dropDown dropDown_hover"><a href="#" class="dropDown_A"><php>echo cookie('user');</php> <i class="Hui-iconfont">&#xe6d5;</i></a>
+            <ul class="dropDown-menu radius box-shadow">
+                <li><a href="{:U('/home/login/logout')}">退出</a></li>
+            </ul>
+        </li>
+    </ul>
+</header>
+<link href="__PUBLIC__/youji/css/zzsc.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="__PUBLIC__/youji/js/zzsc.js"></script>

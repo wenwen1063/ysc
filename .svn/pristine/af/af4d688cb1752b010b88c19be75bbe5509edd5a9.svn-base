@@ -1,0 +1,98 @@
+<?php
+namespace Home\Controller;
+
+use Think\Controller;
+
+class IndexController extends Controller
+{
+    public function index()
+    {
+        cookie('user_id', '1');
+
+        $map['ad_position']   = 1;
+        $mapm['is_recommend'] = 1;
+        $mapm['is_disable']   = 0;
+        $mapm['sort']         = array('neq', 0);
+        $time                 = time();
+        // $actmap['a.start_time'] = array('lt', $time);
+        // $actmap['a.end_time']   = array('gt', $time);
+        $actmap['a.status']     = 1;
+        $classmap['is_disable'] = 0;
+        //获取轮播图片
+        $picinfo = M('ad')->where($map)->field('id,ad_sort,img,img2,ad_type')->limit(6)->order('ad_sort asc')->select();
+        // dump($picinfo);
+        //获取商家信息
+        $shop = M('seller')->where($mapm)->field('id,sort,forshort,logo')->limit(6)->order('sort asc')->select();
+        // dump($shop);
+        //获取公告信息
+        $notic = M('notice')->order('id desc')->limit(5)->select();
+        //营销活动
+        // $activity = M()->table('__ACTIVITY__ a')
+        // ->join('__ACTIVITY_GOODS__ ag on ag.activity_id = a.id')
+        // ->field('a.*,ag.goods_id')
+        // ->where('a.start_time<' . $time . ' and a.end_time>' . $time)
+        // ->limit(1)->where($actmap)->select();
+        $mapac['is_recommend'] = 1;
+        $activity              = M()->table('__ACTIVITY_IMG__ a')
+            ->where($mapac)->select();
+        // dump($activity);
+        //热销分类商品
+        $cmap['gc.is_disable']   = 0;
+        $cmap['gcs.is_disable']  = 0;
+        $cmap['gct.is_disable']  = 0;
+        $cmap['g.is_delete']     = 0;
+        $cmap['g.is_on_sale']    = 1;
+        $cmap['g.is_recommend']  = 1;
+        $cmap['gc.is_recommend'] = 1;
+        $goods                   = M()->table('__GOODS__ g')
+            ->join('left join __GOODS_AND_CLASS__ gac on gac.goods_id = g.id')
+            ->join('left join __GOODS_CLASS_SAN__ gcs on gcs.id = gac.gcs_id')
+            ->join('left join __GOODS_CLASS_TWO__ gct on gct.id = gcs.gct_id')
+            ->join('left join __GOODS_CLASS__ gc on gc.id = gct.goods_class_id')
+            ->join('left join __GOODS_ATTRIBUTE_INFO__ gai on gai.goods_id = g.id')
+            ->where($cmap)
+            ->group('gc.name,g.id')
+            ->field('gc.id as class_id,gc.name as class_name,gc.sort,g.id as goods_id,g.goods_name,g.v_sale,g.sm_pic,min(shop_price)as price')
+            ->order('sort asc,goods_id desc')
+            ->select();
+        // dump($goods);
+        $arr = array();
+        foreach ($goods as $key => $value) {
+            $arr[$value['class_name']][] = $value;
+        }
+        // dump($arr);
+        $this->assign('arr', $arr);
+        $this->assign('activity', $activity);
+        $this->assign('shop', $shop);
+        $this->assign('notic', $notic);
+        $this->assign('picinfo', $picinfo);
+        $this->display();
+    }
+
+    public function save_top_id()
+    {
+        $top_id = I('top_id');
+        session('top_id', $top_id);
+    }
+    public function pfuli()
+    {
+        $this->display();
+    }
+
+    public function notice()
+    {
+        $data = M()->table('__NOTICE__ n')
+            ->field('n.*,FROM_UNIXTIME(n.create_time,"%m") as times,FROM_UNIXTIME(n.create_time,"%d") as addtime')->select();
+        // dump($data);
+        $this->assign('pic', $pic);
+        $this->assign('data', $data);
+        $this->display();
+    }
+    public function goods()
+    {
+        $goods = M('activity_img')->select();
+        $this->assign('goods', $goods);
+        $this->display();
+
+    }
+}

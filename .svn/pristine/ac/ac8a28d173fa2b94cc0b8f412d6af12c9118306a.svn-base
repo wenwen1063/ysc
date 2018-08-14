@@ -1,0 +1,238 @@
+<!--index -->
+<include file="public:index" />
+<!--index-->
+<script type="text/javascript" src="__PUBLIC__/timejs/laydate.js"></script>
+<title>会员管理</title>
+</head>
+
+<body>
+	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 系统 <span class="c-gray en">&gt;</span> 会员管理 <span class="c-gray en">&gt;</span> 会员列表 <span class="c-gray en">&gt;</span> 查看
+		<a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回"><i class="Hui-iconfont">&#xe66b;</i></a>
+		<a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+	</nav>
+	<div class="pd-20">
+		<table class="table table-border table-bordered table-bg mt-20">
+			<thead>
+				<tr>
+					<th colspan="2" scope="col">会员详情</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>会员账号</td>
+					<td>{$data['userphone']}</td>
+				</tr>
+				<tr>
+					<td>会员余额</td>
+					<td>￥{$data['balance']}</td>
+				</tr>
+				<tr>
+					<td>奖励金额总额</td>
+					<td>￥{$data['reward']}</td>
+				</tr>
+				<tr>
+					<td>可领取奖励金额</td>
+					<td>￥{$data['reward_receive']}</td>
+				</tr>
+				<tr>
+					<td>冻结奖励金额</td>
+					<td>￥{$data['reward_freeze']}</td>
+				</tr>
+				<tr>
+					<td>奖励积分总数</td>
+					<td>{$data['gold']}</td>
+				</tr>
+				<tr>
+					<tr>
+						<td>可领取奖励积分</td>
+						<td>{$data['gold_receive']}</td>
+					</tr>
+					<tr>
+						<tr>
+							<td>冻结奖励积分</td>
+							<td>{$data['gold_freeze']}</td>
+						</tr>
+						<tr>
+			</tbody>
+			<table class="table table-border table-bordered table-bg">
+				<thead>
+					<tr>
+						<th scope="col" colspan="15">地址列表</th>
+					</tr>
+					<tr class="text-c">
+						<th width="40">联系人</th>
+						<th width="40">联系电话</th>
+						<th width="40">所在区域</th>
+						<th width="40">详细地址</th>
+						<th width="40">默认地址</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name='addr' item='v'>
+						<tr class="text-c">
+							<td>{$v['contact']}</td>
+							<td>{$v['phone']}</td>
+							<td>{$v['province']}{$v['city']}{$v['district']}</td>
+							<td>{$v['address']}</td>
+							<td>
+								<if condition="$v['default_address']  eq 1">
+									是
+									<else />否
+								</if>
+							</td>
+						</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<table class="table table-border table-bordered table-bg">
+				<thead>
+					<tr>
+						<th scope="col" colspan="15">会员升级记录列表</th>
+					</tr>
+					<tr class="text-c">
+						<th width="40">原始类型</th>
+						<th width="40">升级类型</th>
+						<th width="40">申请条件</th>
+						<th width="40">付款金额</th>
+						<th width="40">申请时间</th>
+						<th width="40">审核状态</th>
+						<th width="40">审核时间</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name='upgrade' item='u'>
+						<tr class="text-c">
+							<td> {$u['type_name']}</td>
+							<td>{$u['upgrade_type_name']}</td>
+							<td>
+								<if condition="$u['condition'] eq 1">消费额
+									<else/> 软件使用费
+								</if>
+							</td>
+							<td>{$u['payment']}</td>
+							<td>{$u['time']|date='Y-m-d H:i:s',###}</td>
+
+							<?php if($u['state']==0): ?>
+							<td class="td-status"><span class="label radius">待审核</span></td>
+							<?php elseif($u['state']==1): ?>
+							<td class="td-status"><span class="label label-success radius">通过</span></td>
+							<?php else: ?>
+							<td class="td-status"><span class="label label-success radius">不通过</span></td>
+							<?php endif ?>
+							<td>
+								<if condition="$u['auditing_time'] neq 0">
+									{$u['auditing_time']|date='Y-m-d H:i:s',###}
+									<else/>
+								</if>
+							</td>
+						</tr>
+					</foreach>
+				</tbody>
+			</table>
+
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/admin/lib/laypage/1.2/laypage.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/admin/lib/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+	<script type="text/javascript">
+		/*
+				  参数解释：
+				  title 标题
+				  url   请求的url
+				  id    需要操作的数据id
+				  w   弹出层宽度（缺省调默认值）
+				  h   弹出层高度（缺省调默认值）
+				*/
+		/*用户-查看*/
+		function member_show(title, url, id, w, h) {
+			layer_show(title, url, w, h);
+		}
+		/*管理员-编辑*/
+		function admin_edit(title, url, id, w, h) {
+			layer_show(title, url, w, h);
+		}
+		//批量删除判断是否选择
+		function Check() {
+			var chks = document.getElementsByTagName('input');
+			var bl = true;
+			for(var i = 0; i < chks.length; i++) {
+				if(chks[i].checked) {
+					bl = false;
+					break;
+				}
+			}
+			if(bl) {
+				alert('最少选择一个');
+				return false;
+			}
+		}
+
+		function orderclose() {
+			document.forms.main_form.action = "{:U('/home/order/orderclose/del')}";
+			document.forms.main_form.submit();
+		}
+
+		function orderpost() {
+			document.forms.main_form.action = "{:U('/home/order/orderpost/out')}";
+			document.forms.main_form.submit();
+		}
+	</script>
+	<script type="text/javascript">
+		! function() {
+			laydate.skin('molv'); //切换皮肤，请查看skins下面皮肤库
+			laydate({
+				elem: '#demo'
+			}); //绑定元素
+		}();
+
+		//日期范围限制
+		var start = {
+			elem: '#start',
+			format: 'YYYY-MM-DD',
+			min: laydate.now(), //设定最小日期为当前日期
+			max: '2099-06-16', //最大日期
+			istime: true,
+			istoday: false,
+			choose: function(datas) {
+				end.min = datas; //开始日选好后，重置结束日的最小日期
+				end.start = datas //将结束日的初始值设定为开始日
+			}
+		};
+
+		var end = {
+			elem: '#end',
+			format: 'YYYY-MM-DD',
+			min: laydate.now(),
+			max: '2099-06-16',
+			istime: true,
+			istoday: false,
+			choose: function(datas) {
+				start.max = datas; //结束日选好后，充值开始日的最大日期
+			}
+		};
+		laydate(start);
+		laydate(end);
+
+		//自定义日期格式
+		laydate({
+			elem: '#test1',
+			format: 'YYYY年MM月DD日',
+			festival: true, //显示节日
+			choose: function(datas) { //选择日期完毕的回调
+				alert('得到：' + datas);
+			}
+		});
+
+		//日期范围限定在昨天到明天
+		laydate({
+			elem: '#hello3',
+			min: laydate.now(-1), //-1代表昨天，-2代表前天，以此类推
+			max: laydate.now(+1) //+1代表明天，+2代表后天，以此类推
+		});
+	</script>
+</body>
+
+</html>

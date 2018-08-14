@@ -1,0 +1,231 @@
+<!--index -->
+  <include file="public:index"   />
+<!--index-->
+<style type="text/css">
+.file {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 1;
+}
+
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+</style>
+<title>编辑</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+ 系统 <span class="c-gray en">&gt;</span>
+  会员管理 <span class="c-gray en">&gt;</span>
+   会员列表 <span class="c-gray en">&gt;</span>
+   新增
+   <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回" ><i class="Hui-iconfont">&#xe66b;</i></a><a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20">
+  <form action="{:U('/home/user/userupdate')}" method="post" enctype="multipart/form-data" name="main_form" class="form form-horizontal" id="form-member-add">
+    <input type="hidden" name="id" value="{$data['id']}">
+    <input type="hidden" name="pwd" value="{$data['password']}">
+    <div class="row cl">
+      <label class="form-label col-3"></span>手机号码(账号)：</label>
+      <div class="formControls col-5">
+        <input type="text" class="input-text" value="{$data['userphone']}" name="userphone" id="userphone" datatype="*2-16">
+      </div>
+      <div class="col-4"> </div>
+    </div>
+
+    <div class="row cl">
+      <label class="form-label col-3"></span>用户名：</label>
+      <div class="formControls col-5">
+        <input type="text" class="input-text" value="{$data['username']}" name="username" id="username" datatype="m">
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    <div class="row cl">
+      <label class="form-label col-3"></span>密码：</label>
+      <div class="formControls col-5">
+        <input type="password" class="input-text" value="{$data['password']}" name="password" id="password" datatype="m">
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-3"></span><span class="c-red">*</span>用户头像：</label>
+        <div class="formControls col-5">
+          <img height="80" width="80" src="__PUBLIC__/Uploads/{$data['avatar']}">
+        </div>
+        <div class="col-4"> </div>
+      </div>
+    <div class="row cl">
+        <label class="form-label col-3"><span class="c-red"></span>用户头像：</label>
+        <div class="formControls col-5" style="width:10%;">
+          <a href="javascript:;" class="file">选择图片<input onchange="change()" type="file" id="sm_pic" name="sm_pic"></a>
+          <p></p>
+          <p id="smtext" class="pic">
+            <img id="picname" name="picname" higth="100" width="100" />
+          </p>
+        </div>
+        <div class="col-4"> </div>
+      </div>
+    <div class="row cl">
+      <label class="form-label col-3"></span>邮箱@：</label>
+      <div class="formControls col-5">
+        <input type="email" class="input-text" value="{$data['email']}" name="email" id="email">
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    <div class="row cl">
+                <label class="form-label col-3">商家地址：</label>
+                <div id="dist_select" class="formControls col-5">
+                    省市区：
+                    <select class="prov " name="province" ></select>
+                    <select class="city " disabled="disabled" name="city"></select>
+                    <select class="dist " disabled="disabled" name="district"></select>
+                    <input type="text" name="address" class="input-text" style="width:40%;" placeholder="详细地址：" value="{$data.address}">
+                </div>
+      </div>
+
+    <div class="row cl">
+      <label class="form-label col-3">备注：</label>
+      <div class="formControls col-5">
+        <textarea name="remark" cols="" rows="" class="textarea"  placeholder="说点什么...输入字符" datatype="*10-100" dragonfly="true" onKeyUp="textarealength(this,100)">{$data['remark']}</textarea>
+        <p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
+      </div>
+      <div class="col-4"> </div>
+    </div>
+
+    <div class="row cl">
+      <div class="col-9 col-offset-3">
+        <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;" onclick="return check()">
+      </div>
+    </div>
+  </form>
+</div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/icheck/jquery.icheck.min.js"></script>
+
+<script src="__PUBLIC__/assets/js/jquery.cityselect.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    $(function() {
+        $("#dist_select").citySelect({
+            prov: "{$data.province}",
+            city: "{$data.city}",
+            dist: "{$data.district}",
+            nodata: "none"
+        });
+    });
+    </script>
+<script type="text/javascript">
+function check(){
+    //form1是form中的name属性
+    var _form = document.main_form;
+    if($('#userphone').val()==""){
+        alert("手机号码不为空!");
+        return false;
+    }
+    if($('#username').val()==""){
+        alert("用户名不为空!");
+        return false;
+    }
+    if($('#password').val()==""){
+        alert("密码不为空!");
+        return false;
+    }
+     if(trim($('#password').val()).length<6){
+        alert("密码不为少于6位!");
+        return false;
+    }
+    return true;
+}
+
+$("#identity").change(function(){
+  if($("#identity").val()==1){
+    $(".hiddendiv").show();
+  }else{
+    $(".hiddendiv").hide();
+  }
+})
+function trim(s) {
+   var count = s.length;
+   var st    = 0;       // start
+   var end   = count-1; // end
+
+   if (s == "") return s;
+   while (st < count) {
+     if (s.charAt(st) == " ")
+       st ++;
+     else
+       break;
+   }
+   while (end > st) {
+     if (s.charAt(end) == " ")
+       end --;
+     else
+       break;
+   }
+   return s.substring(st,end + 1);
+ }
+</script>
+<script>
+    function change() {
+      var pic = document.getElementById("sm_pic"),
+        file = document.getElementById("sm_pic");
+
+      var ext = file.value.substring(file.value.lastIndexOf(".") + 1).toLowerCase();
+
+      // gif在IE浏览器暂时无法显示
+      if(ext != 'png' && ext != 'jpg' && ext != 'jpeg') {
+        alert("图片的格式必须为png或者jpg或者jpeg格式！");
+        return;
+      }
+      var isIE = navigator.userAgent.match(/MSIE/) != null,
+        isIE6 = navigator.userAgent.match(/MSIE 6.0/) != null;
+
+      if(isIE) {
+        file.select();
+        var reallocalpath = document.selection.createRange().text;
+
+        // IE6浏览器设置img的src为本地路径可以直接显示图片
+        if(isIE6) {
+          pic.src = reallocalpath;
+        } else {
+          // 非IE6版本的IE由于安全问题直接设置img的src无法显示本地图片，但是可以通过滤镜来实现
+          pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image',src=\"" + reallocalpath + "\")";
+          // 设置img的src为base64编码的透明图片 取消显示浏览器默认图片
+          pic.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+        }
+      } else {
+        html5Reader(file);
+      }
+    }
+
+    function html5Reader(file) {
+      var file = file.files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function(e) {
+        var pic = document.getElementById("picname");
+        pic.src = this.result;
+      }
+    }
+    </script>
+</body>
+</html>

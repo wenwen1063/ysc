@@ -1,0 +1,106 @@
+body{
+    overflow-x: hidden;
+    margin-bottom: 75px;
+}
+#article,
+#comment{
+    width: 100%;
+    overflow-x: hidden;
+}
+.header {
+    position: relative;
+    background-color: #ff5353;
+    height: 45px;
+}
+
+.mui-title, .mui-action-back {
+    font-weight: 100;
+    color: #FFFFFF;
+}
+
+#article .title h4, h6 {
+    text-align: center;
+    font-weight: 100;
+    padding-top: 10px;
+}
+
+#article .fabulous span {
+    color: #4a4a4a;
+    font-weight: 100;
+}
+
+#article .fabulous {
+    position: relative;
+    float: right;
+    height: 20px;
+}
+
+#article .fabulous .list {
+    padding-left: 15px;
+    padding-right: 10px;
+    float: left;
+}
+
+#article .fabulous .list img {
+    margin: 0 2px;
+    height: 20px;
+    width: 20px;
+}
+
+.mui-bar-tab input {
+    float: left;
+    width: 70%;
+    position: relative;
+    left: 5%;
+    top: 7px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+}
+
+.mui-bar-tab .red {
+    margin-left: 5%;
+    width: 15%;
+    height: 40px;
+    background-color: #fe504f;
+    color: #fff;
+    border-radius: 10px;
+}
+
+#comment {
+    padding: 0 10px;
+    padding-top: 10px;
+    top: 30px;
+    position: relative;
+    width: 100%;
+    border-top: 1px solid #E0E0E0;
+}
+#comment .list {
+    margin-bottom: 20px;
+}
+#comment .list img{
+    border-radius: 50px;
+    float: left;
+    width: 50px;
+    height:50px;
+    position: relative;
+}
+
+#comment .list h5{
+    float: left;
+}
+#comment .list .t{
+    width: 60%;
+    position: relative;
+    top: -5px;
+    left:10px;
+}
+#comment .list .comment p{
+    width: 100%;
+    padding-right: 60px;
+}
+#comment .list .comment{
+    position: relative;
+    left:60px;
+    border-bottom: 1px solid #E0E0E0;
+}

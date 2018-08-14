@@ -1,0 +1,485 @@
+h5 {
+    color: #777777;
+    font-size: 18px;
+}
+.navigation,
+#shop_notice,
+#shops,
+#advertisements,
+.contentmores,
+#commodity_name,
+#shopcontent,
+#commodity_name,
+#shopcontent,
+.mui-bar-tab{
+    width: 100%;
+    overflow-x: hidden;
+}
+body {
+    position: relative;
+    margin-bottom: 85px;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.mui-bar {
+    background-color: #ff5353;
+    height: 45px;
+}
+
+.mui-icon-search,
+.mui-title {
+    color: #FFF;
+}
+
+.mui-slider {
+    position: relative;
+}
+
+.navigation {
+    background-color: #fff;
+    position: relative;
+    width: 100%;
+    height: 146px;
+}
+
+.navigation_one,
+.navigation_two {
+    position: relative;
+    top: 11px;
+    height: 54px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.navigation_two {
+    position: relative;
+    top: 22px;
+}
+
+.list {
+    height: 100%;
+    width: 20%;
+    float: left;
+    position: relative;
+    left: 3%;
+}
+
+.list .list_img {
+    width: 55%;
+    height: 66%;
+}
+
+.list .list_img .img {
+    width: 34px;
+    float: left;
+    left: 5px;
+    position: relative;
+}
+
+.list_span {
+    font-size: 12px;
+    float: left;
+    color: #414141;
+}
+
+#shop_notice {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    background-color: #FFF;
+    border-top: 1px solid #d2d2d2;
+}
+
+#shop_notice .fonst {
+    position: relative;
+    width: 116px;
+    height: 22px;
+    border-right: 1px solid #d2d2d2;
+    top: 16px;
+    float: left;
+}
+
+#shop_notice .fonst img {
+    height: 19px;
+    position: relative;
+    left: 19px;
+}
+
+#shop_notice .content {
+    position: relative;
+    left: 13px;
+}
+
+#shop_notice .content .circular {
+    height: 6px;
+    width: 6px;
+    border-radius: 100px;
+    background-color: #f39800;
+    float: left;
+    top: 22px;
+    position: relative;
+}
+
+#shop_notice .content .content_fonst {
+    position: relative;
+    top: 16px;
+    left: 6px;
+    float: left;
+    width: 50%;
+}
+
+#shop_notice .content .content_fonst span {
+    color: #656565;
+    font-size: 15px;
+}
+
+#shop_notice .content .more {
+    position: relative;
+    top: 12px;
+    float: right;
+    right: 22px;
+    border: 1px solid #fe504f;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+#shop_notice .content .more span {
+    color: #fe504f;
+    font-size: 20px;
+}
+
+#shop {
+    position: relative;
+    width: 100%;
+    top: 10px;
+    height: 242px;
+    background-color: #FFF;
+    margin-bottom: 10px;
+}
+
+#shop .shop_one,
+.shop_two {
+    margin: 0 auto;
+    height: 121px;
+}
+
+#shop .list {
+    border-left: 1px solid #efeff4;
+    border-bottom: 1px solid #efeff4;
+    position: relative;
+    left: 0%;
+    padding-left: 8%;
+    width: 33%;
+    height: 100%;
+}
+
+#shop .list span {
+    color: #e567d1;
+    position: relative;
+    top: 22px;
+}
+
+#shop .list .img img {
+    position: relative;
+    top: 39px;
+    width: 60px;
+}
+
+#advertisement {
+    position: relative;
+    top: 10px;
+    width: 100%;
+    height: 150px;
+    background-color: #FFF;
+}
+
+#advertisement .img {
+    width: 100%;
+    height: 70px;
+}
+
+#advertisement .img_two {
+    position: relative;
+    top: 10px;
+}
+
+#advertisement .img img {
+    height: 70px;
+    width: 100%;
+}
+
+#commodity_name {
+    position: relative;
+    top: 20px;
+    widow: 100%;
+    height: 41px;
+    background-color: #FFF;
+}
+
+#commodity_name .img {
+    float: left;
+}
+
+#commodity_name .more {
+    position: relative;
+    top: 6px;
+    float: right;
+    right: 5%;
+    border: 1px solid #fe504f;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+#commodity_name .more span {
+    color: #fe504f;
+    font-size: 20px;
+}
+
+#commodity_name .img img {
+    position: relative;
+    left: 19px;
+    top: 12px;
+    height: 16px;
+}
+
+#commodity_list {
+    position: relative;
+    top: 35px;
+    height: 241px;
+    width: 100%;
+    /*background-color: #FFF;*/
+}
+
+#commodity_list .list {
+    width: 100%;
+    left: 0%;
+}
+
+#commodity_list .selected {
+    position: relative;
+    width: 44%;
+    height: 100%;
+    float: left;
+    left: 4%;
+}
+
+#commodity_list .right {
+    position: relative;
+    left: 8%;
+}
+
+#commodity_list .selected .img {
+    width: 100%;
+    height: 178px;
+    float: left;
+}
+
+#commodity_list .selected .img img {
+    width: 100%;
+    height: 178px;
+}
+
+#commodity_list .selected .name {
+    position: relative;
+    top: 5px;
+    left: 5px;
+    float: left;
+}
+
+#commodity_list .selected .name .money {
+    color: #ff5252;
+}
+
+#commodity_list .selected .buy {
+    float: right;
+    position: relative;
+    top: 32px;
+    right: 10px;
+}
+
+#commodity_list .selected .buy span {
+    color: #FFF;
+    background-color: #ff5252;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.footer {
+    border-top: 45px;
+    background-color: #fff;
+}
+
+.footer img {
+    width: 22px;
+    height: 22px;
+}
+
+#advertisement {
+    position: relative;
+    height: 170px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+#shops {
+    position: relative;
+    top: 10px;
+    width: 100%;
+    height: 245px;
+    background-color: #fff;
+}
+
+#shops .lists {
+    border-right: 1px solid #e0e0e0;
+    float: left;
+    padding-top: 20px;
+    width: 33%;
+    height: 122px;
+    text-align: center;
+}
+
+#shops .none {
+    border: none;
+}
+
+#shops .lists .names {
+    width: 100%;
+    text-align: center;
+}
+
+#shops .lists h5 {
+    font-size: 16px;
+    font-weight: 100;
+}
+
+#shops .lists img {
+    position: relative;
+    top: 15px;
+    width: 56px;
+    height: 44px;
+}
+
+#advertisements {
+    position: relative;
+    top: 20px;
+    width: 100%;
+    height: 125px;
+}
+
+#advertisements .lists {
+    width: 100%;
+    height: 60px;
+}
+
+#advertisements .lists img {
+    width: 100%;
+    height: 60px;
+}
+
+#commodity_name {
+    position: relative;
+    top: 30px;
+}
+
+#shopcontent {
+    width: 100%;
+    position: relative;
+    top: 40px;
+    height: 460px;
+    padding: 0 10px;
+    margin-bottom: 10px;
+}
+
+#shopcontent .list {
+    margin-bottom: 10px;
+    background-color: #FFFFFF;
+    left: 0px;
+    height: 220px;
+    width: 49%;
+    float: left;
+    border: 2px solid #FFFFFF;
+}
+
+#shopcontent .right {
+    float: right;
+}
+
+#shopcontent .list img {
+    width: 100%;
+    height: 170px;
+}
+
+#shopcontent .list h5 {
+    margin: 0;
+    position: relative;
+    font-size: 16px;
+    color: #4a4a4a;
+    font-weight: 100;
+}
+
+#shopcontent .list span {
+    color: #fe504f;
+    font-size: 16px;
+    float: left;
+}
+
+#shopcontent .list input {
+    padding: 0;
+    margin: 0;
+    background-color: #fe504f;
+    color: #FFFFFF;
+    float: right;
+    right: 10px;
+    font-size: 12px;
+    width: 50px;
+    height: 20px;
+}
+
+.footer {
+    z-index: 99999;
+}
+
+.contentmores {
+    position: relative;
+    top: 30px;
+    width: 100%;
+    height: 30px;
+}
+
+.contentmores .more {
+    float: right;
+}
+
+.contentmores span {
+    padding: 2px;
+    position: relative;
+    right: 10px;
+    color: #FE504F;
+    background-color: #FFFFFF;
+    border: 1px solid #FE504F;
+    border-radius: 5px;
+    font-size: 20px;
+}
+.imgTopDiv {
+    position: relative;
+}
+.imgTopDiv img {
+    position: fixed;
+    z-index: 9999;
+    right: 15px;
+    bottom: 65px;
+    width: 35px;
+}
+.imgkefu {
+    position: relative;
+}
+.imgkefu img {
+    position: fixed;
+    z-index: 9999;
+    right: 15px;
+    bottom: 50px;
+    width: 35px;
+    top: 77%;
+}

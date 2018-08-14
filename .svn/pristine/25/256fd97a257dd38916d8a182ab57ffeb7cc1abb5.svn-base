@@ -1,0 +1,18 @@
+<?php
+namespace Home\Controller;
+
+use Think\Controller;
+
+class IndexController extends BaseController
+{
+    /**
+     * index
+     * @access public
+     * @param nav - array
+     */
+    public function index()
+    {
+        $this->display();
+    }
+
+}

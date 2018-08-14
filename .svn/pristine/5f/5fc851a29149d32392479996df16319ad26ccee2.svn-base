@@ -1,0 +1,103 @@
+.head {
+    padding-top: 10px;
+    padding-left: 10px;
+    position: relative;
+    top: 10px;
+    background-color: #fff;
+    width: 100%;
+    height: 60px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.head .img {
+    position: relative;
+
+    width: 100%;
+    height: 60px;
+    float: left;
+}
+
+.head .img img {
+    float: left;
+    width: 40px;
+    height: 40px;
+}
+
+.head .money {
+    width: 100%;
+    height:40px;
+    position: relative;
+    top: 15px;
+}
+
+.head .money h5 {
+    position: relative;
+    bottom: 5px;
+    color: #4a4a4a;
+    margin-left: 20px;
+    font-size: 16px;
+    float: left;
+}
+
+.head .money span {
+    color: #fe504f;
+    font-size: 25px;
+    float: right;
+    padding-right: 10px;
+}
+
+.chong{
+    top:9px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 10px;
+    width: 100%;
+    height:40px;
+    background-color: #fff;
+    position: relative;
+
+}
+.chong .list{
+    float: left;
+    text-align: center;
+    position: relative;
+    height:40px;
+    width: 50%;
+}
+
+.chong .list img{
+    width: 20px;
+    height:20px;
+    float: left;
+    position: relative;
+    left:20%;
+}
+.mui-bar-nav ~ .mui-content{
+    margin: 0;
+    padding-top: 10px;
+}
+.mui-card{
+    margin: 0;
+}
+
+.mui-content > .mui-card:first-child{
+    margin-top: 10px;
+}
+
+.mui-badge-danger, .mui-badge-red{
+    color: #909090;
+    background-color: #fff;
+}
+.mui-navigate-right img{
+    position: relative;
+    top:5px;
+    margin: 0 10px;
+    width: 20px;
+}
+
+.mui-badge-danger, .mui-badge-red{
+    color: #909090;
+}
+
+.mui-badge-danger{
+    color: #909090;
+}

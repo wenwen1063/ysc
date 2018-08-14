@@ -1,0 +1,183 @@
+<!--index -->
+<include file="public:index" />
+<!--index-->
+<title>搭档权限管理</title>
+</head>
+<style type="text/css">
+	.left_ul {
+		list-style-type: none;
+		/*border:1px solid rgb(179,179,179);*/
+	}
+	
+	.left_ul_li {
+		text-align: center;
+		border-bottom: 1px solid rgb(179, 179, 179);
+	}
+</style>
+
+<body>
+	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 系统 <span class="c-gray en">&gt;</span> 分销管理管理 <span class="c-gray en">&gt;</span> 搭档权限
+		<a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+	</nav>
+	<div class="pd-20 col-xs-2 col-sm-2 col-md-2 col-lg-2">
+		<ul class="left_ul">
+			<!--<a href="{:U('/home/privilege/index',array('id'=>null))}"><li class="maincolor left_ul_li" id="seller_all">全部商家</li></a>-->
+			<foreach name='partner' item='v'>
+				<a href="{:U('/home/privilege/index',array('id'=>$v['id']))}">
+					<li class="maincolor left_ul_li" id="{$v['id']}">{$v['name']}</li>
+				</a>
+			</foreach>
+		</ul>
+	</div>
+	<div class="pd-20 col-xs-2 col-sm-2 col-md-2 col-lg-10">
+		<form action="" method="post/get" name="mainform" class="form form-horizontal" id="form-admin-add" style="float:right;">
+			<input type="hidden" name="id" value="{$id}">
+			<div class="text-c">
+
+				<button type="submit" class="btn btn-success" onclick="return search()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+				<!-- <input type="submit" class="btn btn-danger radius" value="导出" onclick="return privilegeexcel();" style="background-color: #f5862e;border-color: #f5862e;" /> -->
+			</div>
+		</form>
+
+		<form action="" method="post/get" name="main_form" id="main_form">
+			<div class="text-c"><br></div>
+			<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l">
+        <a href="{:U('/home/privilege/privilegeadd',array('id'=>$id))}" class="btn btn-primary radius"> 新增 </a></span>&nbsp;
+				<!--<input type="submit" class="btn btn-danger radius" value="删除" onclick="return delprivilege()" />-->
+				<span class="r">共有数据：<strong>{$count}</strong> 条</span> </div>
+			<table class="table table-border table-bordered table-bg">
+				<thead>
+					<tr>
+						<th scope="col" colspan="14">商品列表</th>
+					</tr>
+					<tr class="text-c">
+						<!--<th width="25"><input type="checkbox" name="" value=""></th>-->
+						<th width="40">操作</th>
+						<th width="40">特权名称</th>
+						<th width="40">产品类型</th>
+						<th width="40">特权产品</th>
+						<th width="40">产品图标</th>
+						<th width="40">数量</th>
+						<th width="40">流量类型</th>
+						<th width="40">折扣</th>
+						<th width="40">折扣频率</th>
+						<th width="40">折扣限额</th>
+						<th width="40">使用期限</th>
+						<th width="40">备注</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name='data' item='v'>
+						<tr class="text-c">
+							<!--<td><input type="checkbox" value="{$v['id']}" name="id[]"></td>-->
+							<td class="td-manage">
+								<a class="btn btn-primary size-MINI radius" href="{:U('/home/privilege/privilegeupdate',array('id'=>$v['id']))}">编辑</a>
+								<a class="btn btn-primary size-MINI radius" href="{:U('/home/privilege/privilegedel',array('id'=>$v['id'],'type'=>2))}" onclick="return confirm('确认要删除吗？');">删除</a>
+							</td>
+							<td>{$v['name']}</td>
+							<?php if($v['type']==0): ?>
+							<td>软件</td>
+							<?php elseif($v['type']==1): ?>
+							<td>保险</td>
+							<?php elseif($v['type']==2): ?>
+							<td>话费</td>
+							<?php elseif($v['type']==3): ?>
+							<td>流量</td>
+							<?php elseif($v['type']==4): ?>
+								<td>商品</td>
+							<?php endif ?>
+							
+							<?php if($v['type']==0): ?>
+							<td>{$v['tname']}</td>
+							<?php elseif($v['type']==1): ?>
+							<td>{$v['iname']}</td>
+							<?php elseif($v['type']==2): ?>
+							<td></td>
+							<?php elseif($v['type']==3): ?>
+							<td></td>
+							<?php elseif($v['type']==4): ?>
+								<td>{$v['gname']}</td>
+							<?php endif ?>
+							<td><img src="__PUBLIC__/Uploads/{$v['ico']}" width="40"></td>
+							<td>{$v['number']}</td>
+							
+							<?php if($v['flow_type']==2): ?>
+							<td class="td-status">省内流量</td>
+							<?php elseif($v['flow_type']==1): ?>
+							<td class="td-status">国内流量</td>
+							<?php else: ?>
+							<td class="td-status"></td>
+							<?php endif ?>
+								
+								
+							<td>{$v['rebate']}</td>
+							<?php if($v['rebate_frequency']==1): ?>
+							<td class="td-status">每月</td>
+							<?php elseif($v['rebate_frequency']==0): ?>
+							<td class="td-status"></td>
+							<?php endif ?>
+								
+							<td>{$v['rebate_quota']}</td>
+							
+							<?php if ($v['term']!=0): ?>
+							<td>{$v['term']|date='Y-m-d H:i:s',###}</td>
+							<?php else: ?>
+							<td></td>
+							<?php endif ?>
+							<td>{$v['remark']}</td>	
+						</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pageright">{$page}</div>
+	</div>
+	</form>
+</body>
+
+</html>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+<script type="text/javascript">
+	var id = "<?php echo $id;?>";
+	if(id == '') {
+		$('.left_ul li').css('color', '#06c');
+		$(".left_ul li:first").css("color", "black");
+	} else {
+		$('.left_ul li').css('color', '#06c');
+		$(".left_ul li[id*=" + id + "]").css('color', 'black');
+	}
+</script>
+<script type="text/javascript">
+	//批量删除判断是否选择
+	function delprivilege() {
+		var gnl = confirm('确认要删除吗？');
+		if(gnl == true) {
+			var chks = document.getElementsByTagName('input');
+			var bl = true;
+			for(var i = 0; i < chks.length; i++) {
+				if(chks[i].checked) {
+					bl = false;
+					break;
+				}
+			}
+			if(bl) {
+				alert('最少选择一个');
+				return false;
+			} else {
+				document.forms.main_form.action = "{:U('/home/privilege/privilegedel')}";
+				document.forms.main_form.submit();
+			}
+		} else {
+			return false;
+		}
+	}
+
+	function search() {
+		document.forms.mainform.action = "{:U('/home/privilege/privilegeindex/search/')}";
+		document.forms.mainform.submit();
+	}
+</script>

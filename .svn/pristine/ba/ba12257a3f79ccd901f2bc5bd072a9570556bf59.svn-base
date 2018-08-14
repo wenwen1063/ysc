@@ -1,0 +1,42 @@
+<head>
+    <meta charset="utf-8">
+    <title>会员信息</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css">
+    <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/Memberinformation/Memberinformation.css">
+
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a href="{:U('/home/user/userindex')}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">会员信息</h1>
+</header>
+<div class="mui-card">
+    <ul class="mui-table-view">
+        <li class="mui-table-view-cell">会员头像<span class="mui-badge">
+            <img src="__PUBLIC__/Wx/img/Home/{$data['avatar']}" alt="">
+        </span></li>
+
+        <li class="mui-table-view-cell">会员名称<span class="mui-badge">
+            {$data['username']}
+        </span></li>
+        <li class="mui-table-view-cell">手机号码<span class="mui-badge">
+            {$data['userphone']}
+        </span></li>
+        <li class="mui-table-view-cell">常用邮箱<span class="mui-badge">
+           {$data['email']}
+        </span></li>
+       <!--  <li class="mui-table-view-cell">微信号<span class="mui-badge">
+           {$data['email']}
+        </span></li> -->
+        <?php if ($data['p_name'] != null): ?>
+        <li class="mui-table-view-cell">搭档层级<span class="mui-badge">
+           {$data['p_name']}
+        </span></li>
+        <?php endif ?>
+    </ul>
+</div>
+</body>
+</html>

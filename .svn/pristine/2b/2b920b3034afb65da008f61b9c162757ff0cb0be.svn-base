@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Modifypassword/Modifypassword.css" rel="stylesheet">
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a href="{:U('/home/user/userindex')}"
+       class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">修改密码</h1>
+</header>
+<div class="list">
+    <img src="__PUBLIC__/Wx/img/My/my_icon_change_password.png" alt="">
+    <input type="password" name="psd" id="psd" placeholder="请输入原密码">
+</div>
+<div class="list">
+    <img src="__PUBLIC__/Wx/img/My/my_icon_change_password.png" alt="">
+    <input type="password" name="npsd" id="npsd" placeholder="请输入新密码">
+</div>
+<div class="list">
+    <img src="__PUBLIC__/Wx/img/My/my_icon_change_password.png" alt="">
+    <input type="password" name="rpsd" id="rpsd" placeholder="请再次确认密码">
+</div>
+<div class="input">
+    <input type="button" value="提&numsp;交" onclick="check()">
+</div>
+ <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+ <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+    <script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+    <script type="text/javascript">
+         function check() {
+            //先判断
+             // var user_id = cookie('user_id');
+             var psd = $("#psd").val();
+             var npsd = $("#npsd").val();
+             var rpsd = $("#rpsd").val();
+              if (psd==''){
+               mui.toast('请输入原密码！');
+               return false;
+              };
+              if (npsd==''){
+                mui.toast('请输入新密码！');
+                return false;
+              };
+              if (rpsd==''){
+                mui.toast('请再次确认密码！');
+                return false;
+              };
+              if (rpsd!=npsd){
+                mui.toast('两次密码不一致');
+                return false;
+            };
+        //传值
+            $.ajax({
+            type: "post",
+            url: "{:U('/home/user/updatepsw')}",
+            async: false,
+            data: {"psd":psd,"npsd":npsd},
+            dataType: "json",
+            success: function(data){
+                console.log(data);
+                if(data.result==0){
+                    mui.toast(data.msg);
+                }
+                else if(data.result==1){
+                   mui.toast(data.msg),setTimeout(function(){
+                   	 window.location.href="{:U('home/user/userindex')}";
+                   },1000);
+                   
+                }
+                else{
+                    mui.toast(data.msg);
+                }
+            },
+        });
+         }
+         // $.ajxs()
+    </script>
+</body>
+</html>

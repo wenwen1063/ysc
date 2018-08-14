@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>营销活动</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Systemmessage/Systemmessage.css" rel="stylesheet">
+</head>
+
+<body>
+    <header class="mui-bar mui-bar-nav header">
+        <a href="{:U('/home/index/index')}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title"></h1>
+    </header>
+    <foreach name="goods" item="vi">
+<!--         <a href="{:U('/home/seller/sellerinfo',array('id'=>$vi['id']))}"> -->
+            <div class="list">
+                <a href="{:U('/home/goods/goodsinfo',array('id'=>$vi['goods_id']))}">
+                    <img src="__PUBLIC__/Uploads/{$vi['img']}" alt="">
+                </a>
+                <!--   <div class="title">
+                <h5>{$vi['title']}</h5>
+                <p>{$vi['times']}-{$vi['addtime']}</p>
+            </div>
+            <div class="coontent">
+                <p>{$vi['content']}</p>
+            </div> -->
+            </div>
+        <!-- </a> -->
+    </foreach>
+    <script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+    <script>
+    function text() {
+        for (var i = 0; i < mui('.list').length; i++) {
+            mui('.list')[i].style.display = 'block';
+        }
+        mui('.none')[0].style.display = 'none';
+        setTimeout(function() {
+            for (var i = 0; i < mui('.list').length; i++) {
+                mui('.list')[i].style.display = 'none';
+            }
+            mui('.none')[0].style.display = 'block';
+            setTimeout(function() {
+                text()
+            }, 1000)
+        }, 1000)
+
+    }
+    text();
+    </script>
+</body>
+
+</html>

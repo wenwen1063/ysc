@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="../../../CSS/CommonCSS/Base.css">
+		<link rel="stylesheet" href="../../../CSS/BusinessCSS/detailss.css">
+		<title>推广工具</title>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">推广工具</h1>
+		</header>
+		<div class="mui-slider">
+			<div class="mui-slider-group">
+				<div class="mui-slider-item">
+					<a href="#"><img src="../../../img/Classification/classification_pic_big.png" /></a>
+				</div>
+				<div class="mui-slider-item">
+					<a href="#"><img src="2.jpg" /></a>
+				</div>
+				<div class="mui-slider-item">
+					<a href="#"><img src="3.jpg" /></a>
+				</div>
+				<div class="mui-slider-item">
+					<a href="#"><img src="4.jpg" /></a>
+				</div>
+			</div>
+			<div class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+			</div>
+			<div id="mess">
+				<h5>商品名称</h5>
+				<p> <span id="money">
+					￥198
+				</span> <del>￥208</del>&ensp;&ensp;&ensp;&ensp;库存：1000&ensp;&ensp;&ensp;&ensp;销量：1000</p>
+			</div>
+		</div>
+
+		<div id="download">
+			<div class="img">
+				<div style="text-align:center;margin-bottom: 10px;">
+					<button style="width: 100%;height: 400px;border: 1px solid #000000;position: absolute;opacity: 0;z-index: 999;" onclick="playPause()">播放/暂停</button>
+					<video id="video1" width="420">
+						<source src="http://www.w3school.com.cn/example/html5/mov_bbb.mp4" type="video/mp4" />
+						<source src="http://www.w3school.com.cn/example/html5/mov_bbb.ogg" type="video/ogg" /> Your browser does not support HTML5 video.
+					</video>
+				</div>
+			</div>
+			<div class="onclick">
+				<input class="button" type="button" value="点击下载">
+			</div>
+			<div class="introduce">
+				<span>软件介绍</span>
+			</div>
+			<div class="content">
+				<span>软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...<br><br>
+            &ensp;&ensp;软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...<br><br>
+            &ensp;&ensp;软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...<br><br>
+            &ensp;&ensp;软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...软件内容介绍...</span>
+			</div>
+			<div class="buy">
+				<input type="button" value="购买软件">
+			</div>
+		</div>
+
+		<div id="popup" style="display: none">
+			<div class="title">
+				<span>系统监测到您还未购买软件，无法下载，是否马上购买?</span>
+			</div>
+			<div class="button">
+				<input type="button" value="取消">
+				<input class="red" type="button" value="确定">
+			</div>
+		</div>
+
+		<script src="../../../Script/CommonJS/Base.js"></script>
+		<script type="text/javascript">
+			//获得slider插件对象
+			var gallery = mui('.mui-slider');
+			gallery.slider({
+				interval: 2000 //自动轮播周期，若为0则不自动播放，默认为0；
+			});
+			var myVideo = document.getElementById("video1");
+
+			function playPause() {
+				if(myVideo.paused)
+					myVideo.play();
+				else
+					myVideo.pause();
+			}
+		</script>
+	</body>
+
+</html>

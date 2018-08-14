@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link rel="stylesheet" href="http://dcloud.io/hellomui/css/mui.min.css">
+    <link href="http://dcloud.io/hellomui/css/mui.picker.css" rel="stylesheet"/>
+    <link href="http://dcloud.io/hellomui/css/mui.poppicker.css" rel="stylesheet"/>
+    <style>
+        .mui-btn {
+            font-size: 16px;
+            padding: 8px;
+            margin: 3px;
+        }
+
+        h5.mui-content-padded {
+            margin-left: 3px;
+            margin-top: 20px !important;
+        }
+
+        h5.mui-content-padded:first-child {
+            margin-top: 12px !important;
+        }
+
+        .ui-alert {
+            text-align: center;
+            padding: 20px 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">picker（选择器）</h1>
+</header>
+<button id='showUserPicker' type='button'>一级选择示例 ...</button>
+<script src="http://dcloud.io/hellomui/js/mui.min.js"></script>
+<script src="http://dcloud.io/hellomui/js/mui.picker.js"></script>
+<script src="http://dcloud.io/hellomui/js/mui.poppicker.js"></script>
+<script>
+    (function ($, doc) {
+        $.init();
+        $.ready(function () {
+            //普通示例
+            var userPicker = new $.PopPicker();
+            userPicker.setData([{
+                value: 'ywj',
+                text: '优惠一&numsp;&numsp;&numsp;满108减5'
+            }, {
+                value: 'aaa',
+                text: '优惠二&numsp;&numsp;&numsp;满108减5'
+            }, {
+                value: 'lj',
+                text: '优惠三&numsp;&numsp;&numsp;满108减5'
+            }]);
+            var showUserPickerButton = doc.getElementById('showUserPicker');
+            var userResult = doc.getElementById('userResult');
+            showUserPickerButton.addEventListener('tap', function (event) {
+                userPicker.show(function (items) {
+                    userResult.innerText = JSON.stringify(items[0]);
+                    //返回 false 可以阻止选择框的关闭
+                    //return false;
+                });
+            }, false);
+            //-----------------------------------------
+            //级联示例
+            var cityPicker = new $.PopPicker({
+                layer: 2
+            });
+            cityPicker.setData(cityData);
+            var showCityPickerButton = doc.getElementById('showCityPicker');
+            var cityResult = doc.getElementById('cityResult');
+            showCityPickerButton.addEventListener('tap', function (event) {
+                cityPicker.show(function (items) {
+                    cityResult.innerText = "你选择的城市是:" + items[0].text + " " + items[1].text;
+                    //返回 false 可以阻止选择框的关闭
+                    //return false;
+                });
+            }, false);
+            //-----------------------------------------
+            //					//级联示例
+            var cityPicker3 = new $.PopPicker({
+                layer: 3
+            });
+            cityPicker3.setData(cityData3);
+            var showCityPickerButton = doc.getElementById('showCityPicker3');
+            var cityResult3 = doc.getElementById('cityResult3');
+            showCityPickerButton.addEventListener('tap', function (event) {
+                cityPicker3.show(function (items) {
+                    cityResult3.innerText = "你选择的城市是:" + (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+                    //返回 false 可以阻止选择框的关闭
+                    //return false;
+                });
+            }, false);
+        });
+    })(mui, document);
+</script>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+body {
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+
+.mui-bar {
+	position: relative;
+	background-color: #ff5353;
+	height: 45px;
+}
+
+.mui-slider,
+#search,
+.mui-content {
+	width: 100%;
+	overflow-x: hidden;
+}
+
+.mui-title,
+.mui-action-back {
+	font-weight: 100;
+	color: #FFFFFF;
+}
+
+#search {
+	z-index: 9999;
+	position: relative;
+	width: 90%;
+	height: 56px;
+	left: 5%;
+	top: 10px;
+}
+
+#search input {
+	border-radius: 100px;
+	text-align: center;
+}
+
+.mui-row.mui-fullscreen> [class*="mui-col-"] {
+	height: 100%;
+}
+
+.mui-col-xs-3,
+.mui-control-content {
+	overflow-y: auto;
+	height: 100%;
+}
+
+.mui-segmented-control .mui-control-item {
+	line-height: 50px;
+	width: 100%;
+}
+
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+	background-color: #fff;
+	border-left: 2px solid #fe504f;
+	color: #fe504f;
+}
+
+.mui-slider {
+	height: 136px;
+	width: 100%;
+	position: relative;
+}
+
+.mui-content {
+	position: relative;
+	top: -10px;
+}
+
+.mui-table-view-cell {
+	background-color: #efefef;
+}
+
+.mui-table-view-cell {
+	padding: 0px 0px;
+}
+
+.mui-card-content-inner .mui-ellipsis {
+	color: #4a4a4a;
+}
+
+.mui-card-footer .Fabulous {
+	float: right;
+}
+
+.mui-card-footer:before,
+.mui-card-header:after {
+	background-color: #FFFFFF;
+}
+
+.mui-card-footer {
+	float: right;
+	;
+}
+
+.mui-card-footer span {
+	margin: 0px 6px;
+}

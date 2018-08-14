@@ -1,0 +1,169 @@
+<!--index -->
+  <include file="public:index"   />
+<!--index-->
+<script type="text/javascript" src="__PUBLIC__/timejs/laydate.js"></script>
+<title>优惠券管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 系统 <span class="c-gray en">&gt;</span> 营销管理 <span class="c-gray en">&gt;</span> 营销信息 <span class="c-gray en">&gt;</span> 活动详情 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回"><i class="Hui-iconfont">&#xe66b;</i></a><a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20">
+    <table class="table table-border table-bordered table-bg">
+        <thead>
+            <tr>
+                <th scope="col" colspan="13">活动列表</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>活动名称</td>
+            <td>{$data[0]['name']}</td>
+        </tr>
+         <tr>
+            <td>开始时间</td>
+            <td>{$data[0]['start_time']|date='Y-m-d H:i:s',###}</td>
+        </tr>
+        <tr>
+            <td>结束时间</td>
+            <td>{$data[0]['end_time']|date='Y-m-d H:i:s',###}</td>
+        </tr>
+        <tr>
+        <tr>
+            <td>所属商家</td>
+            <td><php>
+                if($data[0]['seller_id']==0){echo "全平台";}else{echo $data[0]['s_name'];}
+            </php></td>
+        </tr>
+        <tr>
+            <td>活动图片</td>
+            <td><img height="100" src="__PUBLIC__/Uploads/{$data[0]['pic']}"></td>
+        </tr>
+        <tr>
+            <td>活动详情图片</td>
+            <td><img height="100" src="__PUBLIC__/Uploads/{$data[0]['infopic']}"></td>
+        </tr>
+        <tr>
+            <td>活动类型</td>
+            <td><php>
+                if($data[0]['after_type']==1){echo "优惠活动";}elseif($data[0]['after_type']==2){echo "折扣活动";}elseif($data[0]['after_type']==3){echo "买赠活动";}else{echo "包邮活动";}
+            </php></td>
+        </tr>
+        <?php if($data[0]['after_type'] == 1):  ?>
+        <tr>
+            <td>优惠金额</td>
+            <td>{$data[0]['after_price']}</td>
+        </tr>
+        <?php endif ?>
+        <?php if($data[0]['after_type'] == 2):  ?>
+        <tr>
+            <td>优惠折扣</td>
+            <td>{$data[0]['after_discount']}折</td>
+        </tr>
+        <?php endif ?>
+        <?php if($data[0]['after_type'] == 3):  ?>
+        <tr>
+            <td>购买数量</td>
+            <td>{$data[0]['buy_number']}</td>
+        </tr>
+        <tr>
+            <td>赠送数量</td>
+            <td>{$data[0]['give_number']}</td>
+        </tr>
+        <tr>
+            <td>总可赠送数量</td>
+            <td>{$data[0]['most_give_number']}</td>
+        </tr>
+        <?php endif ?>
+        <tr>
+            <td>活动摘要</td>
+            <td>{$data[0]['content']}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="text-c"><br></div>
+    <table class="table table-border table-bordered table-bg">
+        <thead>
+        <tr>
+            <th scope="col" colspan="13">活动商品详情</th>
+        </tr>
+        <tr class="text-c">
+            <th width="40">商品编号</th>
+            <th width="40">商品名称</th>
+            <th width="40">销量</th>
+            <th width="40">商品图片</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-c">
+            <foreach name="data" item="v">
+                <tr class="text-c">
+                <td>{$v['number']}</td>
+                <td>{$v['goods_name']}</td>
+                <td>{$v['r_sale']}</td>
+                <td><img height="25" src="__PUBLIC__/Uploads/{$v['sm_pic']}"></td>
+                </tr>
+            </foreach>
+
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+<script type="text/javascript">
+!function(){
+  laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
+  laydate({elem: '#demo'});//绑定元素
+}();
+
+//日期范围限制
+var start = {
+    elem: '#start',
+    format: 'YYYY-MM-DD',
+    min: laydate.now(), //设定最小日期为当前日期
+    max: '2099-06-16', //最大日期
+    istime: true,
+    istoday: false,
+    choose: function(datas){
+         end.min = datas; //开始日选好后，重置结束日的最小日期
+         end.start = datas //将结束日的初始值设定为开始日
+    }
+};
+
+var end = {
+    elem: '#end',
+    format: 'YYYY-MM-DD',
+    min: laydate.now(),
+    max: '2099-06-16',
+    istime: true,
+    istoday: false,
+    choose: function(datas){
+        start.max = datas; //结束日选好后，充值开始日的最大日期
+    }
+};
+laydate(start);
+laydate(end);
+
+//自定义日期格式
+laydate({
+    elem: '#test1',
+    format: 'YYYY年MM月DD日',
+    festival: true, //显示节日
+    choose: function(datas){ //选择日期完毕的回调
+        alert('得到：'+datas);
+    }
+});
+
+//日期范围限定在昨天到明天
+laydate({
+    elem: '#hello3',
+    min: laydate.now(-1), //-1代表昨天，-2代表前天，以此类推
+    max: laydate.now(+1) //+1代表明天，+2代表后天，以此类推
+});
+</script>
+</body>
+</html>

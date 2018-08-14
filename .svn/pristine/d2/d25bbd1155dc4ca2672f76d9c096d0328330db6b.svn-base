@@ -1,0 +1,155 @@
+<?php
+/*
+ *地址管理
+ *author:cyl
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class AddressController extends Controller
+{
+    public function addrindex()
+    {
+        $this->display();
+    }
+    public function addradd()
+    {
+
+        $user_id         = cookie('user_id');
+        $name            = I('post.name');
+        $phone           = I('post.phone');
+        $address         = I('post.address');
+        $quyu            = I('post.quyu');
+        $is_moren        = I('post.is_moren');
+        $str             = explode(" ", $quyu);
+        $province        = $str[0];
+        $city            = $str[1];
+        $district        = $str[2];
+        $data            = M('user_addr');
+        $data->user_id   = cookie('user_id');
+        $data->province  = $province;
+        $data->city      = $city;
+        $data->district  = $district;
+        $data->address   = $address;
+        $data->contact   = $name;
+        $data->phone     = $phone;
+        $data->is_delete = 0;
+        $or              = $data->add();
+        if ($or) {
+            $json = array(
+                'result' => 0,
+            );
+        } else {
+            $json = array(
+                'result' => 1,
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+    public function addrmanage()
+    {
+        $map['default_address']  = 1;
+        $mapp['default_address'] = 0;
+        $where['ua.is_delete']   = 0;
+        $add                     = M()->table('__USER_ADDR__ ua')
+            ->join('left join __USER__ u on u.id = ua.user_id')
+            ->field('ua.*,u.username')
+            ->where($map)
+            ->where($where)
+            ->find();
+        $data = M()->table('__USER_ADDR__ ua')
+            ->join('left join __USER__ u on u.id = ua.user_id')
+            ->field('ua.*,u.username')
+            ->where($mapp)
+            ->where($where)
+            ->select();
+        // dump($add);
+        // dump($data);
+        $this->assign('add', $add);
+        $this->assign('data', $data);
+        $this->display();
+    }
+    public function addrupdate()
+    {
+        // $user_id = cookie('user_id');
+        // $add_id = $arr['a_id'];
+        $add_id = 1;
+        // dump($add_id);
+        $user_id        = 1;
+        $where['ua.id'] = $add_id;
+        $data           = M()->table('__USER_ADDR__ ua')
+            ->join('left join __USER__ u on u.id = ua.user_id')
+            ->field('ua.*,u.id as u_id')
+            ->where('ua.user_id =' . $user_id)
+            ->where($where)
+            ->find();
+        // dump($data);
+        $this->assign('data', $data);
+        $this->display();
+    }
+    public function updateaddr()
+    {
+        $rename          = I('post.rename');
+        $phoquyune       = I('post.phone');
+        $quyu            = I('post.quyu');
+        $address         = I('post.address');
+        $is_moren        = I('post.is_moren');
+        $str             = explode(" ", $quyu);
+        $province        = $str[0];
+        $city            = $str[1];
+        $district        = $str[2];
+        $data            = M('user_addr');
+        $data->user_id   = cookie('user_id');
+        $data->province  = $province;
+        $data->city      = $city;
+        $data->district  = $district;
+        $data->address   = $address;
+        $data->contact   = $name;
+        $data->phone     = $phone;
+        $data->is_delete = 0;
+        $or              = $data->save();
+        if ($or) {
+            $json = array(
+                'result' => 0,
+            );
+        } else {
+            $json = array(
+                'result' => 1,
+            );
+        }
+        $this->ajaxReturn($json);
+
+    }
+
+    //地址删除
+    public function del()
+    {
+        $user_id    = I('userid');
+        $address_id = I('addressid');
+        // $user_id    = 1;
+        // $address_id = 2;
+        // $delete = M('user_addr')->where('user_id=' . $user_id . ' and id=' . $address_id)->setField('is_delete', 1);
+        // // 判断是否默认地址
+        // $isaddress = M('user_addr')->where($where = array('user_id' => $user_id, 'default_address' => 1, 'is_delete' => 0))->select();
+        // if ($isaddress == null) {
+        //     // 生成默认地址-1有地址  2没地址
+        //     $isaddress = M('user_addr')->where($where = array('user_id' => $user_id, 'is_delete' => 0))->field('id')->find();
+        //     if ($isaddress != null) {
+        //         $delete = M('user_addr')->where('user_id=' . $user_id . ' and id=' . $isaddress['id'])->setField('default_address', 1);
+        //     }
+        // }
+        // if ($delete) {
+        //     $json = array(
+        //         'result' => 1,
+        //     );
+        // } else {
+        $json = array(
+            'result'    => 0,
+            'user_id'   => $user_id,
+            'addressid' => $address_id,
+        );
+        // }
+        $this->ajaxReturn($json);
+    }
+}

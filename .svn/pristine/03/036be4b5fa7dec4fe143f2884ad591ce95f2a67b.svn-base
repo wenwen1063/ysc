@@ -1,0 +1,95 @@
+<head>
+    <meta charset="utf-8">
+    <title>
+        文章详情
+    </title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="../../../CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="../../../CSS/BusinessCSS/ArticleDetails.css" rel="stylesheet">
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+    </a>
+    <h1 class="mui-title">
+        文章详情
+    </h1>
+</header>
+<nav class="mui-bar mui-bar-tab">
+    <input type="text" placeholder="评论">
+    <input class="red" type="button" value="发送">
+</nav>
+
+<div id="article">
+    <div class="title">
+        <h4>文章标题</h4>
+        <h6>发布者: xxx 2017.01.12</h6>
+    </div>
+    <div class="mui-card-content-inner">
+        <p>文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...</p>
+    </div>
+    <div class="fabulous">
+        <div class="list">
+            <img src="../../../img/Home/home_icon_praise_red.png" alt="">
+            <span>2222</span>
+        </div>
+
+        <div class="list">
+            <img src="../../../img/Home/home_icon_eye.png" alt="">
+            <span>2222</span>
+        </div>
+
+        <div class="list">
+            <img src="../../../img/Home/home_icon_message.png" alt="">
+            <span>2222</span>
+        </div>
+    </div>
+</div>
+
+<div id="comment">
+    <div class="list">
+        <img src="../../../img/Home/home_pic_1.png" alt="">
+        <h5 class="t">用户名</h5>
+        <p class="t">01月12日</p>
+        <div class="comment">
+            <p>评论内容...评论内容...评论内容...评论内容...评论内容...</p>
+        </div>
+    </div>
+
+    <div class="list">
+        <img src="../../../img/Home/home_pic_1.png" alt="">
+        <h5 class="t">用户名</h5>
+        <p class="t">01月12日</p>
+        <div class="comment">
+            <p>评论内容...评论内容...评论内容...评论内容...评论内容...</p>
+        </div>
+    </div>
+
+    <div class="list">
+        <img src="../../../img/Home/home_pic_1.png" alt="">
+        <h5 class="t">用户名</h5>
+        <p class="t">01月12日</p>
+        <div class="comment">
+            <p>评论内容...评论内容...评论内容...评论内容...评论内容...</p>
+        </div>
+    </div>
+</div>
+
+<script src="../../../Script/CommonJS/Base.js">
+</script>
+<script>
+    var gallery = mui('.mui-slider');
+    gallery.slider({
+        interval: 3000//自动轮播周期，若为0则不自动播放，默认为0；
+
+    });
+</script>
+</body>
+</link>
+</link>
+</meta>
+</meta>
+</meta>
+</meta>
+</head>

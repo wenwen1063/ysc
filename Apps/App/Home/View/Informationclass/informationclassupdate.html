@@ -1,0 +1,80 @@
+<!--index -->
+<include file="public:index" />
+<!--index-->
+<title>分类编辑</title>
+</head>
+
+<body>
+   <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 系统 <span class="c-gray en">&gt;</span> 商品管理<span class="c-gray en">&gt;</span> 分类信息<span class="c-gray en">&gt;</span> 编辑 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回"><i class="Hui-iconfont">&#xe66b;</i></a><a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="pd-20">
+        <form action="{:U('/home/informationclass/informationclassupdate')}" method="post" enctype="multipart/form-data" name="main_form" class="form form-horizontal" id="form-admin-add">
+            <input type="hidden" name="id" value="{$data['id']}">
+            <input type="hidden" name="rename" value="{$data['name']}">
+            <input type="hidden" name="renumber" value="{$data['number']}">
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>分类编号：</label>
+                <div class="formControls col-5">
+                    <input type="text" class="input-text" value="{$data['number']}" placeholder="请输入分类名称" id="number" name="number" datatype="*2-16">
+                </div>
+                <div class="col-4"> </div>
+            </div>
+
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>分类名称：</label>
+                <div class="formControls col-5">
+                    <input type="text" class="input-text" value="{$data['name']}" placeholder="请输入分类名称" id="name" name="name" datatype="*2-16">
+                </div>
+                <div class="col-4"> </div>
+            </div>
+
+           <!-- <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>是否帮助中心分类：</label>
+                <div class="formControls col-5 skin-minimal">
+                <if condition="$data['is_help'] eq 0">
+                    <div class="radio-box">
+                        <input type="radio" name="is_help" value="1">
+                        <label>是</label>
+                    </div>
+                    <div class="radio-box">
+                        <input type="radio" name="is_help" value="0" checked="true">
+                        <label>否</label>
+                    </div>
+                <else />
+                    <div class="radio-box">
+                        <input type="radio" name="is_help" value="1" checked="true">
+                        <label>是</label>
+                    </div>
+                    <div class="radio-box">
+                        <input type="radio" name="is_help" value="0">
+                        <label>否</label>
+                    </div>
+                </if>
+                </div>
+                <div class="col-4"> </div>
+            </div>-->
+
+            <div class="row cl">
+                <div class="col-9 col-offset-3">
+                    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;" onclick="return check()">
+                    <input class="btn btn-primary radius" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;">
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/icheck/jquery.icheck.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript">
+    function check() {
+        var _form = document.main_form;
+        if ($('#name').val() == "") {
+            alert("分类名不能为空!");
+            return false;
+        }
+    }
+    </script>
+</body>
+
+</html>

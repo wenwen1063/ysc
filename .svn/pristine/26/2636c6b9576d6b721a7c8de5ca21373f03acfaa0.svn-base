@@ -1,0 +1,160 @@
+<?php
+/**
+ * 商品一级分类管理
+ * User: cyl
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class PartnerController extends IndexController
+{
+    public function index()
+    {
+        $search = I();
+        if ($search != null) {
+
+            if ($search['name'] != null) {
+                $name        = $search['name'];
+                $map['name'] = array("like", "%$name%");
+            }
+            if ($search['number'] != null) {
+                $number        = $search['number'];
+                $map['number'] = array("like", "%$number%");
+            }
+
+            $result = M('Partner')->where($map)
+                ->page($_GET['p'] . ',20')
+                ->select();
+            $count = M('Partner')->where($map)
+                ->count();
+        } else {
+            $result = M('Partner')->page($_GET['p'] . ',20')->select();
+            $count  = M('Partner')->count();
+        }
+        $Page = new \Think\Page($count, 20);
+        $show = $Page->show();
+        $this->assign('page', $show);
+        $this->assign('search', $search);
+        $this->assign('count', $count);
+        $this->assign('data', $result);
+        $this->display();
+    }
+
+    public function partneradd()
+    {
+        $arr = I();
+        $arr['introduce'] = $_POST['introduce'];
+        if ($arr != null) {
+            $upload           = new \Think\Upload(); // 实例化上传类
+            $upload->maxSize  = 52428800; // 设置附件上传大小
+            $upload->exts     = array('jpg', 'gif', 'png', 'jpeg', 'mp4'); // 设置附件上传类型
+            $upload->rootPath = './Public/Uploads/'; // 设置附件上传根目录
+            $upload->savePath = ''; // 设置附件上传（子）目录
+            // 上传文件
+            $info = $upload->upload();
+            if ($info['sm_logo']['savepath'] . $info['sm_logo']['savename'] != null) {
+                $arr['ico'] = $info['sm_logo']['savepath'] . $info['sm_logo']['savename'];
+            }
+            $find = M("Partner")->where(array('name' => $arr['name']))->find();
+            if ($find) {
+                $this->error("您新增的搭档级别已存在");
+            }
+            $arr['addtime'] = strtotime(date('Y-m-d H:i:s', time()));
+            $result = D("Partner")->AddList($arr);
+            if ($result['add'] == 1) {
+                $this->success('新增成功！', U('/home/Partner/index'));
+            } else if ($result['add'] == 2) {
+                $this->success('新增失败！', U('/home/Partner/index'));
+            }
+
+        } else {
+            $this->display();
+        }
+
+    }
+
+    public function partnerupdate()
+    {
+        $arr = I();
+		
+        if ($arr['name'] != '') {
+            $upload           = new \Think\Upload(); // 实例化上传类
+            $upload->maxSize  = 52428800; // 设置附件上传大小
+            $upload->exts     = array('jpg', 'gif', 'png', 'jpeg', 'mp4'); // 设置附件上传类型
+            $upload->rootPath = './Public/Uploads/'; // 设置附件上传根目录
+            $upload->savePath = ''; // 设置附件上传（子）目录
+            // 上传文件
+            $info = $upload->upload();
+            if ($info['sm_logo']['savepath'] . $info['sm_logo']['savename'] != null) {
+                $arr['ico'] = $info['sm_logo']['savepath'] . $info['sm_logo']['savename'];
+            }
+            if ($arr['name'] != $arr['nextname']) {
+                $find = M("Partner")->where(array('name' => $arr['name']))->find();
+                if ($find) {
+                    $this->error("您修改的软件已存在");
+                }
+            }
+			$table=M("partner");
+			$table->nextname=I("nextname");
+			$table->number=I("number");
+			$table->name=I("name");
+			$table->software_cost=I("software_cost");
+			$table->consumption_amount=I("consumption_amount");
+			$table->ico=$arr['ico'];
+			$table->remark=I("remark");
+			$x=$table->where(array('id'=>I("id")))->save();
+              $this->success('编辑成功！', U('/home/Partner/index'));
+        } else {
+            $result = M('Partner')->where(array('id' => $arr['id']))->find();
+            $this->assign('data', $result);
+            $this->display();
+        }
+    }
+
+//  删除
+    public function partnerdel()
+    {
+        $arr    = I();
+        $table  = M("Partner");
+        $result = D("base")->deleteData($arr, $table);
+        if ($result == 1) {
+            $this->success('删除成功！', U('/home/Partner/index'));
+        } else {
+            $this->success('删除失败！', U('/home/Partner/index'));
+        }
+
+    }
+    public function partnerdisable()
+    {
+        $arr    = I();
+        $table  = M("Partner");
+        $result = D("base")->disableData($arr, $table);
+        if ($result == 1) {
+            $this->success('成功！', U('/home/Partner/index'));
+        } else {
+            $this->success('失败！', U('/home/Partner/index'));
+        }
+
+    }
+
+    public function partnerpic()
+    {
+        $data = M("Partner")->where(array('id' => I("id")))->find();
+        $this->assign("data", $data);
+        $this->display();
+    }
+
+    public function partnersale()
+    {
+        $arr    = I();
+        $table  = M("Partner");
+        $result = D("base")->saleData($arr, $table);
+        if ($result == 1) {
+            $this->success('成功！', U('/home/Partner/index'));
+        } else {
+            $this->success('失败！', U('/home/Partner/index'));
+        }
+    }
+
+}

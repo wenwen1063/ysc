@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>系统消息</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Systemmessage/Systemmessage.css" rel="stylesheet">
+    	<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+</head>
+
+<body>
+    <!--<header class="mui-bar mui-bar-nav header">
+        <a href="{:U('/home/index/index')}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">系统消息</h1>
+    </header>-->
+    <?php if ($data != null): ?>
+    <foreach name="data" item="vi">
+        <div class="list">
+            <img src="__PUBLIC__/Wx/img/My/my_icon_system.png" alt="">
+            <div class="title">
+                <h5>{$vi['title']}</h5>
+                <p>{$vi['times']}-{$vi['addtime']}</p>
+            </div>
+            <div class="coontent">
+                <p>{$vi['content']}</p>
+            </div>
+        </div>
+    </foreach>
+    <?php else: ?>
+    <div class="none">
+        <img src="__PUBLIC__/Wx/img/My/default_nosystem.png">
+        <p>暂无任何系统消息</p>
+    </div>
+    <?php endif ?>
+    <script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+    <script>
+    function text() {
+        for (var i = 0; i < mui('.list').length; i++) {
+            mui('.list')[i].style.display = 'block';
+        }
+        mui('.none')[0].style.display = 'none';
+        setTimeout(function() {
+            for (var i = 0; i < mui('.list').length; i++) {
+                mui('.list')[i].style.display = 'none';
+            }
+            mui('.none')[0].style.display = 'block';
+            setTimeout(function() {
+                text()
+            }, 1000)
+        }, 1000)
+
+    }
+    text();
+    </script>
+</body>
+
+</html>

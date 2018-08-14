@@ -1,0 +1,113 @@
+<!--index -->
+<include file="public:index" />
+<!--index-->
+<title>金币设置</title>
+<link href="__PUBLIC__/assets/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="pd-20">
+        <form id="form1" method="post" action="{:U('home/Sys/cash')}" role="form" class="form-inline">
+            <div class="panel panel-info  col-8" >
+                <div class="panel-heading">
+                    个人提现设置
+                </div>
+                <div class="panel-body">
+                <input type="hidden" name="id" value="{$data['id']}">
+                    <div class="row cl">
+                        <label class="form-label col-3" style="height:45px;text-align: right;line-height: 45px">每天可提现：</label>
+                        <div class="formControls col-15">
+                            <input type="text" name="user_max_money" id="user_max_money" class="form-control pd-20" size="12" style="height:45px" ignore="ignore" datatype="n" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" placeholder="" value="{$data['user_max_money']}">元
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-3" style="height:45px;text-align: right;line-height: 45px">每次最低提现：</label>
+                        <div class="formControls col-15">
+                            <input type="text" name="user_min_money" id="user_min_money" class="form-control pd-20" size="12" style="height:45px" ignore="ignore" datatype="n" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" placeholder="" value="{$data['user_min_money']}">元
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-3" style="height:45px;text-align: right;line-height: 45px">每天可提现：</label>
+                        <div class="formControls col-15">
+                            <input type="text" name="user_number" id="user_number" class="form-control pd-20" size="12" style="height:45px" ignore="ignore" datatype="n" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" placeholder="" value="{$data['user_number']}">次
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-3" style="height:45px;text-align: right;line-height: 45px">每天提现时间为：</label>
+                        <div class="formControls col-15">
+                            <input type="time" name="user_begin_time" id="user_begin_time" value="{:date('H:i',$data['user_begin_time'])}" class="form-control pd-20" size="12" style="height:40px" ignore="ignore" datatype="n"> --
+                            <input type="time" name="user_end_time" id="user_end_time" value="{:date('H:i',$data['user_end_time'])}" class="form-control pd-20" size="12" style="height:40px" ignore="ignore" datatype="n">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-info col-8">
+                <div class="panel-heading">
+                    商家提现设置
+                </div>
+                <div class="panel-body">
+                    <input type="hidden" name="id" value="{$data['id']}">
+                    <div class="row cl">
+                        <label class="form-label col-3" style="height:45px;text-align: right;line-height: 45px">每天可提现：</label>
+                        <div class="formControls col-15">
+                            <input type="text" name="seller_max_money" id="seller_max_money" class="form-control pd-20" size="12" style="height:45px" ignore="ignore" datatype="n" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" placeholder="" value="{$data['seller_max_money']}">元
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-3" style="height:45px;text-align: right;line-height: 45px">每次最低提现：</label>
+                        <div class="formControls col-15">
+                            <input type="text" name="seller_min_money" id="seller_min_money" class="form-control pd-20" size="12" style="height:45px" ignore="ignore" datatype="n" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" placeholder="" value="{$data['seller_min_money']}">元
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-3" style="height:45px;text-align: right;line-height: 45px">每月可提现：</label>
+                        <div class="formControls col-15">
+                            <input type="text" name="seller_number" id="seller_number" class="form-control pd-20" size="12" style="height:45px" ignore="ignore" datatype="n" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" placeholder="" value="{$data['seller_number']}">次
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-3" style="height:45px;text-align: right;line-height: 45px">每天提现时间为：</label>
+                        <div class="formControls col-15">
+                            <input type="time" name="seller_begin_time" id="seller_begin_time" value="{:date('H:i',$data['seller_begin_time'])}" class="form-control pd-20" size="12" style="height:40px" ignore="ignore" datatype="n"> --
+                            <input type="time" name="seller_end_time" id="seller_end_time" value="{:date('H:i',$data['seller_end_time'])}" class="form-control pd-20" size="12" style="height:40px" ignore="ignore" datatype="n">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row cl">
+                <div class="col-8 col-offset-2">
+                    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;" onclick="return check()">
+                    <input class="btn btn-default radius" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;">
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+    <script src="__PUBLIC__/assets/js/jquery.min.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/Validform/5.3.2/Validform.min.js"></script>
+ <script type="text/javascript">
+        function check() {
+            if ($('#max_money').val() == "") {
+                alert("请输入每天可提现金额!");
+                return false;
+            }
+            if ($('#min_money').val() == "") {
+                alert("请输入每次最低提现额!");
+                return false;
+            }
+            if ($('#time').val() == "") {
+                alert("请输入每天提现次数!");
+                return false;
+            }
+            return true;
+        }
+
+    </script>
+</body>
+
+</html>

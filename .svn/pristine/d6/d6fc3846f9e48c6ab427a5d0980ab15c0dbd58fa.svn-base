@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>收益详情</title>
+		<meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link rel="stylesheet" type="text/css" href="../css/mui.min.css" />
+		<link href="../../../../CSS/CommonCSS/Base.css" rel="stylesheet"> 
+		<link href="../css/distribution.css" rel="stylesheet"> 
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header">
+			<a href="../../../mypage/Mypage.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">收益详情</h1>
+		</header>
+		<div class="distribution earnings">
+			<div class="distribution_details earnings_details">
+				<div class="details_bg">
+					<div class="details_top">
+						<img src="../img/home_pic_2.png" alt="" style="width: 50px;"> 何凡
+						<p class="display_inline margin_l_10">订单编号:<span>215468242366</span></p>
+					</div>
+					<div class="details_content">
+						<div>
+							<p>搭档级别:<span>草根搭档</span></p>
+							<p>奖金层级:<span>2级</span></p>
+						</div>
+						<div>
+							<p>奖金积分:<span>555</span></p>
+							<p>奖金金额:<span>￥5264</span></p>
+						</div>
+						<div class="margin_t_15">
+							<p>商品名称:<span>xxxx</span></p>
+						</div>
+						<div>
+							<p>所有商家:<span>xxxxx</span></p>
+						</div>
+						<div>
+							<p>商品金额:<span>￥555</span></p>
+							<p>订单金额:<span>￥5264</span></p>
+						</div>
+						<div>
+							<p>奖励状态:<span>正常/冻结</span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="distribution_details earnings_details">
+				<div class="details_bg">
+					<div class="details_top">
+						<img src="../img/home_pic_2.png" alt="" style="width: 50px;"> 何凡
+						<p class="display_inline margin_l_10">订单编号:<span>215468242366</span></p>
+					</div>
+					<div class="details_content">
+						<div>
+							<p>搭档级别:<span>草根搭档</span></p>
+							<p>奖金层级:<span>2级</span></p>
+						</div>
+						<div>
+							<p>奖金积分:<span>555</span></p>
+							<p>奖金金额:<span>￥5264</span></p>
+						</div>
+						<div class="margin_t_15">
+							<p>商品名称:<span>xxxx</span></p>
+						</div>
+						<div>
+							<p>所有商家:<span>xxxxx</span></p>
+						</div>
+						<div>
+							<p>商品金额:<span>￥555</span></p>
+							<p>订单金额:<span>￥5264</span></p>
+						</div>
+						<div>
+							<p>奖励状态:<span>正常/冻结</span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="distribution_details earnings_details">
+				<div class="details_bg">
+					<div class="details_top">
+						<img src="../img/home_pic_2.png" alt="" style="width: 50px;"> 何凡
+						<p class="display_inline margin_l_10">订单编号:<span>215468242366</span></p>
+					</div>
+					<div class="details_content">
+						<div>
+							<p>搭档级别:<span>草根搭档</span></p>
+							<p>奖金层级:<span>2级</span></p>
+						</div>
+						<div>
+							<p>奖金积分:<span>555</span></p>
+							<p>奖金金额:<span>￥5264</span></p>
+						</div>
+						<div class="margin_t_15">
+							<p>商品名称:<span>xxxx</span></p>
+						</div>
+						<div>
+							<p>所有商家:<span>xxxxx</span></p>
+						</div>
+						<div>
+							<p>商品金额:<span>￥555</span></p>
+							<p>订单金额:<span>￥5264</span></p>
+						</div>
+						<div>
+							<p>奖励状态:<span>正常/冻结</span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+
+</html>
+<script type="text/javascript" src="../../../../Script/ActiveXJS/mui.min.js"></script> 
+<script type="text/javascript" src="../../../../Script/ActiveXJS/jquery-2.1.1.min.js"></script> 
+ 

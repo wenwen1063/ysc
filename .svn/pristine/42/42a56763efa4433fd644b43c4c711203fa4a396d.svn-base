@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的文章</title>
+		<meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/Wx/CSS/BusinessCSS/Myarticle/mui.min.css" />
+		<link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/Wx/CSS/BusinessCSS/Myarticle/mui.poppicker.css" />
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/Wx/CSS/BusinessCSS/Myarticle/mui.picker.min.css" />
+		<link href="__PUBLIC__/Wx/CSS/BusinessCSS/Myarticle/article.css" rel="stylesheet">
+
+		<style>
+			#article_content  {
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				/*border: 1px solid red;*/
+				text-align: left;
+				width: 100%;
+				height: 20px;
+			}
+			#article_content p {
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				/*border: 1px solid red;*/
+				text-align: left;
+				/*width: 500px;*/
+				height:100%;
+			} 
+		</style>
+	</head>
+
+	<body>
+		<!--<header class="mui-bar mui-bar-nav header">
+			<a href="{:U('/home/user/userindex')}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的文章</h1>
+		</header>-->
+		<div style="padding-bottom: 50px;">
+			<!--查询文章-->
+			<form action="{:U('/home/Myarticle/myarticle')}" method="post/get" >
+			<div class="search_article bg_white padding_15" style="width: 100%;" name="main_form" class="form form-horizontal" id="form-admin-add" >
+				<!--<input id="checkPicker" class="ddl_btn" type="button" value="请选择审核状态" name="status"/>-->
+				<div style="height: 40px;border: 1px solid rgba(0, 0, 0, .2);border-radius:3px;font-size: 14px;">
+					<select name="status" class="ddl_btn" style="height: 37px">
+						<if condition="$search['status'] eq null">
+							<option value="">请选择审核状态</option>
+							<option value="0">待审核</option>
+							<option value="1">已审核</option>
+							<option value="2">不通过</option>
+							<elseif condition="$search['status'] eq 0"/>
+							<option value="0">待审核</option>
+							<option value="1">已审核</option>
+							<option value="2">不通过</option>
+							<option value="">全部状态</option>
+							<elseif condition="$search['status'] eq 1"/>
+							<option value="1">已审核</option>
+							<option value="2">不通过</option>
+							<option value="">全部状态</option>
+							<option value="0">待审核</option>
+							<elseif condition="$search['status'] eq 2"/>
+							<option value="2">不通过</option>
+							<option value="">全部状态</option>
+							<option value="0">待审核</option>
+							<option value="1">已审核</option>
+						</if>
+					</select>
+				</div>
+
+				<!--收起 查询-->
+				<div class="closediv" style="display: none;margin-top: 10px" >
+					<input type="text" placeholder="标题关键词" class="margin_b_10" name="title" value="{$search['title']}" >
+					<div class="time" >
+						<input id="starttime" class="starttime btn" type="text" placeholder="开始时间"  name="start_time" value="{$search['start_time']}">
+						<i>--</i>
+						<input id="endtime" class="endtime btn" type="text" placeholder="结束时间"  name="end_time" value="{$search['end_time']}">
+					</div>
+					<div class="mui-text-right">
+						<span class="closeopen" type='1' style="display: inline-block;">收起<img class="rotate" src="__PUBLIC__/Wx/img/Myarticle/down.png" alt=""></span>
+						<button type="submit" class="mui-btn mui-btn-danger mui-pull-right">确定查询</button>
+					</div>
+				</div>
+				<!--展开 查询-->
+				<div class="opendiv mui-text-right" style="margin-top: 10px;">
+					<span class="closeopen" type='0' style="display: inline-block;">展开<img src="__PUBLIC__/Wx/img/Myarticle/down.png" alt=""></span>
+					<button type="submit" class="mui-btn mui-btn-danger mui-pull-right">确定查询</button>
+				</div>
+			</div>
+			</form>
+			<!--文章审核-->
+			<div class="article_checked" >
+
+				<foreach name="data" item="v">
+					<div class="mui-card article_details">
+						<div class="mui-card-header">
+							<span>{$v['title']}</span>
+							<?php if($v['status']==0): ?>
+							<i class="waitcheck">待审核</i>
+							<?php elseif($v['status']==1): ?>
+							<i class="waitcheck checked">已审核</i>
+							<?php else: ?>
+							<i class="waitcheck nopass">不通过</i>
+							<?php endif ?>
+						</div>
+						<a href="{:U('/home/Myarticle/articleinfo',array('id'=>$v['id']))}">
+							<div class="mui-card-content border_b">
+								<div class="mui-card-content-inner padding_t_0">
+									<p>时间:<span>{$v['time']|date='Y-m-d H:i:s',###}</span></p>
+									<div class="article mui-ellipsis" id="article_content">
+										<!--{$v['content']}-->
+										<?php echo htmlspecialchars_decode($v['content']); ?>
+									</div>
+								</div>
+							</div>
+						</a>
+						<div class="mui-card-footer">
+
+							<?php if($v['status']==1): ?>
+							<p class="mui-card-link"><img src="__PUBLIC__/Wx/img/Myarticle/credits.png" alt=""><span class="padding_l_10">{$v['gold_number']}</span></p>
+							<?php endif ?>
+							<p class="mui-card-link"><img class="imgHeight20" src="__PUBLIC__/Wx/img/Myarticle/like_red.png" alt=""><span class="padding_l_10">{$v['nice_num']}</span></p>
+							<p class="mui-card-link"><img src="__PUBLIC__/Wx/img/Myarticle/browse.png" alt=""><span class="padding_l_10">{$v['look_num']}</span></p>
+							<p class="mui-card-link"><img src="__PUBLIC__/Wx/img/Myarticle/checked.png" alt=""><span class="padding_l_10">{$v['count']}</span></p>
+						</div>
+					</div>
+				</foreach>
+
+			</div>
+		</div>
+		<nav class="mui-bar mui-bar-tab">
+			<a href="{:U('/home/Myarticle/addarticle')}">
+				<input type="button" value="新增文章" onclick="">
+			</a>
+		</nav>
+	</body>
+
+</html>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.picker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.poppicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.picker.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script>
+	//  展开(0)  收起(1)
+	$('.closeopen').click(function() {
+		var type = $(this).attr('type');
+		if(type == 0) {
+			$('.opendiv').hide();
+			$('.closediv').show();
+		} else if(type == 1) {
+			$('.closediv').hide();
+			$('.opendiv').show();
+		}
+	});
+
+	//开始时间 结束时间
+	(function($) {
+		$.init();
+		//时间控件
+		var result = $('#result')[0];
+		var btns = $('.btn');
+		btns.each(function(i, btn) {
+			btn.addEventListener('tap', function() {
+				var optionsJson = this.getAttribute('data-options') || '{}';
+				var options = JSON.parse(optionsJson);
+				var id = this.getAttribute('id');
+				var $html=document.getElementById(id);
+				/*
+				 * 首次显示时实例化组件
+				 * 示例为了简洁，将 options 放在了按钮的 dom 上
+				 * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
+				 */
+				var picker = new $.DtPicker(options);
+				picker.show(function(rs) {
+					/*
+					 * rs.value 拼合后的 value
+					 * rs.text 拼合后的 text
+					 * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+					 * rs.m 月，用法同年
+					 * rs.d 日，用法同年
+					 * rs.h 时，用法同年
+					 * rs.i 分（minutes 的第二个字母），用法同年
+					 */
+					//					result.innerText = '选择结果: ' + rs.text; 
+//					this.value = rs.text;
+					$html.value = rs.text;
+					/* 
+					 * 返回 false 可以阻止选择框的关闭
+					 * return false;
+					 */
+					/*
+					 * 释放组件资源，释放后将将不能再操作组件
+					 * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
+					 * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
+					 * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+					 */
+					picker.dispose();
+				});
+			}, false);
+		});
+	})(mui);
+	//审核状态
+	/*(function($, doc) {
+		$.init();
+		$.ready(function() {
+			//审核状态
+			var userPicker = new $.PopPicker();
+			userPicker.setData([{
+				value: 'daishenhe',
+				text: '待审核'
+			}, {
+				value: 'yishenhe',
+				text: '已审核'
+			}, {
+				value: 'butongguo',
+				text: '不通过'
+			}]);
+			var showUserPickerButton = doc.getElementById('checkPicker');
+			showUserPickerButton.addEventListener('tap', function(event) {
+				userPicker.show(function(items) {
+					checkPicker.value = (items[0] || {}).text;
+					//返回 false 可以阻止选择框的关闭
+					//return false;
+				});
+			}, false);
+		});
+	})(mui, document);*/
+</script>

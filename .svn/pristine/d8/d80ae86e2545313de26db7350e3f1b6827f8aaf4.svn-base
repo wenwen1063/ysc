@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>申请信息</title>
+        <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="black" name="apple-mobile-web-app-status-bar-style">
+        <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+        <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Applicationinformation.css" rel="stylesheet">
+        <style>
+            .mui-input-group .mui-input-row label {
+                color: #4A4A4A;
+                font-size: 16px;
+            }
+
+            .mui-input-group .mui-input-row input[type='text'] {
+                color: #4A4A4A;
+                font-size: 14px;
+            }
+
+            .mui-input-group .mui-input-row .leixing {
+                height: 40px;
+                line-height: 40px;
+                float: left !important;
+            }
+
+            .mui-input-group .mui-input-row .leixing a {
+                display: inline-block;
+                color: inherit;
+                color: #4A4A4A;
+                font-size: 14px;
+            }
+            .ddl_btn{
+                background: url(./Public/Wx/img/Home/XY.png) no-repeat !important;
+                background-size: 15px  8px !important;
+                background-position: right 15px center !important;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header class="mui-bar mui-bar-nav header">
+            <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <h1 class="mui-title">申请信息</h1>
+        </header>
+        <form class="mui-input-group" action="{:U('/home/seller/sellerapplypersonal')}" method="post" enctype="multipart/form-data" name="main_form">
+        <div id="apply">
+            <div class="mui-input-row">
+                <label>申请类型 :</label>
+                <div>
+                    <div class="leixing">
+                        <a href="{:U('/home/seller/sellerapplypersonal')}">
+                            <h5>个人<img src="__PUBLIC__/Wx/img/Common/btn_check.png"></h5>
+                            <input type="hidden" name="apply_type" value="1">
+                        </a>
+                    </div>
+                    <div class="leixing">
+                        <a href="{:U('/home/seller/sellerapply')}">
+                            <h5>商家<img src="__PUBLIC__/Wx/img/Common/btn_checkoff.png"></h5>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mui-input-row">
+                <label>商家名称 :</label>
+                <input type="text" class="mui-input-clear" data-input-clear="5" name="name" id="name"><span class="mui-icon mui-icon-clear mui-hidden"></span>
+            </div>
+            <div class="mui-input-row">
+                <label>真实姓名 :</label>
+                <input type="text" class="mui-input-clear" data-input-clear="5" name="contact" id="contact"><span class="mui-icon mui-icon-clear mui-hidden"></span>
+            </div>
+            <div class="mui-input-row">
+                <label>银行类型 :</label>
+                <select name="bank_type">
+                    <foreach name="bank" item="v">
+                        <option value="{$v['id']}">{$v['bank_name']}</option>
+                    </foreach>
+                </select>
+            </div>
+            <div class="mui-input-row">
+                <label>开户行 :</label>
+                <input type="text" class="mui-input-clear" data-input-clear="5" name="open_bank" id="open_bank"><span class="mui-icon mui-icon-clear mui-hidden"></span>
+            </div>
+            <div class="mui-input-row">
+                <label>开户名称 :</label>
+                <input type="text" class="mui-input-clear" data-input-clear="5" name="open_name" id="open_name"><span class="mui-icon mui-icon-clear mui-hidden"></span>
+            </div>
+            <div class="mui-input-row">
+                <label>银行卡号 :</label>
+                <input type="text" class="mui-input-clear" data-input-clear="5" name="open_account" id="open_account"><span class="mui-icon mui-icon-clear mui-hidden"></span>
+            </div>
+            <div class="mui-input-row">
+                <label>联系电话 :</label>
+                <input type="text" class="mui-input-clear" data-input-clear="5" name="tel" id="tel"><span class="mui-icon mui-icon-clear mui-hidden"></span>
+            </div>
+
+            <div class="mui-input-row">
+                <label>手机号码 :</label>
+                <input type="text" class="mui-input-clear" data-input-clear="5" name="phone" id="phone"><span class="mui-icon mui-icon-clear mui-hidden"></span>
+            </div>
+            <div class="mui-input-row">
+                <label>联系QQ :</label>
+                <input type="text" class="mui-input-clear" data-input-clear="5" name="qq" id="qq"><span class="mui-icon mui-icon-clear mui-hidden"></span>
+            </div>
+            <div class="mui-input-row">
+                <label>微信号 :</label>
+                <input type="text" class="mui-input-clear" data-input-clear="5" name="wechat" id="wechat"><span class="mui-icon mui-icon-clear mui-hidden"></span>
+            </div>
+            <div class="mui-input-row">
+                 <label style="width:80px;position:absolute;left:0;top:0;">地址 :</label>
+                <div id="dist_select" style="padding-left: 80px;">
+                    <select class="prov" name="prov" style="display: inline-block;width: 30%;height: 30px;border: solid 1px #ddd;vertical-align: middle"></select>
+                    <select class="city " name="city" style="display: inline-block;width: 30%;height: 30px;border: solid 1px #ddd;vertical-align: middle"></select>
+                    <select class="dist " name="dist" style="display: inline-block;width: 30%;height: 30px;border: solid 1px #ddd;vertical-align: middle"></select>
+                </div>
+            </div>
+            <div class="mui-input-row">
+                <label>详细地址 :</label>
+                <input type="text" class="mui-input-clear" data-input-clear="5" name="address" id="address"><span class="mui-icon mui-icon-clear mui-hidden"></span>
+            </div>
+            <ul class="mui-table-view">
+                <li class="mui-table-view-cell">
+                    <span class="class" style="width: 100%;float: left;">
+                        身份证
+                    </span>
+                    <div class="id" style="float: left;">
+                        <input type="file" id="file1" style="display:none;" onchange="change1()" name="id_front">
+                        <img src="__PUBLIC__/Wx/img/Home/home_add_icon.png" id="img-change1">
+                        <h5>正面</h5>
+                    </div>
+                    <div class="id" style="float: left;">
+                        <input type="file" id="file2" style="display:none;" onchange="change2()" name="id_back">
+                        <img src="__PUBLIC__/Wx/img/Home/home_add_icon.png" id="img-change2">
+                        <h5>反面</h5>
+                    </div>
+                </li>
+                <li class="mui-table-view-cell">
+                    <span class="class" style="width: 100%;float: left;">
+                        其他
+                    </span>
+                    <div class="id" style="float: left;">
+                        <input type="file" id="file5" style="display:none;" onchange="change5()" name="other_img">
+                        <img src="__PUBLIC__/Wx/img/Home/home_add_icon.png" id="img-change5">
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <nav class="mui-bar mui-bar-tab footer">
+            <input type="submit" value="提交" onclick="return check()">
+        </nav>
+        </form>
+
+        <script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+    </body>
+</html>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script src="__PUBLIC__/assets/js/jquery.cityselect.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $("#dist_select").citySelect({
+        prov: "",
+        city: "",
+        dist: "",
+        required:false,
+        nodata: "none"
+    });
+</script>
+<script type="text/javascript">
+    function check(){
+        if($('#name').val() == ''){
+            alert('商家名称不能为空');
+            return false;
+        }
+        if($('#open_bank').val() == ''){
+            alert('开户行不能为空');
+            return false;
+        }
+        if($('#open_name').val() == ''){
+            alert('开户名称能为空');
+            return false;
+        }
+        if($('#open_account').val() == ''){
+            alert('银行卡号不能为空');
+            return false;
+        }
+        if($('#contact').val() == ''){
+            alert('真实姓名不能为空');
+            return false;
+        }
+        if($('#tel').val() == ''){
+            alert('联系电话不能为空');
+            return false;
+        }
+        if($('#phone').val() == ''){
+            alert('手机号码不能为空');
+            return false;
+        }
+        if($('#qq').val() == ''){
+            alert('联系QQ不能为空');
+            return false;
+        }
+        if($('#wechat').val() == ''){
+            alert('微信号不能为空');
+            return false;
+        }
+        if($('#file1').val() == ''){
+            alert('身份证正面不能为空');
+            return false;
+        }
+        if($('#file2').val() == ''){
+            alert('身份证反面不能为空');
+            return false;
+        }
+        // if($('#file5').val() == ''){
+        //     alert('其他资质不能为空');
+        //     return false;
+        // }
+        return true;
+    }
+    //实现点击图片同时，触发type=file这个input
+    $("#img-change1").click(function () {
+        $("#file1").click();
+    });
+    $("#img-change2").click(function () {
+        $("#file2").click();
+    });
+    $("#img-change5").click(function () {
+        $("#file5").click();
+    });
+
+    function change1() {
+        var pic = document.getElementById("img-change1"),
+            file = document.getElementById("file1");
+
+        var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
+
+         // gif在IE浏览器暂时无法显示
+         if(ext!='png'&&ext!='jpg'&&ext!='jpeg'){
+             alert("图片的格式必须为png或者jpg或者jpeg格式！");
+             return;
+         }
+         var isIE = navigator.userAgent.match(/MSIE/)!= null,
+             isIE6 = navigator.userAgent.match(/MSIE 6.0/)!= null;
+
+         if(isIE) {
+            file.select();
+            var reallocalpath = document.selection.createRange().text;
+
+            // IE6浏览器设置img的src为本地路径可以直接显示图片
+             if (isIE6) {
+                pic.src = reallocalpath;
+             }else {
+                // 非IE6版本的IE由于安全问题直接设置img的src无法显示本地图片，但是可以通过滤镜来实现
+                 pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image',src=\"" + reallocalpath + "\")";
+                 // 设置img的src为base64编码的透明图片 取消显示浏览器默认图片
+                 pic.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+             }
+         }else {
+            html5Reader1(file);
+         }
+    }
+    function html5Reader1(file){
+        var file = file.files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(e){
+            var pic = document.getElementById("img-change1");
+            pic.src=this.result;
+        }
+    }
+
+    function change2() {
+        var pic = document.getElementById("img-change2"),
+            file = document.getElementById("file2");
+
+        var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
+
+         // gif在IE浏览器暂时无法显示
+         if(ext!='png'&&ext!='jpg'&&ext!='jpeg'){
+             alert("图片的格式必须为png或者jpg或者jpeg格式！");
+             return;
+         }
+         var isIE = navigator.userAgent.match(/MSIE/)!= null,
+             isIE6 = navigator.userAgent.match(/MSIE 6.0/)!= null;
+
+         if(isIE) {
+            file.select();
+            var reallocalpath = document.selection.createRange().text;
+
+            // IE6浏览器设置img的src为本地路径可以直接显示图片
+             if (isIE6) {
+                pic.src = reallocalpath;
+             }else {
+                // 非IE6版本的IE由于安全问题直接设置img的src无法显示本地图片，但是可以通过滤镜来实现
+                 pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image',src=\"" + reallocalpath + "\")";
+                 // 设置img的src为base64编码的透明图片 取消显示浏览器默认图片
+                 pic.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+             }
+         }else {
+            html5Reader2(file);
+         }
+    }
+    function html5Reader2(file){
+        var file = file.files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(e){
+            var pic = document.getElementById("img-change2");
+            pic.src=this.result;
+        }
+    }
+
+    function change5() {
+        var pic = document.getElementById("img-change5"),
+            file = document.getElementById("file5");
+
+        var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
+
+         // gif在IE浏览器暂时无法显示
+         if(ext!='png'&&ext!='jpg'&&ext!='jpeg'){
+             alert("图片的格式必须为png或者jpg或者jpeg格式！");
+             return;
+         }
+         var isIE = navigator.userAgent.match(/MSIE/)!= null,
+             isIE6 = navigator.userAgent.match(/MSIE 6.0/)!= null;
+
+         if(isIE) {
+            file.select();
+            var reallocalpath = document.selection.createRange().text;
+
+            // IE6浏览器设置img的src为本地路径可以直接显示图片
+             if (isIE6) {
+                pic.src = reallocalpath;
+             }else {
+                // 非IE6版本的IE由于安全问题直接设置img的src无法显示本地图片，但是可以通过滤镜来实现
+                 pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image',src=\"" + reallocalpath + "\")";
+                 // 设置img的src为base64编码的透明图片 取消显示浏览器默认图片
+                 pic.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+             }
+         }else {
+            html5Reader5(file);
+         }
+    }
+    function html5Reader5(file){
+        var file = file.files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(e){
+            var pic = document.getElementById("img-change5");
+            pic.src=this.result;
+        }
+    }
+</script>

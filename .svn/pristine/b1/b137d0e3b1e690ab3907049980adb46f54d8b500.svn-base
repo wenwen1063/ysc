@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>查询</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css">
+		<link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/classification/classification.css">
+		<!-- <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/kefandtop.css"> -->
+		<style>
+			.bg_white {
+				background: #fff;
+			}
+			
+			.titlediv {
+				padding-top: 0.5rem;
+				padding-bottom: 0.5rem;
+				text-align: left;
+				border-bottom: 1px solid #F2F2F4 !important;
+			}
+			
+			.titlediv_mall .spanttl {
+				border-left: 4px solid #FE0000 !important;
+				padding-left: 0.5rem;
+				border-left: 4px solid #FE0000;
+			}
+			
+			.ellipsis_1 {
+				display: -webkit-box;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				word-wrap: break-word;
+				word-break: break-all;
+				white-space: normal !important;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
+			}
+			
+			.record_div {
+				padding-top: 10px;
+			}
+			
+			.record_div .row {
+				font-size: 14px;
+				text-align: left;
+				margin-bottom: 10px;
+			}
+			
+			.record_div .row .classimg {
+				display: inline-block;
+				vertical-align: middle;
+				margin-right: 0.5rem;
+			}
+			/*无内容页*/
+			
+			.emptydiv {
+				text-align: center;
+			}
+			
+			.emptydiv .emptyimg {
+				position: absolute;
+				left: 50%;
+				top: 40%;
+				margin-left: -25px;
+				margin-top: -25px;
+				width: 50px;
+			}
+			
+			.emptydiv .emptytip {
+				position: absolute;
+				top: 40%;
+				width: 100%;
+				margin: auto;
+				color: #909090;
+				font-size: 0.7rem;
+				padding-top: 35px;
+			}
+			
+			.emptydiv .emptybtn {
+				position: absolute;
+				top: 50%;
+				width: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div>
+			<!--空记录-->
+			<div class="emptydiv" style="display: block;">
+				<img class="emptyimg" src="__PUBLIC__/Wx/img/emptysearch.png" alt="">
+				<p class="emptytip">暂无搜索记录~</p>
+			</div>
+			<!--搜索历史记录-->
+			<div class="searchrecord bg_white" style="display: none;height: 100%;">
+				<div class="titlediv">
+					<span class="spanttl">搜索记录</span>
+				</div>
+				<div class="record_div">
+					<div class="row ellipsis_1">
+						<img class="classimg" src="__PUBLIC__/Wx/img/STJL.png" />关键词
+					</div>
+					<div class="row ellipsis_1">
+						<img class="classimg" src="__PUBLIC__/Wx/img/STJL.png" />关键词
+					</div>
+					<div class="row ellipsis_1">
+						<img class="classimg" src="__PUBLIC__/Wx/img/STJL.png" />关键词
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,88 @@
+.title {
+    font-size: 16px;
+    font-weight: 100;
+    position: relative;
+    top: 10px;
+    padding-left: 10px;
+    border-left: 2px solid #fe504f;
+}
+
+.xin {
+    margin-bottom: 20px;
+    height: 105px;
+    background-color: #fff;
+    position: relative;
+    top: 20px;
+}
+
+.xin .img {
+    width: 85px;
+    height: 85px;
+    float: left;
+}
+
+.xin .img img {
+    position: relative;
+    top: 10px;
+    float: left;
+    left: 10px;
+    width: 85px;
+    height: 85px;
+}
+
+.xin h5{
+    width: 60%;
+    font-size: 18px;
+    position: relative;
+    top:10px;
+    left:20px;
+    float: left;
+}
+
+.xin p{
+    width: 60%;
+    font-size: 16px;
+    position: relative;
+    top:45px;
+    left:20px;
+    float: left;
+    color: #fe504f;
+}
+.xin p span{
+    color: #000000;
+}
+.bian{
+    background-color: #FFFFFF;
+    position: relative;
+    top:20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    margin-bottom: 20px;
+}
+
+.bian span{
+    color: #fe504f;
+}
+.mui-bar-tab{
+    background-color: #fff;
+    position: relative;
+    top:45px;
+}
+.mui-bar-tab p{
+    color: #fe504f;
+}
+.mui-bar-tab .fukuan input{
+    position: relative;
+    top:10px;
+    float: right;
+    border-radius: 50px;
+    margin-right: 20px;
+    width: 100px;
+    background-color: #FFFFFF;
+}
+
+.mui-bar-tab .fukuan .red{
+    color: #FFFFFF;
+    background-color: #fe504f;
+}

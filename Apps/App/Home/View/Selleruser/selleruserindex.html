@@ -1,0 +1,153 @@
+<!--index -->
+<include file="public:index"   />
+<!--index-->
+
+<title>商家管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+    系统 <span class="c-gray en">&gt;</span>
+    商家管理 <span class="c-gray en">&gt;</span>
+    商家用户列表
+    <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20">
+
+    <form action="{:U('/home/Selleruser/Selleruserindex/search/')}" method="post/get" name="main_form" class="form form-horizontal" id="form-admin-add" style="float:right;">
+        <div class="text-c">
+            <input type="text" name="s_name" value="{$search['s_name']}" class="input-text" style="width:250px" placeholder="输入商家名称">
+            <input type="text" name="name" value="{$search['name']}" class="input-text" style="width:250px" placeholder="输入用户名称">
+
+            <button type="submit" class="btn btn-success" id=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+        </div>
+    </form>
+    <div class="text-c"><br></div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l" style="margin-left: 25%"><a href="{:U('/home/selleruser/selleruseradd')}" class="btn btn-primary radius"> 新增 </a></span>&nbsp;
+        <input type="submit" class="btn btn-danger radius" value="删除" onclick="return deluser()" />
+        <span class="r">共有数据：<strong>{$count}</strong> 条</span>
+    </div>
+    <form action="" method="post/get" name="main_form" id="main_form">
+    <div class="container row cl">
+        <div class="col-3">
+            <form action="" method="post/get" name="result_form">
+                <div style="height: 760px;overflow-y: scroll">
+                    <table class="table table-border table-bordered table-bg table-hover">
+                        <thead>
+                        <tr class="text-c">
+                            <th scope="col" colspan="15">
+                                <span style="line-height: 30px">商家列表</span>
+                                <!--<span style="line-height: 30px" class="r">共有数据：<strong>{$count}</strong> 条</span>-->
+                            </th>
+                        </tr>
+                        <tr class="text-c">
+                            <th width="80">商家名称</th>
+                            <th width="80">商家编号</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="text-c">
+                            <td><a href="{:U('/home/Selleruser/Selleruserindex')}" style="text-decoration: none;color: blue">全部商家</a></td>
+                            <td></td>
+                        </tr>
+                        <foreach name="seller" item="v">
+                            <tr class="text-c">
+                                <td><a href="{:U('/home/Selleruser/Selleruserindex',array('seller_id'=>$v['seller_id']))}" style="text-decoration: none;color: blue">{$v['s_name']}</a></td>
+                                <td>{$v['s_number']}</td>
+                            </tr>
+                        </foreach>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-9">
+            <table class="table table-border table-bordered table-bg table-hover">
+                <thead>
+                <tr>
+                    <th scope="col" colspan="12">商家用户列表</th>
+                </tr>
+                <tr class="text-c">
+                    <th width="25"><input type="checkbox" name="" value=""></th>
+                    <th width="40">操作</th>
+                    <!--<th width="70">商家信息</th>-->
+                    <!--<th width="40">商家简称</th>-->
+                    <th width="40">用户名称</th>
+                    <th width="40">用户电话</th>
+                    <th width="40">email</th>
+                </tr>
+                </thead>
+                <tbody>
+                <foreach name='data' item='v'>
+                    <tr class="text-c">
+                        <td><input type="checkbox" value="{$v['id']}" name="id[]" class="input"></td>
+                        <td><a class="btn btn-primary size-MINI radius" href="{:U('/home/Selleruser/selleruserdel',array('id'=>$v['id'],'type'=>2))}" onclick="return confirm('确认要删除吗？');">删除</a></td>
+                        <!--<td>{$v['forshort']}&nbsp;&nbsp;&nbsp;&nbsp;({$v['number']})</td>-->
+                        <td>{$v['user']}</td>
+                        <td>{$v['phone']}</td>
+                        <td>{$v['email']}</td>
+                    </tr>
+                </foreach>
+                </tbody>
+            </table>
+            <!--</form>-->
+            <div class="pageright">{$page}</div>
+        </div>
+    </div>
+</form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+<script src="__PUBLIC__/assets/js/jquery.cityselect.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    /*
+     参数解释：
+     title   标题
+     url     请求的url
+     id      需要操作的数据id
+     w       弹出层宽度（缺省调默认值）
+     h       弹出层高度（缺省调默认值）
+     */
+    /*用户-查看*/
+    function member_show(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*管理员-编辑*/
+    function admin_edit(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+    //批量删除判断是否选择
+    function deluser(){
+        var gnl = confirm('确认要删除吗？');
+        if (gnl==true){
+//            var chks=document.getElementsByTagName('input');
+            var chks=document.getElementsByClassName('input');
+
+            var bl=true;
+            for(var i=0;i<chks.length;i++)
+            {
+                if(chks[i].checked)
+                {
+                    bl=false;
+                    break;
+                }
+            }
+            if(bl){
+                alert('最少选择一个');
+                return false;
+            }else{
+                document.forms.main_form.action="{:U('/home/selleruser/selleruserdel')}";
+                document.forms.main_form.submit();
+            }
+        }else{
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

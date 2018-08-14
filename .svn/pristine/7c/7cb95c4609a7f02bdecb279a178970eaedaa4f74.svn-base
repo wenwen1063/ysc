@@ -1,0 +1,155 @@
+<?php
+//打印
+function p($arr){
+    dump($arr);
+    die;
+}
+//传递数据以易于阅读的样式格式化后输出
+function pp($data){
+    // 定义样式
+    $str='<pre style="display: block;padding: 9.5px;margin: 44px 0 0 0;font-size: 13px;line-height: 1.42857;color: #333;word-break: break-all;word-wrap: break-word;background-color: #F5F5F5;border: 1px solid #CCC;border-radius: 4px;">';
+    // 如果是boolean或者null直接显示文字；否则print
+    if (is_bool($data)) {
+        $show_data=$data ? 'true' : 'false';
+    }elseif (is_null($data)) {
+        $show_data='null';
+    }else{
+        $show_data=print_r($data,true);
+    }
+    $str.=$show_data;
+    $str.='</pre>';
+    echo $str;
+    die;
+}
+/**
+ * 验证码检查
+ */
+function check_verify($code, $id = "1"){
+
+    $verify = new \Think\Verify();
+    return $verify->check($code, $id);
+}
+//数组合并
+function Merge($arr1,$arr2){
+    $arr  = array_merge($arr1,$arr2);
+    return $arr;
+}
+//组合数组
+function mergearr($list1,$list2,$list3){
+    $arr  = array_merge($list1,$list2,$list3);
+    return $arr;
+}
+//时间月份
+function month(){
+    $year = date("Y");
+    $month = date("m");
+    $allday = date("t");
+    $strat_time = strtotime($year."-".$month."-1");
+    $end_time = strtotime($year."-".$month."-".$allday);
+    $arr = array(
+        'sttime'=>$strat_time,
+        'endtime'=>$end_time,
+        );
+    return $arr;
+}
+function create_guid() {
+    $charid = strtoupper(md5(uniqid(mt_rand(), true)));
+    $hyphen = chr(45);
+    $uuid = chr(123)
+    .substr($charid, 0, 8).$hyphen
+    .substr($charid, 8, 4).$hyphen
+    .substr($charid,12, 4).$hyphen
+    .substr($charid,16, 4).$hyphen
+    .substr($charid,20,12)
+    .chr(125);
+    $uuid = substr($uuid, 0, -1);//去头//去尾
+    $uuid = substr($uuid,1);
+    $arr = explode("-",$uuid);
+    for ($i=0; $i < count($arr); $i++) {
+        $str = $arr[$i].$str;
+    }
+    return $str;
+}
+//存储照片
+function upload(){
+    $upload = new \Think\Upload();// 实例化上传类
+    $upload->maxSize   =     3145728 ;// 设置附件上传大小
+    $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+    $upload->rootPath  =     './uploads/';// 设置附件上传根目录
+    $upload->savePath  =     ''; // 设置附件上传（子）目录
+    $info   =   $upload->upload();
+    $url = $info['file']['savepath'].$info['file']['savename'];
+    return $url;
+}
+//存储多照片
+function uploads(){
+    $upload = new \Think\Upload();// 实例化上传类
+    $upload->maxSize   =     3145728 ;// 设置附件上传大小
+    $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+    $upload->rootPath  =     './Public/Uploads/';// 设置附件上传根目录
+    $upload->savePath  =     ''; // 设置附件上传（子）目录
+    $info   =   $upload->upload();
+    foreach($info as $file){
+        $arr['pic'] = $file['savepath'].$file['savename'];
+    }
+    // foreach ($info as $key=> $v) {
+    //   $arr['pic'] = $v['savepath'].$file['savename'];
+    // }
+    return $arr;
+}
+//存储多照片
+function uploadss(){
+    $upload = new \Think\Upload();// 实例化上传类
+    $upload->maxSize   =     3145728 ;// 设置附件上传大小
+    $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+    $upload->rootPath  =     './Public/Uploads/';// 设置附件上传根目录
+    $upload->savePath  =     ''; // 设置附件上传（子）目录
+    $info   =   $upload->upload();
+    $arr = array();
+    foreach($info as $file){
+        $arr[] = $file['savepath'].$file['savename'];
+    }
+    return $arr;
+}
+//删除照片
+function delpic($url){
+    unlink($url);
+}
+
+function column($input, $columnKey, $indexKey = NULL){
+    $columnKeyIsNumber = (is_numeric($columnKey)) ? TRUE : FALSE;
+    $indexKeyIsNull = (is_null($indexKey)) ? TRUE : FALSE;
+    $indexKeyIsNumber = (is_numeric($indexKey)) ? TRUE : FALSE;
+    $result = array();
+
+    foreach ((array)$input AS $key => $row)
+    {
+      if ($columnKeyIsNumber)
+      {
+        $tmp = array_slice($row, $columnKey, 1);
+        $tmp = (is_array($tmp) && !empty($tmp)) ? current($tmp) : NULL;
+      }
+      else
+      {
+        $tmp = isset($row[$columnKey]) ? $row[$columnKey] : NULL;
+      }
+      if ( ! $indexKeyIsNull)
+      {
+        if ($indexKeyIsNumber)
+        {
+          $key = array_slice($row, $indexKey, 1);
+          $key = (is_array($key) && ! empty($key)) ? current($key) : NULL;
+          $key = is_null($key) ? 0 : $key;
+        }
+        else
+        {
+          $key = isset($row[$indexKey]) ? $row[$indexKey] : 0;
+        }
+      }
+
+      $result[$key] = $tmp;
+    }
+
+    return $result;
+  }
+?>

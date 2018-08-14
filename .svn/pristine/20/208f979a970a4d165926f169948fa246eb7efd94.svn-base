@@ -1,0 +1,150 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>国润后台管理系统</title>
+        <style>
+            body{
+                margin: 0;
+                text-align: center;
+                height: 768px;
+            }
+            *{
+                -webkit-user-select:none;
+
+                -moz-user-select:none;
+
+                -khtml-user-select:none;
+
+                user-select:none;
+
+            }
+            *{
+                outline: none;
+                margin-top: 0px;
+            }
+            .bg{
+                height: 280px;
+                background: -webkit-linear-gradient(#329bdf, #0263c1); /* Safari 5.1 - 6.0 */
+                background: -o-linear-gradient(#329bdf, #0263c1); /* Opera 11.1 - 12.0 */
+                background: -moz-linear-gradient(#329bdf, #0263c1); /* Firefox 3.6 - 15 */
+                background: linear-gradient(#329bdf, #0263c1); /* 标准的语法（必须放在最后） */
+                position: absolute;
+                width: 100%;
+                bottom: 0;
+                z-index: -2;
+            }
+            .header{
+                height: 120px;box-sizing: border-box;border-bottom: 1px solid #c1c1c1;
+            }
+            .header img{
+                vertical-align: middle;position: relative;left: -500px;top: 20px;
+            }
+            .body{
+                height: 480px;background: #F5F5F5;background-position-y: bottom;position: relative;z-index: 1;
+            }
+            .bodyname{
+                display: inline-block;font-size: 27px;font-family: '微软雅黑';color: #2187D4;z-index: fixed;
+            }
+            .bodyname b{
+                padding: 70px 0;display: block;
+            }
+            .bodyname img{
+                width: 360px;vertical-align: middle;margin-right: 50px;z-index: 999;
+            }
+            .bodylogin{
+                position: relative;top: 110px;z-index: 99;display: inline-block;color: #444;width: 360px;font-family: '微软雅黑';text-align: left;
+                border-radius: 10px;
+                margin-left: 50px;
+                box-shadow: 0 0 10px #C1C1C1;
+
+            }
+            .bodylogin_header{
+                background: #F5F5F5;border-bottom: 1px solid #C1C1C1;padding: 0 25px;line-height: 52px;font-size: 18px;
+                border-left: 1px solid #C1C1C1;
+                border-right: 1px solid #C1C1C1;
+                border-top: 1px solid #C1C1C1;
+                border-top-left-radius: 3px;
+                border-top-right-radius: 3px;
+            }
+            .bodylogin_body{
+                padding: 50px 30px;background: #fff;
+                border-left: 1px solid #C1C1C1;
+                border-right: 1px solid #C1C1C1;
+                border-bottom: 1px solid #C1C1C1;
+                border-bottom-left-radius: 3px;
+                border-bottom-right-radius: 3px;
+            }
+            .bodylogin_body_input{
+                border: 1px solid #C1C1C1;line-height: 47px;height: 47px;padding-left: 15px;border-radius: 5px;width: 100%;box-sizing: border-box;margin-bottom: 19px;
+            }
+            .bodylogin_bodyinput{
+                border: 1px solid #C1C1C1;line-height: 47px;height: 47px;padding-left: 15px;border-radius: 5px;width: 120px;box-sizing: border-box;margin-bottom: 12px;
+            }
+            .bodylogin_body input[type="password"]{
+                border: 1px solid #C1C1C1;line-height: 47px;height: 47px;padding-left: 15px;border-radius: 5px;width: 100%;box-sizing: border-box;margin-bottom: 25px;
+            }
+            .bodylogin_body input[type="checkbox"]{
+                vertical-align: middle;margin-right: 10px;
+            }
+            .bodylogin_body input[type="submit"]{
+                width: 100%;line-height: 47px;background: #FF4546;font-size: 15px;border: 0;border-radius: 5px;color: #fff;letter-spacing: 5px;box-sizing: border-box;
+            }
+            .footer{
+                position: absolute;bottom: 25px;text-align: center;width: 100%;
+            }
+            .footer p{
+                font-family: '微软雅黑';font-size: 10px;color: #444;
+            }
+            .code{
+                width: 50%;background: #F5F5F5;height: 47px;vertical-align: middle;margin-left: 15px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <!--<img src="/ysc1/Public/login/img/logo.gif"/>-->
+        </div>
+        <div class="body">
+            <div class="bodyname">
+                <b>国润商城后台管理系统</b>
+                <div>
+                    <img src="/ysc1/Public/login/img/Imacreal.png" />
+                </div>
+            </div>
+            <div class="bodylogin">
+                <div class="bodylogin_header">
+                    登录
+                </div>
+                <form action="<?php echo U('/home/login/login');?>" method="post">
+                    <div class="bodylogin_body">
+                    <input type="text" name="username" class="bodylogin_body_input" placeholder="请输入您的用户名！">
+                    <input type="password" name="password" class="bodylogin_body_input" placeholder="请输入您的用户密码！">
+                        <p class="top15 captcha" id="captcha-container">
+                            <input class="bodylogin_bodyinput" name="verify"  type="text" placeholder="请输入验证码！"/>
+                            <img class="code"  src="<?php echo U('/home/verify/index',array());?>" title="点击刷新" >
+                        </p>
+                    <input type="submit" value="登录"/>
+                    </div>
+                </form>
+            </div>
+            <div class="bg"></div>
+        </div>
+        <div class="footer">
+            <p >Copyright (C) 2016, www.********.com All Rights Reserved.</p>
+        </div>
+    </body>
+<script type="text/javascript" src="/ysc1/Public/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+    var captcha_img = $('#captcha-container').find('img');
+    var verifyimg = captcha_img.attr("src");
+    captcha_img.attr('title', '点击刷新');
+    captcha_img.click(function(){
+        if( verifyimg.indexOf('?')>0){
+            $(this).attr("src", verifyimg+'&random='+Math.random());
+        }else{
+            $(this).attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+        }
+    });
+</script>
+</html>

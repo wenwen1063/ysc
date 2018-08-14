@@ -1,0 +1,232 @@
+<?php
+namespace Home\Controller;
+
+use Think\Controller;
+
+class IndexController extends Controller
+{
+    /*
+     *权限管理
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $rule_name = MODULE_NAME . '/' . CONTROLLER_NAME . '/' . ACTION_NAME;
+        $rabcid    = M('rabc_info')->where($where = array('controller' => $rule_name))->field('id')->find();
+        $this->checkRight($rabcid['id']);
+    }
+
+    private function checkRight($num)
+    {
+        $id = cookie('admin_id');
+        if ($id == null) {
+            //登入超时，无cookie值.
+            redirect(U('/home/login/index'));
+        } else {
+            //拥有权限
+            $rabc = M()
+                ->table('__ROLEADMIN__ ra')->where($where = array('ra.admin_id' => $id))
+                ->join("left join __ROLERABC__ rr on rr.role_id = ra.role_id")
+                ->where($where = array('rr.rabc_id' => $num))
+                ->field('rr.rabc_id')
+                ->find();
+            //判断是否拥有权限
+            \Think\Log::record(var_export($rabc, true));
+            if ($rabc['rabc_id'] == null) {
+                $this->error('无权限，无法访问!', U('/home/error/error'), 1);
+            }
+        }
+    }
+
+//主页
+    public function index()
+    {
+        $role_ids = getCurrentUserRoleIds();
+
+        $data = array();
+        foreach ($role_ids as $key => $value) {
+            $data_menus = M()->table('__RABC_INFO__ c')
+                ->join('left join __ROLERABC__ rc on rc.rabc_id = c.id')
+                ->where('c.is_menu = 1 and rc.role_id ="' . $value['role_id'] . '"')
+                ->field('
+                      c.id,
+                      c.icon,
+                      c.t_id,
+                      c.controller,
+                      c.controllername
+                    ')->select();
+
+            $mapp = $data_menus;
+            $temp = $data;
+            $data = array_merge_recursive($mapp, $temp);
+        }
+        $data  = $this->array_unique_fb($data); //数组去重
+        $menus = $this->unlimitedForLayer($data);
+
+//        pp($menus);
+        $this->assign('menus', $menus);
+        $this->display();
+    }
+// 数组去重
+    private function array_unique_fb($array2D)
+    {
+        foreach ($array2D as $k => $v) {
+            $v        = join(',', $v); //降维,也可以用implode,将一维数组转换为用逗号连接的字符串
+            $temp[$k] = $v;
+        }
+        $temp = array_unique($temp); //去掉重复的字符串,也就是重复的一维数组
+        foreach ($temp as $k => $v) {
+            $array = explode(',', $v); //再将拆开的数组重新组装
+            //下面的索引根据自己的情况进行修改即可
+            $temp2[$k]['id']             = $array[0];
+            $temp2[$k]['icon']           = $array[1];
+            $temp2[$k]['t_id']           = $array[2];
+            $temp2[$k]['controller']     = $array[3];
+            $temp2[$k]['controllername'] = $array[4];
+        }
+        return $temp2;
+    }
+    // 递归方法
+    private function unlimitedForLayer($cate, $name = 'submenus', $pid = 0)
+    {
+        $arr = array();
+        foreach ($cate as $v) {
+            if ($v['t_id'] == $pid) {
+                $v[$name] = self::unlimitedForLayer($cate, $name, $v['id']);
+                $arr[]    = $v;
+            }
+        }
+        return $arr;
+    }
+    public function welcome()
+    {
+        set_time_limit(0);
+        $st                                    = strtotime(date('Y-m-d')); //今日起始
+//        $end                                   = strtotime(date('Y-m-d')) + 64000; //今日截止
+        $end                                   = time(); //现在时间
+        $map_cmem_new['addtime']           = array('between', array($st, $end));
+        $map_csller_new['time']           = array('between', array($st, $end));
+        $map_corder_new['addtime']         = array('between', array($st, $end));
+        $map_cart_new['time']         = array('between', array($st, $end));
+        $map_corderprice['o.pay_status']     = array('neq', 0);
+
+        $map_corderprice_new['o.addtime']  = array('between', array($st, $end));
+        $map_corderprice_new['o.pay_status'] = array('neq', 0);
+        $map_cgoods_new['addtime']            = array('between', array($st, $end));
+
+//        $where_crebate_new['r_status']         = array('neq', 0);
+        $where_record_new['time']      = array('between', array($st, $end));
+        $where_fhll_new['time']      = array('between', array($st, $end));
+
+        $where_bonus_new['u.addtime']      = array('between', array($st, $end));
+
+        $where_consume_new['o.pay_time']      = array('between', array($st, $end));
+        $where_consume_new['o.pay_status']      = array('neq', 0);
+
+        $data = array(); //要返回的数组
+
+        $cmem            = M('user')->where($where = array('is_delete' => 0))->count(); //会员数
+        $corder          = M('orders')->where($where = array('is_deleted' => 0))->count(); //订单数
+        $cseller              = M('seller')->count(); //商家数
+        $cgoods              = M('goods')->where($where = array('is_delete' => 0))->count(); //商品数
+        $carticle             = M('article')->count(); //文章总数
+        $corderprice_arr = M()->table('__ORDERS__ o')
+            ->where($map_corderprice)
+//            ->join('left join __ORDER_GOODS__ og on og.order_id=o.id')
+            ->field('sum(o.total_price) as corderprice')
+            ->group('o.pay_status')
+            ->select();
+        $corderprice         = $corderprice_arr[0]['corderprice']; //订单总金额
+        $ctool_arr = M('record')->where(array('type'=>0,'is_pay'=>1))->field('sum(paid_price) as paid_price')->select();
+        $ctool        = $ctool_arr[0]['paid_price']; //软件购买总金额
+
+        $huafei_arr = M('telephone_fare_record')->where(array('type'=>0,'state'=>1))->field('sum(paid_price) as paid_price')->select();
+        $chuafei       = $huafei_arr[0]['paid_price']; //话费充值金额
+
+        $liuliang_arr = M('telephone_fare_record')->where(array('type'=>1,'state'=>1))->field('sum(paid_price) as paid_price')->select();
+        $cliuliang       = $liuliang_arr[0]['paid_price']; //流量充值金额
+
+        $cbonus_arr = M('user')->where(array('is_disable'=>0))->field('sum(reward) as reward')->select();
+        $cbonus       = $cbonus_arr[0]['reward']; //奖励金额
+
+
+//        $where['r_status']   = array('neq', 0);
+//        $crebate_arr         = M('distribution')->where($where)->field('sum(rebate_price) as crebate')->select();
+//        $crebate             = $crebate_arr[0]['crebate']; //奖金总额
+        $cmem_new            = M('user')->where($map_cmem_new)->count(); //今日新增会员数
+        $cseller_new            = M('seller')->where($map_csller_new)->count(); //今日新增会员数
+        $corder_new          = M('orders')->where($map_corder_new)->count(); //今日新增订单总数
+        $corderprice_arr_new = M()->table('__ORDERS__ o')
+            ->where($map_corderprice_new)
+            ->field('sum(o.total_price) as corderprice')
+            ->group('o.order_status')
+            ->select();
+        $corderprice_new = $corderprice_arr_new[0]['corderprice']; //新增订单总额
+        $cgoods_new      = M('goods')->where($where = array('is_delete' => 0))->where($map_cgoods_new)->count(); //今日新增商品总数
+        $carticle_new      = M('article')->where($map_cart_new)->count(); //新增文章总数
+
+        $ctool_arr_new = M('record')->where($where_record_new)->where(array('type'=>0,'is_pay'=>1))->field('sum(paid_price) as paid_price')->select();
+        $ctool_new        = $ctool_arr_new[0]['paid_price']; //软件购买总金额
+
+        $huafei_arr_new = M('telephone_fare_record')->where($where_fhll_new)->where(array('type'=>0,'state'=>1))->field('sum(paid_price) as paid_price')->select();
+        $chuafei_new       = $huafei_arr_new[0]['paid_price']; //话费充值金额
+
+        $liuliang_arr_new = M('telephone_fare_record')->where($where_fhll_new)->where(array('type'=>1,'state'=>1))->field('sum(paid_price) as paid_price')->select();
+        $cliuliang_new       = $liuliang_arr_new[0]['paid_price']; //流量充值金额
+
+//        $cbonus_arr = M('user')->where(array('is_disable'=>0))->field('sum(reward) as reward')->select();
+//        $cbonus       = $cbonus_arr[0]['reward']; //奖励金额
+        $recommend = M()->table('__BONUS_RECOMMEND__ br')
+            ->join('left join __USER__ u on u.id = br.user_id')
+            ->where($where_bonus_new)
+            ->field('sum(br.bonus_amount) as recommend')
+            ->select();
+        $consume = M()->table('__BONUS_CONSUME__ bc')
+            ->join('left join __ORDERS__ o on o.id = bc.order_id')
+            ->where($where_consume_new)
+//            ->join('left join __ORDER_GOODS__ og on og.order_id = o.id')
+//            ->field('sum(og.platform_bonus) as pmoney,sum(og.partner_bonus) as dmoney')
+                ->field('sum(bc.money) as consume')
+            ->select();
+        $cbonus_new = $recommend[0]['recommend'] + $consume[0]['consume'];
+//        pp($cbonus_new);
+
+
+//        $cdoctor_new     = M('doctor')->where($map_cmem_new)->where($where = array('is_delete' => 0))->count(); //新增医师总数
+//        $crebate_new_arr = M('distribution')->where($where_crebate_new)->field('sum(rebate_price) as crebate_new')->select();
+//        $crebate_new     = $crebate_new_arr[0]['crebate_new'];
+//
+        $data['cmem']            = $cmem;
+        $data['corder']          = $corder;
+        $data['cseller']          = $cseller;
+        $data['corderprice']     = $corderprice;
+        $data['cgoods']          = $cgoods;
+        $data['cseller']          = $cseller;
+        $data['carticle']         = $carticle;
+        $data['ctool']         = $ctool;
+        $data['chuafei']         = $chuafei;
+        $data['cliuliang']         = $cliuliang;
+        $data['cbonus']         = $cbonus;
+
+
+
+
+        $data['cmem_new']        = $cmem_new;
+        $data['cseller_new']        = $cseller_new;
+        $data['corder_new']      = $corder_new;
+        $data['corderprice_new'] = $corderprice_new;
+        $data['cgoods_new']      = $cgoods_new;
+        $data['carticle_new']      = $carticle_new;
+        $data['ctool_new']     = $ctool_new;
+
+        $data['chuafei_new']     = $chuafei_new;
+        $data['cliuliang_new']     = $cliuliang_new;
+        $data['cbonus_new']     = $cbonus_new;
+
+//        $data['$crebate_new']    = $cbonus_new;
+//        pp($data);
+        $this->assign('data', $data);
+        $this->display();
+    }
+
+}

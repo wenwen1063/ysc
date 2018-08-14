@@ -1,0 +1,67 @@
+<!--index -->
+  <include file="public:index"   />
+<!--index-->
+
+<title>导师管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+ 系统 <span class="c-gray en">&gt;</span>
+  导师管理 <span class="c-gray en">&gt;</span>
+   导师列表
+   <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20">
+
+    <form action="{:U('/home/teacher/teacherindex/search/')}" method="post/get" name="main_form" class="form form-horizontal" id="form-admin-add" style="float:right;">
+        <div class="text-c">
+            <input type="text" name="teacher_name" value="{$search['teacher_name']}" class="input-text" style="width:250px" placeholder="输入导师姓名">
+            <button type="submit" class="btn btn-success" id=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+        </div>
+    </form>
+    <div class="text-c"><br></div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l"><a href="{:U('/home/teacher/teacheradd')}" class="btn btn-primary radius"> 新增 </a></span>&nbsp;
+        <span class="r">共有数据：<strong>{$count}</strong> 条</span>
+    </div>
+    <table class="table table-border table-bordered table-bg">
+        <thead>
+            <tr>
+                <th scope="col" colspan="12">导师列表</th>
+            </tr>
+            <tr class="text-c">
+                <th width="70">操作</th>
+                <th width="80">导师姓名</th>
+                <th width="80">导师头像</th>
+                <th width="100">导师广告图</th>
+                <th width="40">推荐</th>
+            </tr>
+        </thead>
+        <tbody>
+            <foreach name='data' item='v'>
+                <tr class="text-c">
+                    <td class="td-manage">
+                    <a class="btn btn-primary size-MINI radius" href="{:U('/home/teacher/teacherupdate',array('id'=>$v['id']))}">编辑</a>
+                    <a class="btn btn-primary size-MINI radius" href="{:U('/home/teacher/teacherdel',array('id'=>$v['id']))}" onclick="return confirm('确认要删除吗？');">删除</a>
+                    </td>
+                    <!-- <td>
+                    <a class="size-MINI radius maincolor" href="{:U('/home/teacher/teacherinfo',array('id'=>$v['id']))}">{$v['teacher_name']}</a>
+                    </td> -->
+                    <td>{$v['teacher_name']}</td>
+                    <td><img src="__PUBLIC__/Uploads/{$v['img']}" width="40"></td>
+                    <td><img src="__PUBLIC__/Uploads/{$v['teacher_img']}" width="40"></td>
+                    <?php if ($v['is_recommend']==0): ?>
+                        <td class="td-status"><span class="label radius">否</span></td>
+                    <?php else: ?>
+                        <td class="td-status"><span class="label label-success radius">是</span></td>
+                    <?php endif ?>
+                </tr>
+            </foreach>
+        </tbody>
+    </table>
+    <div class="pageright">{$page}</div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>

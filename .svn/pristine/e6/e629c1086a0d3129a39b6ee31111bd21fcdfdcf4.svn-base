@@ -1,0 +1,263 @@
+<?php
+/**
+ *商品列表
+ *author:cyl
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class GoodsController extends Controller
+{
+    //默认商品列表页
+    public function goodslist()
+    {
+        $id        = I('id'); //三级分类id
+        $sort_flag = I('sort_flag'); //排序标志
+        $rand      = I('rand'); //价格排序 asc 升序  desc降序
+        //三级分类名称
+        $classsan_name = M('goods_class_san')
+            ->where(array('id' => $id))
+            ->getField('name');
+        //根据id获取分类下的商品信息
+        //默认
+        if ($sort_flag == 'default_sort') {
+            $data = M()->table('__GOODS_AND_CLASS__ gac')
+                ->where(array('gac.gcs_id' => $id, 'g.is_on_sale' => 1, 'g.is_delete' => 0))
+                ->join('left join __GOODS__ g on g.id=gac.goods_id')
+                ->join('left join __GOODS_ATTRIBUTE_INFO__ gai on gai.goods_id=gac.goods_id')
+                ->field('g.id,g.sm_pic,g.goods_name,min(gai.shop_price) as min_shop_price')
+                ->group('gac.goods_id')
+                ->select();
+        }
+        $this->assign('classsan_name', $classsan_name);
+        $this->assign('data', $data);
+        $this->assign('id', $id);
+        $this->display();
+    }
+
+    //商品排序
+    public function sortgoodslist()
+    {
+        $id        = I('id'); //三级分类id
+        $sort_flag = I('sort_flag'); //排序标志
+        $rand      = I('rand'); //价格排序 asc 升序  desc降序
+        //三级分类名称
+        $classsan_name = M('goods_class_san')
+            ->where(array('id' => $id))
+            ->getField('name');
+        //根据id获取分类下的商品信息
+        //默认
+        if ($sort_flag == 'default_sort') {
+            $data = M()->table('__GOODS_AND_CLASS__ gac')
+                ->where(array('gac.gcs_id' => $id, 'g.is_on_sale' => 1, 'g.is_delete' => 0))
+                ->join('left join __GOODS__ g on g.id=gac.goods_id')
+                ->join('left join __GOODS_ATTRIBUTE_INFO__ gai on gai.goods_id=gac.goods_id')
+                ->field('g.id,g.sm_pic,g.goods_name,min(gai.shop_price) as min_shop_price')
+                ->group('gac.goods_id')
+                ->select();
+        } //销量降序
+        else if ($sort_flag == 'sale_sort') {
+            $data = M()->table('__GOODS_AND_CLASS__ gac')
+                ->where(array('gac.gcs_id' => $id, 'g.is_on_sale' => 1, 'g.is_delete' => 0))
+                ->join('left join __GOODS__ g on g.id=gac.goods_id')
+                ->join('left join __GOODS_ATTRIBUTE_INFO__ gai on gai.goods_id=gac.goods_id')
+                ->field('g.id,g.sm_pic,g.goods_name,min(gai.shop_price) as min_shop_price')
+                ->group('gac.goods_id')
+                ->order('g.r_sale desc,g.v_sale desc')
+                ->select();
+        } //价格排序(升降两种)
+        else {
+            if ($rand == 'asc') {
+                $data = M()->table('__GOODS_AND_CLASS__ gac')
+                    ->where(array('gac.gcs_id' => $id, 'g.is_on_sale' => 1, 'g.is_delete' => 0))
+                    ->join('left join __GOODS__ g on g.id=gac.goods_id')
+                    ->join('left join __GOODS_ATTRIBUTE_INFO__ gai on gai.goods_id=gac.goods_id')
+                    ->field('g.id,g.sm_pic,g.goods_name,min(gai.shop_price) as min_shop_price')
+                    ->group('gac.goods_id')
+                    ->order('min_shop_price asc')
+                    ->select();
+            } else {
+                $data = M()->table('__GOODS_AND_CLASS__ gac')
+                    ->where(array('gac.gcs_id' => $id, 'g.is_on_sale' => 1, 'g.is_delete' => 0))
+                    ->join('left join __GOODS__ g on g.id=gac.goods_id')
+                    ->join('left join __GOODS_ATTRIBUTE_INFO__ gai on gai.goods_id=gac.goods_id')
+                    ->field('g.id,g.sm_pic,g.goods_name,min(gai.shop_price) as min_shop_price')
+                    ->group('gac.goods_id')
+                    ->order('min_shop_price desc')
+                    ->select();
+            }
+        }
+        if ($data != null) {
+            $json = array(
+                'result'        => 1,
+                'data'          => $data,
+                'id'            => $id,
+                'classsan_name' => $classsan_name,
+            );
+        } else {
+            $json = array(
+                'result'        => 0,
+                'id'            => $id,
+                'classsan_name' => $classsan_name,
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+
+    //商品详情
+    public function goodsinfo()
+    {
+        $id = I('id'); //商品ID
+        //商品的四张轮播图
+        $slider_pics = M('pic')->where(array('goods_id' => $id))->limit(4)->select();
+        //商品的基本信息 名称 销量 详情
+        $goods_base_info = M('goods')->where(array('id' => $id))->field('id,goods_name,r_sale,goods_introduce,is_seven,is_baoyou,v_sale')->find();
+        //商品的最小现价和最小原价
+        $market_shop = M('goods_attribute_info')->where(array('goods_id' => $id))->field('min(market_price) as min_market_price,min(shop_price) as min_shop_price')->select();
+        //商品的评价信息
+        $comment = M()->table('__EVALUATION__ e')
+            ->where(array('e.is_disable' => 0, 'e.is_delete' => 0, 'goods_id' => $id))
+            ->join('left join __USER__ u on u.id=e.user_id')
+            ->field('u.username,u.avatar,e.score,e.content')
+            ->select();
+        // dump($comment);
+        $all_comment_number  = count($comment); //全部评论数
+        $map1['e.score']     = array('in', array(4, 5));
+        $map2['e.score']     = array('in', array(2, 3));
+        $map3['e.score']     = array('in', array(0, 1));
+        $good_comment_number = M()->table('__EVALUATION__ e')
+            ->where(array('e.is_disable' => 0, 'e.is_delete' => 0, 'goods_id' => $id))
+            ->where($map1)
+            ->count();
+        $mid_comment_number = M()->table('__EVALUATION__ e')
+            ->where(array('e.is_disable' => 0, 'e.is_delete' => 0, 'goods_id' => $id))
+            ->where($map2)
+            ->count();
+        $bad_comment_number = M()->table('__EVALUATION__ e')
+            ->where(array('e.is_disable' => 0, 'e.is_delete' => 0, 'goods_id' => $id))
+            ->where($map3)
+            ->count();
+        //商品的规格信息
+        $attr = M()->table('__GOODS_ATTRIBUTE_INFO__ gai')
+            ->where(array('gai.goods_id' => $id))
+            ->join('left join __GOODS_ATTRIBUTE__ ga on ga.id=gai.goods_attribute_id')
+            ->field('gai.goods_attribute_id as ga_id,ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock,gai.weight')
+            ->select();
+        // dump($attr);
+        //商品活动信息
+        $time      = time();
+        $goods_act = M()->table('__ACTIVITY__ a')
+            ->join('__ACTIVITY_GOODS__ ag on ag.activity_id=a.id') //活动表
+            ->join('__ACTIVITY_DISCOUNT__ ad on ad.activity_id=a.id')
+            ->where("a.start_time<'$time'")
+            ->where("a.end_time>'$time'")
+            ->where($where = array('ag.goods_id' => $id))
+            ->field('
+            a.name,
+            ad.after_type
+          ')
+            ->find();
+        // dump($goods_act);
+        $this->assign('goods_act', $goods_act);
+        $this->assign('slider_pics', $slider_pics);
+        $this->assign('goods_base_info', $goods_base_info);
+        $this->assign('market_shop', $market_shop);
+        $this->assign('comment', $comment);
+        $this->assign('all_comment_number', $all_comment_number);
+        $this->assign('good_comment_number', $good_comment_number);
+        $this->assign('mid_comment_number', $mid_comment_number);
+        $this->assign('bad_comment_number', $bad_comment_number);
+        $this->assign('id', $id);
+        $this->assign('attr', $attr);
+        $this->display();
+    }
+
+    //评论切换 全部 好 中 差
+    public function commentchange()
+    {
+        $id   = I('id');
+        $flag = I('flag');
+        if ($flag == 'good') {
+            $map['e.score'] = array('in', array(4, 5));
+        } else if ($flag == 'mid') {
+            $map['e.score'] = array('in', array(2, 3));
+        } else if ($flag == 'bad') {
+            $map['e.score'] = array('in', array(0, 1));
+        } else {
+
+        }
+        //商品的评价信息
+        $comment = M()->table('__EVALUATION__ e')
+            ->where(array('e.is_disable' => 0, 'e.is_delete' => 0, 'goods_id' => $id))
+            ->where($map)
+            ->join('left join __USER__ u on u.id=e.user_id')
+            ->field('u.username,u.avatar,e.score,e.content')
+            ->select();
+        if ($comment != null) {
+            $json = array(
+                'result' => 1,
+                'data'   => $comment,
+            );
+        } else {
+            $json = array(
+                'result' => 0,
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+
+    //切换商品规格
+    public function attrchange()
+    {
+        $id    = I('id');
+        $ga_id = I('ga_id');
+        $data  = M('goods_attribute_info')
+            ->where(array('goods_id' => $id, 'goods_attribute_id' => $ga_id))
+            ->field('weight,stock,market_price,shop_price')
+            ->find();
+        if ($data != null) {
+            $json = array(
+                'result' => 1,
+                'data'   => $data,
+            );
+        } else {
+            $json = array(
+                'result' => 0,
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+
+    //加入收藏
+    public function mycolection()
+    {
+        $id      = I('id');
+        $user_id = cookie('user_id');
+        $is_not  = M('mycolection')->where(array('user_id' => $user_id, 'goods_id' => $id))->find();
+        if ($is_not) {
+            $json = array(
+                'result' => 0,
+                'msg'    => '您已收藏过该商品！',
+            );
+            $this->ajaxReturn($json);
+            exit();
+        }
+        $data['user_id']  = $user_id;
+        $data['goods_id'] = $id;
+        $res              = M('mycolection')->add($data);
+        if ($res) {
+            $json = array(
+                'result' => 1,
+                'msg'    => '收藏成功！',
+            );
+        } else {
+            $json = array(
+                'result' => 0,
+                'msg'    => '收藏失败！',
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+
+}

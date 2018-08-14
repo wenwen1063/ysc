@@ -1,0 +1,278 @@
+<?php
+/**
+ * 售后服务管理
+ * User: lwh
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class ServiceController extends IndexController
+{
+/*
+ *售后服务管理
+ */
+    public function serviceindex()
+    {
+        $search = I();
+//		dump($search);
+        if ($search['seller_id'] != null) {
+            $map['o.seller_id'] = $search['seller_id'];
+        }
+        if ($search['order_number'] != null) {
+            $sid                   = $search['order_number'];
+            $map['cs.service_number'] = array("eq", "$sid");
+        }
+        if ($search['status'] != null) {
+
+            $type= $search['status'];
+			$map['cs.type'] = array("eq", "$type");
+        }
+		$seller_id=cookie("seller_id");
+          if($seller_id!=0)
+          {
+        $data = M()->table('__CUSTOMER_SERVICE__ cs')
+            ->where($map)
+            ->join('left join __ORDERS__ o on o.id = cs.order_id')
+            ->join('left join __USER__ m on m.id = cs.user_id')
+            ->join('left join __SELLER__ s on s.id = cs.seller_id')
+            ->page($_GET['p'] . ',20')->order('cs.status')
+            ->field('cs.*,m.username,o.order_number,s.name as seller_name')
+			->where(array('o.seller_id'=>$seller_id))
+            ->select();
+        $count = M()->table('__CUSTOMER_SERVICE__ cs')->where($map)
+            ->join('left join __ORDERS__ o on o.id = cs.order_id')
+            ->join('left join __USER__ m on m.id = cs.user_id')
+            ->join('left join __SELLER__ s on s.id = cs.seller_id')
+			->where(array('o.seller_id'=>$seller_id))
+            ->count();
+        	$seller = M('seller')->where(array('id'=>cookie('seller_id')))->field('id,name')->select();
+		  }else{
+		  	$data = M()->table('__CUSTOMER_SERVICE__ cs')
+            ->where($map)
+            ->join('left join __ORDERS__ o on o.id = cs.order_id')
+            ->join('left join __USER__ m on m.id = cs.user_id')
+            ->join('left join __SELLER__ s on s.id = cs.seller_id')
+            ->page($_GET['p'] . ',20')->order('cs.status')
+            ->field('cs.*,m.username,o.order_number,s.name as seller_name')
+            ->select();
+        $count = M()->table('__CUSTOMER_SERVICE__ cs')->where($map)
+            ->join('left join __ORDERS__ o on o.id = cs.order_id')
+            ->join('left join __USER__ m on m.id = cs.user_id')
+            ->join('left join __SELLER__ s on s.id = cs.seller_id')
+            ->count();
+        $seller = M('seller')->field('id,name')->select();
+		  }
+//dump($data);
+        $Page   = new \Think\Page($count, 20);
+        $show   = $Page->show();
+        $this->assign('page', $show);
+        $this->assign('data', $data);
+        $this->assign('count', $count);
+        $this->assign('seller', $seller);
+        $this->assign('search', $search);
+        $this->display();
+    }
+    /*
+     *售后服务管理-详情
+     */
+    public function serviceinfo()
+    {
+
+        $data = M()->table('__CUSTOMER_SERVICE__ cs')
+            ->where($where = array('cs.id' => I('id')))
+            ->join('left join __ORDER_GOODS__ og on og.order_id = cs.order_id and og.goods_id = cs.goods_id')
+            ->join('left join __ORDERS__ o on o.id = og.order_id')
+            ->join('left join __GOODS__ g on g.id = cs.goods_id')
+            ->field('
+            g.id as goods_id,
+            g.goods_name,
+            o.order_number,
+            cs.remark,
+            cs.*
+            ')
+            ->select();
+        $this->assign('data', $data);
+        $this->display();
+    }
+
+/*
+ *售后服务管理-处理
+ */
+    public function pass()
+    {
+        $arr = I(); //type 0退货1退款2换货->status132
+        if ($arr['type'] == 1) {
+            $data         = M('customer_service');
+            $data->id     = $arr['id'];
+            $data->status = 2;
+            $data->save();
+        } elseif ($arr['type'] == 2) {
+            $data         = M('customer_service');
+            $data->id     = $arr['id'];
+            $data->status = 1;
+            $data->save();
+        }
+        $this->success('操作成功！', U('/home/service/serviceindex'));
+    }
+/*
+ *售后服务管理-拒绝
+ */
+    public function no()
+    {
+        $arr = I(); //type 0退货1换货2退款->status567
+        if ($arr['type'] == 1) {
+            $data         = M('customer_service');
+            $data->id     = $arr['id'];
+            $data->status = 6;
+            $data->save();
+        } elseif ($arr['type'] == 2) {
+            $data         = M('customer_service');
+            $data->id     = $arr['id'];
+            $data->status = 5;
+            $data->save();
+        } 
+        $this->success('操作成功！', U('/home/service/serviceindex'));
+    }
+    /*
+     *售后服务管理-待通过--退货--接受
+     */
+//  public function servicegoods()
+//  {
+//      /*售后服务状态*/
+//      $data         = M('customer_service');
+//      $data->id     = I('id');
+//      $data->status = 1;
+//      $data->save();
+//      $this->success('退货成功！', U('/home/service/serviceindex'));
+//  }
+//  /*
+//   *售后服务管理-待通过--换货--拒绝
+//   */
+//  public function servicenochange()
+//  {
+//      /*售后服务状态*/
+//      $data         = M('customer_service');
+//      $data->id     = I('id');
+//      $data->status = 6;
+//      $data->save();
+//      $this->success('拒绝换货！', U('/home/service/serviceindex'));
+//  }
+    /*
+     *售后服务管理-待退款--退货--接受->已完成
+     *订单->已关闭
+     */
+    public function serviceprice()
+    {
+        $arr = I();
+        /*售后服务状态*/
+        $data         = M('customer_service');
+        $data->id     = I('id');
+        $data->status = 4;
+        $data->save();
+
+        //member  金额增加
+        $order = M()
+            ->table('__CUSTOMER_SERVICE__ cs')
+            ->field('cs.*')
+            ->find();
+		
+		$money=$order['money'];
+//		增加钱
+        M('user')->where(array('id' => $order['user']))->setInc('balance',$money);
+//		增加退款记录
+        $rechargecash=M("rechargecash");
+           $rechargecash->user      = $order['member_id'];
+           $rechargecash->type = 5;
+		   $rechargecash->apply_time = time();
+		   $rechargecash->is_time = time();
+		   $rechargecash->is_ok = 1;
+           $rechargecash->add();
+		   
+//        修改库存
+        $serviceinfo = M("order_goods")
+		     ->where(array('order_id'=>$order['order_id'],'goods_id'=>array("in",$order['goods_id'])))
+             ->select();
+//	    dump($serviceinfo);
+        for ($i = 0; $i < count($serviceinfo); $i++) {
+             M('goods_attribute_info')
+             ->where(array("goods_id"=>$serviceinfo['goods_id'],'goods_attribute_id'=>$serviceinfo['goods_attribute_id']))
+			 ->setInc('stock',$serviceinfo['goods_number']);
+        }
+        $bonus_platform=M("bonus_consume")
+        ->where(array("order_id"=>$order['order_id'],'goods_id'=>array("in",$order['goods_id'])))->select();
+		
+		foreach( $bonus_platform as $key=>$value){
+		   $user->where(array('id' => $value['user_id']))->setDec('reward_freeze', floatval($bonus_consume['money'])); // 用户的冻结奖励减少
+           $user->where(array('id' => $value['user_id']))->setDec('reward_receive', floatval($bonus_consume['money'])); //可领取奖励加
+		}
+
+        $this->success('操作成功！', U('/home/service/serviceindex'));
+    }
+    /*
+     *售后服务管理-待退款--退货--拒绝->拒绝退款
+     */
+//  public function servicenoprice()
+//  {
+//      /*售后服务状态*/
+//      $data         = M('customer_service');
+//      $data->id     = I('id');
+//      $data->status = 7;
+//      $data->save();
+//      $this->success('拒绝退款！', U('/home/service/serviceindex'));
+//  }
+    /*
+     *售后服务管理-待退货--收货-type=0 待换货--收货-type=1
+     */
+    public function servicereceipt()
+    {
+        $arr = I();
+        if ($arr['type'] == 0) {
+            /*订单状态*/
+            $data              = M('orders');
+            $data->id          = I('id');
+            $data->post_status = 5;
+            $data->save();
+            /*会员余额添加*/
+            $order = M()
+                ->table('__CUSTOMER_SERVICE__ cs')
+                ->where($where = array('cs.id' => $arr['id']))
+                ->join('left join __ORDER_GOODS__ og on og.order_id = cs.order_id and og.goods_id = cs.goods_id')
+                ->group('cs.id')
+                ->field('cs.*,sum(og.goods_number*og.price) as allprice')
+                ->find();
+
+            M('user')->where(array('id' => I('user_id')))->setInc('balance', $order['total_price']);
+            //修改库存
+            $serviceinfo = M()->table('__CUSTOMER_SERVICE__ cs')
+                ->join('left join __ORDER_GOODS__ og on og.order_id = cs.order_id and og.goods_id = cs.goods_id')
+                ->join('left join __GOODS_ATTRIBUTE_INFO__ gai on gai.goods_id = og.goods_id and gai.goods_attribute_id = og.goods_attr_id ')
+                ->where($where = array('cs.id' => $arr['id']))
+                ->field('gai.id,(gai.stock+og.goods_number)as num')->select();
+            for ($i = 0; $i < count($serviceinfo); $i++) {
+                $service_goodsstock        = M('goods_attribute_info');
+                $service_goodsstock->id    = $serviceinfo[$i]['id'];
+                $service_goodsstock->stock = $serviceinfo[$i]['num'];
+                $service_goodsstock->save();
+            }
+            /*售后服务状态*/
+            $data         = M('customer_service');
+            $data->id     = I('id');
+            $data->status = 4;
+            $data->save();
+            $this->success('收货结束！', U('/home/service/serviceindex'));
+        } elseif ($arr['type'] == 1) {
+            $id      = I('id'); //售后服务id
+            $orderid = I('order_id'); //订单id
+            $class   = M('logistics')->where($where = array('is_disable' => 0))->select();
+            $order   = M()->table('__ORDERS__')
+                ->where($where = array('id' => $orderid))
+                ->find();
+            $this->assign('order', $order);
+            $this->assign('class', $class);
+            $this->assign('id', $id);
+            $this->assign('orderid', $orderid);
+            $this->display();
+        }
+    }
+}

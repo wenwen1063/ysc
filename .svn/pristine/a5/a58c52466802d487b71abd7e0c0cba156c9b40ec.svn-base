@@ -1,0 +1,111 @@
+<!--index -->
+  <include file="public:index"   />
+<!--index-->
+<title>订单设置</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+ 系统 <span class="c-gray en">&gt;</span>
+  订单设置
+<a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20">
+    <form action="{:U('/home/sys/orderset')}" method="post" enctype="multipart/form-data" name="main_form" class="form form-horizontal" id="form-admin-add">
+        <input type="hidden" name="id" value="{$data['id']}">
+        <div class="row cl">
+            <label class="form-label col-3"><span class="c-red">*</span>订单自动取消天数：</label>
+            <div class="formControls col-5">
+                <input type="text" class="input-text" value="{$data['order_cancel']}" placeholder="订单自动取消天数" id="order_cancel" name="order_cancel" datatype="*2-16">
+            </div>
+            <div class="col-4"> </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-3"><span class="c-red">*</span>订单自动确认收货天数：</label>
+            <div class="formControls col-5">
+                <input type="text" class="input-text" value="{$data['order_confirm']}" placeholder="订单自动确认收货天数" id="order_confirm" name="order_confirm" datatype="*2-16">
+            </div>
+            <div class="col-4"> </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-3"><span class="c-red">*</span>订单自动评价天数：</label>
+            <div class="formControls col-5">
+                <input type="text" class="input-text" value="{$data['order_evaluation']}" placeholder="订单自动评价天数" id="order_evaluation" name="order_evaluation" datatype="*2-16">
+            </div>
+            <div class="col-4"> </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-3"><span class="c-red">*</span>订单不可申请售后服务天数：</label>
+            <div class="formControls col-5">
+                <input type="text" class="input-text" value="{$data['no_service']}" placeholder="订单不可申请售后服务天数" id="no_service" name="no_service" datatype="*2-16">
+            </div>
+            <div class="col-4"> </div>
+        </div>
+
+       <!-- <div class="row cl">
+            <label class="form-label col-3"><span class="c-red">*</span>首重费用（元/1KG）：</label>
+            <div class="formControls col-5">
+                <input type="text" class="input-text" value="{$data2['start_price']}" placeholder="首重费用" id="start_price" name="start_price" datatype="*2-16">
+            </div>
+            <div class="col-4"> </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-3"><span class="c-red">*</span>续重费用（元/KG）：</label>
+            <div class="formControls col-5">
+                <input type="text" class="input-text" value="{$data2['next_price']}" placeholder="续重费用" id="next_price" name="next_price" datatype="*2-16">
+            </div>
+            <div class="col-4"> </div>
+        </div>-->
+
+        <div class="row cl">
+            <div class="col-9 col-offset-3">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/icheck/jquery.icheck.min.js"></script>
+<script type="text/javascript">
+function check(){
+    var _form = document.main_form;
+    alert(trim(_form.order_cancel.value))
+    if(trim(_form.order_cancel.value)==" "){
+        alert("订单自动取消天数不能为空!");
+        return false;
+    }
+    if(trim(_form.order_confirm.value)==" "){
+        alert("订单自动确认收货天数不能为空!");
+        return false;
+    }
+    if(trim(_form.no_service.value)==" "){
+        alert("订单不可申请售后服务天数不能为空!");
+        return false;
+    }
+    return false;
+}
+
+function trim(s) {
+   var count = s.length;
+   var st    = 0;       // start
+   var end   = count-1; // end
+
+   if (s == "") return s;
+   while (st < count) {
+     if (s.charAt(st) == " ")
+       st ++;
+     else
+       break;
+   }
+   while (end > st) {
+     if (s.charAt(end) == " ")
+       end --;
+     else
+       break;
+   }
+   return s.substring(st,end + 1);
+ }
+</body>
+</html>

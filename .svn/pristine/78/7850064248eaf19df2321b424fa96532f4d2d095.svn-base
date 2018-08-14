@@ -1,0 +1,205 @@
+<?php
+/**
+ * ajax- search
+ * User: lwh
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class SearchController extends Controller
+{
+    /*
+     *角色管理-角色选择用户
+     */
+    public function adminsearch()
+    {
+        $id   = I('role_id');
+        $user = I('user');
+        //选择为拥有此角色的用户
+        $role   = M('roleadmin')->where($where = array('role_id' => $id))->field('admin_id')->select();
+        $search = I();
+        if ($search != null) {
+            if ($role != null) {
+                $role            = column($role, 'admin_id');
+                $map['admin_id'] = array('not in', $role);
+            }
+            if ($user != null) {
+                $map['user'] = array('like', "%$user%");
+            } else {
+                $map['user'] = array('like', "%%");
+            }
+            $arr = M('admin')
+                ->where($map)
+                ->select();
+        } else {
+            $admin = M()->table('__ROLEADMIN__ rl')
+                ->where($where = array('r.role_id' => $id))
+                ->join('left join __ROLE__ r on r.role_id = rl.role_id')
+                ->join('left join __ADMIN__ a on a.admin_id = rl.admin_id')
+                ->field('a.admin_id')->select();
+
+            \Think\Log::record(var_export($admin, true));
+
+            $where['wm.admin_id'] = array('not in', $admin['admin_id']);
+            $arr                  = M('admin')
+                ->where($where)
+                ->select();
+        }
+        $this->ajaxReturn($arr);
+    }
+    /*
+     *角色管理-用户编辑选择角色
+     */
+    public function rolesearch()
+    {
+        $admin_id = I('admin_id');
+        $user     = I('user');
+    }
+    /*
+     *商品添加-选择类型后-找出全部类型的属性值
+     */
+    public function goodsclassadd()
+    {
+        $id   = I('classid');
+        $data = M('attr')->where($where = array('class_id' => $id))->select();
+        $this->ajaxReturn($data);
+    }
+
+    public function goodsaddpic()
+    {
+        if ($_FILES) {
+            $file = uploads();
+        }
+        $this->ajaxReturn($file);
+    }
+    /*换货*/
+    public function servicereceipt()
+    {
+        $arr = I();
+        //1.发货
+        $data               = M('logistics_log');
+        $data->order_id     = $arr['order_id'];
+        $data->logistics_id = $arr['logistics_id'];
+        $data->consignee    = $arr['consignee'];
+        $data->address      = $arr['address'];
+        $data->class_id     = $arr['class_id'];
+        $data->tel          = $arr['tel'];
+        $data->dynamic      = $arr['dynamic'];
+        $data->status       = 0;
+        $data->create_time  = strtotime(date('Y-m-d H:i:s'));
+        $data->add();
+        /*售后服务状态*/
+        $data         = M('service');
+        $data->id     = I('id');
+        $data->status = 3; //待换货
+        $data->save();
+        $this->success('收货结束！', U('/home/service/serviceindex'));
+    }
+    //查看详细期号
+    public function wincode()
+    {
+        $str = substr_replace(I('wincode'), '', 0, 3);
+        $str = explode("+++", $str);
+        $str = array_filter($str);
+        $this->assign('str', $str);
+        $this->display();
+    }
+    //查看二维码
+    public function ecode()
+    {
+        $data = M('rechargecash')->where($where = array('id' => I('id')))->find();
+        $this->assign('data', $data);
+        $this->display();
+    }
+    public function test()
+    {
+        // $user = I('user');
+        // $pwd = I('pwd');
+        $data = array(
+            'user' => I('user'),
+            'pwd'  => I('pwd'),
+        );
+        $result = M('testlogin')->data($data)->add();
+        if ($result) {
+            $json = array(
+                'result' => 1,
+            );
+        } else {
+            $json = array(
+                'result' => 0,
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+
+    public function getClass()
+    {
+        \Think\Log::record('aaa');
+        $data = M()->table('__GOODS__ g')
+            ->join('left join __GOODS_CLASS__ gc on gc.id = g.class_id')
+            ->field('g.is_stock,gc.id as class_id,gc.name as class_name')
+            ->where($where = array('g.id' => I('goods_id')))
+            ->find();
+        // dump($name);die;
+        if (!empty($data)) {
+            $json = array(
+                'result'        => 0,
+                'message'       => "查询成功！",
+                'class_id_name' => $data,
+            );
+            \Think\Log::record(var_export($json, true));
+            $this->ajaxReturn($json);
+        } else {
+            $json = array(
+                'result'  => 1,
+                'message' => "查询失败！",
+            );
+            $this->ajaxReturn($json);
+        }
+
+    }
+
+    //声音提示
+    public function notiyf()
+    {
+        $order = M('order')->where($where = array('post_status' => 2, 'prompt_tone' => 0))->field('id,prompt_tone')->find();
+        //值不变时为null
+        if ($order == null) {
+            $ajax['cash'] = null;
+        } else {
+            $orderchange              = M('order');
+            $orderchange->id          = $order['id'];
+            $orderchange->prompt_tone = 1;
+            $orderchange->save();
+            sleep(1000);
+            $ajax['cash'] = 1;
+        }
+        $this->ajaxReturn($ajax);
+    }
+    public function dayin()
+    {
+        $this->assign('dayin', $dayin);
+        $this->display();
+    }
+
+    public function classtwo(){
+        $classtwo = M('goods_class_two')->where(array('goods_class_id'=>I('classone')))->select();
+//        pp($classtwo);
+        $this->ajaxReturn($classtwo);
+    }
+    public function classsan(){
+
+        $classsan = M('goods_class_san')->where(array('gct_id'=>I('classtwo')))->select();
+//        pp($classsan);
+        $this->ajaxReturn($classsan);
+    }
+
+    public function attribute2(){
+        $arr = I();
+        $attribute = M('goods_attribute')->where(array('class_san_id'=>$arr['classsan']))->field('id,name,class_san_id')->select(); //规格
+//        pp($attribute);
+        $this->ajaxReturn($attribute);
+//        pp($attribute);
+    }
+}

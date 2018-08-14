@@ -1,0 +1,40 @@
+.list {
+    display: block;
+    position: relative;
+    top: 10px;
+    width: 100%;
+    height: 60px;
+    background-color: #fff;
+    float: left;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 5px 15px;
+}
+
+.list h5, .list p {
+    float: left;
+    width: 51%;
+}
+.list h5{
+    font-size: 18px;
+    color: #4a4a4a;
+    position: relative;
+}
+.list h4{
+    font-size: 25px;
+    font-weight: 100;
+    position: relative;
+    bottom:20px;
+    float: right;
+}
+
+.backm{
+    display: none;
+    margin-top: 50%;
+    text-align: center;
+}
+
+.backm img{
+    height:50px;
+    width: 50px;
+    margin-bottom: 20px;
+}

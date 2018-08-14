@@ -1,0 +1,99 @@
+<?php
+namespace Home\Model;
+
+use Think\Model;
+
+/**
+ * Created by PhpStorm.
+ * User: Administrator
+ * Date: 2017/4/8
+ * Time: 15:09
+ */
+class PartnerModel extends Model
+{
+    //今日信息-推荐奖励
+    public function dayinfo()
+    {
+        $user_id = cookie('user_id');
+//        $time = strtotime(date("Y-m-d")); //今日0点时间戳
+        $map['u.addtime'] = array('EGT',strtotime(date("Y-m-d")));
+        $map['br.user_id'] = $user_id;
+        $data = M()->table('__BONUS_RECOMMEND__ br')
+            ->join('left join __USER__ u on u.id = br.recommend_user')
+            ->where($map)
+            ->field('sum(br.bonus_amount) as brmoney,sum(br.integral) as brgold')
+            ->select();
+        return $data;
+    }
+    //今日信息-消费奖励
+    public function dayinfoc()
+    {
+//        $time = strtotime(date("Y-m-d")); //今日0点时间戳
+//        $map['o.pay_time'] = array('between',array($time,time()));
+        $map['o.addtime'] = array('EGT',strtotime(date("Y-m-d")));
+        $map['bc.recommend_user'] = cookie('user_id');
+        $map['o.pay_status'] = 1;
+        $data = M()->table('__BONUS_CONSUME__ bc')
+            ->join('left join __ORDERS__ o on o.id = bc.order_id')
+            ->join('left join __ORDER_GOODS__ og on og.order_id = o.id')
+            ->where($map)
+            ->field('sum(og.bonus_amount) as totalm,sum(og.score_number) as totalg')
+            ->select();
+        return $data;
+    }
+    //分销汇总
+    public function total()
+    {
+        $user_id = cookie('user_id');
+        $data = M()->table('__BONUS_RECOMMEND__ br')
+            ->where(array('br.user_id'=>$user_id))
+            ->field('SUM(br.bonus_amount) as totalm,SUM(br.integral) as totalg')
+            ->select();
+        return $data;
+    }
+    public function totalc()
+    {
+        $user_id = cookie('user_id');
+        $data = M()->table('__BONUS_CONSUME__ bc')
+            ->where(array('bc.recommend_user'=>$user_id))
+            ->join('left join __ORDERS__ o on o.id = bc.order_id and o.pay_status = 1')
+            ->join('left join __ORDER_GOODS__ og on og.order_id = o.id')
+            ->field('SUM(og.bonus_amount) as totalm,SUM(og.score_number) as totalg')
+            ->select();
+        return $data;
+    }
+
+    //特权领取
+    public function record()
+    {
+        $user_id = cookie('user_id');
+//        $user_id = 1;
+
+        $data = M()->table('__RECORD__ r')
+            ->join('left join __PARTNER__ p on p.id = r.privilege_hierarchy')
+            ->where(array('user_id'=>$user_id))
+            ->field('r.*,p.name as p_name')
+            ->select();
+        for($i=0;$i<count($data);$i++){
+            //特权商品为软件时
+            if($data[$i]['type'] == 0){
+                $data[$i]['product'] = M('tool')->where(array('id'=>$data[$i]['privilege_id']))->field('name')->find();
+            }
+            //特权商品为保险时
+            if($data[$i]['type'] == 1){
+                $data[$i]['product'] = M('insurance')->where(array('id'=>$data[$i]['privilege_id']))->field('name')->find();
+            }
+            //特权商品为话费或流量时
+            if($data[$i]['type'] == 2 || $data[$i]['type'] == 3){
+                $data[$i]['product'] = M('telephone_fare')->where(array('id'=>$data[$i]['privilege_id']))->field('name')->find();
+            }
+            //特权商品为商品时
+            if($data[$i]['type'] == 4){
+                $data[$i]['product'] = M('goods')->where(array('id'=>$data[$i]['privilege_id']))->field('goods_name as name')->find();
+            }
+        }
+
+        return $data;
+    }
+
+}

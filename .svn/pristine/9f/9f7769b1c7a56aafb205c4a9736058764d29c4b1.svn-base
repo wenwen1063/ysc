@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>优惠券管理</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="../../../CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="../../../CSS/BusinessCSS/Mycoupon/Mycoupon.css" rel="stylesheet">
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">优惠券管理</h1>
+    <!--<a><span class="mui-icon mui-icon-loop mui-pull-right"></span></a>-->
+    <a href="Historyrecord.html" class="mui-pull-right">
+        <img src="../../../img/10.png" style="width: 21px;height: 21px;position: relative;top: 10px;right: 10px">
+    </a>
+    <!--<a class="mui-btn mui-btn-blue mui-btn-link mui-pull-right"></a>-->
+</header>
+<div id="voucher" style="display: none">
+    <a href="Coupondetails.html">
+        <div class="list">
+            <div class="img">
+                <img src="../../../img/Common/coupon_icon.png" alt="">
+            </div>
+            <div class="name">
+                <h4>阿玛尼优惠券</h4>
+            </div>
+            <div class="time">
+                <p>有效期:2017.0.12-2017.0.12</p>
+            </div>
+            <div class="money">
+                <h4>￥800</h4>
+                <p>满1000元使用</p>
+            </div>
+        </div>
+    </a>
+    <a href="Coupondetails.html">
+        <div class="list">
+            <div class="img">
+                <img src="../../../img/Common/coupon_icon.png" alt="">
+            </div>
+            <div class="name">
+                <h4>阿玛尼优惠券</h4>
+            </div>
+            <div class="time">
+                <p>有效期:2017.0.12-2017.0.12</p>
+            </div>
+            <div class="money">
+                <h4>￥800</h4>
+                <p>满1000元使用</p>
+            </div>
+        </div>
+    </a>
+    <a href="Coupondetails.html">
+        <div class="list">
+            <div class="img">
+                <img src="../../../img/Common/coupon_icon.png" alt="">
+            </div>
+            <div class="name">
+                <h4>阿玛尼优惠券</h4>
+            </div>
+            <div class="time">
+                <p>有效期:2017.0.12-2017.0.12</p>
+            </div>
+            <div class="money">
+                <h4>￥800</h4>
+                <p>满1000元使用</p>
+            </div>
+        </div>
+    </a>
+    <a href="Coupondetails.html">
+        <div class="list">
+            <div class="img">
+                <img src="../../../img/Common/coupon_icon.png" alt="">
+            </div>
+            <div class="name">
+                <h4>阿玛尼优惠券</h4>
+            </div>
+            <div class="time">
+                <p>有效期:2017.0.12-2017.0.12</p>
+            </div>
+            <div class="money">
+                <h4>￥800</h4>
+                <p>满1000元使用</p>
+            </div>
+        </div>
+    </a>
+    <a href="Coupondetails.html">
+        <div class="list">
+            <div class="img">
+                <img src="../../../img/Common/coupon_icon.png" alt="">
+            </div>
+            <div class="name">
+                <h4>阿玛尼优惠券</h4>
+            </div>
+            <div class="time">
+                <p>有效期:2017.0.12-2017.0.12</p>
+            </div>
+            <div class="money">
+                <h4>￥800</h4>
+                <p>满1000元使用</p>
+            </div>
+        </div>
+    </a>
+    <a href="Coupondetails.html">
+        <div class="list">
+            <div class="img">
+                <img src="../../../img/Common/coupon_icon.png" alt="">
+            </div>
+            <div class="name">
+                <h4>阿玛尼优惠券</h4>
+            </div>
+            <div class="time">
+                <p>有效期:2017.0.12-2017.0.12</p>
+            </div>
+            <div class="money">
+                <h4>￥800</h4>
+                <p>满1000元使用</p>
+            </div>
+        </div>
+    </a>
+
+</div>
+<a href="Mycoupon.html">
+    <div class="input">
+        <input type="button" value="+领取优惠券">
+    </div>
+</a>
+<script src="../../../Script/CommonJS/Base.js"></script>
+<script src="../../../Script/CommonJS/Base.js"></script>
+<script>
+    function text() {
+        mui('#voucher')[0].style.display = 'block'
+        mui('.input')[0].style.display = 'none'
+        setTimeout(function () {
+            mui('#voucher')[0].style.display = 'none'
+            mui('.input')[0].style.display = 'block'
+            setTimeout(function () {
+                text()
+            }, 1000)
+        }, 1000)
+
+    }
+    //    text()
+    //    mui('.input').on('tap','input',function () {
+    //        mui('#voucher')[0].style.display = 'block'
+    //        mui('.input')[0].style.display = 'none'
+    //    })
+</script>
+</body>
+</html>

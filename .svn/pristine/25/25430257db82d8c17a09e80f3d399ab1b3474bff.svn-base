@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品详情</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="../../../CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="../../../CSS/BusinessCSS/Storedetails.css" rel="stylesheet">
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">商品详情</h1>
+</header>
+<div class="mui-slider">
+    <div class="mui-slider-group">
+        <div class="mui-slider-item"><a href="#"><img src="../../../img/Classification/classification_pic_big.png" /></a></div>
+        <div class="mui-slider-item"><a href="#"><img src="2.jpg" /></a></div>
+        <div class="mui-slider-item"><a href="#"><img src="3.jpg" /></a></div>
+        <div class="mui-slider-item"><a href="#"><img src="4.jpg" /></a></div>
+    </div>
+    <div class="mui-slider-indicator">
+        <div class="mui-indicator mui-active"></div>
+        <div class="mui-indicator"></div>
+        <div class="mui-indicator"></div>
+        <div class="mui-indicator"></div>
+    </div>
+    <div class="name">
+        <h4>多肉植物组合盆栽</h4>
+        <div class="dui">
+            <p>已兑 &numsp;30%</p>
+            <p class="mui-progressbar mui-progressbar-warning" data-progress="30"><span style="transform: translate3d(-70%, 0px, 0px);"></span></p>
+        </div>
+        <div class="money">
+            <h4>￥52 <del>价值:￥60</del></h4>
+        </div>
+    </div>
+</div>
+
+<div id="content">
+    <div class="title">
+        <h4>商品详情</h4>
+    </div>
+    <div class="img">
+        <img src="../../../img/Home/home_exchange_pic.png" alt="">
+        <img src="../../../img/Home/home_exchange_pic.png" alt="">
+        <img src="../../../img/Home/home_exchange_pic.png" alt="">
+        <img src="../../../img/Home/home_exchange_pic.png" alt="">
+    </div>
+</div>
+<script src="../../../Script/CommonJS/Base.js"></script>
+</body>
+</html>

@@ -1,0 +1,1382 @@
+[ 2018-05-04T10:38:56+08:00 ] 127.0.0.1 /ysc2/index.php
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000013s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001544s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002168s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002217s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0128s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Index/index' LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0093s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '77' LIMIT 1   [ RunTime:0.0030s ]
+ERR: array (
+  'rabc_id' => '77',
+)
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0093s ]
+SQL: SELECT RADMIN.role_id FROM roleadmin RADMIN WHERE RADMIN.admin_id = '1'  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0074s ]
+SQL: SELECT c.id,c.icon,c.t_id,c.controller,c.controllername FROM rabc_info c left join rolerabc rc on rc.rabc_id = c.id  WHERE ( c.is_menu = 1 and rc.role_id ="1" )  [ RunTime:0.0058s ]
+INFO: [ view_parse ] --START--
+NOTIC: [2] file_get_contents(./Apps/app/Home/View/public/aside.html): failed to open stream: No such file or directory C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Template.class.php 第 696 行.
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000076s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000108s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.027466s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.027507s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001427s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001456s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001941s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001979s ]
+
+[ 2018-05-04T10:38:57+08:00 ] 127.0.0.1 /ysc2/index.php/home/index/welcome.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000020s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001876s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002168s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002232s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0175s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Index/welcome' LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0126s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '78' LIMIT 1   [ RunTime:0.0006s ]
+ERR: array (
+  'rabc_id' => '78',
+)
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0133s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `user` WHERE `is_delete` = 0 LIMIT 1   [ RunTime:0.0026s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0121s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `orders` WHERE `is_deleted` = 0 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `seller` [ RunTime:0.0093s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `seller` LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0092s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `goods` WHERE `is_delete` = 0 LIMIT 1   [ RunTime:0.0028s ]
+SQL: SHOW COLUMNS FROM `article` [ RunTime:0.0093s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `article` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0098s ]
+SQL: SELECT sum(o.total_price) as corderprice FROM orders o WHERE o.pay_status <> 0 GROUP BY o.pay_status  [ RunTime:0.0009s ]
+SQL: SHOW COLUMNS FROM `record` [ RunTime:0.0078s ]
+SQL: SELECT sum(paid_price) as paid_price FROM `record` WHERE `type` = 0 AND `is_pay` = 1  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `telephone_fare_record` [ RunTime:0.0101s ]
+SQL: SELECT sum(paid_price) as paid_price FROM `telephone_fare_record` WHERE `type` = 0 AND `state` = 1  [ RunTime:0.0007s ]
+SQL: SELECT sum(paid_price) as paid_price FROM `telephone_fare_record` WHERE `type` = 1 AND `state` = 1  [ RunTime:0.0003s ]
+SQL: SELECT sum(reward) as reward FROM `user` WHERE `is_disable` = 0  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `user` WHERE `addtime` BETWEEN 1525363200 AND 1525449600 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `seller` WHERE `time` BETWEEN 1525363200 AND 1525449600 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `orders` WHERE `addtime` BETWEEN 1525363200 AND 1525449600 LIMIT 1   [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0093s ]
+SQL: SELECT sum(o.total_price) as corderprice FROM orders o WHERE o.addtime BETWEEN 1525363200 AND 1525449600 AND o.pay_status <> 0 GROUP BY o.order_status  [ RunTime:0.0007s ]
+NOTIC: [8] Undefined offset: 0 C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\IndexController.class.php 第 188 行.
+SQL: SELECT COUNT(*) AS tp_count FROM `goods` WHERE `is_delete` = 0 AND `addtime` BETWEEN 1525363200 AND 1525449600 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `article` WHERE `time` BETWEEN 1525363200 AND 1525449600 LIMIT 1   [ RunTime:0.0002s ]
+SQL: SELECT sum(paid_price) as paid_price FROM `record` WHERE `time` BETWEEN 1525363200 AND 1525449600 AND `type` = 0 AND `is_pay` = 1  [ RunTime:0.0003s ]
+SQL: SELECT sum(paid_price) as paid_price FROM `telephone_fare_record` WHERE `time` BETWEEN 1525363200 AND 1525449600 AND `type` = 0 AND `state` = 1  [ RunTime:0.0003s ]
+SQL: SELECT sum(paid_price) as paid_price FROM `telephone_fare_record` WHERE `time` BETWEEN 1525363200 AND 1525449600 AND `type` = 1 AND `state` = 1  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `bonus_recommend` [ RunTime:0.0086s ]
+SQL: SELECT sum(br.bonus_amount) as recommend FROM bonus_recommend br left join user u on u.id = br.user_id  WHERE u.addtime BETWEEN 1525363200 AND 1525449600  [ RunTime:0.0023s ]
+SQL: SHOW COLUMNS FROM `bonus_consume` [ RunTime:0.0086s ]
+SQL: SELECT sum(bc.money) as consume FROM bonus_consume bc left join orders o on o.id = bc.order_id  WHERE o.pay_time BETWEEN 1525363200 AND 1525449600 AND o.pay_status <> 0  [ RunTime:0.0005s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000072s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000104s ]
+NOTIC: [8] Undefined variable: is_seller C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\ee3925b7580957c46e9b1767d158436d.php 第 164 行.
+NOTIC: [8] Undefined variable: is_seller C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\ee3925b7580957c46e9b1767d158436d.php 第 333 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.013437s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.013466s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001002s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001029s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001274s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001317s ]
+
+[ 2018-05-04T10:39:15+08:00 ] 127.0.0.1 /ysc2/admin.php/Home/Seller/sellerindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000008s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000586s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001712s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001780s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0078s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Seller/sellerindex' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0064s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '401' LIMIT 1   [ RunTime:0.0006s ]
+ERR: array (
+  'rabc_id' => '401',
+)
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\SellerController.class.php on line 15 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\SellerController.class.php 第 81 行.
+SQL: SHOW COLUMNS FROM `seller` [ RunTime:0.0077s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT * FROM `seller` LIMIT 0,20   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `seller` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `seller` LIMIT 1   [ RunTime:0.0003s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000067s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000119s ]
+NOTIC: [8] Undefined index: name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 40 行.
+NOTIC: [8] Undefined index: synopsis C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 41 行.
+NOTIC: [8] Undefined index: is_disable C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 51 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: prov C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 136 行.
+NOTIC: [8] Undefined index: city C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 137 行.
+NOTIC: [8] Undefined index: dist C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 138 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.015004s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.015035s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001128s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001153s ]
+
+[ 2018-05-04T10:39:16+08:00 ] 127.0.0.1 /ysc2/admin.php/Home/Seller/sellerindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000569s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001236s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001273s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0106s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Seller/sellerindex' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0065s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '401' LIMIT 1   [ RunTime:0.0003s ]
+ERR: array (
+  'rabc_id' => '401',
+)
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\SellerController.class.php on line 15 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\SellerController.class.php 第 81 行.
+SQL: SHOW COLUMNS FROM `seller` [ RunTime:0.0090s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT * FROM `seller` LIMIT 0,20   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `seller` [ RunTime:0.0075s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `seller` LIMIT 1   [ RunTime:0.0004s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000055s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000085s ]
+NOTIC: [8] Undefined index: name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 40 行.
+NOTIC: [8] Undefined index: synopsis C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 41 行.
+NOTIC: [8] Undefined index: is_disable C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 51 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: addtime C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 110 行.
+NOTIC: [8] Undefined index: prov C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 136 行.
+NOTIC: [8] Undefined index: city C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 137 行.
+NOTIC: [8] Undefined index: dist C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6b1385fdbd593945acf1d1270b1aeb6b.php 第 138 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.013789s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.013821s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001158s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001184s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001863s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001913s ]
+
+[ 2018-05-04T10:39:26+08:00 ] 127.0.0.1 /ysc2/admin.php/home/seller/sellerinfo/id/11.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000016s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000547s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001118s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001154s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0121s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Seller/sellerinfo' LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0128s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '408' LIMIT 1   [ RunTime:0.0004s ]
+ERR: array (
+  'rabc_id' => '408',
+)
+SQL: SHOW COLUMNS FROM `seller` [ RunTime:0.0103s ]
+SQL: SELECT * FROM `seller` WHERE `id` = 11 LIMIT 1   [ RunTime:0.0006s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000050s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000080s ]
+NOTIC: [8] Undefined variable: page C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\5cfd4268368ae6ddbe1012f9120659fa.php 第 112 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012930s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012968s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001086s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001112s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001184s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001211s ]
+
+[ 2018-05-04T10:39:36+08:00 ] 127.0.0.1 /ysc2/admin.php/Home/Goods/goodsindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000715s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001232s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001276s ]
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\GoodsController.class.php on line 20 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\GoodsController.class.php 第 222 行.
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0082s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT g.*,s.name as seller_name,l.name as logistics_name,min(gai.stock) as goods_inventory FROM goods g left join seller s on s.id=g.seller_id left join logistics l on l.id=g.default_express left join goods_attribute_info gai on gai.goods_id=g.id  WHERE g.is_delete = 0 GROUP BY g.id LIMIT 0,20   [ RunTime:0.0126s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0089s ]
+SQL: SELECT COUNT(*) AS tp_count FROM goods g LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `seller` [ RunTime:0.0085s ]
+SQL: SELECT `id`,`name` FROM `seller`  [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: seller_id C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\GoodsController.class.php 第 241 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000108s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000143s ]
+NOTIC: [8] Undefined index: goods_name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 55 行.
+NOTIC: [8] Undefined index: shop_price_l C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 56 行.
+NOTIC: [8] Undefined index: shop_price_h C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 58 行.
+NOTIC: [8] Undefined index: r_sale_l C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 59 行.
+NOTIC: [8] Undefined index: r_sale_h C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 61 行.
+NOTIC: [8] Undefined index: bonus_state C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 63 行.
+NOTIC: [8] Undefined index: status C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 93 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.017810s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.017841s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001191s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001219s ]
+
+[ 2018-05-04T10:39:38+08:00 ] 127.0.0.1 /ysc2/admin.php/Home/Goods/goodsindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000023s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000589s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001181s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001216s ]
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\GoodsController.class.php on line 20 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\GoodsController.class.php 第 222 行.
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0151s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT g.*,s.name as seller_name,l.name as logistics_name,min(gai.stock) as goods_inventory FROM goods g left join seller s on s.id=g.seller_id left join logistics l on l.id=g.default_express left join goods_attribute_info gai on gai.goods_id=g.id  WHERE g.is_delete = 0 GROUP BY g.id LIMIT 0,20   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0149s ]
+SQL: SELECT COUNT(*) AS tp_count FROM goods g LIMIT 1   [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `seller` [ RunTime:0.0097s ]
+SQL: SELECT `id`,`name` FROM `seller`  [ RunTime:0.0003s ]
+NOTIC: [8] Undefined index: seller_id C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\GoodsController.class.php 第 241 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000128s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000182s ]
+NOTIC: [8] Undefined index: goods_name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 55 行.
+NOTIC: [8] Undefined index: shop_price_l C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 56 行.
+NOTIC: [8] Undefined index: shop_price_h C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 58 行.
+NOTIC: [8] Undefined index: r_sale_l C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 59 行.
+NOTIC: [8] Undefined index: r_sale_h C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 61 行.
+NOTIC: [8] Undefined index: bonus_state C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 63 行.
+NOTIC: [8] Undefined index: status C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 93 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.017841s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.017870s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001062s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001087s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001210s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001242s ]
+
+[ 2018-05-04T10:39:42+08:00 ] 127.0.0.1 /ysc2/admin.php/home/goods/goodsinfo/id/17.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000551s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001252s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001288s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0171s ]
+SQL: SELECT g.*,s.name as seller_name,l.name as logistics_name FROM goods g left join seller s on s.id=g.seller_id left join logistics l on l.id=g.default_express  WHERE g.id = '17' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `pic` [ RunTime:0.0201s ]
+SQL: SELECT p.pic FROM pic p WHERE p.goods_id = '17'  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0077s ]
+SQL: SELECT ga.name as attr_name,gai.* FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '17'  [ RunTime:0.0036s ]
+SQL: SHOW COLUMNS FROM `goods_bouns_info` [ RunTime:0.0177s ]
+SQL: SELECT * FROM `goods_bouns_info` WHERE `goods_id` = 17  [ RunTime:0.0004s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000046s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000076s ]
+NOTIC: [8] Undefined variable: bonus_ratio_amount C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\be0c590e79a84c688ba270d7f74631d7.php 第 103 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.013570s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.013602s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001356s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001387s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001276s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001302s ]
+
+[ 2018-05-04T10:39:54+08:00 ] 127.0.0.1 /ysc2/admin.php/home/goods/goodsinfo/id/17.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000008s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000635s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001212s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001250s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0159s ]
+SQL: SELECT g.*,s.name as seller_name,l.name as logistics_name FROM goods g left join seller s on s.id=g.seller_id left join logistics l on l.id=g.default_express  WHERE g.id = '17' LIMIT 1   [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `pic` [ RunTime:0.0093s ]
+SQL: SELECT p.pic FROM pic p WHERE p.goods_id = '17'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0066s ]
+SQL: SELECT ga.name as attr_name,gai.* FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '17'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_bouns_info` [ RunTime:0.0094s ]
+SQL: SELECT * FROM `goods_bouns_info` WHERE `goods_id` = 17  [ RunTime:0.0003s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000054s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000091s ]
+NOTIC: [8] Undefined variable: bonus_ratio_amount C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\be0c590e79a84c688ba270d7f74631d7.php 第 103 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012936s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012968s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001042s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001066s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001131s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001155s ]
+
+[ 2018-05-04T10:39:57+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/neworder.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000008s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000552s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001094s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001127s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0139s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 37  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0139s ]
+SQL: SELECT o.id,o.prompt_tone FROM orders o WHERE o.pay_status = 1 AND `prompt_tone` = 0  [ RunTime:0.0016s ]
+
+[ 2018-05-04T10:40:02+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/newbonus.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000006s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000580s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001383s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001414s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0145s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2083  [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0103s ]
+SQL: SELECT `id`,`prompt_tone` FROM `goods` WHERE `prompt_tone` = 0  [ RunTime:0.0008s ]
+
+[ 2018-05-04T10:40:11+08:00 ] 127.0.0.1 /ysc2/admin.php/Home/Goods/goodsindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000599s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001356s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001391s ]
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\GoodsController.class.php on line 20 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\GoodsController.class.php 第 222 行.
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0071s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT g.*,s.name as seller_name,l.name as logistics_name,min(gai.stock) as goods_inventory FROM goods g left join seller s on s.id=g.seller_id left join logistics l on l.id=g.default_express left join goods_attribute_info gai on gai.goods_id=g.id  WHERE g.is_delete = 0 GROUP BY g.id LIMIT 0,20   [ RunTime:0.0017s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0066s ]
+SQL: SELECT COUNT(*) AS tp_count FROM goods g LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `seller` [ RunTime:0.0081s ]
+SQL: SELECT `id`,`name` FROM `seller`  [ RunTime:0.0003s ]
+NOTIC: [8] Undefined index: seller_id C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\GoodsController.class.php 第 241 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000124s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000161s ]
+NOTIC: [8] Undefined index: goods_name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 55 行.
+NOTIC: [8] Undefined index: shop_price_l C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 56 行.
+NOTIC: [8] Undefined index: shop_price_h C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 58 行.
+NOTIC: [8] Undefined index: r_sale_l C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 59 行.
+NOTIC: [8] Undefined index: r_sale_h C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 61 行.
+NOTIC: [8] Undefined index: bonus_state C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 63 行.
+NOTIC: [8] Undefined index: status C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 93 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.016511s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.016550s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001125s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001149s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001241s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001288s ]
+
+[ 2018-05-04T10:40:12+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/service.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000692s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001120s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001156s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0174s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2108  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `customer_service` [ RunTime:0.0114s ]
+SQL: SELECT `id`,`prompt_tone` FROM `customer_service` WHERE `prompt_tone` = 0  [ RunTime:0.0004s ]
+
+[ 2018-05-04T10:40:13+08:00 ] 127.0.0.1 /ysc2/admin.php/Home/Goodsclasstwo/goodsclasstwoindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001071s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002755s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002826s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0100s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Goodsclasstwo/goodsclasstwoindex' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0092s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '33' LIMIT 1   [ RunTime:0.0004s ]
+ERR: array (
+  'rabc_id' => '33',
+)
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\GoodsclasstwoController.class.php on line 15 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\GoodsclasstwoController.class.php 第 37 行.
+SQL: SHOW COLUMNS FROM `goods_class_two` [ RunTime:0.0126s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT gct.*,gc.name as gc_name FROM goods_class_two gct left join goods_class gc on gc.id=gct.goods_class_id  ORDER BY gct.sort asc LIMIT 0,20   [ RunTime:0.0037s ]
+SQL: SHOW COLUMNS FROM `goods_class_two` [ RunTime:0.0074s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `goods_class_two` LIMIT 1   [ RunTime:0.0003s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000044s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000076s ]
+NOTIC: [8] Undefined index: name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\25fa7dd361c93201f89c850b1a588664.php 第 38 行.
+NOTIC: [8] Undefined index: is_disable C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\25fa7dd361c93201f89c850b1a588664.php 第 41 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012658s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012690s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001212s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001241s ]
+
+[ 2018-05-04T10:40:14+08:00 ] 127.0.0.1 /ysc2/admin.php/Home/Goodsclasstwo/goodsclasstwoindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000551s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003212s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003282s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0153s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Goodsclasstwo/goodsclasstwoindex' LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0133s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '33' LIMIT 1   [ RunTime:0.0006s ]
+ERR: array (
+  'rabc_id' => '33',
+)
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\GoodsclasstwoController.class.php on line 15 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\GoodsclasstwoController.class.php 第 37 行.
+SQL: SHOW COLUMNS FROM `goods_class_two` [ RunTime:0.0149s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT gct.*,gc.name as gc_name FROM goods_class_two gct left join goods_class gc on gc.id=gct.goods_class_id  ORDER BY gct.sort asc LIMIT 0,20   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `goods_class_two` [ RunTime:0.0105s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `goods_class_two` LIMIT 1   [ RunTime:0.0003s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000044s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000074s ]
+NOTIC: [8] Undefined index: name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\25fa7dd361c93201f89c850b1a588664.php 第 38 行.
+NOTIC: [8] Undefined index: is_disable C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\25fa7dd361c93201f89c850b1a588664.php 第 41 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012890s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012938s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001066s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001106s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002008s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002087s ]
+
+[ 2018-05-04T10:40:17+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/rechargecash.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000017s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000886s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000740s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000772s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0141s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 1600  [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `rechargecash` [ RunTime:0.0137s ]
+SQL: SELECT `id`,`prompt_tone` FROM `rechargecash` WHERE `type` = 2 AND `prompt_tone` = 0  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `rechargecash_seller` [ RunTime:0.0076s ]
+SQL: SELECT `id`,`prompt_tone` FROM `rechargecash_seller` WHERE `type` = 1 AND `prompt_tone` = 0  [ RunTime:0.0004s ]
+
+[ 2018-05-04T10:40:21+08:00 ] 127.0.0.1 /ysc2/admin.php/Home/Goods/goodsindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000408s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000748s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000784s ]
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\GoodsController.class.php on line 20 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\GoodsController.class.php 第 222 行.
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0083s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT g.*,s.name as seller_name,l.name as logistics_name,min(gai.stock) as goods_inventory FROM goods g left join seller s on s.id=g.seller_id left join logistics l on l.id=g.default_express left join goods_attribute_info gai on gai.goods_id=g.id  WHERE g.is_delete = 0 GROUP BY g.id LIMIT 0,20   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0076s ]
+SQL: SELECT COUNT(*) AS tp_count FROM goods g LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `seller` [ RunTime:0.0089s ]
+SQL: SELECT `id`,`name` FROM `seller`  [ RunTime:0.0004s ]
+NOTIC: [8] Undefined index: seller_id C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\GoodsController.class.php 第 241 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000113s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000148s ]
+NOTIC: [8] Undefined index: goods_name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 55 行.
+NOTIC: [8] Undefined index: shop_price_l C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 56 行.
+NOTIC: [8] Undefined index: shop_price_h C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 58 行.
+NOTIC: [8] Undefined index: r_sale_l C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 59 行.
+NOTIC: [8] Undefined index: r_sale_h C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 61 行.
+NOTIC: [8] Undefined index: bonus_state C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 63 行.
+NOTIC: [8] Undefined index: status C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\db1bde4730d8f7dfd71e68460af75dae.php 第 93 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.015470s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.015505s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000667s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000692s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000900s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000934s ]
+
+[ 2018-05-04T10:40:23+08:00 ] 127.0.0.1 /ysc2/admin.php/Home/Bonuscheck/bonuscheckindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000521s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000728s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000765s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0097s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Bonuscheck/bonuscheckindex' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0099s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '85' LIMIT 1   [ RunTime:0.0004s ]
+ERR: array (
+  'rabc_id' => '85',
+)
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\BonuscheckController.class.php on line 15 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\BonuscheckController.class.php 第 100 行.
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0093s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT g.*,s.name as seller_name,l.name as logistics_name,min(gai.stock) as goods_inventory FROM goods g left join seller s on s.id=g.seller_id left join logistics l on l.id=g.default_express left join goods_attribute_info gai on gai.goods_id=g.id  WHERE g.is_delete = 0 GROUP BY g.id ORDER BY g.bonus_state LIMIT 0,20   [ RunTime:0.0213s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0075s ]
+SQL: SELECT COUNT(*) AS tp_count FROM goods g LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0078s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '619'  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0072s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '17'  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0071s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '27'  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0081s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '28'  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0086s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '31'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0076s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '32'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0078s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '33'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0072s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '34'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0070s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '35'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0078s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '36'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0072s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '37'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0080s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '38'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0080s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '39'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0086s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '42'  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0084s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '43'  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0069s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '47'  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0075s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '49'  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0067s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '50'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0069s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '51'  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0075s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '52'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_class_two` [ RunTime:0.0069s ]
+SQL: SELECT gct.*,gc.name as gc_name FROM goods_class_two gct left join goods_class gc on gc.id=gct.goods_class_id  WHERE gct.is_disable = 0 AND gc.is_disable = 0  [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `goods_class_san` [ RunTime:0.0099s ]
+SQL: SELECT gcs.*,gct.name as gct_name FROM goods_class_san gcs left join goods_class_two gct on gct.id=gcs.gct_id  WHERE gct.is_disable = 0 AND gcs.is_disable = 0  [ RunTime:0.0005s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000079s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000109s ]
+NOTIC: [8] Undefined index: gct_id C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\cbf5328bad4ace9db501957694a5123f.php 第 71 行.
+NOTIC: [8] Undefined index: goods_name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\cbf5328bad4ace9db501957694a5123f.php 第 73 行.
+NOTIC: [8] Undefined index: number C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\cbf5328bad4ace9db501957694a5123f.php 第 74 行.
+NOTIC: [8] Undefined index: bonus_state C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\cbf5328bad4ace9db501957694a5123f.php 第 76 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.014207s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.014245s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000540s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000563s ]
+
+[ 2018-05-04T10:40:24+08:00 ] 127.0.0.1 /ysc2/admin.php/Home/Bonuscheck/bonuscheckindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000016s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000526s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000730s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000773s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0140s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Bonuscheck/bonuscheckindex' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0118s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '85' LIMIT 1   [ RunTime:0.0009s ]
+ERR: array (
+  'rabc_id' => '85',
+)
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\BonuscheckController.class.php on line 15 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\BonuscheckController.class.php 第 100 行.
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0103s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT g.*,s.name as seller_name,l.name as logistics_name,min(gai.stock) as goods_inventory FROM goods g left join seller s on s.id=g.seller_id left join logistics l on l.id=g.default_express left join goods_attribute_info gai on gai.goods_id=g.id  WHERE g.is_delete = 0 GROUP BY g.id ORDER BY g.bonus_state LIMIT 0,20   [ RunTime:0.0151s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM goods g LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0081s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '619'  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0072s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '17'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0074s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '27'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0072s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '28'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0071s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '31'  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0074s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '32'  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0071s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '33'  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0096s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '34'  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0095s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '35'  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0071s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '36'  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0082s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '37'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0069s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '38'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0091s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '39'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0077s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '42'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0098s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '43'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0070s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '47'  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0085s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '49'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0074s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '50'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0076s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '51'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0064s ]
+SQL: SELECT ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '52'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods_class_two` [ RunTime:0.0072s ]
+SQL: SELECT gct.*,gc.name as gc_name FROM goods_class_two gct left join goods_class gc on gc.id=gct.goods_class_id  WHERE gct.is_disable = 0 AND gc.is_disable = 0  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods_class_san` [ RunTime:0.0067s ]
+SQL: SELECT gcs.*,gct.name as gct_name FROM goods_class_san gcs left join goods_class_two gct on gct.id=gcs.gct_id  WHERE gct.is_disable = 0 AND gcs.is_disable = 0  [ RunTime:0.0009s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000078s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000128s ]
+NOTIC: [8] Undefined index: gct_id C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\cbf5328bad4ace9db501957694a5123f.php 第 71 行.
+NOTIC: [8] Undefined index: goods_name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\cbf5328bad4ace9db501957694a5123f.php 第 73 行.
+NOTIC: [8] Undefined index: number C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\cbf5328bad4ace9db501957694a5123f.php 第 74 行.
+NOTIC: [8] Undefined index: bonus_state C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\cbf5328bad4ace9db501957694a5123f.php 第 76 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012006s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012057s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000662s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000688s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000857s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000905s ]
+
+[ 2018-05-04T10:40:40+08:00 ] 127.0.0.1 /ysc2/admin.php/home/goods/goodsinfo/id/619.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000701s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001101s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001155s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0107s ]
+SQL: SELECT g.*,s.name as seller_name,l.name as logistics_name FROM goods g left join seller s on s.id=g.seller_id left join logistics l on l.id=g.default_express  WHERE g.id = '619' LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `pic` [ RunTime:0.0082s ]
+SQL: SELECT p.pic FROM pic p WHERE p.goods_id = '619'  [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `goods_attribute_info` [ RunTime:0.0092s ]
+SQL: SELECT ga.name as attr_name,gai.* FROM goods_attribute_info gai left join goods_attribute ga on ga.id=gai.goods_attribute_id  WHERE gai.goods_id = '619'  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods_bouns_info` [ RunTime:0.0098s ]
+SQL: SELECT * FROM `goods_bouns_info` WHERE `goods_id` = 619  [ RunTime:0.0004s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000054s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000091s ]
+NOTIC: [8] Undefined variable: bonus_ratio_amount C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\be0c590e79a84c688ba270d7f74631d7.php 第 103 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.007648s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.007682s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000704s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000743s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000912s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000948s ]
+
+[ 2018-05-04T10:40:57+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/neworder.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000449s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000618s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000649s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0181s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 37  [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0215s ]
+SQL: SELECT o.id,o.prompt_tone FROM orders o WHERE o.pay_status = 1 AND `prompt_tone` = 0  [ RunTime:0.0003s ]
+
+[ 2018-05-04T10:40:59+08:00 ] 127.0.0.1 /ysc2/admin.php/Home/Feeflow/feeflowindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000595s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001986s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002130s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0104s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Feeflow/feeflowindex' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0119s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '29' LIMIT 1   [ RunTime:0.0004s ]
+ERR: array (
+  'rabc_id' => '29',
+)
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\FeeflowController.class.php on line 18 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\FeeflowController.class.php 第 43 行.
+SQL: SHOW COLUMNS FROM `telephone_fare` [ RunTime:0.0144s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT * FROM telephone_fare tf LIMIT 0,20   [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `telephone_fare` [ RunTime:0.0070s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `telephone_fare` LIMIT 1   [ RunTime:0.0003s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000045s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000085s ]
+NOTIC: [8] Undefined index: number_l C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\8546dae72948a0c1fdcdc17fe76cd1df.php 第 38 行.
+NOTIC: [8] Undefined index: number_h C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\8546dae72948a0c1fdcdc17fe76cd1df.php 第 39 行.
+NOTIC: [8] Undefined index: type C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\8546dae72948a0c1fdcdc17fe76cd1df.php 第 42 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.009877s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.009914s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000463s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000486s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000688s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000718s ]
+
+[ 2018-05-04T10:41:00+08:00 ] 127.0.0.1 /ysc2/admin.php/Home/Feeflow/feeflowindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000378s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000563s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000592s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0139s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Feeflow/feeflowindex' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0103s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '29' LIMIT 1   [ RunTime:0.0005s ]
+ERR: array (
+  'rabc_id' => '29',
+)
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\FeeflowController.class.php on line 18 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\FeeflowController.class.php 第 43 行.
+SQL: SHOW COLUMNS FROM `telephone_fare` [ RunTime:0.0206s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT * FROM telephone_fare tf LIMIT 0,20   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `telephone_fare` [ RunTime:0.0072s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `telephone_fare` LIMIT 1   [ RunTime:0.0003s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000055s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000090s ]
+NOTIC: [8] Undefined index: number_l C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\8546dae72948a0c1fdcdc17fe76cd1df.php 第 38 行.
+NOTIC: [8] Undefined index: number_h C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\8546dae72948a0c1fdcdc17fe76cd1df.php 第 39 行.
+NOTIC: [8] Undefined index: type C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\8546dae72948a0c1fdcdc17fe76cd1df.php 第 42 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.007923s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.007975s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000488s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000541s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000674s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000716s ]
+
+[ 2018-05-04T10:41:07+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/newbonus.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000399s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000587s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000615s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0067s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2083  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0083s ]
+SQL: SELECT `id`,`prompt_tone` FROM `goods` WHERE `prompt_tone` = 0  [ RunTime:0.0006s ]
+
+[ 2018-05-04T10:41:10+08:00 ] 127.0.0.1 /ysc2/admin.php/home/logclass/logclassindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000419s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000679s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000711s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0092s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Logclass/logclassindex' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0087s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '601' LIMIT 1   [ RunTime:0.0004s ]
+ERR: array (
+  'rabc_id' => '601',
+)
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\LogclassController.class.php on line 17 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+SQL: SHOW COLUMNS FROM `logistics` [ RunTime:0.0077s ]
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\LogclassController.class.php 第 27 行.
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT * FROM `logistics` LIMIT 0,20   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `logistics` LIMIT 1   [ RunTime:0.0002s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000042s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000073s ]
+NOTIC: [8] Undefined index: name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\2a3b08ff11fec76432adad8e97e29113.php 第 39 行.
+NOTIC: [8] Undefined index: is_disable C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\2a3b08ff11fec76432adad8e97e29113.php 第 42 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.010310s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.010349s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000583s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000606s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000705s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000734s ]
+
+[ 2018-05-04T10:41:11+08:00 ] 127.0.0.1 /ysc2/admin.php/home/logclass/logclassindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000008s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000373s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000597s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000626s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0150s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Logclass/logclassindex' LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0139s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '601' LIMIT 1   [ RunTime:0.0003s ]
+ERR: array (
+  'rabc_id' => '601',
+)
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\LogclassController.class.php on line 17 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+SQL: SHOW COLUMNS FROM `logistics` [ RunTime:0.0067s ]
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\LogclassController.class.php 第 27 行.
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT * FROM `logistics` LIMIT 0,20   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `logistics` LIMIT 1   [ RunTime:0.0002s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000042s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000090s ]
+NOTIC: [8] Undefined index: name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\2a3b08ff11fec76432adad8e97e29113.php 第 39 行.
+NOTIC: [8] Undefined index: is_disable C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\2a3b08ff11fec76432adad8e97e29113.php 第 42 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.008843s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.008880s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000595s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000623s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000720s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000762s ]
+
+[ 2018-05-04T10:41:17+08:00 ] 127.0.0.1 /ysc2/admin.php/home/logmanage/logmanageindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000386s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002303s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002387s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0072s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Logmanage/logmanageindex' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0073s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '602' LIMIT 1   [ RunTime:0.0004s ]
+ERR: array (
+  'rabc_id' => '602',
+)
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\LogmanageController.class.php on line 17 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\LogmanageController.class.php 第 55 行.
+SQL: SHOW COLUMNS FROM `logistics_seller` [ RunTime:0.0106s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT LS.*,S.forshort,S.number,L.sn,L.name FROM logistics_seller LS left join seller S on S.id = LS.seller_id left join logistics L on L.id = LS.logistics_id  LIMIT 0,20   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `logistics_seller` [ RunTime:0.0093s ]
+SQL: SELECT COUNT(*) AS tp_count FROM logistics_seller LS left join seller S on S.id = LS.seller_id left join logistics L on L.id = LS.logistics_id  LIMIT 1   [ RunTime:0.0004s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000040s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000069s ]
+NOTIC: [8] Undefined index: name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\ecf8e90a9c69630f735dba680cc3f981.php 第 39 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.009246s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.009279s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000521s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000602s ]
+
+[ 2018-05-04T10:41:18+08:00 ] 127.0.0.1 /ysc2/admin.php/home/logmanage/logmanageindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000456s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000551s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000581s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0155s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Logmanage/logmanageindex' LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0100s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '602' LIMIT 1   [ RunTime:0.0004s ]
+ERR: array (
+  'rabc_id' => '602',
+)
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\LogmanageController.class.php on line 17 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\LogmanageController.class.php 第 55 行.
+SQL: SHOW COLUMNS FROM `logistics_seller` [ RunTime:0.0088s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT LS.*,S.forshort,S.number,L.sn,L.name FROM logistics_seller LS left join seller S on S.id = LS.seller_id left join logistics L on L.id = LS.logistics_id  LIMIT 0,20   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `logistics_seller` [ RunTime:0.0087s ]
+SQL: SELECT COUNT(*) AS tp_count FROM logistics_seller LS left join seller S on S.id = LS.seller_id left join logistics L on L.id = LS.logistics_id  LIMIT 1   [ RunTime:0.0005s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000064s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000122s ]
+NOTIC: [8] Undefined index: name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\ecf8e90a9c69630f735dba680cc3f981.php 第 39 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.007949s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.007981s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000602s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000630s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001224s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001291s ]
+
+[ 2018-05-04T10:41:27+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/service.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000635s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000583s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000613s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0063s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2108  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `customer_service` [ RunTime:0.0079s ]
+SQL: SELECT `id`,`prompt_tone` FROM `customer_service` WHERE `prompt_tone` = 0  [ RunTime:0.0004s ]
+
+[ 2018-05-04T10:41:37+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/rechargecash.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000390s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001535s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001583s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0078s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 1600  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `rechargecash` [ RunTime:0.0079s ]
+SQL: SELECT `id`,`prompt_tone` FROM `rechargecash` WHERE `type` = 2 AND `prompt_tone` = 0  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `rechargecash_seller` [ RunTime:0.0078s ]
+SQL: SELECT `id`,`prompt_tone` FROM `rechargecash_seller` WHERE `type` = 1 AND `prompt_tone` = 0  [ RunTime:0.0003s ]
+
+[ 2018-05-04T10:41:57+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/neworder.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000647s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000914s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000958s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0152s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 37  [ RunTime:0.0009s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0165s ]
+SQL: SELECT o.id,o.prompt_tone FROM orders o WHERE o.pay_status = 1 AND `prompt_tone` = 0  [ RunTime:0.0006s ]
+
+[ 2018-05-04T10:42:12+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/newbonus.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000371s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000661s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000702s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0142s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2083  [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0149s ]
+SQL: SELECT `id`,`prompt_tone` FROM `goods` WHERE `prompt_tone` = 0  [ RunTime:0.0011s ]
+
+[ 2018-05-04T10:42:42+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/service.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000533s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000743s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000772s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0101s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2108  [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `customer_service` [ RunTime:0.0105s ]
+SQL: SELECT `id`,`prompt_tone` FROM `customer_service` WHERE `prompt_tone` = 0  [ RunTime:0.0003s ]
+
+[ 2018-05-04T10:42:57+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/neworder.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000008s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000407s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000624s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000651s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0291s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 37  [ RunTime:0.0009s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0184s ]
+SQL: SELECT o.id,o.prompt_tone FROM orders o WHERE o.pay_status = 1 AND `prompt_tone` = 0  [ RunTime:0.0006s ]
+
+[ 2018-05-04T10:42:58+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/rechargecash.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000401s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000623s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000653s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0170s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 1600  [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `rechargecash` [ RunTime:0.0158s ]
+SQL: SELECT `id`,`prompt_tone` FROM `rechargecash` WHERE `type` = 2 AND `prompt_tone` = 0  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `rechargecash_seller` [ RunTime:0.0067s ]
+SQL: SELECT `id`,`prompt_tone` FROM `rechargecash_seller` WHERE `type` = 1 AND `prompt_tone` = 0  [ RunTime:0.0003s ]
+
+[ 2018-05-04T10:43:05+08:00 ] 127.0.0.1 /ysc2/admin.php/Home/Actimg/actimgindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000013s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000436s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000770s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000810s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0181s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Actimg/actimgindex' LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0114s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '1207' LIMIT 1   [ RunTime:0.0004s ]
+ERR: array (
+  'rabc_id' => '1207',
+)
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ActimgController.class.php 第 19 行.
+SQL: SHOW COLUMNS FROM `activity_img` [ RunTime:0.0155s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT a.*,g.goods_name FROM activity_img a left join goods g on g.id = a.goods_id  LIMIT 0,20   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `activity_img` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM activity_img a left join goods g on g.id = a.goods_id  LIMIT 1   [ RunTime:0.0004s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000044s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000075s ]
+NOTIC: [8] Undefined variable: search C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\931f5100735bf6c4a5abff1fca8ef639.php 第 35 行.
+NOTIC: [8] Undefined variable: search C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\931f5100735bf6c4a5abff1fca8ef639.php 第 36 行.
+NOTIC: [8] Undefined index: sort_no C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\931f5100735bf6c4a5abff1fca8ef639.php 第 71 行.
+NOTIC: [8] Undefined index: sort_no C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\931f5100735bf6c4a5abff1fca8ef639.php 第 71 行.
+NOTIC: [8] Undefined index: sort_no C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\931f5100735bf6c4a5abff1fca8ef639.php 第 71 行.
+NOTIC: [8] Undefined index: sort_no C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\931f5100735bf6c4a5abff1fca8ef639.php 第 71 行.
+NOTIC: [8] Undefined index: sort_no C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\931f5100735bf6c4a5abff1fca8ef639.php 第 71 行.
+NOTIC: [8] Undefined index: sort_no C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\931f5100735bf6c4a5abff1fca8ef639.php 第 71 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012041s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012088s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000600s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000623s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000952s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000995s ]
+
+[ 2018-05-04T10:43:10+08:00 ] 127.0.0.1 /ysc2/admin.php/Home/Order/orderindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000035s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002182s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000681s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000715s ]
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php on line 12 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: seller_id C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 14 行.
+NOTIC: [8] Undefined index: shr_tel C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 17 行.
+NOTIC: [8] Undefined index: username C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 22 行.
+NOTIC: [8] Undefined index: order_no C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 26 行.
+NOTIC: [8] Undefined index: class_id C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 30 行.
+SQL: SHOW COLUMNS FROM `order_status` [ RunTime:0.0148s ]
+SQL: SELECT id as class_id,type as class_name FROM `order_status`  [ RunTime:0.0004s ]
+NOTIC: [8] Undefined index: time C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 43 行.
+NOTIC: [8] Undefined variable: map C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 82 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 99 行.
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0149s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT o.*,u.username,s.id as seller_id,s.name as seller_name,group_concat(og.goods_number) as allnum,group_concat(og.price) as allprice,group_concat(g.goods_name) as goods_names FROM orders o left join user u on u.id = o.user_id left join seller s on s.id = o.seller_id left join order_goods og on og.order_id = o.id left join goods g on g.id = og.goods_id  GROUP BY o.id ORDER BY o.pay_time  desc LIMIT 0,20   [ RunTime:0.0167s ]
+SQL: SHOW COLUMNS FROM `seller` [ RunTime:0.0081s ]
+SQL: SELECT `id`,`name` FROM `seller`  [ RunTime:0.0004s ]
+NOTIC: [8] Undefined variable: map C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 105 行.
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0090s ]
+SQL: SELECT COUNT(*) AS tp_count FROM orders o left join user u on u.id = o.user_id left join seller s on s.id = o.seller_id  LIMIT 1   [ RunTime:0.0006s ]
+NOTIC: [8] Undefined index: seller_id C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 121 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000072s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000102s ]
+NOTIC: [8] Undefined index: phone C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\b05ed8e4ba657476b6f84006decac184.php 第 162 行.
+NOTIC: [8] Undefined index: username C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\b05ed8e4ba657476b6f84006decac184.php 第 163 行.
+NOTIC: [8] Undefined index: order_no C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\b05ed8e4ba657476b6f84006decac184.php 第 164 行.
+NOTIC: [8] Undefined index: time C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\b05ed8e4ba657476b6f84006decac184.php 第 165 行.
+NOTIC: [8] Undefined index: time2 C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\b05ed8e4ba657476b6f84006decac184.php 第 166 行.
+NOTIC: [8] Undefined index: class_id C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\b05ed8e4ba657476b6f84006decac184.php 第 169 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012387s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012419s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000502s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000528s ]
+
+[ 2018-05-04T10:43:11+08:00 ] 127.0.0.1 /ysc2/admin.php/Home/Order/orderindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000006s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000522s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000655s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000692s ]
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php on line 12 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: seller_id C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 14 行.
+NOTIC: [8] Undefined index: shr_tel C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 17 行.
+NOTIC: [8] Undefined index: username C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 22 行.
+NOTIC: [8] Undefined index: order_no C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 26 行.
+NOTIC: [8] Undefined index: class_id C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 30 行.
+SQL: SHOW COLUMNS FROM `order_status` [ RunTime:0.0061s ]
+SQL: SELECT id as class_id,type as class_name FROM `order_status`  [ RunTime:0.0003s ]
+NOTIC: [8] Undefined index: time C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 43 行.
+NOTIC: [8] Undefined variable: map C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 82 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 99 行.
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0092s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT o.*,u.username,s.id as seller_id,s.name as seller_name,group_concat(og.goods_number) as allnum,group_concat(og.price) as allprice,group_concat(g.goods_name) as goods_names FROM orders o left join user u on u.id = o.user_id left join seller s on s.id = o.seller_id left join order_goods og on og.order_id = o.id left join goods g on g.id = og.goods_id  GROUP BY o.id ORDER BY o.pay_time  desc LIMIT 0,20   [ RunTime:0.0096s ]
+SQL: SHOW COLUMNS FROM `seller` [ RunTime:0.0089s ]
+SQL: SELECT `id`,`name` FROM `seller`  [ RunTime:0.0003s ]
+NOTIC: [8] Undefined variable: map C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 105 行.
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0090s ]
+SQL: SELECT COUNT(*) AS tp_count FROM orders o left join user u on u.id = o.user_id left join seller s on s.id = o.seller_id  LIMIT 1   [ RunTime:0.0006s ]
+NOTIC: [8] Undefined index: seller_id C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\OrderController.class.php 第 121 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000071s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000102s ]
+NOTIC: [8] Undefined index: phone C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\b05ed8e4ba657476b6f84006decac184.php 第 162 行.
+NOTIC: [8] Undefined index: username C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\b05ed8e4ba657476b6f84006decac184.php 第 163 行.
+NOTIC: [8] Undefined index: order_no C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\b05ed8e4ba657476b6f84006decac184.php 第 164 行.
+NOTIC: [8] Undefined index: time C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\b05ed8e4ba657476b6f84006decac184.php 第 165 行.
+NOTIC: [8] Undefined index: time2 C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\b05ed8e4ba657476b6f84006decac184.php 第 166 行.
+NOTIC: [8] Undefined index: class_id C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\b05ed8e4ba657476b6f84006decac184.php 第 169 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.010847s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.010893s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001891s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001949s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001853s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001927s ]
+
+[ 2018-05-04T10:43:17+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/newbonus.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000008s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000372s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000704s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000746s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0101s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2083  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0079s ]
+SQL: SELECT `id`,`prompt_tone` FROM `goods` WHERE `prompt_tone` = 0  [ RunTime:0.0006s ]
+
+[ 2018-05-04T10:43:22+08:00 ] 127.0.0.1 /ysc2/admin.php/home/order/orderinfo/id/79.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000656s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000554s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000586s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0114s ]
+SQL: SELECT o.*,u.username,u.userphone,s.name as seller_name FROM orders o left join user u on o.user_id = u.id left join seller s on o.seller_id = s.id  WHERE o.id = '79' LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `order_goods` [ RunTime:0.0105s ]
+SQL: SELECT og.*,o.order_number,o.is_invoice,g.goods_name,ga.name as ganame FROM order_goods og left join orders o on o.id = og.order_id  left join goods g on g.id = og.goods_id left join goods_attribute ga on ga.id = og.goods_attribute_id  WHERE og.order_id = '79'  [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `coupon_user` [ RunTime:0.0137s ]
+SQL: SELECT c.* FROM coupon_user as cu left join coupon as c on cu.discount_id=c.id  WHERE `order_id` = '79' LIMIT 1   [ RunTime:0.0035s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000070s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000106s ]
+NOTIC: [8] Undefined index: post_type C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\b0691df461a2bfb53ae343b559a9821e.php 第 108 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012128s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012182s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000497s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000521s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000634s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000659s ]
+
+[ 2018-05-04T10:43:29+08:00 ] 127.0.0.1 /ysc2/admin.php/home/order/orderinfo/id/78.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000373s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000624s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000676s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0120s ]
+SQL: SELECT o.*,u.username,u.userphone,s.name as seller_name FROM orders o left join user u on o.user_id = u.id left join seller s on o.seller_id = s.id  WHERE o.id = '78' LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `order_goods` [ RunTime:0.0116s ]
+SQL: SELECT og.*,o.order_number,o.is_invoice,g.goods_name,ga.name as ganame FROM order_goods og left join orders o on o.id = og.order_id  left join goods g on g.id = og.goods_id left join goods_attribute ga on ga.id = og.goods_attribute_id  WHERE og.order_id = '78'  [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `coupon_user` [ RunTime:0.0092s ]
+SQL: SELECT c.* FROM coupon_user as cu left join coupon as c on cu.discount_id=c.id  WHERE `order_id` = '78' LIMIT 1   [ RunTime:0.0005s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000076s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000127s ]
+NOTIC: [8] Undefined index: post_type C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\b0691df461a2bfb53ae343b559a9821e.php 第 108 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.008891s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.008948s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000529s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000553s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000622s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000645s ]
+
+[ 2018-05-04T10:43:57+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/neworder.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000008s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000434s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000640s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000675s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0136s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 37  [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0125s ]
+SQL: SELECT o.id,o.prompt_tone FROM orders o WHERE o.pay_status = 1 AND `prompt_tone` = 0  [ RunTime:0.0006s ]
+
+[ 2018-05-04T10:43:58+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/service.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000353s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000779s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000811s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0126s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2108  [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `customer_service` [ RunTime:0.0073s ]
+SQL: SELECT `id`,`prompt_tone` FROM `customer_service` WHERE `prompt_tone` = 0  [ RunTime:0.0004s ]
+
+[ 2018-05-04T10:44:17+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/rechargecash.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000021s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000776s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000635s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000669s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0234s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 1600  [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `rechargecash` [ RunTime:0.0157s ]
+SQL: SELECT `id`,`prompt_tone` FROM `rechargecash` WHERE `type` = 2 AND `prompt_tone` = 0  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `rechargecash_seller` [ RunTime:0.0098s ]
+SQL: SELECT `id`,`prompt_tone` FROM `rechargecash_seller` WHERE `type` = 1 AND `prompt_tone` = 0  [ RunTime:0.0003s ]
+
+[ 2018-05-04T10:44:22+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/newbonus.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000762s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001467s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001534s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0181s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2083  [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0137s ]
+SQL: SELECT `id`,`prompt_tone` FROM `goods` WHERE `prompt_tone` = 0  [ RunTime:0.0010s ]
+
+[ 2018-05-04T10:44:57+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/neworder.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000806s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001048s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001094s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0165s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 37  [ RunTime:0.0009s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0173s ]
+SQL: SELECT o.id,o.prompt_tone FROM orders o WHERE o.pay_status = 1 AND `prompt_tone` = 0  [ RunTime:0.0006s ]
+
+[ 2018-05-04T10:45:12+08:00 ] 127.0.0.1 /ysc2/index.php/home/search/service.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000373s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000586s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000613s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0077s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2108  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `customer_service` [ RunTime:0.0081s ]
+SQL: SELECT `id`,`prompt_tone` FROM `customer_service` WHERE `prompt_tone` = 0  [ RunTime:0.0003s ]
+

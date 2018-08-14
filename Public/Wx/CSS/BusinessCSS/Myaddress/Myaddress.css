@@ -1,0 +1,59 @@
+.input input {
+    top: 30px;
+    position: relative;
+    width: 90%;
+    height: 45px;
+    left: 5%;
+    background-color: #FFFFFF;
+    color: #007aff;
+    border: 2px dotted #e0e0e0;
+    display: block;
+}
+
+.mui-input-row {
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+}
+.xin{
+    position: relative;
+    top:10px;
+    display: none;
+}
+.xin label {
+    color: #4a4a4a;
+    font-size: 16px;
+
+}
+
+.xin .moren {
+    position: relative;
+    top: 10px;
+    width: 100%;
+    padding: 0 10px;
+    background-color: #fff;
+    height: 45px;
+}
+
+.xin .moren img {
+    margin-right: 10px;
+    float: left;
+    width: 19px;
+    height: 19px;
+}
+
+.xin .moren img, p {
+    position: relative;
+    top: 13px;
+}
+
+.xin .baocun input {
+    border:none;
+    top:40px;
+    width: 90%;
+    position: relative;
+    left: 5%;
+    height: 45px;
+    background-color: #fe504f;
+    color: #FFFFFF;
+    border-radius: 5px;
+}

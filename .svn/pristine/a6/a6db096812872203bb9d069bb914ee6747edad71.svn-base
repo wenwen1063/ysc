@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>搭档中心</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../../../CSS/CommonCSS/Base.css">
+		<link rel="stylesheet" href="../css/distribution.css">
+		<link rel="stylesheet" href="../../../../CSS/BusinessCSS/Mypage/Distributioncenter.css">
+		<link rel="stylesheet" href="../../../homepage/marketingActive/css/active.css">
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header">
+			<a href="../../Mypage.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">搭档中心</h1>
+		</header>
+		<div class="mui-content">
+			<div class="distribution_nav">
+				<ul style="padding-right: 0;">
+					<li class="active">
+						<img src="../img/dadang.png" alt="">
+						<h5>搭档中心</h5>
+					</li>
+					<li class="">
+						<img src="../img/tequan.png" alt="">
+						<h5>特权领取</h5>
+					</li>
+					<li class="">
+						<img src="../img/tuijian.png" alt="">
+						<h5>我的推荐</h5>
+					</li>
+					<li class="">
+						<img src="../../../../img/My/my_gpdc_icon_my_income.png" alt="">
+						<h5>我的收益</h5>
+					</li>
+					<li class="">
+						<img src="../../../../img/My/my_gpdc_icon_promotion_information.png" alt="">
+						<h5>推广信息</h5>
+					</li>
+				</ul>
+			</div>
+			<div style="clear: both;"></div>
+			<div class="main margin_t_15">
+				<!--搭档中心-->
+				<div class="partnercenter">
+					<div id="slider" class="mui-slider">
+						<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+							<a class="mui-control-item mui-h5" href="#item1mobile">
+								今日信息
+							</a>
+							<a class="mui-control-item mui-h5" href="#item2mobile">
+								分销汇总
+							</a>
+						</div>
+						<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
+						<div class="mui-slider-group">
+							<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+								<div id="scroll1" class="mui-scroll-wrapper">
+									<div class="mui-scroll">
+										<ul class="mui-table-view">
+											<li class="mui-table-view-cell">
+												<div class="mui-table">
+													<div class="mui-table-cell mui-col-xs-10">
+														<p class="mui-ellipsis">新增推荐奖励金额</p>
+													</div>
+													<div class="mui-table-cell mui-col-xs-2 mui-text-right">
+														<span class="redbold">￥55</span>
+													</div>
+												</div>
+											</li>
+											<li class="mui-table-view-cell">
+												<div class="mui-table">
+													<div class="mui-table-cell mui-col-xs-10">
+														<p class="mui-ellipsis">新增推荐奖励积分</p>
+													</div>
+													<div class="mui-table-cell mui-col-xs-2 mui-text-right">
+														<span class="redbold">￥55</span>
+													</div>
+												</div>
+											</li>
+											<li class="mui-table-view-cell">
+												<div class="mui-table">
+													<div class="mui-table-cell mui-col-xs-10">
+														<p class="mui-ellipsis">新增消费奖金金额</p>
+													</div>
+													<div class="mui-table-cell mui-col-xs-2 mui-text-right">
+														<span class="redbold">￥55</span>
+													</div>
+												</div>
+											</li>
+											<li class="mui-table-view-cell">
+												<div class="mui-table">
+													<div class="mui-table-cell mui-col-xs-10">
+														<p class="mui-ellipsis">新增消费奖励积分</p>
+													</div>
+													<div class="mui-table-cell mui-col-xs-2 mui-text-right">
+														<span class="redbold">￥55</span>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div id="item2mobile" class="mui-slider-item mui-control-content">
+								<div id="scroll2" class="mui-scroll-wrapper">
+									<div class="mui-scroll">
+										<div class="mui-loading">
+											<div class="mui-spinner">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<a id="lookmore_a" style="display: none;" href="distribution_details.html">
+						<button type="button" class="lookmore mui-btn mui-btn-blue mui-btn-outlined mui-btn-block font_size14">
+				     	查看更多 >
+			           </button>
+					</a>
+				</div>
+				<!--特权领取-->
+				<div class="privilegeget">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell">
+							<div class="mui-table">
+								<div class="mui-table-cell mui-col-xs-3">
+									<p class="mui-ellipsis">会员层级</p>
+								</div>
+								<div class="mui-table-cell mui-col-xs-4">
+									<p class="mui-ellipsis">特权信息</p>
+								</div>
+								<div class="mui-table-cell mui-col-xs-5">
+									<p class="mui-ellipsis">领取数量</p>
+								</div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-table">
+								<div class="mui-table-cell mui-col-xs-3">
+									<p class="mui-ellipsis">二级</p>
+								</div>
+								<div class="mui-table-cell mui-col-xs-4">
+									<p class="mui-ellipsis">名称:<span class="margin_l_10">推广工具</span></p>
+									<p class="mui-ellipsis">类型:<span class="margin_l_10">软件</span></p>
+									<p class="mui-ellipsis">产品:<span class="margin_l_10">工具</span></p>
+								</div>
+								<div class="mui-table-cell mui-col-xs-5">
+									<p class="mui-ellipsis">数量:<span class="margin_l_10">1</span></p>
+									<p class="mui-ellipsis">类型:<span class="margin_l_10">/</span></p>
+									<p class="mui-ellipsis">时间:<span class="margin_l_10">2017/01/12</span></p>
+								</div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-table">
+								<div class="mui-table-cell mui-col-xs-3">
+									<p class="mui-ellipsis">二级</p>
+								</div>
+								<div class="mui-table-cell mui-col-xs-4">
+									<p class="mui-ellipsis">名称:<span class="margin_l_10">推广工具</span></p>
+									<p class="mui-ellipsis">类型:<span class="margin_l_10">软件</span></p>
+									<p class="mui-ellipsis">产品:<span class="margin_l_10">工具</span></p>
+								</div>
+								<div class="mui-table-cell mui-col-xs-5">
+									<p class="mui-ellipsis">数量:<span class="margin_l_10">1</span></p>
+									<p class="mui-ellipsis">类型:<span class="margin_l_10">/</span></p>
+									<p class="mui-ellipsis">时间:<span class="margin_l_10">2017/01/12</span></p>
+								</div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-table">
+								<div class="mui-table-cell mui-col-xs-3">
+									<p class="mui-ellipsis">二级</p>
+								</div>
+								<div class="mui-table-cell mui-col-xs-4">
+									<p class="mui-ellipsis">名称:<span class="margin_l_10">推广工具</span></p>
+									<p class="mui-ellipsis">类型:<span class="margin_l_10">软件</span></p>
+									<p class="mui-ellipsis">产品:<span class="margin_l_10">工具</span></p>
+								</div>
+								<div class="mui-table-cell mui-col-xs-5">
+									<p class="mui-ellipsis">数量:<span class="margin_l_10">1</span></p>
+									<p class="mui-ellipsis">类型:<span class="margin_l_10">/</span></p>
+									<p class="mui-ellipsis">时间:<span class="margin_l_10">2017/01/12</span></p>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<!--我的推荐-->
+				<div class="mui-content  goodsclassify myrecommand">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell">
+							<div class="mui-table">
+								<div class="mui-table-cell mui-col-xs-4  mui-text-center">
+									<div class="content">
+										<a href="#">
+											<img class="mui-media-object border_radicus50 " src="../img/home_pic_2.png">
+											<div class="mui-media-body">
+												<p class="title">何凡</p>
+												<p>草根搭档</p>
+											</div>
+										</a>
+									</div>
+								</div>
+								<div class="mui-table-cell mui-col-xs-4  mui-text-center">
+									<div class="content">
+										<a href="#">
+											<img class="mui-media-object border_radicus50 " src="../img/home_pic_2.png">
+											<div class="mui-media-body">
+												<p class="title">何凡</p>
+												<p>草根搭档</p>
+											</div>
+										</a>
+									</div>
+								</div>
+								<div class="mui-table-cell mui-col-xs-4  mui-text-center">
+									<div class="content">
+										<a href="#">
+											<img class="mui-media-object border_radicus50 " src="../img/home_pic_2.png">
+											<div class="mui-media-body">
+												<p class="title">何凡</p>
+												<p>草根搭档</p>
+											</div>
+										</a>
+									</div>
+								</div>
+								<div class="mui-table-cell mui-col-xs-4  mui-text-center">
+									<div class="content">
+										<a href="#">
+											<img class="mui-media-object border_radicus50 " src="../img/home_pic_2.png">
+											<div class="mui-media-body">
+												<p class="title">何凡</p>
+												<p>草根搭档</p>
+											</div>
+										</a>
+									</div>
+								</div>
+								<div class="mui-table-cell mui-col-xs-4  mui-text-center">
+									<div class="content">
+										<a href="#">
+											<img class="mui-media-object border_radicus50 " src="../img/home_pic_2.png">
+											<div class="mui-media-body">
+												<p class="title">何凡</p>
+												<p>草根搭档</p>
+											</div>
+										</a>
+									</div>
+								</div>
+								<div class="mui-table-cell mui-col-xs-4  mui-text-center">
+									<div class="content">
+										<a href="#">
+											<img class="mui-media-object border_radicus50 " src="../img/home_pic_2.png">
+											<div class="mui-media-body">
+												<p class="title">何凡</p>
+												<p>草根搭档</p>
+											</div>
+										</a>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<!--我的收益-->
+				<div class="myearnings">
+					<div>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell">
+								<div class="mui-table">
+									<div class="mui-table-cell mui-col-xs-10">
+										<p class="mui-ellipsis">奖励金额总额</p>
+									</div>
+									<div class="mui-table-cell mui-col-xs-2 mui-text-right">
+										<span class="redbold">￥55</span>
+									</div>
+								</div>
+							</li>
+							<li class="mui-table-view-cell">
+								<div class="mui-table">
+									<div class="mui-table-cell mui-col-xs-10">
+										<p class="mui-ellipsis">可领取奖励金额</p>
+									</div>
+									<div class="mui-table-cell mui-col-xs-2 mui-text-right">
+										<span class="redbold">￥55</span>
+									</div>
+								</div>
+							</li>
+							<li class="mui-table-view-cell">
+								<div class="mui-table">
+									<div class="mui-table-cell mui-col-xs-10">
+										<p class="mui-ellipsis">冻结奖励金额</p>
+									</div>
+									<div class="mui-table-cell mui-col-xs-2 mui-text-right">
+										<span class="redbold">￥55</span>
+									</div>
+								</div>
+							</li>
+							<li class="mui-table-view-cell">
+								<div class="mui-table">
+									<div class="mui-table-cell mui-col-xs-10">
+										<p class="mui-ellipsis">奖励积分总数</p>
+									</div>
+									<div class="mui-table-cell mui-col-xs-2 mui-text-right">
+										<span class="redbold">￥55</span>
+									</div>
+								</div>
+							</li>
+							<li class="mui-table-view-cell">
+								<div class="mui-table">
+									<div class="mui-table-cell mui-col-xs-10">
+										<p class="mui-ellipsis">可领取奖励积分</p>
+									</div>
+									<div class="mui-table-cell mui-col-xs-2 mui-text-right">
+										<span class="redbold">￥55</span>
+									</div>
+								</div>
+							</li>
+							<li class="mui-table-view-cell">
+								<div class="mui-table">
+									<div class="mui-table-cell mui-col-xs-10">
+										<p class="mui-ellipsis">冻结奖励积分</p>
+									</div>
+									<div class="mui-table-cell mui-col-xs-2 mui-text-right">
+										<span class="redbold">￥55</span>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="btnDiv">
+						<a href="extractearnings.html">
+							<button type="button" class="mui-btn mui-btn-danger mui-btn-block font_size14">
+					              提取收益
+			                </button>
+						</a>
+					</div>
+					<a href="earnings_details.html">
+						<button type="button" class="lookmore mui-btn mui-btn-blue mui-btn-outlined mui-btn-block font_size14">
+					查看更多 >
+			    </button>
+					</a>
+				</div>
+				<!--推广信息-->
+				<div class="publishinfo">
+					<div class="publishinfoDiv">
+						<div class="infoshowDiv">
+							<p class="mui-ellipsis-2">显示推广信息连接...显示推广信息连接...显示推广信息连接...显示推广信息连接...显示推广信息连接...显示推广信息连接...</p>
+						</div>
+						<div class="btnDiv publishbtnDiv">
+							<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined mui-btn-block font_size14">
+					       复制推广链接
+			            </button>
+						</div>
+					</div>
+					<!--背景图片-->
+					<div class="publishbtmDiv">
+						<img src="../img/beijing.png" alt="" style="width: 100%;">
+						<div class="titleDiv">
+							<img src="../img/headerlogo.png" alt="">
+							<span>兰州小浪仔</span>
+						</div>
+						<div class="qrDiv">
+							<img src="../img/qr.png" alt="" style="width: 48%;">
+						</div>
+						<div class="btnDiv savebtnDiv">
+							<button type="button" class="mui-btn mui-btn-danger  mui-btn-outlined mui-btn-block font_size14">
+					       保存到手机
+			            </button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../../../../Script/CommonJS/Base.js"></script>
+
+	</body>
+
+</html>
+<script src="../../../../Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+	var index = 0;
+	$(function() {
+		$('.main>div').hide();
+		$('.main>div:eq(' + index + ')').show();
+	});
+	$('.distribution_nav ul li').click(function() {
+		index = $(this).index();
+		$('.distribution_nav ul li').removeClass('active');
+		$(this).addClass('active');
+		$('.main>div').hide();
+		$('.main>div:eq(' + index + ')').show();
+	});
+	mui.init({
+		swipeBack: false
+	});
+	(function($) {
+		$('.mui-scroll-wrapper').scroll({
+			indicators: true //是否显示滚动条
+		});
+		var html2 = '<ul class="mui-table-view">' +
+			'<li class="mui-table-view-cell"><div class="mui-table"><div class="mui-table-cell mui-col-xs-10"><p class="mui-ellipsis">推荐奖励金额</p></div><div class="mui-table-cell mui-col-xs-2 mui-text-right"><span class="redbold">￥55</span></div></div></li>' +
+			'<li class="mui-table-view-cell"><div class="mui-table"><div class="mui-table-cell mui-col-xs-10"><p class="mui-ellipsis">推荐奖励积分</p></div><div class="mui-table-cell mui-col-xs-2 mui-text-right"><span class="redbold">￥55</span></div></div></li>' +
+			'<li class="mui-table-view-cell"><div class="mui-table"><div class="mui-table-cell mui-col-xs-10"><p class="mui-ellipsis">消费奖金金额</p></div><div class="mui-table-cell mui-col-xs-2 mui-text-right"><span class="redbold">￥55</span></div></div></li>' +
+			'<li class="mui-table-view-cell"><div class="mui-table"><div class="mui-table-cell mui-col-xs-10"><p class="mui-ellipsis">消费奖励积分</p></div><div class="mui-table-cell mui-col-xs-2 mui-text-right"><span class="redbold">￥55</span></div></div></li>' +
+			'</ul>';
+		var item2 = document.getElementById('item2mobile');
+		document.getElementById('slider').addEventListener('slide', function(e) {
+			if(e.detail.slideNumber === 1) { 
+				if(item2.querySelector('.mui-loading')) {
+					setTimeout(function() {
+						item2.querySelector('.mui-scroll').innerHTML = html2; 
+					}, 500);
+				}
+			}
+		});
+		var sliderSegmentedControl = document.getElementById('sliderSegmentedControl');
+		$('.mui-input-group').on('change', 'input', function() {
+			if(this.checked) {
+				sliderSegmentedControl.className = 'mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-' + this.value;
+				//force repaint
+				sliderProgressBar.setAttribute('style', sliderProgressBar.getAttribute('style'));
+			}
+		});
+	})(mui);
+</script>

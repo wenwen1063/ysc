@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>成为搭档</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/partners.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/editstyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/index.css">
+    <style>
+        #classification .list{
+            height: auto;
+            width: 33.333%;
+        }
+        #classification .list p{
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+
+<body style="margin-bottom: 0;">
+    <header class="mui-bar mui-bar-nav header">
+        <a href="{:U('/home/index/index')}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">成为搭档</h1>
+    </header>
+    <div id="header">
+        <img src="__PUBLIC__/Wx/img/Common/banner_1.png" alt="">
+    </div>
+    <div id="classification">
+        <foreach name="data" item="v">
+            <div class="list power">
+                <input type="hidden" name="p_id" id="p_id" value="{$v['id']}">
+                <!--    <input type="hidden" name="software" id="software" value="{$v['software_cost']}">
+            <input type="hidden" name="amount" id="amount" value="{$v['consumption_amount']}"> -->
+                <p style="color: #33e060" onclick="partner()">{$v['name']}</p>
+                <div class="img">
+                    <img src="__PUBLIC__/Uploads/{$v['ico']}" alt="">
+                </div>
+            </div>
+        </foreach>
+    </div>
+    <div id="content">
+        <div class="titlediv">
+                <span class="spanttl">搭档规则</span>
+            </div>
+        <div class="titlediv_left">
+                <span class="spanttl">搭档条件</span>
+            </div>
+        <div class="tiao">
+            <foreach name="datas" item="va">
+                <p>{$va['name']}级别:支付软件使用费<span>{$va['software_cost']}</span>元,或累计消费<span>{$va['consumption_amount']}</span>元</p>
+            </foreach>
+        </div>
+        <div class="titlediv_left padded_t_0">
+                <span class="spanttl">搭档福利</span>
+            </div>
+        <div class="te">
+            <table border="1">
+                <tr>
+                    <th></th>
+                    <foreach name="datas" item="vb">
+                        <th>{$vb['name']}</th>
+                    </foreach>
+                </tr>
+
+                <tr>
+                    <td>软件使用时限</td>
+                    <foreach name="result" item="m">
+                        <td>{$m['term']}年</td>
+                    </foreach>
+                </tr>
+
+                <tr>
+                    <td>交通意外险</td>
+                    <foreach name="insur" item="u">
+                        <td>{$u['term']}年</td>
+                    </foreach>
+                </tr>
+
+                 <tr>
+                    <td>线下培训</td>
+                    <foreach name="xianx" item="y">
+                    <td>{$y['privilege_products']}次/月</td>
+                    </foreach>
+                </tr>
+
+                 <tr>
+                    <td>收款工具</td>
+                    <foreach name="xianx" item="b">
+                        <td>{$b['privilege_products']}个</td>
+                    </foreach>
+                </tr>
+
+                <tr>
+                    <td>话费折扣</td>
+                    <foreach name="hzhe" item="n">
+                        <td>{$n['rebate']}折</td>
+                    </foreach>
+                </tr>
+
+                <tr>
+                    <td>流量折扣</td>
+                    <foreach name="lzhe" item="b">
+                        <td>全国{$b['rebate']}折</td>
+                    </foreach>
+                </tr>
+            </table>
+        </div>
+        <div class="titlediv_left padded_t_0">
+                <span class="spanttl">搭档返佣</span>
+            </div>
+        <div class="fan">
+            <table border="1">
+                <tr>
+                    <th style="color:#6ac4ff;">推荐奖励</th>
+                    <th>草根搭档</th>
+                    <th>精英搭档</th>
+                    <th>贵族搭档</th>
+                </tr>
+            <tr>
+                    <td>一级</td>
+                   <foreach name="pone" item="p">
+                    <td>{$p['amount']}</td>
+                    </foreach>
+                </tr>
+                <tr>
+                    <td>二级</td>
+                    <foreach name="ptwo" item="o">
+                    <td>{$o['amount']}</td>
+                    </foreach>
+                </tr>
+                <tr>
+                    <td>三级</td>
+                    <foreach name="pth" item="u">
+                    <td>{$u['amount']}</td>
+                    </foreach>
+                </tr>
+            </table>
+        </div>
+        <div class="fan" style="position: relative;">
+            <table border="1">
+                <tr>
+                    <th style="color:#6ac4ff;">销售奖励</th>
+                    <th>草根搭档</th>
+                    <th>精英搭档</th>
+                    <th>贵族搭档</th>
+                </tr>
+                <tr>
+                    <td>一级</td>
+                   <foreach name="xiaos" item="l">
+                    <td>{$l['rate']}%</td>
+                    </foreach>
+                </tr>
+                <tr>
+                    <td>二级</td>
+                    <foreach name="xiaor" item="k">
+                    <td>{$k['rate']}%</td>
+                    </foreach>
+                </tr>
+                <tr>
+                    <td>三级</td>
+                    <foreach name="xiaoa" item="j">
+                    <td>{$j['rate']}%</td>
+                    </foreach>
+                </tr>
+                <tr style="border-color: #E0E0E0;height: 40px;">
+                    <td colspan="4" style="border: none;">备注: <span style="color: #FE504F;">成为哪个级别的搭档最高可享受以上对应奖励</span>
+                    </td>
+                    <td class="td"></td>
+                    <td class="td"></td>
+                    <td class="td"></td>
+                </tr>
+            </table>
+        </div>
+         <div class="titlediv_left padded_t_0">
+                <span class="spanttl">搭档介绍</span>
+            </div>
+        <foreach name="data" item="je">
+            <div class="jie">
+                <p>{$je['name']}:{$je['introduce']}</p>
+            </div>
+        </foreach>
+    </div>
+    <div id="popupnones" style="display: none">
+        <div class="popup" style="left:12.5% ;width: 75%;top:50%">
+            <span class="name">草根搭档</span>
+            <div class="money">
+                <input type="hidden" id="pp_id" name="pp_id" value="">
+                <p class="zhifu">支付软件使用费 <a id="fee">0</a>元
+                    <input class="sss" type="button" value="申请" onclick="applicate()">
+                </p>
+                <p class="xiaofei">累计消费金额 <a id="amount">0</a>元
+                    <input type="button" class="aaa" value="申请" onclick="all()">
+                </p>
+            </div>
+        </div>
+    </div>
+    <script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/index/js/template.js"></script>
+    <script>
+    // mui('div').on('tap', 'div', function () {
+    //     var sum = mui('div');
+    //     var sum
+    //     console.log(this)
+    //     if (mui('#popupnones')[0].style.display == 'block') {
+    //         if (this.className == 'money') {
+    //             return false
+    //         }
+    //         mui('#popupnones')[0].style.display = 'none'
+    //         for (var i = 0; i < sum.length; i++) {
+    //             sum[i].style.opacity = '1';
+    //         }
+    //     } else if (this.className == 'list') {
+    //         mui('#popupnones')[0].style.display = 'block';
+    //         mui('#popupnones .popup .name')[0].innerHTML = this.getElementsByTagName('p')[0].innerHTML;
+    //         if (this.getElementsByTagName('p')[0].innerHTML == "草根搭档") {
+    //             mui('#popupnones .popup .money .zhifu a')[0].innerHTML = 198;
+    //             mui('#popupnones .popup .money .xiaofei a')[0].innerHTML = 500;
+    //         } else if (this.getElementsByTagName('p')[0].innerHTML == "贵族搭档") {
+    //             mui('#popupnones .popup .money .zhifu a')[0].innerHTML = 888;
+    //             mui('#popupnones .popup .money .xiaofei a')[0].innerHTML = 2000;
+    //         } else if (this.getElementsByTagName('p')[0].innerHTML == "精英搭档") {
+    //             mui('#popupnones .popup .money .zhifu a')[0].innerHTML = 398;
+    //             mui('#popupnones .popup .money .xiaofei a')[0].innerHTML = 1000;
+    //         }
+    //         for (var i = 0; i < sum.length; i++) {
+    //             sum[i].style.opacity = '0.2';
+    //         }
+    //         mui('#popupnones')[0].style.opacity = '1';
+    //         mui('#popupnones .popup')[0].style.opacity = '1';
+    //         mui('#popupnones .popup .money')[0].style.opacity = '1';
+    //     }
+
+    // })
+    </script>
+    <script type="text/javascript">
+    //  $(".power").click(function() {
+    // var id = $(this).children("input").val();
+    //      alert(1);
+    //显示效果
+    // $('#classification .list').removeClass('bgm');
+    //      $('#item3 .liu_list').removeClass('bgm');
+    // $(this).addClass('bgm');
+
+    // $.ajax({
+    //     url: "{:U('/home/Special/power')}",
+    //     type: "post",
+    //     data: {
+    //         "id": id
+    //     },
+    // dataType: "json",
+    // success: function(data) {
+    //              console.log(data);
+    //              alert(data.data.length);
+    // $('#pname').html(data['paname']);
+    // $('#pcontent').html(data['paintroduce']);
+    //              $('#pcontent').html(data.paintroduce);
+
+    //              for(var i=0;i<data.data2.length;i++){
+    //                  if(data['data2'][i]['type'] == 2){
+    //                      $("#flow2").html(data['data2'][i]["rebate"]);
+    //                  };
+    //                  if(data['data2'][i]['type'] == 3){
+    //                      $("#dataflow").html(data['data2'][i]["rebate"]);
+    //                  }
+    //              }
+    // $('#content').html();
+    // var html = template('tpl', data);
+    // document.getElementById('content').innerHTML = html;
+    $(".power").click(function() {
+        var id = $(this).children("input").val();
+        $.ajax({
+                url: "{:U('/home/partners/bpartner')}",
+                type: "post",
+                data: {
+                    "id": id
+                },
+                dataType: "json",
+                success: function(data) {
+                    console.log(data);
+                    if (data['result'] == 0) {
+                        $('#fee').html(data['fee']);
+                        $('#amount').html(data['amount']);
+                        $("#popupnones").css('display', 'block');
+                    }
+                    if (data['result'] == 1) {
+                        alert('错误');
+                    }
+                    $("#popupnones").click(function() {
+                        $("#popupnones").css('display', 'none');
+                    });
+                    $(".sss").click(function() {
+                        // $price = $('#fee').val();
+                        // window.location.href = "__ROOT__/wx.php/home/pay/tool_wxpay?recharge_money=" + $price;
+                         window.location.href = "__ROOT__/wx.php/home/extension/extensionlist";
+                    });
+                    $(".aaa").click(function() {
+                        var p_id = $(this).children("input").val();
+                        var number = $('#amount').val();
+                        // alert(number);
+                        $.ajax({
+                            url: "{:U('/home/partners/bepartner')}",
+                            type: "post",
+                            data: {
+                                "p_id": p_id,
+                                "all_fee": number
+                            },
+                            dataType: "json",
+                            success: function(data) {
+                                console.log(data);
+                                if (data['result'] == 0) {
+                                    alert('申请成功！');
+                                }
+                                if (data['result'] == 1) {
+                                    alert('申请失败！');
+                                }
+                            }
+                        })
+                    });
+                }
+            })
+            // applicate();
+            // all();
+    });
+    //     }
+    // })
+    // })
+    </script>
+    <!--  <script>
+    function applicate() {
+        $price = $('#fee').val();
+        window.location.href = "__ROOT__/wx.php/home/pay/tool_wxpay?recharge_money=" + $price;
+    }
+
+    function all() {
+        // alert('1');
+        var p_id = $(this).children("input").val();
+        var number = $('#amount').val();
+        // alert(number);
+        $.ajax({
+            url: "{:U('/home/partners/bepartner')}",
+            type: "post",
+            data: {
+                "p_id": p_id,
+                "all_fee": number
+            },
+            dataType: "json",
+            success: function(data) {
+                console.log(data);
+                if (data['result'] == 0) {
+                    alert('申请成功！');
+                }
+                if (data['result'] == 1) {
+                    alert('申请失败！');
+                }
+            }
+        })
+    }
+    </script> -->
+</body>
+
+</html>

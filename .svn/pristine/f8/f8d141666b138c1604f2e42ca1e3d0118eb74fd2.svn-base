@@ -1,0 +1,63 @@
+<!--index -->
+  <include file="public:index"   />
+<!--index-->
+<script type="text/javascript" src="__PUBLIC__/timejs/laydate.js"></script>
+<title>订单管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+ 系统 <span class="c-gray en">&gt;</span>
+  订单管理 <span class="c-gray en">&gt;</span>
+   评价列表 <span class="c-gray en">&gt;</span>
+    评价详情
+   <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回" ><i class="Hui-iconfont">&#xe66b;</i></a><a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <table class="table table-border table-bordered table-bg">
+        <thead>
+            <tr>
+                <th scope="col" colspan="15">评价信息</th>
+            </tr>
+            <tr class="text-c">
+                <!--<th width="150">回复类型</th>-->
+                <th width="150">回复内容</th>
+                <th width="150">回复时间</th>
+                <th width="150">回复人员</th>
+            </tr>
+        </thead>
+            <tbody>
+            <foreach name='data' item='v'>
+                <tr class="text-c">
+<!--                    <td>{$v['service_id']}</td> -->
+                    <td>{$v['reply_content']}</td>
+                    <td>{$v['reply_time']}</td>
+                   <td>{$v['user']}</td>
+                </tr>
+            </foreach>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+<script type="text/javascript">
+/*
+    参数解释：
+    title   标题
+    url     请求的url
+    id      需要操作的数据id
+    w       弹出层宽度（缺省调默认值）
+    h       弹出层高度（缺省调默认值）
+*/
+/*用户-查看*/
+function member_show(title,url,id,w,h){
+    layer_show(title,url,w,h);
+}
+/*管理员-编辑*/
+function admin_edit(title,url,id,w,h){
+    layer_show(title,url,w,h);
+}
+</script>
+</body>
+</html>

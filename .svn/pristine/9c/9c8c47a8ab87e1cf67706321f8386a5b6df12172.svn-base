@@ -1,0 +1,267 @@
+<?php
+/**
+ *积分商城
+ *author:qql
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class GoldmallController extends Controller
+{
+
+    public function goldmallindex()
+    {
+       $goldmall = M()->table('__GOLD_MALL__ gm')
+           ->join('left join __GOODS__ g on g.id = gm.goods_id')
+           ->field('gm.*,g.sm_pic,g.goods_name')
+           ->select();
+        for($i=0;$i<count($goldmall);$i++){
+            //已兑换的比例
+            $goldmall[$i]['ratio0'] = (1 - ($goldmall[$i]['surplus_number']/$goldmall[$i]['number']))*100;
+            $goldmall[$i]['ratio2'] = $goldmall[$i]['surplus_number']/$goldmall[$i]['number']*100;
+
+            $goldmall[$i]['ratio'] = round($goldmall[$i]['ratio0'],2); //保留两位小数
+
+            //判断是否已经兑换完
+            if($goldmall[$i]['ratio'] >=100){
+                $goldmall[$i]['state'] = 1;
+            }
+            else if($goldmall[$i]['start_time']>time()){
+                $goldmall[$i]['state'] = 2;  //未开始
+            }
+            else if($goldmall[$i]['end_time']<time()){
+                $goldmall[$i]['state'] = 3;  //已结束
+            }else{
+                $goldmall[$i]['state'] = 0;
+            }
+        }
+
+//pp($goldmall);
+        $this->assign('goldmall', $goldmall);
+        $this->display();
+    }
+    //商品详情
+    public function goldmallgoods(){
+
+        $data = M()->table('__GOLD_MALL__ gm')
+            ->join('left join __GOODS__ g on g.id = gm.goods_id')
+            ->where(array('gm.id'=>I('id')))
+            ->field('gm.*,g.sm_pic,g.goods_name,g.id as goods_id,g.goods_introduce')
+            ->select();
+        //商品的规格信息
+        $attr = M()->table('__GOLD_MALL__ gm')
+            ->where(array('gm.id' => I('id')))
+            ->join('left join __GOODS_ATTRIBUTE_INFO__ gai on gai.goods_id = gm.goods_id and gai.stock !=0')
+            ->join('left join __GOODS_ATTRIBUTE__ ga on ga.id=gai.goods_attribute_id')
+            ->field('gai.goods_attribute_id as ga_id,ga.name as ga_name,gai.market_price,gai.shop_price,gai.stock,gai.weight,gai.goods_id')
+            ->select();
+//        pp($attr);
+        //四张轮播图
+        $pic = M('pic')->where(array('goods_id'=>$data[0]['goods_id']))->limit(4)->select();
+
+        for($i=0;$i<count($data);$i++){
+            //已兑换的比例
+            $data[$i]['ratio0'] = (1 - $data[$i]['surplus_number']/$data[$i]['number'])*100;
+            $data[$i]['ratio2'] = $data[$i]['surplus_number']/$data[$i]['number']*100;
+            $data[$i]['ratio'] = round($data[$i]['ratio0'],2); //保留两位小数
+            //判断是否已经兑换完
+            if($data[$i]['ratio'] >=100){
+                $data[$i]['state'] = 1;
+            }
+            else if($data[$i]['start_time']>time()){
+                $data[$i]['state'] = 2;  //未开始
+            }
+            else if($data[$i]['end_time']<time()){
+                $data[$i]['state'] = 3;  //已结束
+            }else{
+                $data[$i]['state'] = 0;
+            }
+        }
+//        pp($data);
+        $this->assign('data',$data);
+        $this->assign('pic',$pic);
+        $this->assign('attr',$attr);
+        $this->display();
+    }
+    //结算界面
+    public function gopay()
+    {
+//        pp(I());
+        $id = $_POST['id'];
+        $user_id = cookie('user_id');
+
+
+        $user = M('user')->where(array('id'=>$user_id))->field('gold')->find();
+
+        $goldmall = M()->table('__GOLD_MALL__ gm')
+            ->where(array('gm.id'=>$id))
+            ->find();
+        if($goldmall['surplus_number'] <=0){
+            $json = array(
+                'result'=>1,
+                'msg'=>'已售完'
+            );
+        }
+        else if($goldmall['start_time'] > time()){
+            $json = array(
+                'result'=>2,
+                'msg'=>'活动还未开始'
+            );
+        }
+        else if($goldmall['end_time'] < time()){
+            $json = array(
+                'result'=>3,
+                'msg'=>'活动已结束'
+            );
+        }
+        else if($user['gold'] < $goldmall['gold_price']){
+
+            $json = array(
+                'result'=>4,
+                'msg'=>'积分不足'
+            );
+        }
+        else{
+            $json = array(
+                'result'=>5
+            );
+        }
+        $this->ajaxReturn($json);
+
+    }
+    //提交订单
+    public function balance()
+    {
+//        pp(I());
+        $arr = I();
+        $ga_id = I('ga_id');
+        $data = M()->table('__GOLD_MALL__ gm')
+            ->join('left join __SELLER__ s on s.id = gm.seller_id')
+            ->join('left join __GOODS__ g on g.id = gm.goods_id')
+            ->field('gm.gold_price,gm.id as gold_mall_id,s.name as s_name,s.logo as s_logo,s.id as seller_id,g.goods_name,g.sm_pic,g.id as goods_id')
+            ->where(array('gm.id'=>$arr['id']))
+            ->select();
+        // 订单显示默认地址
+        $moadd = M("user_addr")->where(array('default_address' => 1, 'user_id' =>cookie('user_id')))->find();
+        $address = M("user_addr")->where(array('user_id' => cookie('user_id')))->select();
+        $this->assign('address', $address);
+//        pp($moadd);
+        $this->assign('data',$data);
+        $this->assign('moadd',$moadd);
+        $this->assign('ga_id',$ga_id);
+
+        $this->display();
+    }
+    public function pay()
+    {
+        $arr = I();
+//        pp($arr);
+        $user_id = cookie('user_id');
+        $tmp     = "GM" . date('YmdHis', time()) . rand(1000, 9999); //订单编号
+
+        //更新用户积分
+        $mygold = M('user')->where(array('id'=>$user_id))->getField('gold');
+        $surplus =$mygold - $arr['gold_price'];
+        $user        = M('user');
+        $user->id    = $user_id;
+        $user->gold  = $surplus;
+        $user->save();
+
+        //更新积分商城表
+        $surplus2 = M('gold_mall')->where(array('id'=>$arr['gold_mall_id']))->getField('surplus_number');
+        $surplus_number = $surplus2 - 1;
+        $goldmall                 = M('gold_mall');
+        $goldmall->id             = $arr['gold_mall_id'];
+        $goldmall->surplus_number = $surplus_number;
+        $goldmall->save();
+
+        //添加订单表
+        $addr = M('user_addr')->where(array('id'=>$arr['address_id']))->find();
+
+        $order = M('orders');
+        $order->order_number  = $tmp;
+        $order->user_id       = $user_id;
+        $order->addtime       = time();
+        $order->pay_status    = 1;
+        $order->pay_time      = time();
+        $order->order_status  = 1;
+        $order->note          = $arr['remark'];
+        $order->seller_id     = $arr['seller_id'];
+        $order->order_from    = 3;
+        $order->gold          = $arr['gold_price'];
+        $order->province      = $addr['province'];
+        $order->city          = $addr['city'];
+        $order->district      = $addr['district'];
+        $order->address       = $addr['address'];
+        $order->contact       = $addr['contact'];
+        $order->phone         = $addr['phone'];
+        $order->is_invoice    = 0;
+        $order->add();
+
+        //添加订单商品表
+        $order_id = M('orders')->where(array('order_number'=>$tmp))->getField('id');
+        //规格id
+        $gai_id = M('goods_attribute_info')->where(array('goods_id'=>$arr['goods_id'],'goods_attribute_id'=>$arr['ga_id']))->getField('id');
+        $ordergd = M('order_goods');
+        $ordergd->order_id           = $order_id;
+        $ordergd->goods_id           = $arr['goods_id'];
+        $ordergd->goods_attr_id      = $arr['ga_id'];
+        $ordergd->goods_number       = 1;
+        $ordergd->activity_type      = 5;
+        $ordergd->activity_type      = 5;
+        $ordergd->goods_attribute_id = $gai_id;
+        $ordergd->add();
+
+        //添加用户积分表
+        $golduser = M('gold_user');
+        $golduser->user_id          = $user_id;
+        $golduser->source_type      = 3;
+        $golduser->credits_source   = "兑换商品";
+        $golduser->create_time      = time();
+        $golduser->credits_number   = $arr['gold_price'];
+        $golduser->order_id         = $order_id;
+        $golduser->add();
+
+        $json = array(
+            'result'=>1,
+            'msg'=>'购买成功'
+        );
+        $this->ajaxReturn($json);
+    }
+
+    //兑换
+    public function goldmallbuy()
+    {
+
+
+        /*//添加用户积分表
+        $golduser = M('gold_user');
+        $golduser->user_id          = $user_id;
+        $golduser->source_type      = 3;
+        $golduser->credits_source   = "兑换商品";
+        $golduser->create_time      = time();
+        $golduser->credits_number   = $goldmall['gold_price'];
+        $golduser->order_id         = 1;  //订单表还未做
+//        $golduser->add();
+
+        //更新用户积分
+        $surplus = $user['gold'] - $goldmall['gold_price'];
+        $user = M('user');
+        $user->id    = $user_id;
+        $user->gold    = $surplus;
+//        $user->save();
+
+        //更新积分商城表
+        $surplus_number = $goldmall['surplus_number'] - 1;
+        $goldmall = M('gold_mall');
+        $goldmall->id = $id;
+        $goldmall->surplus_number = $surplus_number;
+//        $goldmall->save();
+
+        $this->ajaxReturn($json);*/
+    }
+
+
+
+}

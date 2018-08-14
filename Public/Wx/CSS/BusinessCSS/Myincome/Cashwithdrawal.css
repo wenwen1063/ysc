@@ -1,0 +1,121 @@
+.input img{
+    float: left;
+    height:20px;
+    height:20px;
+    margin-right: 10px;
+}
+.input{
+    position: relative;
+    padding: 10px ;
+    padding-left: 15px;
+    top:10px;
+    background-color: #fff;
+    width: 100%;
+    height:40px;
+}
+
+.input span{
+    font-size: 16px;
+    color: #4a4a4a;
+    float: left;
+
+}
+
+.input input{
+    font-size: 12px;
+    position: relative;
+    bottom: 10px;
+    left:15px;
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    width: 70%;
+    float: left;
+}
+
+.list {
+    border-bottom: 1px solid #e0e0e0;
+    position: relative;
+    top:20px;
+    background-color: #fff;
+    height:40px;
+    width: 100%;
+    padding: 10px;
+    padding-left: 15px;
+}
+
+.list img,.list h5{
+    float: left;
+}
+
+.list img{
+    width: 20px;
+    height:20px;
+    margin-right: 10px;
+}
+.list .right{
+    position: relative;
+    top:5px;
+    float: right;
+    width: 15px;
+    height:15px;
+}
+
+.queding input{
+    position: relative;
+    top:40px;
+    width: 90%;
+    left:5%;
+    background-color: #fe504f;
+    color: #FFFFFF;
+    height:40px;
+    border: none;
+    border-radius: 5px;
+}
+.available{
+    top:10px;
+    margin-bottom: 10px;
+    position: relative;
+    height:45px;
+    width: 100%;
+    background-color: #fff;
+    padding: 10px;
+    padding-left: 15px;
+}
+.available img{
+    margin-top: 5px;
+    width: 20px;
+    height:20px;
+    float: left;
+    margin-right: 10px;
+}
+
+.available h5{
+    position: relative;
+    top:2px;
+    color: #4a4a4a;
+    font-size: 15px;
+}
+
+.available h5 span{
+    color: #fe504f;
+}
+
+.available a{
+    position: relative;
+    bottom:20px;
+    float: right;
+    font-size: 14px;
+    color: #318dad;
+}
+.explain{
+    position: relative;
+    top:20px;
+    width: 100%;
+    position: relative;
+    left:20px;
+}
+
+.explain span{
+    color: #fe504f;
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>钱包提现</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Mywallet/Walletcash.css" rel="stylesheet">
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a href="{:U('/home/user/userindex')}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">钱包提现</h1>
+</header>
+<div class="available">
+    <img src="__PUBLIC__/Wx/img/My/my_icon_available_cash.png" alt="">
+    <h5>可提现金额：<span>￥{$cash_all}</span></h5>
+    <a href="#" onclick="all_cash()">全部提现</a>
+</div>
+
+<div class="input">
+    <img src="__PUBLIC__/Wx/img/My/my_icon_recharge.png" alt="">
+    <span>金额(￥)</span><input type="text" id="cashmoney" placeholder="输入提现金额">
+</div>
+<div class="input">
+    <img src="__PUBLIC__/Wx/img/My/my_icon_recharge.png" alt="">
+    <span>账号</span><input type="text" id="cashaccount" placeholder="输入微信号或支付宝账号或银行卡号仔细核对">
+</div>
+<div class="list">
+    <img src="__PUBLIC__/Wx/img/My/my_icon_wechat.png">
+    <h5>提现至微信</h5>
+    <img class="right" name="2" src="__PUBLIC__/Wx/img/My/my_icon_check_red.png" alt="">
+</div>
+<div class="list">
+    <img src="__PUBLIC__/Wx/img/My/my_icon_alipay.png">
+    <h5>提现至支付宝</h5>
+    <img class="right" name="1" src="__PUBLIC__/Wx/img/My/my_icon_checkoff.png" alt="">
+</div>
+<div class="list">
+    <img src="__PUBLIC__/Wx/img/My/my_icon_unionpay.png">
+    <h5>提现至银行卡</h5>
+    <img class="right" name="3" src="__PUBLIC__/Wx/img/My/my_icon_checkoff.png" alt="">
+</div>
+<div class="queding">
+    <input type="button" value="确 &numsp;定" onclick="return do_cash()">
+</div>
+</body>
+</html>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+    function all_cash(){
+        var cash_all = "<?php echo $cash_all;?>";
+        $('#cashmoney').val(cash_all);
+    }
+    //充值金额校验
+    function check(){
+        var user_min_money = "<?php echo $user_min_money; ?>"; //每次最少提现金额
+        var cash_all = "<?php echo $cash_all;?>"; //用户账户余额
+        var cashmoney = $("#cashmoney").val(); //提现金额
+        if(isNaN(cashmoney)){
+            alert('您输入的提现金额有误！');
+            return false;
+        }
+        if(Number(cashmoney) <= 0){
+            alert('提现金额不能小于等于0！');
+            return false;
+        }
+        if(Number(cashmoney) < user_min_money){
+            alert('每次提现金额不能小于'+user_min_money+"元！");
+            return false;
+        }
+        if(Number(cashmoney) > cash_all){
+            alert('提现金额不能大于可提现金额！');
+            return false;
+        }
+        if($('#cashaccount').val() == ''){
+            alert('提现账号不能为空!');
+            return false;
+        }
+        return true;
+    }
+    //支付方式的切换效果
+    var cashtype = 2;
+    $(".list").click(function(){
+        $(".list .right").attr("src","__PUBLIC__/Wx/img/My/my_icon_checkoff.png");
+        $(this).children("img.right").attr("src","__PUBLIC__/Wx/img/My/my_icon_check_red.png");
+        cashtype = $(this).children("img.right").attr("name"); //支付方式
+    });
+    //执行充值操作的方法
+    function do_cash(){
+        var is_pass_check = check();
+        if(!is_pass_check){
+            return false;
+        }
+        var cash_money = $("#cashmoney").val(); //提现金额
+        var cash_type = cashtype; //提现方式 1 zfbpay 2 wxpay 3 yhkpay
+        var cash_account = $('#cashaccount').val();
+        // alert("提现方式："+cash_type+" "+"金额："+cash_money+"账户："+cash_account);
+        $.ajax({
+            url:"{:U('/home/rechargecash/do_cash')}",
+            type:"post",
+            data:{"cash_money":cash_money,"cash_type":cash_type,"cash_account":cash_account},
+            dataType: "json",
+            success:function(data){
+                // console.log(data.result);
+                alert(data.msg);
+                window.location.href = "{:U('/home/user/userindex')}"; //跳转到我的界面
+            }
+        });
+    }
+</script>

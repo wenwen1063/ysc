@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>提取收益</title>
+		<meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/Wx/CSS/BusinessCSS/Myarticle/mui.min.css" />
+		<link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+		<link href="__PUBLIC__/Wx/CSS/BusinessCSS/distribution.css" rel="stylesheet">
+			<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+	</head>
+
+	<body>
+		<!--<header class="mui-bar mui-bar-nav header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">提取收益</h1>
+		</header>-->
+		<div class="extractearnings" style="position: fixed;top: 45px;left:0;width: 100%;">
+			<form action="{:U('/home/partner/extractearnings')}">
+			<p class="margin_l_15 margin_r_15 margin_t_15">可提取收益:<span class="redbold margin_l_10" id="rmoney">{$rr}</span>元</p>
+			<input type="text" placeholder="输入金额" style="border: 0;" name="money" id="money" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" />
+			<p class="margin_l_15 margin_r_15"><i class="redbold">*</i><span class="margin_l_10">目前收益只能提现到我的账号钱包</span></p>
+			<div class="btnDiv">
+				<button type="submit" class="mui-btn mui-btn-danger mui-btn-block font_size14"  onclick="return check()">
+					    提 取
+			    </button>
+			</div>
+			</form>
+		</div>
+	</body>
+
+</html>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+
+<script>
+	function check(){
+		$rmoney = $('#rmoney').html();
+		$money = $('#money').val();
+		if($money == null || $money == ''){
+			mui.toast('请输入金额！');
+			return false;
+		}
+
+		if($money>$rmoney){
+			mui.toast('提取金额大于可提取金额，请重新输入！');
+			return false;
+		}
+	}
+</script>

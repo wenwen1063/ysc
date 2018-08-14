@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>奖金提现</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="../../../CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="../../../CSS/BusinessCSS/Myincome/Cashwithdrawal.css" rel="stylesheet">
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">奖金提现</h1>
+</header>
+<div class="available">
+    <img src="../../../img/My/my_icon_available_cash.png" alt="">
+    <h5>可提现金额：<span>￥0.00</span></h5>
+    <a href="#">全部提现</a>
+</div>
+
+<div class="input">
+    <img src="../../../img/My/my_icon_recharge.png" alt="">
+    <span>金额(￥)</span><input type="text" placeholder="请输入充值金额">
+</div>
+<p class="explain">&numsp;&numsp;&numsp;<span> * </span>奖金目前只能提到我的账户余额里</p>
+<div class="queding">
+    <input type="button" value="确 &numsp;定">
+</div>
+</body>
+</html>

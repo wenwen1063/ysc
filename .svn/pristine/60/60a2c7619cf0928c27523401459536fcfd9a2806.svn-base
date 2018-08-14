@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>资讯消息</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Selectinformation.css" rel="stylesheet">
+    <style type="text/css">
+    .clearfloat:after {
+        display: block;
+        clear: both;
+        content: "";
+        visibility: hidden;
+        height: 0
+    }
+
+    .clearfloat {
+        zoom: 1
+    }
+
+    .ellipsis {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        color: #444;
+    }
+    </style>
+</head>
+
+<body>
+    <header class="mui-bar mui-bar-nav header">
+        <a href="{:U('/home/index/index')}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">资讯消息</h1>
+    </header>
+    <div class="mui-content mui-row mui-fullscreen">
+        <div class="mui-col-xs-3">
+            <foreach name='class' item='vi'>
+                <div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical claname">
+                    <!-- <a class="mui-control-item mui-active" href="#content1">资讯分类</a> -->
+                    <input type="hidden" class="class_id" name="type" value="{$vi['id']}">
+                    <a class="mui-control-item">{$vi['name']}</a>
+                </div>
+            </foreach>
+        </div>
+        <div id="segmentedControlContents" class="mui-col-xs-9">
+            <if condition="$info eq null">
+                <div id="content1" class="mui-control-content mui-active">
+                    <div class="img">
+                        <img src="__PUBLIC__/Wx/img/Home/default_noconsulting.png" alt="">
+                        <p>暂无任何资讯消息哦~</p>
+                    </div>
+                </div>
+            </if>
+            <div id="content2" class="mui-control-content" style="display:block">
+                <foreach name="info" item='va'>
+                    <ul class="mui-table-view">
+                        <a href="{:U('home/information/infor',array('id'=>$va['id']))}">
+                            <li class="mui-table-view-cell mui-media">
+                                <img style="height: 65px;width: 100px;float: left" src="__PUBLIC__/Uploads/{$va['pic']}">
+                                <div class="mui-media-body">
+                                    <h4>{$va['title']}</h4>
+                                    <h6>{$va['times']}.{$va['addtime']}.{$va['addtimes']}</h6>
+                                    <p class="ellipsis" style="color:#414141!important;">{$va['content']}</p>
+                                </div>
+                            </li>
+                        </a>
+                    </ul>
+                </foreach>
+            </div>
+            <div id="content3" class="mui-control-content" style="display:none">
+                <ul class="mui-table-view" id="content">
+                    <script id="tpl" type="text/template">
+                        {{each data as v i}}
+                        <a href="{:U('home/information/infor',array('id'=>v.i_id))}">
+                            <li class="mui-table-view-cell mui-media">
+                                <img style="height: 65px;width: 100px;float: left" src="__PUBLIC__/Uploads/{{v.pic}}">
+                                <div class="mui-media-body">
+                                    <h4>{{v.title}}</h4>
+                                    <h6>{{v.times}}.{{v.addtime}}.{{v.addtimes}}</h6>
+                                    <p class="mui-ellipsis">{{v.content}}</p>
+                                </div>
+                            </li>
+                        </a>
+                        {{/each}}
+                    </script>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/index/js/template.js"></script>
+<script type="text/javascript">
+$(".claname").click(function() {
+    var class_id = $(this).find('.class_id').val();
+    // alert(class_id);
+    $.ajax({
+        url: "{:U('/home/information/classinfo')}",
+        type: "post",
+        data: {
+            "class_id": class_id
+        },
+        dataType: "json",
+        success: function(data) {
+            console.log(data);
+            // alert(data);
+            if (data['result'] == 0) {
+                var html = template('tpl', data);
+                $('#content').html(html);
+                $("#content2").css('display', 'none');
+                $("#content3").css('display', 'block');
+            }
+            if (data['result'] == 1) {
+                alert('该分类暂无资讯！');
+            }
+
+        }
+    })
+});
+</script>
+
+</html>

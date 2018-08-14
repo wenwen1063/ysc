@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>商家主页</title>
+		<meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+		<link href="__PUBLIC__/Wx/CSS/BusinessCSS/MerchantHomepage.css" rel="stylesheet">
+			<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+		<style>
+			#header_img input {
+				padding-top: 3px;
+				padding-left: 10px;
+				height: 25px;
+				width: 60px;
+				text-align: center;
+				background-color: #fe504f;
+				color: #FFFFFF;
+				float: right;
+				right: 10%;
+				top: 40%;
+			}
+			
+			#allshop {
+				padding: 0;
+				overflow-y: hidden;
+			}
+			
+			#allshop .list {
+				border: 1px solid #F0F0F0;
+				padding: 10px;
+				width: 50%;
+				height: auto;
+				margin-bottom: 0px;
+				top: 0;
+			}
+			
+			.list .img {
+				margin: auto;
+				text-align: center;
+			}
+			
+			#allshop .list .img img {
+				height: auto;
+				max-width: 300px;
+			}
+			
+			#allshop .list .name h5 {
+				margin: 5px 0 !important;
+				font-size: 15px !important;
+				width: 100% !important;
+			}
+			
+			#allshop .list .money input {
+				border: 1px solid #fe504f;
+			}
+			#allshop .title{
+				text-align: center;
+				border-bottom: 2px solid #F0F0F0;
+			}
+			#allshop .title span{
+				display: inline-block;
+				height: 40px;
+				line-height: 20px;
+				line-height: 40px;
+				border-bottom: 2px solid #FE504F;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--<header class="mui-bar mui-bar-nav header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">商家主页</h1>
+		</header>-->
+
+		<div id="user">
+			<div class="header" id="header_img">
+				<div class="userm">
+					<img src="__PUBLIC__/Uploads/{$seller['logo']}" alt="">
+					<h5>{$seller['name']}</h5>
+					<?php if($myattention == null): ?>
+					<input type="button" class="guanzhu" value="关注">
+					<?php else: ?>
+					<input type="button" class="guanzhu" value="已关注">
+					<?php endif ?>
+				</div>
+			</div>
+		</div>
+		<div id="introduce">
+			<span> <img src="__PUBLIC__/Wx/img/Home/home_icon_details.png" alt="">详细介绍:</span>
+			<p>{$seller['synopsis']}</p>
+		</div>
+
+		<div id="allshop">
+			<div class="title">
+				<span>全部商品</span>
+			</div>
+			<foreach name="goods" item="v">
+				<if condition="$key%2 neq 1">
+					<div class="list">
+						<a href="__ROOT__/wx.php/home/goods/goodsinfo?id={$v['id']}">
+							<div class="img">
+								<img src="__PUBLIC__/Uploads/{$v['sm_pic']}" alt="">
+							</div>
+							<div class="name">
+								<h5 style="display: block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 75%;">{$v['goods_name']}</h5>
+							</div>
+							<div class="money">
+								<span>￥{$v['min_shop_price']}</span>
+								<input type="button" value="购买">
+							</div>
+						</a>
+					</div>
+					<else />
+					<div class="list right">
+						<a href="__ROOT__/wx.php/home/goods/goodsinfo?id={$v['id']}">
+							<div class="img">
+								<img src="__PUBLIC__/Uploads/{$v['sm_pic']}" alt="">
+							</div>
+							<div class="name">
+								<h5 style="display: block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 75%;">{$v['goods_name']}</h5>
+							</div>
+							<div class="money">
+								<span>￥{$v['min_shop_price']}</span>
+								<input type="button" value="购买">
+							</div>
+						</a>
+					</div>
+				</if>
+			</foreach>
+		</div>
+		<script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+	</body>
+
+</html>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+	var ad_pic = "__PUBLIC__/Uploads/" + "<?php echo $seller['ad_pic'];?>"
+	$("#header_img").css({
+		"background-image": "url(" + ad_pic + ")"
+	});
+</script>
+<script type="text/javascript">
+	$('.guanzhu').click(function() {
+		$seller_id = "<?php echo $seller['id'] ?>";
+		$isnot = $(this).val();
+		if($isnot == "已关注") {
+			mui.toast('已关注！');
+		} else {
+			$.ajax({
+				url: "{:U('/home/seller/guanzhu')}",
+				type: "post",
+				data: {
+					"id": $seller_id
+				},
+				dataType: "json",
+				success: function(data) {
+					//                 console.log(data);
+					if(data.result == 1) {
+						$('#header_img input').val('已关注');
+						mui.toast('关注成功！');
+					}
+
+				}
+			});
+		};
+	})
+</script>

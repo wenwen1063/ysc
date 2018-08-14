@@ -1,0 +1,91 @@
+<!--index -->
+  <include file="public:index"   />
+<!--index-->
+
+<title>广告管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 系统 <span class="c-gray en">&gt;</span> 广告管理 <span class="c-gray en">&gt;</span> 广告信息详情
+ <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回"><i class="Hui-iconfont">&#xe66b;</i></a>
+ <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20">
+    <div class="text-c"><br></div>
+    <table class="table table-border table-bordered table-bg">
+        <thead>
+            <tr class="text-c">
+                <th scope="col" colspan="13">广告信息详情</th>
+            </tr>
+            <tr class="text-c">
+                <th width="60">编号</th><td>{$data['id']}</td>
+            </tr>
+            <tr class="text-c">
+                <th width="60">广告名称</th><td>{$data['ad_name']}</td>
+            </tr>
+            <tr class="text-c">
+                <th width="60">广告小图</th><td><img height="40" src="__PUBLIC__/Uploads/{$data['img']}"></td>
+            </tr>
+            <tr class="text-c">
+                <th width="60">广告大图</th><td><img height="40" src="__PUBLIC__/Uploads/{$data['img2']}"></td>
+            </tr>
+            <tr class="text-c">
+                <th width="60">广告位置</th><td><?php if ($data['ad_position']==1){echo "轮播";}else{echo "固定";}?></td>
+            </tr>
+            <tr class="text-c">
+                <th width="60">广告类型</th><td><?php if ($data['ad_type']==1){echo "内容";}else{echo "链接";}?></td>
+            </tr>
+            <tr class="text-c">
+                <th width="60">广告内容</th><td>{$data['ad_content']}</td>
+            </tr>
+            <tr class="text-c">
+                <th width="60">广告链接</th><td>{$data['ad_link']}</td>
+            </tr>
+            <tr class="text-c">
+                <th width="60">广告顺序</th><td>{$data['ad_sort']}</td>
+            </tr>
+        </thead>
+    </table>
+</div>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+<script type="text/javascript">
+/*
+    参数解释：
+    title   标题
+    url     请求的url
+    id      需要操作的数据id
+    w       弹出层宽度（缺省调默认值）
+    h       弹出层高度（缺省调默认值）
+*/
+/*用户-查看*/
+function member_show(title,url,id,w,h){
+    layer_show(title,url,w,h);
+}
+/*管理员-编辑*/
+function admin_edit(title,url,id,w,h){
+    layer_show(title,url,w,h);
+}
+//批量删除判断是否选择
+function Check()
+{
+var chks=document.getElementsByTagName('input');
+var bl=true;
+for(var i=0;i<chks.length;i++)
+{
+    if(chks[i].checked)
+    {
+        bl=false;
+        break;
+    }
+}
+if(bl){
+    alert('最少选择一个');
+    return false;
+}
+}
+</script>
+</body>
+</html>

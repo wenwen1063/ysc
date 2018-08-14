@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>搜索</title>
+        <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="black" name="apple-mobile-web-app-status-bar-style">
+        <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+        <link href="__PUBLIC__/Wx/CSS/BusinessCSS/classification/Commoditydetails.css" rel="stylesheet">
+        <link href="__PUBLIC__/Wx/CSS/BusinessCSS/classification/Threeclassification.css" rel="stylesheet">
+        <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+        <style type="text/css">
+        	.emptydiv {
+				text-align: center;
+			}
+			
+			.emptydiv .emptyimg {
+				position: absolute;
+				left: 50%;
+				top: 40%;
+				margin-left: -25px;
+				margin-top: -25px;
+				width: 50px;
+			}
+			
+			.emptydiv .emptytip {
+				position: absolute;
+				top: 40%;
+				width: 100%;
+				margin: auto;
+				color: #909090;
+				font-size: 0.7rem;
+				padding-top: 35px;
+			}
+			
+			.emptydiv .emptybtn {
+				position: absolute;
+				top: 50%;
+				width: 100%;
+			}
+        </style>
+    </head>
+
+    <body>
+        <!--<header class="mui-bar mui-bar-nav header">
+            <a href="{:U('/home/goodsclass/goodsclassindex')}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <h1 class="mui-title">{$classsan_name}</h1>
+        </header>-->      
+        <if condition="$count neq 0 "> 
+			<div class="content" id="goods_content">
+				<foreach name="data" item="v">
+			            <a href="__ROOT__/wx.php/home/goods/goodsinfo?id={$v['id']}">
+			                <div class="list">
+			                    <div class="img">
+			                        <img src="__PUBLIC__/Uploads/{$v['sm_pic']}" alt="">
+			                    </div>
+			                    <div class="name" style="width:100%;">
+			                        <h5 style="display: block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 75%;color: #444;">{$v['goods_name']}</h5>
+			                        <p>￥{$v['shop_price']}</p>
+			                        <input type="button" value="购买">
+			                    </div>
+			                </div>
+			            </a>
+			        </foreach>
+			        </div>
+			<else /> 
+           <div class="emptydiv" style="display: block;">
+				<img class="emptyimg" src="__PUBLIC__/Wx/img/emptysearch.png" alt="">
+				<p class="emptytip">暂无搜索记录~</p>
+			</div>
+</if>
+        
+        
+        
+        
+
+        <div id="finde">
+            <a href="{:U('/home/order/carindex')}"><img src="__PUBLIC__/Wx/img/Classification/classification_btn_shoppingcart.png"></a>
+            <a href="#"><img src="__PUBLIC__/Wx/img/Classification/classification_btn_top.png"></a>
+        </div>
+    </body>
+</html>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/index/js/template.js"></script>

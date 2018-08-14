@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>购物车</title>
+		<meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+		<link href="__PUBLIC__/Wx/CSS/BusinessCSS/ShoppingCart/ShoppingCart.css" rel="stylesheet">
+		<style type="text/css">
+			.pichide {
+				display: none;
+			}
+			
+			.picshow {
+				dispaly: block;
+			}
+			
+			<style> .money {
+				color: #FF5353;
+				font-size: 16px;
+			}
+			
+			.margin_l_5 {
+				margin-left: 5px;
+			}
+			
+			.margin_r_5 {
+				margin-right: 5px;
+			}
+			
+			.margin_r_15 {
+				margin-right: 15px;
+			}
+			
+			.divrelative {
+				position: relative;
+				padding-left: 100px;
+				padding-right: 100px;
+				font-size: 16px;
+			}
+			
+			.divrelative .divleft {
+				position: absolute;
+				left: 10px;
+				top: 5px;
+			}
+			
+			.divrelative .divright {
+				position: absolute;
+				right: 10px;
+				top: 5px;
+			}
+			
+			.divrelative .divcontent {
+				width: 100%;
+				text-align: right;
+				padding-top: 5px;
+			}
+			
+			.imgkefu {
+				position: relative;
+			}
+			
+			.imgkefu img {
+				position: fixed;
+				z-index: 9999;
+				right: 15px;
+				bottom: 50px;
+				width: 35px;
+				top: 74%;
+			}
+			
+			.content {
+				top: 0px;
+			}
+			
+			.sellerdiv {
+				margin-top: 10px;
+				background: #fff;
+			}
+			
+			.content .list {
+				background: transparent;
+			}
+			
+			.content .list .name h5 {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				width: 110px;
+				line-height: 25px;
+				margin: 0;
+			}
+			
+			.content .commodity .list {
+				margin-bottom: 0;
+			}
+			
+			.content .commodity .list:last-child {
+				border-bottom: none;
+			}
+			
+			.clearfix:after {
+				content: ".";
+				display: block;
+				height: 0;
+				visibility: hidden;
+				clear: both;
+			}
+			
+			.clearfix {
+				zoom: 1;
+			}
+			
+			.content .commodity .list .mui-numbox {
+				right: 10px;
+			}
+			
+			.countdiv {
+				width: auto;
+				left: 10px;
+				top: 5px;
+				height: 26px;
+			}
+			
+			.countdiv input[type='text'] {
+				display: inline-block;
+				text-align: center;
+				width: 40px;
+				border: 1px solid #BBB;
+				height: 26px;
+				line-height: 20px;
+				font-size: 14px;
+				padding: 0 5px;
+				box-sizing: border-box;
+				margin-bottom: 0;
+				position: relative;
+				top: 1px;
+			}
+			
+			.cut {
+				border: 1px solid #BBB;
+				width: 26px;
+				height: 26px;
+				line-height: 20px;
+				display: inline-block;
+				text-align: center;
+				background-color: #DDDFEB;
+			}
+			
+			.content .commodity .list .title p .money {
+				color: #fe504f;
+			}
+			
+			.content .commodity .list .title h5 {
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+			
+			.content .commodity {
+				position: relative;
+			}
+			
+			.countdiv {
+				width: auto;
+				/* float: right; */
+				position: relative;
+				/* right: 10px; */
+				/* top: 8px; */
+				height: 26px;
+			}
+			
+			.deldiv {
+				position: absolute;
+				right: 0px;
+				top: 0;
+				background: #DD2727;
+				color: #fff;
+				font-size: 15px;
+				/* width: 40px; */
+				padding: 0 10px;
+				text-align: center;
+				height: 100%;
+				line-height: 80px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">购物车</h1>
+			<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" id="clear">清空</button>
+		</header>
+		<div class="none">
+			<img src="__PUBLIC__/Wx/img/ShoppingCart/default_nothing.png">
+			<a href="{:U('/home/goodsclass/goodsclassindex')}">
+				<p>去挑选商品吧</p>
+			</a>
+		</div>
+		<div class="content">
+			<div class="list" id="carshop">
+				<script id="tpl" type="text/template">
+					{{each data as v i}}
+					<div class="sellerdiv clearfix">
+						<div class="name">
+							<!--<i class="list_i"></i>-->
+							<img class="xuan selleroff" src="__PUBLIC__/Wx/img/My/my_icon_checkoff.png" alt="">
+							<img class="xuan sellerred pichide" src="__PUBLIC__/Wx/img/My/my_icon_check_red.png" alt="">
+							<img class="userm" src="__PUBLIC__/Uploads/{{v['logo']}}" alt="">
+							<h5>{{v['sname']}}</h5>
+							<input type="button" class="updateshop" value="编辑">
+							<input type="button" class="saveshop" value="保存" style="color: #fe504f;border: 1px solid #fe504f;display: none;">
+						</div>
+						<div class="commodity">
+							{{each v.shop as g j}}
+							<div class="list">
+								<img class="xuan off selectshop" src="__PUBLIC__/Wx/img/My/my_icon_checkoff.png" alt="">
+								<img class="xuan red pichide selectshop" src="__PUBLIC__/Wx/img/My/my_icon_check_red.png" alt="">
+								<a href="__ROOT__/wx.php/home/goods/goodsinfo?id={{g.goods_id}}"><img class="userm" src="__PUBLIC__/Uploads/{{g.sm_pic}}" alt=""></a>
+								<input type="hidden" class="content1" id="" value="11" />
+								<div class="title hideshop">
+									<h5>{{g.gname}}</h5>
+									<p>￥<span class="money">{{g.shop_price}}</span> &numsp;<span>x<span class="shopnum">{{g.goods_number}}</span></span>
+									</p>
+								</div>
+								<div class="countdiv aui-padded-l-5 hidediv" style="display: none;">
+									<span class="cut minus">-</span>
+									<input type="text" class="num" value="{{g.goods_number}}" nid="{{g.id}}" />
+									<span class="cut color_red addnum">+</span>
+									<!--<div class="deldiv hidediv" style="display: none;" nid="{{g.id}}">删除</div>-->
+								</div>
+								<div class="deldiv hidediv" style="display: none;" nid="{{g.id}}">删除</div>
+							</div>
+							{{/each}}
+						</div>
+					</div>
+					{{/each}}
+				</script>
+			</div>
+		</div>
+		<nav class="mui-bar mui-bar-tab footer" style="background: white;bottom: 50px;">
+			<div class="divrelative">
+				<div class="divleft">
+					<img id="allselect" src="__PUBLIC__/Wx/img/My/my_icon_checkoff.png" alt="">
+					<img id="all" src="__PUBLIC__/Wx/img/My/my_icon_check_red.png" alt="" style="display: none;">
+					<p>全选</p>
+				</div>
+				<div class="divcontent">
+					<div>共<span class="money margin_l_5 margin_r_5 " id='allnum'>0</span>件商品</div>
+					<div class='mui-ellipsis money'>￥<span id="allmoney">0.00</span></div>
+					<div class="divright">
+						<button type="button" id="balance" class="mui-btn mui-btn-danger" style="top: 0;">去结算</button>
+					</div>
+				</div>
+		</nav>
+		<!--客服图标-->
+		<div class="imgkefu">
+			<a href="http://chat8.live800.com/live800/chatClient/chatbox.jsp?companyID=820706&configID=151385&jid=5530154684">
+				<img src="__PUBLIC__/Wx/img/KFRK.png" alt="">
+			</a>
+		</div>
+		<include file="public:nav" />
+	</body>
+
+</html>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/index/js/template.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+<script language="javascript" src="http://chat8.live800.com/live800/chatClient/monitor.js?jid=5530154684&companyID=820706&configID=151384&codeType=custom"></script>
+<!--获取购物车信息-->
+<script>
+	$(function() {
+		carinfo();
+	})
+</script>
+<script>
+	
+
+	function carinfo() {
+		$user_id = "<?php echo cookie('user_id')?>";
+		$.ajax({
+			url: "{:U('/home/Order/carinfo')}",
+			type: "post",
+			data: {
+				'user_id': $user_id,
+			},
+			dataType: "json",
+			success: function(data) {
+				console.log(data);
+				if(data.count == 0) {
+					$(".content").hide();
+					$(".onefooter").hide();
+					$(".none").show();
+				} else {
+					$(".content").show();
+					$(".onefooter").show();
+					$(".none").hide();
+					if(data.result == 1) {
+						console.log(data.data);
+						var html = template('tpl', data);
+						$('#carshop').html(html);
+						update();
+						deldiv();
+						save();
+						add();
+						reduce();
+						selectpic();
+					} else {
+						$(".content").hide();
+						$(".onefooter").show();
+						$(".none").show();
+						mui.toast('获取购物车失败');
+					}
+				}
+			}
+		})
+	}
+	function deldiv(){
+		$(".deldiv").click(function() {
+			$id=$(this).attr("nid");
+			var btnArray = ['否', '是'];
+		mui.confirm('删除商品？', ' ', btnArray, function(e) {
+			if(e.index == 1) {
+				$.ajax({
+					url: "{:U('/home/Order/deletecar')}",
+					type: "post",
+					data: {
+						'id': $id
+					},
+					dataType: "json",
+					success: function(data) {
+						console.log(data);
+						if(data.result == 1) {
+							    mui.toast('删除成功');
+							carinfo();
+						} else {
+							mui.toast('删除成功');
+						}
+					}
+				})
+			} else {}
+		})
+	})
+	}
+	
+	function update() {
+		$('.updateshop').click(function() {
+			$(this).hide();
+			$(this).parent('.name').find(".saveshop").show();
+			$(this).parent('.name').parent('.sellerdiv').find(".hidediv").show();
+			$(this).parent('.name').parent('.sellerdiv').find(".hideshop").hide();
+			
+			$("#all").hide();
+			$("#allselect").show();
+			$(".off").removeClass('pichide');
+			$(".red").removeClass('picshow');
+			$(".red").addClass('pichide');
+
+			$(".selleroff").removeClass('pichide');
+			$(".sellerred").removeClass('picshow');
+			$(".sellerred").addClass('pichide');
+			shopselect();
+		});
+	}
+
+	function save() {
+		$('.saveshop').click(function() {
+			$(this).hide();
+			$(this).parent('.name').find(".updateshop").show();
+			$(this).parent('.name').parent('.sellerdiv').find(".hidediv").hide();
+			$(this).parent('.name').parent('.sellerdiv').find(".hideshop").show();
+			$result = new Array();
+			$(this).parent('.name').parent('.sellerdiv').find(".num").each(function(i, d) {
+				$c = {
+					'id': $(this).attr('nid'),
+					'num': $(this).val()
+				};
+				$result.push($c);
+			});
+			$.ajax({
+				url: "{:U('/home/Order/updatecar')}",
+				type: "post",
+				data: {
+					'id': $result
+				},
+				dataType: "json",
+				success: function(data) {
+					console.log(data);
+					if(data.result == 1) {
+						mui.toast('保存成功');
+						carinfo();
+						$("#all").hide();
+						$("#allselect").show();
+						$(".off").removeClass('pichide');
+						$(".red").removeClass('picshow');
+						$(".red").addClass('pichide');
+
+						$(".selleroff").removeClass('pichide');
+						$(".sellerred").removeClass('picshow');
+						$(".sellerred").addClass('pichide');
+						shopselect();
+					} else {
+						mui.toast('保存失败');
+						$("#all").hide();
+						$("#allselect").show();
+						$(".off").removeClass('pichide');
+						$(".red").removeClass('picshow');
+						$(".red").addClass('pichide');
+
+						$(".selleroff").removeClass('pichide');
+						$(".sellerred").removeClass('picshow');
+						$(".sellerred").addClass('pichide');
+						shopselect();
+					}
+				}
+			})
+		});
+	}
+
+	function add() {
+		$(".addnum").click(function() {
+			$num = parseInt($(this).parent().find(".num").val());
+			$c = $num + 1;
+			$(this).parent().find(".num").val($c);
+		})
+	}
+
+	function reduce() {
+		$(".minus").click(function() {
+			$num = parseInt($(this).parent().find(".num").val());
+			if($num > 1) {
+				$c = $num - 1;
+			}
+			$(this).parent().find(".num").val($c);
+		})
+	}
+
+	$("#clear").click(function() {
+		var btnArray = ['否', '是'];
+		mui.confirm('清空购物车？', ' ', btnArray, function(e) {
+			if(e.index == 1) {
+				$user_id = "<?php echo cookie('user_id')?>";
+				$.ajax({
+					url: "{:U('/home/Order/clearcar')}",
+					type: "post",
+					data: {
+						'user_id': $user_id
+					},
+					dataType: "json",
+					success: function(data) {
+						if(data.result == 1) {
+//						       mui.toast('保存成功');
+							
+						} 
+//else {
+//							mui.toast('系统出现问题，请重新清空购物车');
+//						}
+			carinfo();
+					}
+				})
+			} else {}
+		})
+	});
+
+	function selectpic() {
+		$(".selleroff").click(function() {
+			$(this).removeClass('picshow');
+			$(this).addClass('pichide');
+			$(this).parent('.name').find('.sellerred').removeClass('pichide');
+			$(this).parent('.name').find('.sellerred').addClass('picshow');
+			$(this).parent('.name').parent('.sellerdiv').find(".red").each(function() {
+				$(this).removeClass('pichide');
+				$(this).addClass('picshow');
+			})
+			$(this).parent('.name').parent('.sellerdiv').find(".off").each(function() {
+				$(this).removeClass('picshow');
+				$(this).addClass('pichide');
+			})
+			shopselect();
+		})
+
+		$(".sellerred").click(function() {
+			$(this).removeClass('picshow');
+			$(this).addClass('pichide');
+			$(this).parent('.name').find('.selleroff').removeClass('pichide');
+			//      $(this).parent('.name').find('.selleroff').addClass('picshow');
+			$(this).parent('.name').parent('.sellerdiv').find(".red").each(function() {
+				$(this).removeClass('picshow');
+				$(this).addClass('pichide');
+			})
+			$(this).parent('.name').parent('.sellerdiv').find(".off").each(function() {
+				$(this).removeClass('pichide');
+			})
+			shopselect();
+		})
+		$(".red").click(function() {
+				$(this).removeClass('picshow');
+				$(this).addClass('pichide');
+				$(this).parent().find('.off').removeClass('pichide');
+				shopselect();
+			})
+			//商品没选择
+		$(".off").click(function() {
+			$(this).removeClass('picshow');
+			$(this).addClass('pichide');
+			$(this).parent().find('.red').removeClass('pichide');
+			$(this).parent().find('.red').addClass('picshow');
+			shopselect();
+		})
+
+		$("#allselect").click(function() {
+			$(this).hide();
+			$("#all").show();
+			$(".red").addClass('picshow');
+			$(".red").removeClass('pichide');
+			$(".off").removeClass('picshow');
+			$(".off").addClass('pichide');
+
+			$(".sellerred").addClass('picshow');
+			$(".sellerred").removeClass('pichide');
+			$(".selleroff").removeClass('picshow');
+			$(".selleroff").addClass('pichide');
+			shopselect();
+		})
+
+		$("#all").click(function() {
+			qusel();
+		})
+
+		function qusel() {
+			$("#all").hide();
+			$("#allselect").show();
+			$(".off").removeClass('pichide');
+			$(".red").removeClass('picshow');
+			$(".red").addClass('pichide');
+
+			$(".selleroff").removeClass('pichide');
+			$(".sellerred").removeClass('picshow');
+			$(".sellerred").addClass('pichide');
+			shopselect();
+		}
+	}
+
+	function shopselect() {
+		$allmoney = 0;
+		$allnum = 0;
+		$(".picshow").each(function() {
+			$money = Number($(this).parent('.list').find(".money").html()) * Number($(this).parent('.list').find(".shopnum").html());
+			$num = Number($(this).parent('.list').find(".shopnum").html());
+			if(!isNaN($money)) {
+				$allmoney += $money;
+				$allnum += $num;
+			}
+		})
+		$('#allnum').html($allnum);
+		$('#allmoney').html($allmoney.toFixed(2));
+	}
+
+	$("#balance").click(function() {
+			$json = '';
+			$(".picshow").each(function() {
+				$money = $(this).parent('.list').find(".num").attr('nid');
+				if(!isNaN($money)) {
+					$json += $money + ',';
+				}
+			})
+			if($json != '') {
+				mui.openWindow({
+					url: "__ROOT__/wx.php/home/order/balance?id=" + $json + "&type=2",
+					id: 'balance'
+				});
+			} else {
+				mui.toast("请选择商品！");
+			}
+
+		})
+		//全选
+</script>

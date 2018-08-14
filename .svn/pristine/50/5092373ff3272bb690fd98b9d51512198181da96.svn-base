@@ -1,0 +1,235 @@
+<?php
+namespace Home\Controller;
+
+use Think\Controller;
+
+class TwoController extends Controller
+{
+    public function two()
+    {
+        $test = I('test');
+        $this->assign('test', $test);
+        $this->display();
+
+    }
+    // public function qrcode($level = 3, $size = 4)
+    // {
+    //     $user_id = cookie('user_id');
+    //     $url     = "http://www.ysc998.com/wx.php?&user_code=$user_id";
+    //     Vendor('phpqrcode.phpqrcode');
+    //     $errorCorrectionLevel = intval($level); //容错级别
+    //     $matrixPointSize      = intval($size); //生成图片大小
+    //     //生成二维码图片
+    //     $object = new \QRcode();
+    //     $object->png($url, false, $errorCorrectionLevel, $matrixPointSize, 2);
+    // }
+    // public function twos()
+    // {
+    //     # code...
+    // }
+    // set_time_limit(0);
+    //生成二维码
+    public function getEwm($fqid = 14255, $type = 1)
+    {
+        // // $wechat       = M('Member_public')->where(array('id' => $wechatid))->find();
+        // $appid        = $wechat['appid'];
+        // $secret       = $wechat['secret'];
+        $appid        = "wx6df7cb139d86f3e7";
+        $secret       = "6cb7d92fee9845212040f7097133658d";
+        $ACCESS_TOKEN = $this->getToken($appid, $secret);
+        $url          = $this->getQrcodeurl($ACCESS_TOKEN, $fqid, 1);
+        dump($url);die;
+        return DownLoadQr($url, time());
+    }
+    protected function getQrcodeurl($ACCESS_TOKEN, $fqid, $type = 1)
+    {
+        $qrcode_url     = "https://api.weixin.qq.com/cgi-bin/qrcode/create?";
+        $qrcode_get_url = "https://mp.weixin.qq.com/cgi-bin/showqrcode?";
+        $url            = $qrcode_url . 'access_token=' . $ACCESS_TOKEN;
+        if ($type == 1) {
+            //生成永久二维码
+            $qrcode = '{"action_name": "QR_LIMIT_SCENE", "action_info": {"scene": {"scene_id": ' . $fqid . '}}}';
+        } else {
+            //生成临时二维码
+            $qrcode = '{"expire_seconds": 1800, "action_name": "QR_SCENE", "action_info": {"scene": {"scene_id": ' . $fqid . '}}}';
+        }
+        $result = $this->http_post_data($url, $qrcode);
+        $oo     = json_decode($result[1]);
+        if (!$oo->ticket) {
+            $this->ErrorLogger('getQrcodeurl falied. Error Info: getQrcodeurl get failed');
+            exit();
+        }
+        $url = $qrcode_get_url . 'ticket=' . $oo->ticket . '';
+        return $url;
+
+    }
+
+    protected function getToken($appid, $secret)
+    {
+        $token_url    = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&";
+        $ACCESS_TOKEN = file_get_contents($token_url . "appid=$appid&secret=$secret");
+        $ACCESS_TOKEN = json_decode($ACCESS_TOKEN);
+        $ACCESS_TOKEN = $ACCESS_TOKEN->access_token;
+        return $ACCESS_TOKEN;
+    }
+    protected function http_post_data($url, $data_string)
+    {
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json; charset=utf-8',
+            'Content-Length: ' . strlen($data_string))
+        );
+        ob_start();
+        curl_exec($ch);
+        if (curl_errno($ch)) {
+            $this->ErrorLogger('curl falied. Error Info: ' . curl_error($ch));
+        }
+        $return_content = ob_get_contents();
+        ob_end_clean();
+        $return_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        return array($return_code, $return_content);
+    }
+    //下载二维码到服务器
+    protected function DownLoadQr($url, $filestring)
+    {
+        if ($url == "") {
+            return false;
+        }
+        $filename = $filestring . '.jpg';
+        ob_start();
+        readfile($url);
+        $img = ob_get_contents();
+        ob_end_clean();
+        $size = strlen($img);
+        $fp2  = fopen('./Uploads/qrcode/' . $filename, "a");
+        if (fwrite($fp2, $img) === false) {
+            $this->ErrorLogger('dolwload image falied. Error Info: 无法写入图片');
+            exit();
+        }
+        // fclose($fp2);
+        return './Uploads/qrcode/' . $filename;
+    }
+
+    private function ErrorLogger($errMsg)
+    {
+        $logger = fopen('./ErrorLog.txt', 'a+');
+        fwrite($logger, date('Y-m-d H:i:s') . " Error Info : " . $errMsg . "\r\n");
+    }
+
+    public function twos()
+    {
+        $user_id = cookie('user_id');
+        // $username = M('user')->where(array('id' => $user_id))->getField('username'); //用户名
+        $head  = M('user')->where(array('id' => $user_id))->getField('avatar');
+        $heads = M('user')->where(array('id' => $user_id))->find();
+        // dump($heads);
+        if ($heads['is_xg'] == 0) {
+            $head_img = $head; //用户头像
+        } else {
+            $head_img = "Public/Uploads/" . $head; //用户头像
+        }
+
+        if (strpos($head_img, '://')) {
+            $head_img = $head;
+        }
+        // $this->downloadFile('http://www.kkbing2016.com/index.php/home/vip/qrcode', './'); //二维码图片
+        $bg     = M('base')->where(array('id' => 1))->getField('b_pic');
+        $bg_img = "Public/Uploads/" . $bg; //背景图
+
+        ob_clean();
+        header('Content-type:image/png');
+        //11111111111111如果遇到问题需要找bug，把header放最后
+        //二维码
+        $url = "http://www.ysc998.com/wx.php/home/index/index?&user_code=$user_id";
+        // $url = "http://www.kkbing2016.com/index.php?&user_code=$user_id";
+        Vendor('phpqrcode.phpqrcode');
+        $errorCorrectionLevel = intval(3); //容错级别
+        $matrixPointSize      = intval(4); //生成图片大小
+        //生成二维码图片
+        $object = new \QRcode();
+        $object->png($url, 'qrcode.png', $errorCorrectionLevel, $matrixPointSize, 2);
+        $path_1 = 'qrcode.png';
+        //背景图片
+        $path_2 = $bg_img;
+
+        $image_1 = imagecreatefromstring(file_get_contents($path_2));
+        // $image_2 = imagecreatefrompng($path_1);
+        $image_2 = imagecreatefromstring(file_get_contents($path_1));
+        //创建一个和bg图片一样大小的真彩色画布（ps：只有这样才能保证后面copy二维码图片的时候不会失真）
+        $image_3 = imageCreatetruecolor(imagesx($image_1), imagesy($image_1));
+        //为真彩色画布创建白色背景，再设置为透明
+        $color = imagecolorallocate($image_3, 255, 255, 255);
+        imagefill($image_3, 0, 0, $color);
+        imageColorTransparent($image_3, $color);
+        //首先将二维码画布采样copy到真彩色画布中，不会失真
+        imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
+        //再将背景图片copy到已经具有二维码图像的真彩色画布中，同样也不会失真
+        imagecopyresampled($image_3, $image_2, 285, 780, 0, 0, imagesx($image_2), imagesy($image_2), imagesx($image_2), imagesy($image_2));
+        //将画布保存到指定的png文件
+        imagepng($image_3, 'bg_erweima.png');
+
+//2222222222222222新背景图
+        $dst_path = 'bg_erweima.png';
+        //创建图片的实例
+        $dst = imagecreatefromstring(file_get_contents($dst_path));
+
+//打上文字
+        // $font = 'Arial.ttf';//字体路径
+
+        // $black = imagecolorallocate($dst, 0x00, 0x00, 0x00); //字体颜色
+        imagettftext($dst, 16, 0, 300, 100, 'simkai.ttf');
+        //输出图片
+        imagepng($dst, 'word_bg_erweima.png'); //文字生成的图片
+
+//3333333333333333头像
+        // $path_1 = $head_img;
+        //背景图片
+        $path_2 = "word_bg_erweima.png";
+
+        $image_1 = imagecreatefrompng($path_2);
+        // $image_2 = imagecreatefrompng($path_1);
+        // $image_2 = imagecreatefromstring(file_get_contents($path_1));
+        //创建一个和bg图片一样大小的真彩色画布（ps：只有这样才能保证后面copy二维码图片的时候不会失真）
+        $image_3 = imageCreatetruecolor(imagesx($image_1), imagesy($image_1));
+        //为真彩色画布创建白色背景，再设置为透明
+        $color = imagecolorallocate($image_3, 255, 255, 255);
+        imagefill($image_3, 0, 0, $color);
+        imageColorTransparent($image_3, $color);
+        //首先将二维码画布采样copy到真彩色画布中，不会失真
+        imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
+        //再将背景图片copy到已经具有二维码图像的真彩色画布中，同样也不会失真
+        imagecopyresampled($image_3, 150, 50, 0, 0, 100, 100);
+
+        //将画布保存到指定的png文件
+        imagepng($image_3, 'head_word_bg_erweima.png');
+
+//44444444444444444头像
+        $path_1 = $head_img;
+        //背景图片
+        $path_2 = "head_word_bg_erweima.png";
+
+        $image_1 = imagecreatefrompng($path_2);
+        // $image_2 = imagecreatefrompng($path_1);
+        $image_2 = imagecreatefromstring(file_get_contents($path_1));
+        //创建一个和bg图片一样大小的真彩色画布（ps：只有这样才能保证后面copy二维码图片的时候不会失真）
+        $image_3 = imageCreatetruecolor(imagesx($image_1), imagesy($image_1));
+        //为真彩色画布创建白色背景，再设置为透明
+        $color = imagecolorallocate($image_3, 255, 255, 255);
+        imagefill($image_3, 0, 0, $color);
+        imageColorTransparent($image_3, $color);
+        //首先将二维码画布采样copy到真彩色画布中，不会失真
+        imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
+        //再将背景图片copy到已经具有二维码图像的真彩色画布中，同样也不会失真
+        imagecopyresampled($image_3, $image_2, 350, 845, 0, 0, 57, 57, imagesx($image_2), imagesy($image_2));
+
+        //将画布保存到指定的png文件
+        // $ret = imagepng($image_3, 'head_word_bg_erweima.png');
+        // dump($image_3);
+        imagepng($image_3);
+        $this->display();
+    }
+}

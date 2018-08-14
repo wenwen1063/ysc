@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../CSS/CommonCSS/Base.css">
+    <title>二维码</title>
+    <style type="text/css">
+        img {
+            width: 100%;
+            height: 100%;
+        }
+        .mui-bar-tab .mui-tab-item.mui-active{
+            color: #ff5053;
+        }
+    </style>
+</head>
+
+<body>
+<img src="../../img/two.jpg"/>
+<nav class="mui-bar mui-bar-tab footer">
+    <a id="one" class="mui-tab-item" href="../../Html/index.html">
+        <span class="mui-icon"><img src="../../img/TabBarController/tabbarcontroller_icon_home_normal.png"
+                                    alt=""></span>
+        <span class="mui-tab-label">首页</span>
+    </a>
+    <a id="two" class="mui-tab-item" href="../classification/classification.html">
+        <span class="mui-icon"><img src="../../img/TabBarController/tabbarcontroller_icon_classification_normal.png"
+                                    alt=""></span>
+        <span class="mui-tab-label">分类</span>
+    </a>
+    <a id="code" class="mui-tab-item mui-active" href="">
+        <span class="mui-icon"><img src="../../img/TabBarController/tabbarcontroller_icon_qrcode_press.png"
+                                    alt=""></span>
+        <span class="mui-tab-label">二维码</span>
+    </a>
+    <a id="three" class="mui-tab-item" href="../ShoppingCart/ShoppingCart.html">
+        <span class="mui-icon"><img src="../../img/TabBarController/tabbarcontroller_icon_shoppingcart_normal.png"
+                                    alt=""></span>
+        <span class="mui-tab-label">购物车</span>
+    </a>
+    <a id="four" class="mui-tab-item" href="../mypage/Mypage.html">
+        <span class="mui-icon"><img src="../../img/TabBarController/tabbarcontroller_icon_my_normal.png" alt=""></span>
+        <span class="mui-tab-label">我的</span>
+    </a>
+</nav>
+</body>
+
+</html>

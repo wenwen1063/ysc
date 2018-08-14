@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>资讯详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Informationtitle.css" rel="stylesheet">
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a href="{:U('home/information/index')}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">资讯详情</h1>
+</header>
+<div class="title">
+    <h4>{$data['title']}</h4>
+    <p>{$data['times']}.{$data['addtime']}.{$data['addtimes']}</p>
+</div>
+
+<div class="img">
+    <img src="__PUBLIC__/Uploads/{$data['pic']}" alt="">
+</div>
+<div class="content">
+    <p>{$data['content']}</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!--index -->
+  <include file="public:index"   />
+<!--index-->
+<script type="text/javascript" src="__PUBLIC__/timejs/laydate.js"></script>
+<title>物流分类</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+ 系统 <span class="c-gray en">&gt;</span>
+  积分管理 <span class="c-gray en">&gt;</span>
+   积分商城
+   <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20">
+	<form action="{:U('/home/goldmall/goldmallindex/search/')}" method="post/get" name="main_form" class="form form-horizontal" id="form-admin-add" style="float:right;">
+		<div class="text-c">
+			<input type="text" id="g_number" name="g_number" value="{$search['g_number']}" class="input-text" style="width:250px" placeholder="输入商品编号">
+			<input type="text" id="g_name" name="g_name" value="{$search['g_name']}" class="input-text" style="width:250px" placeholder="输入商品名称">
+
+			<!--<input type="date" placeholder="开始时间" id="l_time" name="l_time" value="{$search['l_time']}" ><i>&#45;&#45;&#45;&#45;</i>-->
+			<!--<input type="date" placeholder="结束时间" id="r_time" name="r_time" value="{$search['r_time']}">-->
+
+			<input placeholder="开始时间" class="laydate-icon" style="height:29px;" value="{$search['l_time']}"  name="l_time" id="l_time" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"><i>--</i>
+			<input placeholder="结束时间" class="laydate-icon" style="height:29px;" value="{$search['r_time']}" name="r_time" id="r_time" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+
+			<button type="submit" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+		</div>
+
+	</form>
+	<form action="{:U('/home/logclass/logclassdel/del')}" method="post/get" name="main_form">
+		<div class="text-c"><br></div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l">
+		<a href="{:U('/home/goldmall/goldmalladd')}" class="btn btn-primary radius"> 新增 </a></span>&nbsp;
+		<!-- <input type="submit" class="btn btn-danger radius" value="删除" onclick="return Check()" /> --><!-- <i class="Hui-iconfont">&#xe6e2;</i> -->
+		<span class="r">共有数据：<strong>{$count}</strong> 条</span> </div>
+	<table class="table table-border table-bordered table-bg">
+		<thead>
+			<tr>
+				<th scope="col" colspan="15">积分商品列表</th>
+			</tr>
+			<tr class="text-c">
+				<th width="40">操作</th>
+				<th width="40">商家信息</th>
+				<th width="40">商品编号</th>
+				<th width="40">商品名称</th>
+				<th width="40">所需积分数量</th>
+				<th width="40">商品金额</th>
+				<th width="40">剩余数量</th>
+				<th width="40">开始时间</th>
+				<th width="40">结束时间</th>
+			</tr>
+		</thead>
+		<tbody>
+			<foreach name='data' item='v'>
+				<tr class="text-c">
+					<td class="td-manage">
+					<a class="btn btn-primary size-MINI radius" href="{:U('/home/goldmall/goldmallupdate',array('id'=>$v['id']))}">编辑</a>
+					<a class="btn btn-primary size-MINI radius" href="{:U('/home/goldmall/goldmalldel',array('id'=>$v['id']))}" onclick="return confirm('确认要删除吗？');">删除</a>
+					</td>
+					<td>{$v['s_name']}</td>
+					<td>{$v['g_number']}</td>
+					<td>{$v['goods_name']}</td>
+					<td>{$v['gold_price']}</td>
+					<td>{$v['money']}</td>
+					<td>{$v['surplus_number']}</td>
+					<td>{$v['start_time']|date='Y-m-d H:i:s',###}</td>
+					<td>{$v['end_time']|date='Y-m-d H:i:s',###}</td>
+				</tr>
+			</foreach>
+		</tbody>
+	</table>
+	<div class="pageright">{$page}</div>
+	</form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+<script type="text/javascript">
+//批量删除判断是否选择
+function Check()
+{
+var chks=document.getElementsByTagName('input');
+var bl=true;
+for(var i=0;i<chks.length;i++)
+{
+    if(chks[i].checked) 
+    {
+        bl=false;
+        break;
+    }
+} 
+if(bl){
+	alert('最少选择一个');
+	return false;
+}
+}
+!function(){
+	laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
+	laydate({elem: '#demo'});//绑定元素
+}();
+
+
+
+</script>
+
+</body>
+</html>

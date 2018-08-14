@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=NO" />
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">-->
+    <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css">
+    <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/index.css">
+    	<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+    <!-- <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/kefandtop.css"> -->
+    <title>搭档商城</title>
+    <style>
+    html,
+    body {
+        /*font-size: 14px;*/
+        /*height: 100% !important;*/
+        background: #F1F2F6 !important;
+        color: #444 !important;
+        font-family: sans-serif !important;
+        font-style: normal !important;
+        /*text-align: center !important;*/
+        margin-bottom: 0;
+    }
+
+    #shop_notice {
+        border-top: 1px solid #eee;
+    }
+
+    .searchbar {
+        width: 100%;
+        padding-right: 40px;
+        position: relative;
+        height: 35px;
+        background: #fff;
+        border-radius: 5px;
+        padding-right: 60px;
+    }
+
+    .searchbar .searchimg {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        width: 20px;
+        height: 20px;
+    }
+
+    .searchbar input[type='search'] {
+        margin: 0;
+        display: inline-block;
+        border: none;
+        height: 35px;
+        padding: 5px 10px;
+        padding-right: 0;
+        font-size: 14px;
+        background: #fff;
+        text-align: left;
+    }
+
+    .mui-bar-tab .mui-tab-item.mui-active {
+        color: #fe504f;
+    }
+
+    .ellipsis {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        color: #444;
+    }
+
+    #shop_notice {
+        height: 50px;
+    }
+
+    #shop_notice .fonst {
+        width: 100px;
+        padding: 0 10px;
+    }
+
+    #shop_notice .fonst img {
+        left: 0;
+        position: none;
+        width: 100%;
+    }
+
+    #shop_notice .content {
+        left: 8px;
+    }
+
+    #shop_notice .content .content_fonst {
+        top: 10px;
+        left: 8px;
+        height: 30px;
+    }
+
+    #shop_notice .content .more {
+        border: none;
+        right: 15px;
+    }
+
+    #shops {
+        height: auto;
+        top: 0;
+        margin-top: 10px;
+    }
+
+    #shops .lists {
+        padding-top: 0;
+        padding: 20px 10px;
+        padding-bottom: 15px;
+        width: 33.3333%;
+        height: auto;
+    }
+
+    #shops .lists:nth-child(n+3) {
+        border-right: 0;
+    }
+
+    #shops .lists h5 {
+        margin: 0;
+        color: #444;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    #shops .lists img {
+        top: 0;
+        width: 100% !important;
+        height: auto;
+        padding: 10px;
+    }
+
+    #commodity_name {
+        padding: 10px;
+        height: auto;
+        color: red;
+        font-size: 16px;
+        top: 0px;
+        margin-top: 10px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    #commodity_name .more {
+        top: 0;
+        border: none;
+        right: 0;
+        padding: 0;
+    }
+
+    #shopcontent {
+        top: 0;
+        height: auto;
+        padding: 0;
+    }
+
+    #shopcontent .list {
+        border: 1px solid #F0F0F0;
+        padding: 10px;
+        width: 50%;
+        height: auto;
+        margin-bottom: 0px;
+    }
+
+    #shopcontent .list h5 {
+        margin: 5px 0;
+        font-size: 15px;
+    }
+
+    #shopcontent .list img {
+        height: auto;
+    }
+
+    #shopcontent .list input {
+        right: 0;
+    }
+
+    .imgkefu img {
+        top: auto;
+        bottom: 110px;
+    }
+
+    #shopcontent .list input {
+        border: 1px solid #fe504f;
+    }
+
+    .searchbar .imgdiv {
+        width: 50px;
+        height: 100%;
+        text-align: center;
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        right: 0px;
+        background: #FE504F;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .searchbar .imgdiv span {
+        vertical-align: middle;
+        /* width: 20px; */
+        position: absolute;
+        font-size: 15px;
+        /* top: 7.5px; */
+        width: 100%;
+        display: inline-block;
+        line-height: 35px;
+        right: 0px;
+        color: #fff;
+    }
+
+    .marketing_div {
+        background: #fff;
+    }
+
+    .marketing_div .banner_div {
+        width: 100%;
+        float: left;
+    }
+
+    .marketing_div .banner_div img {
+        width: 100%;
+        float: left;
+    }
+
+    .more span {
+        color: #FE504F !important;
+        font-size: 12px !important;
+    }
+    </style>
+</head>
+<body>
+	
+    <!--<header class="mui-bar mui-bar-nav header">-->
+        <!--<a id="info" class="mui-icon mui-icon-search mui-pull-right" href="classification/Searchgoods.html"></a>-->
+        <!--<h1 class="mui-title">首页</h1>-->
+    <!--</header>-->
+    <div style="padding-bottom: 50px;">
+        <div style="padding:10px;">
+            <form>
+                <div class="searchbar">
+                   <input type="search" id="searchtext" placeholder="输入搜索关键字" />
+                    <div class="imgdiv">
+                        <span id="search">搜索</span>
+                    </div>
+                    <!--<img class="searchimg" src="__PUBLIC__/Wx/img/Home/search.png" alt="">-->
+                </div>
+            </form>
+        </div>
+        <div>
+            <div id="slider" class="mui-slider">
+                <div class="mui-slider-group mui-slider-loop" id="adverinfo">
+                    <foreach name='picinfo' item='v1' key='k2'>
+                    	<if condition="$k2 eq count($picinfo)-1">
+                            <div class="mui-slider-item mui-slider-item-duplicate">
+                                <a href="#"><img src=" __PUBLIC__/Uploads/{$v1['img']}" /></a>
+                            </div>
+                        </if>
+                    </foreach>
+                        
+	                         <foreach name='picinfo' item='v' key='k'>
+	                        <div class="mui-slider-item">
+	                            <?php if ($v['ad_type']==1): ?>
+	                            	<a href="javascript:void(0)">
+	                            <?php elseif ($v['ad_type']==2): ?>
+	                                <a href="{$v['ad_link']}">
+	                            <?php else : ?>
+	                            	<a href="{:U('/home/goods/goodsinfo',array('id'=>$v['ad_goods']))}">
+	                            <?php endif ?>
+	                            <img src=" __PUBLIC__/Uploads/{$v['img']}" /></a>
+	                        </div>
+                        </foreach>
+                        
+                       <foreach name='picinfo' item='v2' key='k1'>
+                       <if condition="$k1 eq 0">
+                            <div class="mui-slider-item mui-slider-item-duplicate">
+                                <a href="#"><img id="aaaa" src=" __PUBLIC__/Uploads/{$v2['img']}" /></a>
+                            </div>
+                        </if>
+                    </foreach>
+                <!--</div>-->
+            </div>
+        </div>
+        <div class="navigation">
+            <div class="navigation_one">
+                <a href="{:U('/home/partners/index')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_partners.png">
+                        </div>
+                        <span class="list_span">成为搭档</span>
+                    </div>
+                </a>
+                <a href="{:U('/home/Special/partnerspecial')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_exclusive.png">
+                        </div>
+                        <span class="list_span">搭档福利</span>
+                    </div>
+                </a>
+                <a href="{:U('/home/extension/extensionlist')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_extensiontool.png">
+                        </div>
+                        <span class="list_span">推广工具</span>
+                    </div>
+                </a>
+                <a href="{:U('/home/teacher/index')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_mentor.png">
+                        </div>
+                        <span class="list_span">创业社区</span>
+                    </div>
+                </a>
+                <!-- <a href="{:U('/home/seller/sellercenter')}"> -->
+                <a href="{:U('/home/seller/sellerapply')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_bc.png">
+                        </div>
+                        <span class="list_span">商家入驻</span>
+                    </div>
+                </a>
+            </div>
+            <div class="navigation_two">
+                <a href="{:U('/home/feeflow/feeflow')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_vc.png">
+                        </div>
+                        <span class="list_span">话费流量</span>
+                    </div>
+                </a>
+                <a href="{:U('/home/goldmall/goldmallindex')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_exchange.png">
+                        </div>
+                        <span class="list_span">积分换购</span>
+                    </div>
+                </a>
+                <a href="{:U('/home/coupon/couponindex')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_lc.png">
+                        </div>
+                        <span class="list_span">领券中心</span>
+                    </div>
+                </a>
+                <a href="{:U('/home/information/index')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_consulting.png">
+                        </div>
+                        <span class="list_span">精品资讯</span>
+                    </div>
+                </a>
+                <a href="{:U('/home/goodsclass/goodsclassindex')}">
+                    <div class="list">
+                        <div class="list_img">
+                            <img class="img" src="__PUBLIC__/Wx/img/Home/home_btn_goods.png">
+                        </div>
+                        <span class="list_span">全部商品</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div id="shop_notice">
+            <div class="fonst">
+                <img src="__PUBLIC__/Wx/img/Home/shop_fonst.png">
+            </div>
+            <div class="content">
+                <div class="circular">
+                </div>
+                <div class="content_fonst">
+                    <marquee direction="up" scrollDelay="190" height="30px" loop="-1" scrollamount="3">
+                        <foreach name='notic' item='vb'>
+                            <p class="ellipsis" style="color:#000">{$vb['content']}</p>
+                        </foreach>
+                    </marquee>
+                </div>
+                <div class="more">
+                    <a href="{:U('/home/index/notice')}">
+                        <span>更多</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="shops">
+            <foreach name='shop' item='vi'>
+                <a href="{:U('/home/seller/sellerinfo',array('id'=>$vi['id']))}">
+                    <div class="lists" style="border-bottom: 1px solid #e0e0e0">
+                        <div class="names">
+                            <h5 class="ellipsis">{$vi['forshort']}
+                        </h5>
+                        </div>
+                        <img src="__PUBLIC__/Uploads/{$vi['logo']}">
+                    </div>
+                </a>
+            </foreach>
+        </div>
+        <div style="clear: both;"></div>
+        <?php if ($activity != null): ?>
+        <div class="marketing_div">
+            <div id="commodity_name">
+                限时抢购
+                <a href="{:U('/home/index/goods',array('goods_id'=>$as['goods_id']))}">
+                    <div class="more">
+                        <span>更多</span>
+                    </div>
+                </a>
+            </div>
+            <foreach name='activity' item='as'>
+                <a href="{:U('/home/goods/goodsinfo',array('id'=>$as['goods_id']))}">
+                    <div class="banner_div">
+                        <img src="__PUBLIC__/Uploads/{$as['img']}">
+                    </div>
+                </a>
+            </foreach>
+        </div>
+        <?php endif ?>
+        <div style="clear: both;"></div>
+        <!-- <?php if ($activity != null): ?> -->
+        <!-- <div id="commodity_name"> -->
+        <!-- <img src="__PUBLIC__/Wx/img/Home/1F.png">
+                <span>营销活动</span>
+                <div class="more">
+                    <a href="{:U('/home/goodsclass/goodsclassindex')}">
+                        <span>更多</span>
+                    </a>
+                </div>
+                 <div id="advertisements">
+                <foreach name='activity' item='as'>
+                <a href="{:U('/home/goods/goodsinfo',array('id'=>$as['goods_id']))}">
+                    <div class="lists" style="margin-bottom: 5px">
+                        <img src="__PUBLIC__/Uploads/{$as['pic']}">
+                    </div>
+                     </a>
+                </foreach>
+            </div>
+            </div>
+            <?php endif ?> -->
+        <foreach name='arr' item='as' key='k'>
+            <div id="commodity_name">
+                <!-- <img src="__PUBLIC__/Wx/img/Home/1F.png"> -->
+                {$k}
+                <!-- <span>{$k}</span> -->
+                <div class="more">
+                    <a href="{:U('/home/goodsclass/goodsclassindex',array('id'=>$as[0]['class_id']))}">
+                        <span>更多</span>
+                    </a>
+                </div>
+            </div>
+            <div id="shopcontent">
+                <foreach name='as' item='vl' key="key">
+                    <if condition="$key lt 4">
+                        <a href="{:U('/home/goods/goodsinfo',array('id'=>$vl['goods_id']))}">
+                            <div class="list">
+                                <img src="__PUBLIC__/Uploads/{$vl['sm_pic']}">
+                                <h5 class="ellipsis">{$vl['goods_name']}</h5>
+                                <div class="money">
+                                    <span>￥{$vl['price']}</span>
+                                    <input type="button" value="购买">
+                                </div>
+                            </div>
+                        </a>
+                    </if>
+                </foreach>
+            </div>
+        </foreach>
+    </div>
+    <!--客服和回到顶部-->
+    <include file="public:kfandtop" />
+    <!--nav底部导航-->
+    <include file="public:nav" />
+    <!--nav底部导航结束-->
+</body>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/index/js/template.js"></script>
+<script language="javascript" src="http://chat8.live800.com/live800/chatClient/monitor.js?jid=5530154684&companyID=820706&configID=151384&codeType=custom"></script>
+<script type="text/javascript">
+
+$("#search").click(function(){
+	$text=$("#searchtext").val();
+	mui.openWindow({
+					url: "__ROOT__/wx.php/home/index/search?search=" + $text,
+					id: 'indexsearch'
+				});
+})
+</script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript">  
+
+//通过config接口注入权限验证配置
+wx.config({
+debug : false,
+appId : 'AppID',
+timestamp : '<?php echo $jsdk["timestamp"];?>',
+nonceStr : '<?php echo $jsdk["noncestr"];?>',
+signature : '<?php echo $jsdk["signature"];?>',
+jsApiList : ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo']
+});
+
+$url="<?php echo C('URL_IP');?>"+"Public/Wx/img/300.jpg";
+
+
+
+
+
+wx.ready(function(){
+var
+    s_title = '搭档商城',  // 分享标题
+    s_link =  window.location.href,  // 分享链接
+    s_desc = '精致生活，健康搭档',  //分享描述
+    s_imgUrl =$url; // 分享图标
+//朋友圈
+
+wx.onMenuShareTimeline({
+    title: s_title, // 分享标题
+    link: s_link, // 分享链接
+    imgUrl: s_imgUrl, // 分享图标
+    success: function () { 
+    },
+    cancel: function () { }
+});
+//发送给好友
+wx.onMenuShareAppMessage({
+    title: s_title, // 分享标题
+    desc: s_desc, // 分享描述
+    link: s_link, // 分享链接
+    imgUrl: s_imgUrl, // 分享图标
+    type: '', // 分享类型,music、video或link，不填默认为link
+    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+    success: function () {},
+    cancel: function () {}
+});
+//QQ好友
+wx.onMenuShareQQ({
+    title: s_title, // 分享标题
+    desc: s_desc, // 分享描述
+    link: s_link, // 分享链接
+    imgUrl: s_imgUrl, // 分享图标
+    success: function () { },
+    cancel: function () { }
+});
+//腾讯微博
+wx.onMenuShareWeibo({
+    title: s_title, // 分享标题
+    desc: s_desc, // 分享描述
+    link: s_link, // 分享链接
+    imgUrl: s_imgUrl, // 分享图标
+    success: function () { },
+    cancel: function () { }
+});
+});
+</script>
+
+
+
+</html>

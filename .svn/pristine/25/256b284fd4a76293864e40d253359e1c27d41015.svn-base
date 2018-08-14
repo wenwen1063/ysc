@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>售后详情</title>
+		<meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+		<link href="__PUBLIC__/Wx/CSS/BusinessCSS/Myorder/Orderdetails.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<!--<header class="mui-bar mui-bar-nav header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">售后详情</h1>
+		</header>-->
+		<span class="title">商品信息</span>
+		<foreach name="info" item="v" key="key">
+			<div class="xin">
+				<div class="img">
+					<img src="__PUBLIC__/Uploads/{$v['sm_pic']}">
+				</div>
+				<h5>{$v['goods_name']}</h5>
+				<p>￥{$v['shop_price']}&numsp;&numsp;&numsp;<span>{$v['goods_number']}</span></p>
+			</div>
+		</foreach>
+		<span class="title">详细</span>
+		<div class="bian">
+			<p>商品状态：
+				<if condition="$data['status'] eq 0">
+					<a class=" mui-active status">待通过</a>
+					<elseif condition="$data['status'] eq 1" />
+					<a class=" status">退货中</a>
+					<elseif condition="$data['status'] eq 2" />
+					<a class=" status">退款中</a>
+					<elseif condition="$data['status'] eq 4" />
+					<a class=" status">已完成 </a>
+					<elseif condition="$data['status'] eq 5" />
+					<a class=" status">拒绝退货 </a>
+					<elseif condition="$data['status'] eq 6" />
+					<a class="status">拒绝退款 </a>
+				</if>
+			</p>
+			<if condition="$data['type'] eq 1">
+				<p>退款金额：{$data['money']}</p>
+			</if>
+			<p>问题描述：{$data['remark']}</p>
+		</div>
+		<span class="title">上传照片</span>
+		<div class="bian">
+			<if condition="$data['pic1'] neq ''">
+				<img src="__PUBLIC__/Uploads/{$data['pic1']}" / width="50px">
+			</if>
+			<if condition="$data['pic2'] neq ''">
+				<img src="__PUBLIC__/Uploads/{$data['pic2']}" / width="50px">
+			</if>
+		</div>
+		<nav class="mui-bar mui-bar-tab">
+			<div class="fukuan">
+				<if condition="$data['status'] eq 4">
+					<input type="button" class="cancelorder" oid="{$info[0]['id']}" value="删除售后订单">
+				<else/>
+				</if>
+			</div>
+		</nav>
+	</body>
+	<script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+	<script>
+		//  mui('#segmentedControl').on('tap', 'a', function () {
+		//
+		////        this.style.display = 'block'
+		//  })
+
+		function orderinfo(state) {
+			mui.openWindow({
+				url: "__ROOT__/wx.php/home/user/orderinfo?state=" + state,
+				id: 'orderinfo'
+			});
+		}
+		//详情页
+		$(".derdetail").click(function() {
+				$id = $(this).attr('oid');
+				mui.openWindow({
+					url: "__ROOT__/wx.php/home/user/orderdetails?order_no=" + $id,
+					id: 'orderinfo'
+				});
+			})
+		//支付		
+		//删除订单
+		$(".cancelorder").click(function() {
+			$id = $(this).attr('oid');
+			var btnArray = ['否', '是'];
+			mui.confirm('确定删除售后订单', ' ', btnArray, function(e) {
+				if(e.index == 1) {
+					mui.openWindow({
+						url: "__ROOT__/wx.php/home/user/cancelorder?order_no=" + $id,
+						id: 'orderinfo'
+					});
+				} else {}
+			})
+		});
+	</script>
+
+</html>

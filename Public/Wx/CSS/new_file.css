@@ -1,0 +1,422 @@
+body{
+	background: #f5f5f5;
+}
+img{
+	vertical-align: middle;
+}
+.header{
+	background: #2577E3;
+}
+.memBody{
+	padding-top: 20px;
+}
+.memBody_b{
+	width: 980px;
+	margin: 0 auto;
+}
+.memBody_m{
+	float: left;
+	width: 100%;
+}
+.memBody_m:after{
+	clear: both;
+	display: block;
+	content: '';
+}
+.all_main{
+	float: left;
+    width: 100%;
+	padding: 5px;
+	background: #fff;
+}
+.stair_nav{
+	height: 40px;
+	line-height: 38px;
+	background: #F5F5F5;
+	border: 1px solid #ECECEC;
+}
+.stair_nav li{
+	float: left;
+	width: 120px;
+	text-align: center;
+	cursor: default;
+}
+.stair_nav li.active{
+	color: #fff;
+	background: #2577E3;
+}
+.stair_nav .goback{
+	float: right;
+	margin-right: 10px;
+	font-size: 80%;
+	color: #2577E3;
+}
+.colff4{
+	color: #ff4040;
+}
+.float_right{
+	float: right !important;
+}
+.com_mes{
+	float: left;
+	width: 100%;
+	margin-top: 20px;
+	text-align: right;
+}
+.com_mes_b{
+	position: relative;
+	padding: 20px 20px 0 150px;
+	line-height: 40px;
+	border: 1px solid #ECECEC;
+}
+.com_price{
+	position: relative;
+	height: 120px;
+	border-bottom: 1px solid #ECECEC;
+	text-align: left;
+}
+.com_price big{
+	margin-right: 15px;
+}
+.com_img{
+	position: absolute;
+	left: 15px;
+	top: 20px;
+	width: 110px;
+}
+.com_ap{
+	text-align: right;
+	line-height: 40px;
+}
+.ord_button{
+	width: 120px;
+	height: 35px;
+	margin: 20px 0 15px;
+	color: #fff;
+	border: 0;
+	cursor: pointer;
+}
+.ord_eva{
+	background: #F2FEF0;
+	border: 1px solid #2577E3;
+}
+.ord_eva .com_price{
+	top: -5px;
+	border: 0;
+}
+.ord_eva .showdet{
+	position: absolute;
+	right: 10px;
+	bottom: 0;
+	display: block;
+	font-size: 80%;
+	color: #2577E3;
+}
+.eva_indi{
+	display: inline-block;
+	width: 80px;
+}
+.eva_eva_p{
+	float: left;
+	width: 100%;
+	margin: 20px 0;
+	line-height: 40px;
+}
+.eva_eva_p img{
+	width: 20px;
+	margin: 0 2px;
+}
+.eva_eva_p img.margin{
+	margin-left: 20px;
+}
+#rating-star a {
+	position: relative;
+	top: 8px;
+    display: inline-block;
+    height: 23px;
+    width: 23px;
+    text-indent: -999em;
+    background: url(../img/stars.png) no-repeat 0 -24px;
+    background-size:23px ;
+}
+.eva_mes{
+	position: relative;
+	width: 535px;
+	margin-top: 0px;
+	margin-bottom: 250px;
+}
+.eva_text{
+	width: 450px;
+	height: 200px;
+	padding: 10px;
+	vertical-align: text-top;
+	resize: none;
+}
+.eva_mes .length{
+	position: absolute;
+	bottom: 52px;
+	right: 10px;
+}
+.eva_button{
+	width: 100px;
+	height: 33px;
+	margin-top: 20px;
+	color: #fff;
+	border: 0;
+}
+.eva_button.conf{
+	background: #2577E3;
+}
+.eva_button.canc{
+	margin-left: 20px;
+	background: #CECABF;
+}
+.eva_button.margin{
+	margin-left: 85px;
+}
+.col1ec{
+	color: #2577E3;
+}
+.mem_user_m{
+	float: left;
+	width: 100%;
+	padding: 10px;
+	background: #D4F1FF;
+	border: 1px solid #6ED0FF;
+}
+.mem_user_m ul{
+	float: left;
+	width: 550px;
+	margin-top: 15px;
+	line-height: 25px;
+}
+.mem_user_m ul li{
+	float: left;
+	width: 50%;
+	font-size: 80%;
+}
+.mem_user_m .qrcode{
+	float: right;
+	width: 198px;
+	text-align: center;
+}
+.mem_user_m .qrcode img{
+	position: relative;
+	top: -14px;
+	width: 140px;
+	height: 140px;
+	background: #F5F5F5;
+}
+.qrcode a{
+	font-size: 80%;
+	color: #0078B6;
+}
+.bi_icon{
+	width: 25px;
+	padding: 2.5px;
+	margin-left: 20px;
+	vertical-align: text-bottom;
+	cursor: pointer;
+}
+.mes_li_nav{
+	float: left;
+	width: 100%;
+	line-height: 30px;
+}
+.mes_li_nav .left{
+	float: left;
+	width: 30%;
+	padding: 0 40px 0 10px;
+	font-size: 80%;
+	color: #148401;
+	background: #86E776 url(../../../img/img-0.png) no-repeat;
+	background-size: 20px;
+	background-position: 95.5% 5px;
+	text-align: right;
+}
+.mes_li_nav .left .i{
+	position: relative;
+	top: -2px;
+	width: 20px;
+	margin-left: 10px;
+	vertical-align: middle;
+}
+.mes_li_nav .right{
+	float: left;
+	width: 70%;
+	padding: 0 10px;
+	color: #fff;
+	background: #1DC301;
+	text-align: left;
+}
+.mes_li_nav .right .icon{
+	position: relative;
+	top: -2px;
+	width: 30px;
+	margin-right: 10px;
+	vertical-align: middle;
+}
+.recom_text{
+	width: 90%;
+	height: 60px;
+	padding: 6px;
+	font-size: 80%;
+	color: #2577E3;
+	background: #EEFCEB;
+	border: 1px solid #2577E3;
+	resize: none;
+}
+.mem_num_m p.margin{
+	margin: 8px 0 3px 0;
+}
+.mem_num_m .recom_button{
+	margin-top: 2px;
+	padding: 0 10px;
+	height: 30px;
+	font-size: 95%;
+	background: #2577E3;
+	color: #fff;
+	border: 0;
+}
+.mem_num_m .pre_img{
+	display: block;
+	width: 100%;
+	height: 197px;
+	border: 1px solid #e8e8e8;
+}
+.page_button{
+	margin-right: 15px;
+	padding: 0 13px;
+	height: 28px;
+	font-size: 80%;
+	color: #fff;
+	background: #2577E3;
+	border: 0;
+	cursor: pointer;
+}
+.page_coll{
+	line-height: 40px;
+}
+.page_coll a{
+	margin-right: 15px;
+	font-size: 90%;
+	color: #2577E3;
+}
+.mem_num_m .upload{
+	position: absolute;
+	right: 15px;
+	bottom: 0px;
+	width: 50px;
+	height: 50px;
+	padding: 5px;
+	color: #fff;
+	background: #909090;
+	border: 0;
+	cursor: pointer;
+}
+.mem_num_m .upload:hover{
+	background: #2577E3;
+}
+.mes_li_nav .right{
+	position: relative;
+}
+.add_hint{
+	width: 95%;
+	margin: 20px auto;
+}
+.dept_select{
+	width: 100px;
+}
+.nostate_mod{
+	display: none;
+	padding: 150px 0;
+	text-align: center;
+}
+.nostate_mod img{
+	width: 60px;
+	height: 60px;
+	margin-bottom: 30px;
+}
+.nostate_mod button{
+	width: 100px;
+	height: 35px;
+	margin-top: 30px;
+	color: #fff;
+	background: #FFC100;
+	border: 0;
+	cursor: pointer;
+}
+.hint_i{
+	z-index: 99;
+	position: relative;
+	display: inline-block;
+	margin-left: 15px;
+}
+.hint_i:hover div{
+	display: block;
+}
+.hint_i img{
+	width: 18px;
+}
+.hint_i div{
+	display: none;
+	position: absolute;
+	left: 30px;
+	top: 10px;
+	width: 200px;
+	padding: 8px;
+	font-size: 80%;
+	line-height: 25px;
+	background: #FFFAEA;
+	border: 1px solid #FFC100;
+}
+.hint_i div p{
+	font-size: inherit;
+}
+.change_b_l{
+	height: 139px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+.change_b_l li{
+	width: 300px;
+	margin-top: 15px;
+	padding: 5px 10px;
+	line-height: 25px;
+	background: #E6FDE3;
+	border: 1px solid #ECEBF0;
+	cursor: default;
+}
+.change_b_l li.active{
+	border: 1px solid #2577E3;
+}
+@media only screen and (min-width: 320px) and (max-width: 1024px) {
+	body{
+		min-width: auto;
+		font-size: 14px;
+	}
+	.com_mes_b{
+		padding: 10px 10px 0px 85px;
+		line-height: 25px;
+	}
+	.com_img{
+		left: 7.5px;
+		top: 10px;
+		width: 70px;
+	}
+	.com_price{
+		height: auto;
+	}
+	.com_price big{
+		font-size: 90%;
+	}
+	.ord_eva .showdet{
+		bottom: 5px;
+	}
+	.eva_mes{
+		width: 100%;
+	}
+	.eva_text{
+		width: 100%;
+	}
+}

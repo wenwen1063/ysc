@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>文章详情</title>
+		<meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link href="../../../../CSS/CommonCSS/Base.css" rel="stylesheet">
+		<link href="../css/article.css" rel="stylesheet"> 
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav header">
+			<a href="Myarticle.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">文章详情</h1>
+		</header>
+		<div class="padding_15">
+			<!--文章详情内容-->
+			<div class="mui-card article_details">
+				<div class="mui-card-header border_b" style="position: relative;">
+					<span class="title  mui-text-center">文章标题</span>
+					<i class="waitcheck"  style="display:none;position: absolute;right: 15px;">待审核</i>
+					<i class="waitcheck checked" style="display:none;position: absolute;right: 15px;">已审核</i>
+					<i class="waitcheck nopass" style="display:block;position: absolute;right: 15px;">不通过</i>	
+				</div>
+				<div class="mui-card-content">
+					<div class="mui-card-content-inner">
+						<p class="mui-text-center">时间:<span>2017-02-25</span></p>
+						<div class="article">
+							<p>文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...</p>
+							<p>文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...</p>
+						</div>
+					</div>
+				</div>
+				<div class="mui-card-footer">
+					<p class="mui-card-link"><img class="imgHeight20" src="../img/credits.png" alt=""><span class="padding_l_10">2223</span></p>
+					<p class="mui-card-link"><img class="imgHeight20" src="../img/like_red.png" alt=""><span class="padding_l_10">2223</span></p>
+					<p class="mui-card-link"><img class="imgHeight20" src="../img/browse.png" alt=""><span class="padding_l_10">2223</span></p>
+					<p class="mui-card-link"><img class="imgHeight20" src="../img/checked.png" alt=""><span class="padding_l_10">2223</span></p>
+				</div>
+			</div>
+			<!--评价-->
+			<div class="evaluate">
+				<div class="mui-card-header mui-card-media">
+					<img src="../img/userlogo.png" />
+					<div class="mui-media-body">
+						<h4>用户名</h4>
+						<p>发表于 2016-06-30 15:30</p>
+						<div class="mui-input-row">
+							<input type="text" class="mui-ellipsis" placeholder="文章标题" value="评价内容...评价内容...评价内容...评价内容...评价内容...评价内容...!">
+						</div>
+					</div>
+				</div>
+				<div class="mui-card-header mui-card-media">
+					<img src="../img/userlogo.png" />
+					<div class="mui-media-body">
+						<h4>用户名</h4>
+						<p>发表于 2016-06-30 15:30</p>
+						<div class="mui-input-row">
+							<input type="text" class="mui-ellipsis" placeholder="文章标题" value="评价内容...评价内容...评价内容...评价内容...评价内容...评价内容...!">
+						</div>
+					</div>
+				</div>
+				<div class="mui-card-header mui-card-media">
+					<img src="../img/userlogo.png" />
+					<div class="mui-media-body">
+						<h4>用户名</h4>
+						<p>发表于 2016-06-30 15:30</p>
+						<input type="text" class="mui-ellipsis" placeholder="文章标题" value="评价内容...评价内容...评价内容...评价内容...评价内容...评价内容...!">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--待审核 不通过-->
+		<nav class="mui-bar mui-bar-tab"> 
+			<input class="del" type="button" value="删除文章">
+			<a href="Editarticle.html"><input type="button" value="编辑文章" style="width: 50%;"></a>  
+		</nav>
+	</body>
+
+</html>

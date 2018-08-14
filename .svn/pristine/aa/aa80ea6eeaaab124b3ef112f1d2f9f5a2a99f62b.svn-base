@@ -1,0 +1,109 @@
+<?php
+/**
+ *充值中心
+ *author:cyl
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class FeeflowController extends Controller
+{
+    //充值中心页面
+    public function feeflow()
+    {
+        //话费
+        $fee = M('telephone_fare')->where(array('type' => 0))->select();
+        //流量
+        $flow = M('telephone_fare')->where(array('type' => 1))->select();
+        $this->assign('fee', $fee);
+        $this->assign('flow', $flow);
+		$this->assign('type',I('type'));
+        $this->display();
+    }
+
+    //话费流量详情
+    public function feeflowinfo()
+    {
+        $id   = I('id');
+        $data = M('telephone_fare')->where(array('id' => $id))->find();
+        if ($data) {
+            $json = array(
+                'result' => 1,
+                'data'   => $data,
+            );
+        } else {
+            $json = array(
+                'result' => 0,
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+
+    //写入充值未支付数据
+    public function pre_feeflow()
+    {
+        $id  = I('id'); //要充值的商品id -----telephone_fare 表里面的id
+        $tel = I('tel'); //充值的号码
+        //获取商品信息
+        $info = M('telephone_fare')->where(array('id' => $id))->find();
+        //获取当前登录会员的折扣信息
+        if ($info['type'] == 0) {
+            $map['type'] = 2;
+        } else {
+            $map['type'] = 3;
+        }
+		
+		
+        $partner_id = M('user')->where(array('id' => cookie('user_id')))->getField('privilege_hierarchy_id');
+		
+        if ($partner_id != null) {
+            $map['partner_id'] = $partner_id;
+            $condition         = M('privilege')->where($map)->field('rebate,rebate_frequency,rebate_quota')->find(); //折扣 折扣频率（每月） 折扣限额
+            $discount_rate     = $condition['rebate'];
+            $discount_times    = $condition['rebate_frequency'];
+            $discount_limit    = $condition['rebate_quota'];
+            //拿到会员使用折扣的信息
+            $map_time['time']    = array('between', array(strtotime(date('Y-m-01', strtotime(date("Y-m-d")))), time())); //本月第一天到当前时间为止
+            $map_time['user_id'] = cookie('user_id');
+//          $times               = M('telephone_fare_record')->where($map_time)->where(array('state' => 1, 'is_discount' => 1))->count(); //已使用折扣频率
+            $limit               = M('telephone_fare_record')->where($map_time)->where(array('state' => 1, 'is_discount' => 1))->sum('price'); //本月已参加折扣的总额度
+            if ($limit == null) {
+                $limit = 0;
+            }
+            if (($info['price'] + $limit) <= $discount_limit) {
+                $info['price']       = sprintf("%.2f", $info['price'] * $discount_rate / 10); //四舍五入 保留两位小数
+                $data['is_discount'] = 1;
+            }
+        }
+        //写入充值记录表
+        $tmp                  = "HFLL" . date('YmdHis', time()) . rand(1000, 9999); //订单编号
+        $tfr                  = M('telephone_fare_record');
+        $data['order_number'] = $tmp;
+        $data['user_id']      = cookie('user_id'); //当前登录的用户id
+        $data['type']         = $info['type']; //0话费 1流量
+        $data['number']       = $info['number']; //充值数量
+        $data['flow_type']    = $info['flow_type']; //0-省内流量，1-国内流量
+        $data['unit']         = $info['unit']; //0-为元，1-兆
+        $data['tel']          = $tel; //充值手机号码
+        $data['price']        = $info['price']; //售价
+        $data['time']         = time(); //时间
+        $data['remark']       = '话费流量充值';
+        $res                  = $tfr->add($data);
+        if ($res) {
+            $json = array(
+                'result'       => 1,
+                'order_number' => $tmp,
+                'total_money'  => $info['price'],
+                'msg'          => '操作成功！',
+            );
+        } else {
+            $json = array(
+                'result' => 0,
+                'msg'    => '操作失败！',
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+
+}

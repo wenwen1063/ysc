@@ -1,0 +1,33 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../CSS/CommonCSS/Base.css">
+    <link rel="stylesheet" href="../../../CSS/BusinessCSS/More/Passwordmanagement.css">
+    <title>密码管理</title>
+</head>
+
+<body>
+
+<header class="mui-bar mui-bar-nav header">
+    <a href="../../mypage/Mypage.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">密码管理</h1>
+</header>
+<div class="content">
+    <ul class="mui-table-view">
+        <li class="mui-table-view-cell">
+            <a href="../Modifypassword/Modifypassword.html" class="mui-navigate-right">
+                修改密码
+            </a>
+        </li>
+    </ul>
+
+    <ul class="mui-table-view">
+        <li class="mui-table-view-cell top">
+            <a href="../../BindonAccount/Forgetpassword.html" class="mui-navigate-right">
+            忘记密码
+            </a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="../../../../CSS/CommonCSS/Base.css">
+		<link rel="stylesheet" href="../../../../CSS/BusinessCSS/partnerspecial.css">
+		<link rel="stylesheet" href="../css/partnerspecial.css">
+		<title>搭档专享</title>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a href="../../index.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">搭档专享</h1>
+		</header>
+
+		<div id="classification">
+			<div class="list selected">
+				<span style="color: #33e060;">草根搭档</span>
+				<div class="img">
+					<img src="../../../../img/Home/home_icon_grassroots.png">
+				</div>
+			</div>
+
+			<div class="list">
+				<span style="color:#e567d1;">精英搭档</span>
+				<div class="img">
+					<img src="../../../../img/Home/home_icon_elite.png">
+				</div>
+			</div>
+
+			<div class="list">
+				<span style="color:#ffba00;">贵族搭档</span>
+				<div class="img">
+					<img src="../../../../img/Home/home_icon_noble.png">
+				</div>
+			</div>
+		</div>
+		<div id="introduce">
+			<div class="pagetitle">
+				<span>草根搭档</span>
+			</div>
+			<div class="content">
+				<span>草根搭档的介绍...草根搭档的介绍...草根搭档的介绍...草根搭档的介绍...草根搭档的介绍...草根搭档的介绍...</span>
+			</div>
+		</div>
+
+		<div id="privilege">
+			<div class="pagetitle">
+				<span>搭档特权</span>
+			</div>
+			<div class="content">
+				<div class="list">
+					<a href="../../Extension/Extension.html">
+						<div class="img">
+							<img src="../../../../img/Home/home_partner_icon_extensiontool.png">
+						</div>
+						<div class="name">
+							<span>推广工具</span>
+						</div>
+						<div class="money">
+							<span>￥198</span>
+						</div>
+					</a>
+					<div class="Receive">
+						<a href="payment.html"><span>免费领取</span></a>
+					</div>
+				</div>
+				<div class="list">
+					<a href="insurancedetails.html">
+						<div class="img">
+							<img src="../../../../img/Home/home_partner_icon_insurance.png">
+						</div>
+						<div class="name" style="width: 60px">
+							<span>交通意外险</span>
+						</div>
+						<div class="money">
+							<span>￥198</span>
+						</div>
+					</a>
+					<div class="Receive" onclick="insuranceQr(this)">
+						<span>免费领取</span>
+					</div>
+				</div>
+				<div class="list">
+					<a href="goodsdetails.html">
+						<div class="img">
+							<img src="../../../../img/Home/home_partner_icon_offlinetraining.png">
+						</div>
+						<div class="name">
+							<span>线下培训</span>
+						</div>
+						<div class="money">
+							<span>￥198</span>
+						</div>
+					</a>
+					<div class="Receive">
+						<a href="payment.html"><span>免费领取</span></a>
+					</div>
+				</div>
+
+			</div>
+			<div class="content" style="position: relative;top:39px;">
+				<div class="list">
+					<a href="goodsdetails.html">
+						<div class="img">
+							<img src="../../../../img/Home/home_partner_icon_pos.png">
+						</div>
+						<div class="name">
+							<span>收款工具</span>
+						</div>
+						<div class="money">
+							<span>￥198</span>
+						</div>
+					</a> 
+					<div class="Receive">
+						<a href="payment.html"><span>免费领取</span></a>
+					</div>
+				</div>
+				<div class="list">
+					<div class="img">
+						<img src="../../../../img/Home/home_partner_icon_mpr.png">
+					</div>
+					<div class="name" style="width: 60px">
+						<span>话费充值</span>
+					</div>
+					<div class="money">
+						<span>&ensp;&ensp;8折&ensp;</span>
+					</div>
+					<div class="Receive" style="width: 38px">
+						<a href="../../../homepage/VoucherCenter/VoucherCenter.html"><span>前往</span></a>
+					</div>
+				</div>
+				<div class="list">
+					<div class="img">
+						<img src="../../../../img/Home/home_btn_vc.png">
+					</div>
+					<div class="name">
+						<span>流量充值</span>
+					</div>
+					<div class="money">
+						<span>&ensp;&ensp;8折&ensp;</span>
+					</div>
+					<div class="Receive" style="width: 38px">
+						<a href="../../../homepage/VoucherCenter/VoucherCenter.html?t=a"><span>前往</span></a>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="fixedbox img" style="display: none;">
+			<div class="fixedbox_zxxq">
+				<img src="../img/hx.png" class="close">
+				<div class="article">
+					<img src="../img/qr.png" alt="">
+					<p class="mui-text-center">扫码领取奖励</p>
+				</div>
+			</div>
+		</div>
+		<script src="../../../../Script/CommonJS/Base.js"></script>
+	</body>
+
+</html>
+<script type="text/javascript" src="../../../../Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+	$(".fixedbox .close").click(function() {
+		$(".fixedbox.img").hide();
+	});
+
+	function insuranceQr(obj) {
+		$('.fixedbox').show();
+	}
+</script>

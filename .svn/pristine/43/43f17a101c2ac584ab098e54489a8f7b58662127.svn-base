@@ -1,0 +1,239 @@
+<?php
+/**
+ *个人中心
+ *author:qql
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class PartnersController extends Controller
+{
+
+    public function index()
+    {
+        //搭档信息
+        $data = M('partner')->order('id asc')->limit(3)->select();
+        //海报
+        $wmap['ad_position'] = 3;
+        $wmap['ad_skort']    = 1;
+        $hai                 = M('ad')->where($wmap)->find();
+        //搭档条件
+        $datas = M('partner')->select();
+        //搭档特权
+        // $result = M()->table('__PRIVILEGE__ pv')
+        //     ->join('left join __TOOL__ t on t.id = pv.tool_id')
+        //     ->join('left join __INSURANCE__ i on i.id = pv.insurance_id')
+        //     ->join('left join __GOODS__ g on g.id = pv.goods_id')
+        //     ->field('pv.*,t.name as tname,i.name as iname,g.goods_name')
+        //     ->select();
+
+        //软件使用时间
+        $result = M()->table('__PRIVILEGE__ pv')
+            ->join("left join __PARTNER__ p on pv.partner_id = p.id")
+            ->group('p.id')
+            ->field('pv.term,p.id as partner_id ')
+            ->order('partner_id')
+            ->select();
+        // dump($result);
+        //线下培训
+        $whe['pv.type'] = 0;
+        $xianx          = M()->table('__PRIVILEGE__ pv')
+            ->join('left join __GOODS__ g on g.id = pv.goods_id')
+            ->join("left join __PARTNER__ p on pv.partner_id = p.id")
+            ->where($whe)
+            ->group('p.id')
+            ->field('pv.privilege_products,g.goods_name,p.id')
+            ->order('p.id')
+            ->select();
+        //保险
+        $wh['pv.type'] = 1;
+        $insur         = M()->table('__PRIVILEGE__ pv')
+            ->join("left join __INSURANCE__ i on i.id = pv.insurance_id")
+            ->join('left join __PARTNER__ p on p.id = pv.partner_id')
+            ->where($wh)
+            ->group('pv.id')
+            ->field('pv.term,p.id as partner_id')
+            ->order('partner_id')
+            ->select();
+        // dump($insur);
+        //话费折扣
+        $hzhe = M()->table('__PRIVILEGE__ pv')
+            ->where(array('pv.type' => 2))
+            ->join("left join __PARTNER__ p on pv.partner_id = p.id")
+            ->group('p.id')
+            ->field('pv.id,pv.rebate,p.id as partner_id ')
+        // ->group('partner_id')
+            ->order('partner_id')
+            ->select();
+        //流量折扣
+        $mapa['pv.flow_type'] = 0;
+        $mapa['pv.flow_type'] = 1;
+        $lzhe                 = M()->table('__PRIVILEGE__ pv')
+
+            ->join("left join __PARTNER__ p on pv.partner_id = p.id")
+            ->group('p.id')
+            ->field('pv.id,pv.flow_type,pv.rebate,p.id as partner_id ')
+            ->where(array('pv.type' => 3))
+            ->where($mapa)
+        // ->group('partner_id')
+            ->order('partner_id')
+            ->select();
+        //销售一级
+        $xiaos = M()->table('__SALE_BONUS_SET__ sbs')
+            ->join('left join __PARTNER__ p on sbs.partner_id = p.id')
+            ->where(array('sbs.partner_level' => 1))
+            ->field('p.name,sbs.*')
+            ->select();
+        //销售二级
+        $xiaor = M()->table('__SALE_BONUS_SET__ sbs')
+            ->join('left join __PARTNER__ p on sbs.partner_id = p.id')
+            ->where(array('sbs.partner_level' => 2))
+            ->field('p.name,sbs.*')
+            ->select();
+        //销售三级
+        $xiaoa = M()->table('__SALE_BONUS_SET__ sbs')
+            ->join('left join __PARTNER__ p on sbs.partner_id = p.id')
+            ->where(array('sbs.partner_level' => 3))
+            ->field('p.name,sbs.*')
+            ->select();
+        //搭档一级
+        $pone = M()->table('__UPDATE_BONUS_SET__ ubs')
+            ->join('left join __PARTNER__ p on ubs.partner_id = p.id')
+            ->where(array('ubs.partner_level' => 1))
+            ->field('p.name,ubs.*')
+            ->select();
+        //搭档二级
+        $ptwo = M()->table('__UPDATE_BONUS_SET__ ubs')
+            ->join('left join __PARTNER__ p on ubs.partner_id = p.id')
+            ->where(array('ubs.partner_level' => 2))
+            ->field('p.name,ubs.*')
+            ->select();
+        //搭档三级
+        $pth = M()->table('__UPDATE_BONUS_SET__ ubs')
+            ->join('left join __PARTNER__ p on ubs.partner_id = p.id')
+            ->where(array('ubs.partner_level' => 3))
+            ->field('p.name,ubs.*')
+            ->select();
+        // dump($xiaor);
+        // dump($xiaor);
+
+        // dump($data);
+        // dump($insur);
+        $this->assign('xianx', $xianx);
+        $this->assign('insur', $insur);
+        $this->assign('result', $result);
+        $this->assign('hzhe', $hzhe);
+        $this->assign('lzhe', $lzhe);
+        $this->assign('xiaos', $xiaos);
+        $this->assign('xiaor', $xiaor);
+        $this->assign('xiaoa', $xiaoa);
+        $this->assign('pone', $pone);
+        $this->assign('ptwo', $ptwo);
+        $this->assign('pth', $pth);
+        $this->assign('datas', $datas);
+        $this->assign('data', $data);
+        $this->assign('hai', $hai);
+        $this->display();
+    }
+    // public function info()
+    // {
+    // $id = I('id');
+    // $id = 1;
+    // $result = M()->table('__PRIVILEGE__ pv')
+    //     ->join('left join __TOOL__ t on t.id = pv.tool_id')
+    //     ->join('left join __INSURANCE__ i on i.id = pv.insurance_id')
+    //     ->join('left join __GOODS__ g on g.id = pv.goods_id')
+    //     ->field('pv.*,t.name as tname,i.name as iname,g.goods_name')
+    //     ->where(array('pv.partner_id' => $id))
+    //     ->select();
+
+    // $result = M()->table('__PARTNER__ p')
+    //     ->join("left join __PRIVILEGE__ pv on pv.partner_id = p.id")
+    //     ->field('pv.term,p.id as partner_id ')
+    //     ->order('partner_id')
+    //     ->select();
+
+    // $result = M()->table('__PRIVILEGE__ pv')
+    //     ->join("left join __PARTNER__ p on pv.partner_id = p.id")
+    //     ->group('p.id')
+    //     ->field('pv.term,p.id as partner_id ')
+    //     ->order('partner_id')
+    //     ->select();
+
+    // $bound = M()->table('__PARTNER__ p')
+    //     ->join('left join __SALE_BONUS_SET__ sbs on sbs.partner_id = p.id')
+    //     ->join('left join __PRIVILEGE__ pv on pv.partner_id = p.id')
+    //     ->join('left join __GOODS__ g on g.id = pv.goods_id')
+    //     ->where(array('p.id' => $id))
+    //     ->select();
+    // $xiaos = M()->table('__PARTNER__ p')
+    //     ->join('left join __SALE_BONUS_SET__ sbs on sbs.partner_id = p.id')
+    //     ->where(array('p.id' => $id))
+    //     ->field('p.name,sbs.*')
+    //     ->distinct(true)
+    //     ->select();
+    // $json = array(
+    //     'result' => $result,
+    // 'bound'  => $pabound,
+    // 'xiaos'  => $xiaos,
+    //     );
+    //     pp($json);
+    //     $this->ajaxReturn($json);
+    // }
+
+    public function bpartner()
+    {
+        $p_id = I('post.id');
+        // $p_id       = 2;
+        $data       = M('partner')->where('id =' . $p_id)->find();
+        $partner_id = $data['id'];
+        $cost       = $data['software_cost'];
+        $amount     = $data['consumption_amount'];
+        $json       = array(
+            'result'     => 0,
+            'partner_id' => $partner_id,
+            'fee'        => $cost,
+            'amount'     => $amount,
+        );
+        $this->ajaxReturn($json);
+    }
+
+    public function bepartner()
+    {
+        $p_id              = I('post.p_id');
+        $amount            = I('post.all_fee');
+        $map['user_id']    = cookie('user_id');
+        $map['pay_status'] = 1;
+        $fee               = M('order')
+            ->group('user_id')
+            ->field('sum(paid_price) as number')
+            ->where($map)
+            ->select();
+        $number = $fee['number'];
+        if ($amount <= $number) {
+            $user                         = M('user');
+            $user->id                     = $u_id;
+            $user->privilege_hierarchy_id = $p_id;
+            $res                          = $user->save();
+            if ($res) {
+                $json = array(
+                    'result' => 0,
+                    'msg'    => '申请成功！',
+                );
+            } else {
+                $json = array(
+                    'result' => 1,
+                    'msg'    => '申请失败！',
+                );
+            }
+        } else {
+            $json = array(
+                'result' => 1,
+                'msg'    => '消费金额不足' . $number . '元,申请失败！',
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+
+}

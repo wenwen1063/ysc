@@ -1,0 +1,76 @@
+html {
+    overflow-x: hidden;
+}
+
+.header {
+    position: relative;
+    background-color: #ff5353;
+    height: 45px;
+}
+
+.mui-title, .mui-action-back {
+    font-weight: 100;
+    color: #FFFFFF;
+}
+
+.mui-bar .mui-btn-link {
+    color: #FFFFFF;
+}
+
+.title {
+    position: relative;
+    padding: 10px 0;
+    left: 5%;
+}
+
+#voucher .list {
+    background-size: 100% 100%;
+    background-image: url(../../img/Common/coupon_bg_unused.png);
+    width: 90%;
+    height: 70px;
+    position: relative;
+    left: 5%;
+}
+
+#voucher .list .img {
+    position: relative;
+    left: 5%;
+    top: 10px;
+    height: 50px;
+    float: left;
+}
+
+#voucher .list .img img {
+    height: 50px;
+}
+#voucher .list .name h4{
+    position: relative;
+    left: 25px;
+    font-weight: 100;
+    font-size: 18px;
+    top: 10px;
+}
+
+#voucher .list .time p{
+    top: 15px;
+    position: relative;
+    left:25px;
+    font-size: 12px;
+}
+
+#voucher .list .money{
+    position: relative;
+    bottom: 47px;
+    float: right;
+    right: 9px;
+}
+
+#voucher .list .money h4{
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 100;
+}
+#voucher .list .money p{
+    font-size: 12px;
+    color: #FFFFFF;
+}

@@ -1,0 +1,61 @@
+html {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.mui-bar {
+    position: relative;
+    background-color: #ff5353;
+    height: 45px;
+}
+
+.mui-title, .mui-action-back {
+    font-weight: 100;
+    color: #FFFFFF;
+}
+
+.mui-card-header {
+    background-image: url(../../img/Home/home_banner.png);
+    height: 128px;
+    background-size: 100% 100%;
+}
+
+#introduce {
+    position: relative;
+    top: 10px;
+    height: 400px;
+    background-color: #FFFFFF;
+    padding-left: 5%;
+    padding-top: 30px;
+}
+
+#introduce .name img {
+    float: left;
+    margin-right: 20px;
+    height: 14px;
+    width: 12px;
+}
+
+#introduce .name {
+    width: 100%;
+    height: 50px;
+}
+
+#introduce h4 {
+    height:13px;
+    width: 70%;
+    position: relative;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    float: left;
+    top: -4px;
+    font-size: 14px;
+    font-weight: 100;
+}
+
+#introduce .name .header_img {
+    position: relative;
+    top: -13px;
+    width: 45px;
+    height: 45px;
+}

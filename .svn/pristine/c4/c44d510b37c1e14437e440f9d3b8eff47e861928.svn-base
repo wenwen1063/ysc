@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>钱包充值</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Mywallet/Walletrecharge.css" rel="stylesheet">
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a href="{:U('/home/user/userindex')}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">钱包充值</h1>
+</header>
+
+<div class="input">
+    <img src="__PUBLIC__/Wx/img/My/my_icon_recharge.png" alt="">
+    <span>金额(￥)</span><input type="text" id="rechargemoney" placeholder="请输入充值金额">
+</div>
+
+<div class="list">
+    <img src="__PUBLIC__/Wx/img/My/my_icon_wechat.png">
+    <h5>微信支付</h5>
+    <img class="right" name="2" src="__PUBLIC__/Wx/img/My/my_icon_check_red.png" alt="">
+</div>
+<!-- <div class="list">
+    <img src="__PUBLIC__/Wx/img/My/my_icon_alipay.png">
+    <h5>支付宝支付</h5>
+    <img class="right" name="1" src="__PUBLIC__/Wx/img/My/my_icon_checkoff.png" alt="">
+</div>
+<div class="list">
+    <img src="__PUBLIC__/Wx/img/My/my_icon_unionpay.png">
+    <h5>银行卡支付</h5>
+    <img class="right" name="3" src="__PUBLIC__/Wx/img/My/my_icon_checkoff.png" alt="">
+</div> -->
+<div class="queding">
+    <input type="button" value="确 &numsp;定" id="rechargeBtn" onclick="return do_recharge()">
+</div>
+</body>
+</html>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+    //充值金额校验
+    function check(){
+        var rechargemoney = $("#rechargemoney").val(); //充值金额
+        if(rechargemoney == ''){
+            alert('充值金额不能为空，请重新输入！');
+            return false;
+        }
+        if(isNaN(rechargemoney)){
+            alert('您输入的充值金额有误！');
+            return false;
+        }
+        if(Number(rechargemoney) <= 0){
+            alert('充值金额不能小于等于0！');
+            return false;
+        }
+        return true;
+    }
+    //支付方式的切换效果
+    var paytype = 2;
+    $(".list").click(function(){
+        $(".list .right").attr("src","__PUBLIC__/Wx/img/My/my_icon_checkoff.png");
+        $(this).children("img.right").attr("src","__PUBLIC__/Wx/img/My/my_icon_check_red.png");
+        paytype = $(this).children("img.right").attr("name"); //支付方式
+    });
+    //执行充值操作的方法
+    function do_recharge(){
+        var is_pass_check = check();
+        if(!is_pass_check){
+            return false;
+        }
+        var recharge_money = $("#rechargemoney").val(); //充值金额
+        var pay_type = paytype; //支付方式 1 zfbpay 2 wxpay 3 yhkpay
+        // alert("支付方式："+pay_type+" "+"金额："+recharge_money);
+        $.ajax({
+            url:"{:U('/home/rechargecash/do_recharge')}",
+            type:"post",
+            data:{"recharge_money":recharge_money,"pay_type":pay_type},
+            dataType: "json",
+            success:function(data){
+                // console.log(data);
+                if (data.result==1 && pay_type==2) {
+                    window.location.href="__ROOT__/wx.php/home/pay/wxpay?recharge_money="+ recharge_money+"&order_id="+data.order_id;
+                }else{
+                    alert(data.msg);
+                    return;
+                }
+            }
+        });
+    }
+</script>

@@ -1,0 +1,136 @@
+<?php
+/**
+ * 返佣默认设置
+ * User: cyl
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class BonusdefaultsetController extends IndexController
+{
+    /*
+     *返佣默认设置
+     */
+    public function bonusdefaultsetindex()
+    {
+        $arr = I();
+        if ($arr != null) {
+            // dump($arr);
+            //更新搭档奖金默认设置数据
+            foreach ($arr['partner_ids'] as $key => $value) {
+                $map['partner_id'] = $value; //搭档id
+                for ($i = 0; $i < 3; $i++) {
+                    $partner_level        = $i + 1;
+                    $map['partner_level'] = $partner_level; //搭档层级
+                    if ($partner_level == 1) {
+                        $save['rate'] = $arr['first_level'][$key];
+                    } else if ($partner_level == 2) {
+                        $save['rate'] = $arr['second_level'][$key];
+                    } else if ($partner_level == 3) {
+                        $save['rate'] = $arr['third_level'][$key];
+                    }
+                    $res = M('sale_bonus_set')->where($map)->save($save);
+                }
+            }
+            //更新搭档升级返佣默认设置数据
+            foreach ($arr['partner_ids2'] as $k => $v) {
+                $map2['partner_id'] = $v; //搭档id
+                for ($j = 0; $j < 3; $j++) {
+                    $partner_level2        = $j + 1;
+                    $map2['partner_level'] = $partner_level2; //搭档层级
+                    if ($partner_level2 == 1) {
+                        $save2['amount'] = $arr['first_level2'][$k];
+                    } else if ($partner_level2 == 2) {
+                        $save2['amount'] = $arr['second_level2'][$k];
+                    } else if ($partner_level2 == 3) {
+                        $save2['amount'] = $arr['third_level2'][$k];
+                    }
+                    $res2 = M('update_bonus_set')->where($map2)->save($save2);
+                }
+            }
+			if($arr['pingtaihide']!=$arr['pingtai']){
+				M("update_bonus_set")->where(array("id"=>10))->setfield("pingtai_money",$arr['pingtai']);
+			}
+            $this->success('保存成功', U('/home/bonusdefaultset/bonusdefaultsetindex'));
+        } else {
+            //搭档奖金默认设置数据
+            $data = M()->table('__SALE_BONUS_SET__ sbs')
+                ->join('left join __PARTNER__ p on p.id=sbs.partner_id')
+                ->field('sbs.*,p.name')
+                ->select();
+            //数据处理
+            $done = array();
+            foreach ($data as $key => $value) {
+                $done[$value['partner_id']][] = $value;
+            }
+            // pp($done);
+            //搭档升级返佣默认设置数据
+            $data2 = M()->table('__UPDATE_BONUS_SET__ ubs')
+                ->join('left join __PARTNER__ p on p.id=ubs.partner_id')
+                ->limit(9)
+                ->field('ubs.*,p.name')
+                ->select();
+            //数据处理
+            $done2 = array();
+            foreach ($data2 as $key => $value) {
+                $done2[$value['partner_id']][] = $value;
+            }
+//dump($done2);
+			$data3 = M()->table('__UPDATE_BONUS_SET__ ubs')
+			->where(array("id"=>10))
+            ->find();
+            $this->assign('sale', $done);
+			$this->assign('data', $data3);
+            $this->assign('update', $done2);
+            $this->display();
+        }
+
+    }
+ public function bonusdefaultsetparnter()
+    {
+    		$arr = I();
+        if ($arr != null) {
+        	$moren_parnter=M("moren_parnter");
+			$moren_parnter->id=$arr['id'];
+			$moren_parnter->rcg=$arr['rcg'];
+			$moren_parnter->rjy=$arr['rjy'];
+			$moren_parnter->rgz=$arr['rgz'];
+			
+			$moren_parnter->jcg=$arr['jcg'];
+			$moren_parnter->jjy=$arr['jjy'];
+			$moren_parnter->jgz=$arr['jgz'];
+			
+			$moren_parnter->xcg=$arr['xcg'];
+			$moren_parnter->xjy=$arr['xjy'];
+			$moren_parnter->xgz=$arr['xgz'];
+			
+			$moren_parnter->scg=$arr['scg'];
+			$moren_parnter->sjy=$arr['sjy'];
+			$moren_parnter->sgz=$arr['sgz'];
+			
+			$moren_parnter->hcg=$arr['hcg'];
+			$moren_parnter->hjy=$arr['hjy'];
+			$moren_parnter->hgz=$arr['hgz'];
+			
+			$moren_parnter->lcg=$arr['lcg'];
+			$moren_parnter->ljy=$arr['ljy'];
+			$moren_parnter->lgz=$arr['lgz'];
+			
+			$moren_parnter->lscg=$arr['lscg'];
+			$moren_parnter->lsjy=$arr['lsjy'];
+			$moren_parnter->lsgz=$arr['lsgz'];
+			
+			$moren_parnter->cgname=$arr['cgname'];
+			$moren_parnter->jyname=$arr['jyname'];
+			$moren_parnter->gzname=$arr['gzname'];
+			$moren_parnter->save();
+        	$this->success('保存成功', U('/home/bonusdefaultset/bonusdefaultsetparnter'));
+        }else{
+        $info=M("moren_parnter")->where(array('id'=>1))->find();
+		$this->assign('info', $info);
+    	$this->display();	
+        }
+    	
+    }
+}

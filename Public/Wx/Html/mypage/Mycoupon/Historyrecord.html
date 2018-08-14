@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>历史记录</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="../../../CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="../../../CSS/BusinessCSS/Mycoupon/Historyrecord.css" rel="stylesheet">
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">历史记录</h1>
+</header>
+<div class="none">
+    <img src="../../../img/My/default_nocoupon.png">
+    <p>暂无任何优惠卷记录</p>
+</div>
+<div id="voucher">
+    <div class="list">
+        <div class="img">
+            <img src="../../../img/Common/coupon_icon.png" alt="">
+        </div>
+        <div class="name">
+            <h4>阿玛尼优惠券</h4>
+        </div>
+        <div class="time">
+            <p>有效期:2017.0.12-2017.0.12</p>
+        </div>
+        <div class="money">
+            <h4>￥800</h4>
+            <p>满1000元使用</p>
+            <img class="guo" src="../../../img/My/my_icon_already_used.png" alt="">
+        </div>
+    </div>
+    <div class="list">
+        <div class="img">
+            <img src="../../../img/Common/coupon_icon.png" alt="">
+        </div>
+        <div class="name">
+            <h4>阿玛尼优惠券</h4>
+        </div>
+        <div class="time">
+            <p>有效期:2017.0.12-2017.0.12</p>
+        </div>
+        <div class="money">
+            <h4>￥800</h4>
+            <p>满1000元使用</p>
+            <img class="guo" src="../../../img/My/my_icon_already_used.png" alt="">
+        </div>
+    </div>
+    <div class="list">
+        <div class="img">
+            <img src="../../../img/Common/coupon_icon.png" alt="">
+        </div>
+        <div class="name">
+            <h4>阿玛尼优惠券</h4>
+        </div>
+        <div class="time">
+            <p>有效期:2017.0.12-2017.0.12</p>
+        </div>
+        <div class="money">
+            <h4>￥800</h4>
+            <p>满1000元使用</p>
+            <img class="guo" src="../../../img/My/my_icon_already_used.png" alt="">
+        </div>
+    </div>
+    <div class="list">
+        <div class="img">
+            <img src="../../../img/Common/coupon_icon.png" alt="">
+        </div>
+        <div class="name">
+            <h4>阿玛尼优惠券</h4>
+        </div>
+        <div class="time">
+            <p>有效期:2017.0.12-2017.0.12</p>
+        </div>
+        <div class="money">
+            <h4>￥800</h4>
+            <p>满1000元使用</p>
+            <img class="guo" src="../../../img/My/my_icon_already_used.png" alt="">
+        </div>
+    </div>
+    <div class="list">
+        <div class="img">
+            <img src="../../../img/Common/coupon_icon.png" alt="">
+        </div>
+        <div class="name">
+            <h4>阿玛尼优惠券</h4>
+        </div>
+        <div class="time">
+            <p>有效期:2017.0.12-2017.0.12</p>
+        </div>
+        <div class="money">
+            <h4>￥800</h4>
+            <p>满1000元使用</p>
+            <img class="guo" src="../../../img/My/my_icon_already_used.png" alt="">
+        </div>
+    </div>
+    <div class="list">
+        <div class="img">
+            <img src="../../../img/Common/coupon_icon.png" alt="">
+        </div>
+        <div class="name">
+            <h4>阿玛尼优惠券</h4>
+        </div>
+        <div class="time">
+            <p>有效期:2017.0.12-2017.0.12</p>
+        </div>
+        <div class="money">
+            <h4>￥800</h4>
+            <p>满1000元使用</p>
+            <img class="guo" src="../../../img/My/my_icon_already_used.png" alt="">
+        </div>
+    </div>
+</div>
+<script src="../../../Script/CommonJS/Base.js"></script>
+<script>
+    function text() {
+        mui('#voucher')[0].style.display = 'block'
+        mui('.none')[0].style.display = 'none'
+        setTimeout(function () {
+            mui('#voucher')[0].style.display = 'none'
+            mui('.none')[0].style.display = 'block'
+            setTimeout(function () {
+                text()
+            },1000)
+        },1000)
+
+    }
+//    text()
+</script>
+
+</body>
+</html>

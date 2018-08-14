@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>充值中心</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="../../../CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="../../../CSS/BusinessCSS/VoucherCenter.css" rel="stylesheet">
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">充值中心</h1>
+</header>
+<div style="height: 45px;background-color:#fff;">
+    <div id="segmentedControl" class="mui-segmented-control">
+        <a id="obj" class="mui-control-item  mui-active" href="#item2">
+            <span>话 费</span>
+        </a>
+        <a id="liuliang" class="mui-control-item" href="#item3">
+            <span>流 量</span>
+        </a>
+    </div>
+</div>
+<div>
+    <div id="item2" class="mui-control-content mui-active">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <div class="mui-input-row mui-password">
+                    <input class="mui-input-password" data-input-password="3" type="text" placeholder="请输入电话号码">
+                </div>
+                <div class="list bgm">
+                    <h5>10元</h5>
+                    <p>优惠价: 9.9元</p>
+                </div>
+                <div class="list">
+                    <h5>20元</h5>
+                    <p>优惠价: 19.9元</p>
+                </div>
+                <div class="list">
+                    <h5>30元</h5>
+                    <p>优惠价: 29.9元</p>
+                </div>
+                <div class="list">
+                    <h5>50元</h5>
+                    <p>优惠价: 49.9元</p>
+                </div>
+                <div class="list">
+                    <h5>100元</h5>
+                    <p>优惠价: 99.9元</p>
+                </div>
+                <div class="list">
+                    <h5>150元</h5>
+                    <p>优惠价: 149.9元</p>
+                </div>
+                <div class="list">
+                    <h5>200元</h5>
+                    <p>优惠价: 199.9元</p>
+                </div>
+                <div class="list">
+                    <h5>500元</h5>
+                    <p>优惠价: 499.9元</p>
+                </div>
+                <div class="list">
+                    <h5>1000元</h5>
+                    <p>优惠价: 9999.9元</p>
+                </div>
+
+            </li>
+        </ul>
+    </div>
+    <div id="item3" class="mui-control-content">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <div class="mui-input-row mui-password">
+                    <input class="mui-input-password" data-input-password="3" type="text" placeholder="请输入电话号码">
+                </div>
+
+                <div class="liuliangs">
+                    <div class="liu_list">
+                        30M
+                    </div>
+                    <div class="liu_list">
+                        100M
+                    </div>
+                    <div class="liu_list">
+                        300M
+                    </div>
+                    <div class="liu_list">
+                        500M
+                    </div>
+                    <div class="liu_list">
+                        700M
+                    </div>
+                    <div class="liu_list">
+                        1000M
+                    </div>
+                    <div class="liu_list bgm">
+                        2000M
+                    </div>
+                    <div class="liu_list">
+                        3000M
+                    </div>
+                    <div class="liu_list"> 
+                    	5000M
+                    </div>
+                </div>
+
+                <div class="jiesuans">
+                    <div class="jielist">
+                        <h5>63.50元 <del>70元</del></h5>
+                        <p>本地可用,即时生效,当月有效</p>
+                        <input type="button"value="购买">
+                    </div>
+                    <div class="jielist">
+                        <h5>63.50元 <del>70元</del></h5>
+                        <p>本地可用,即时生效,当月有效</p>
+                        <input type="button"value="购买">
+                    </div>
+                </div>
+
+
+                <!--<div class="all">-->
+                <!--<input class="red" type="button" value="本地">-->
+                <!--<input class="white" type="button" value="全国">-->
+                <!--</div>-->
+                <!--<div id="listmoney" class="money">-->
+                <!--<div class="list bgm">-->
+                <!--<h5>10M</h5>-->
+                <!--<p>优惠价: 2元</p>-->
+                <!--</div>-->
+                <!--<div class="list">-->
+                <!--<h5>30M</h5>-->
+                <!--<p>优惠价: 4元</p>-->
+                <!--</div>-->
+                <!--<div class="list">-->
+                <!--<h5>50M</h5>-->
+                <!--<p>优惠价: 6元</p>-->
+                <!--</div>-->
+                <!--<div class="list">-->
+                <!--<h5>100M</h5>-->
+                <!--<p>优惠价: 8元</p>-->
+                <!--</div>-->
+                <!--<div class="list">-->
+                <!--<h5>300M</h5>-->
+                <!--<p>优惠价: 19元</p>-->
+                <!--</div>-->
+                <!--<div class="list">-->
+                <!--<h5>500M</h5>-->
+                <!--<p>优惠价: 28元</p>-->
+                <!--</div>-->
+                <!--<div class="list">-->
+                <!--<h5>1G</h5>-->
+                <!--<p>优惠价: 45元</p>-->
+                <!--</div>-->
+                <!--<div class="list">-->
+                <!--<h5>2G</h5>-->
+                <!--<p>优惠价: 65元</p>-->
+                <!--</div>-->
+                <!--<div class="list">-->
+                <!--<h5>3G</h5>-->
+                <!--<p>优惠价: 95元</p>-->
+                <!--</div>-->
+                <!--</div>-->
+
+            </li>
+        </ul>
+    </div>
+</div>
+
+<nav class="mui-bar mui-bar-tab footer">
+    <div class="money">
+        <div class="jie">
+            <span>合计:<p>￥0.00</p></span>
+            <input type="button" value="结算">
+        </div>
+    </div>
+</nav>
+
+<script src="../../../Script/CommonJS/Base.js"></script>
+
+<script>
+    //    mui("#item3").on("tap", ".all .white", function () {
+    //        var obj1 = mui("#item3 .all .red")[0];
+    //        obj1.className = 'white'
+    //        this.className = 'red';
+    //        if (this.value != '本地') {
+    //            mui("#item3 .all .red")[0].className = 'red button_red'
+    //            mui("#item3 .all .white")[0].className = 'white button_white'
+    //            all()
+    //        } else {
+    //            ben_list()
+    //        }
+    //    });
+    //
+    //    function all() {
+    //        var all_list = [2.75, 4.75, 6.75, 8.75, 20, 29.5, 48.5, 68.5, 95.5]
+    //        var itmem = document.getElementById("listmoney").getElementsByClassName('list')
+    //        for (var i = 0; i < itmem.length; i++) {
+    //            itmem[i].getElementsByTagName('p')[0].innerHTML = "优惠价: " + all_list[i] + "元"
+    //        }
+    //    }
+    //
+    //    function ben_list() {
+    //        var ben_list = [2, 4, 6, 8, 19, 28, 45, 65, 95]
+    //        var itmem = document.getElementById("listmoney").getElementsByClassName('list')
+    //        for (var i = 0; i < itmem.length; i++) {
+    //            itmem[i].getElementsByTagName('p')[0].innerHTML = "优惠价: " + ben_list[i] + "元"
+    //        }
+    //    }
+    //
+    //
+    //    (function () {
+    //        function text() {
+    //            mui('#obj')[0].className = 'mui-control-item'
+    //            mui('#liuliang')[0].className = 'mui-control-item mui-active'
+    //            mui('#item3')[0].className = 'mui-control-content mui-active'
+    //            mui('#item2')[0].className = 'mui-control-content'
+    //        }
+    //        function GetQueryString(name) {
+    //            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    //            var r = window.location.search.substr(1).match(reg);
+    //            if (r != null)return unescape(r[2]);
+    //            return null;
+    //        }
+    //        var ret = GetQueryString("t");
+    //        if (ret == 'a') {
+    //            text()
+    //        }
+    //    })()
+</script>
+</body>
+
+</html>

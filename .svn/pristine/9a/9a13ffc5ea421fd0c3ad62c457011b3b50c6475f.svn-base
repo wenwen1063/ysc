@@ -1,0 +1,113 @@
+<!--index -->
+<include file="public:index" />
+<!--index-->
+<title>评价管理</title>
+</head>
+
+<body>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 系统 <span class="c-gray en">&gt;</span> 评价管理 <span class="c-gray en">&gt;</span> 评价列表
+        <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="pd-20 col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        <ul class="left_ul">
+            <a href="{:U('/home/order/orderindex',array('seller_id'=>null))}">
+                <li class="maincolor left_ul_li" id="seller_all">全部商家</li>
+            </a>
+            <foreach name='seller' item='v'>
+                <a href="{:U('/home/order/orderindex',array('seller_id'=>$v['id']))}">
+                    <li class="maincolor left_ul_li" id="{$v['id']}">{$v['name']}</li>
+                </a>
+            </foreach>
+        </ul>
+    </div>
+    <div class="pd-20 col-xs-2 col-sm-2 col-md-2 col-lg-10">
+        <form action="{:U('/home/comment/commentindex/search/')}" method="post/get" name="main_form" class="form form-horizontal" id="form-admin-add" style="float:right;">
+            <div class="text-c">
+                <input type="text" id="order_number" name="order_number" value="{$search['order_number']}" class="input-text" style="width:250px" placeholder="输入订单编号">
+                <span class="select-box inline">
+                    <select name="class_id" class="select">
+                        <foreach name='class' item='v'>
+                            <option value="{$v['id']}">{$v['name']}</option>
+                        </foreach>
+                    </select>
+                </span>
+                <button type="submit" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+            </div>
+        </form>
+        <div class="text-c">
+            <br>
+        </div>
+        <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <span class="l"></span>&nbsp;
+            <span class="r">共有数据：<strong>{$count}</strong> 条</span> </div>
+        <table class="table table-border table-bordered table-bg">
+            <thead>
+                <tr>
+                    <th scope="col" colspan="20">评价列表</th>
+                </tr>
+                <tr class="text-c">
+                    <th width="40">操作</th>
+                    <th width="40">评价编号</th>
+                    <th width="40">订单编号</th>
+                    <th width="40">所属商家</th>
+                    <th width="40">评价类型</th>
+                    <th width="40">商品编号</th>
+                    <th width="40">商品名称</th>
+                    <th width="40">评价会员</th>
+                    <th width="40">评价分数</th>
+                    <th width="40">评价内容</th>
+                    <th width="40">评价时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                <foreach name='data' item='v'>
+                    <tr class="text-c">
+                        <td>
+                            <?php if (($v['type']==0)): ?>
+                            <a class="btn btn-primary size-MINI radius" href="{:U('/home/comment/appeals',array('id'=>$v['id'],'type'=>$v['type']))}">申诉</a>
+                            <?php endif ?>
+                            <?php if ($v['reply']==null): ?>
+                            <a class="btn btn-primary size-MINI radius" href="{:U('/home/comment/commentreply',array('id'=>$v['id']))}" class="ml-5" style="text-decoration:none">回复</a>
+                            <?php else: ?>
+                            <td class="td-status"><span class="label radius">已回复</span></td>
+                            <?php endif ?>
+                        </td>
+                        <td>{$v['id']}</td>
+                        <td>{$v['order_id']}</td>
+                        <td>{$v['seller_name']}</td>
+                        <td>
+                            <php>
+                                 if($v['type']==0){
+                                    echo "商品";
+                                 }else{
+                                    echo "商家";
+                                 }
+                            </php>
+                        </td>
+                        <td>{$v['goods_id']}</td>
+                        <td>{$v['goods_name']}</td>
+                        <td>{$v['username']}</td>
+                        <td>{$v['score']}</td>
+                        <td>{$v['content']}</td>
+                        <td>{$v['time']|date='Y-m-d H:i:s',###}</td>
+                    <!--    <?php if ($v['reply']!=null): ?>
+                        <td>{$v['reply']}</td>
+                        <td>{$v['replytime']|date='Y-m-d H:i:s',###}</td>
+                        <?php else: ?>
+                        <td><span class="label label-success radius">请回复</span></td>
+                        <td><span class="label label-success radius">请回复</span></td>
+                        <?php endif ?> -->
+                    </tr>
+                </foreach>
+            </tbody>
+        </table>
+        <div class="pageright">{$page}</div>
+    </div>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+</body>
+
+</html>

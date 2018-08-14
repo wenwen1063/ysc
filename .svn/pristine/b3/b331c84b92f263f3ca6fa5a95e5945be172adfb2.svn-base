@@ -1,0 +1,161 @@
+<?php
+/*
+ *充值提现
+ *author:cyl
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class RechargecashController extends Controller
+{
+    //会员充值页面
+    public function recharge()
+    {
+        $this->display();
+    }
+    //往数据库写入充值数据(待支付)
+    public function do_recharge()
+    {
+        //接收数据
+        $recharge_money = I('recharge_money');
+        $pay_type       = I('pay_type');
+        $order_id       = 'CZ' . date('YmdHis') . rand(1000, 9999); //充值单号
+        //写入数据库
+        $rechargecash             = M('rechargecash');
+        $rechargecash->user_id    = cookie('user_id'); //会员id
+        $rechargecash->type       = 1; //充值
+        $rechargecash->money      = $recharge_money; //充值
+        $rechargecash->apply_time = time(); //充值时间
+        $rechargecash->is_ok      = 0; //是否完成
+        $rechargecash->pay_type   = $pay_type; //支付方式
+        $rechargecash->note       = $order_id; //充值单号
+        $id                       = $rechargecash->add();
+        if ($id) {
+            $json = array(
+                'result'   => 1,
+                'order_id' => $order_id,
+                'msg'      => '写入成功',
+            );
+        } else {
+            $json = array(
+                'result' => 0,
+                'msg'    => '写入失败',
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+    //会员提现页面
+    public function cash()
+    {
+        $user_id        = cookie('user_id'); //当前登录会员id
+        $cash_all       = M('user')->where(array('id' => $user_id))->getField('balance'); //可提现金额
+        $user_cash_rule = M('cash')->where(array('id' => 1))->find(); //会员提现规则
+        // $user_max_money = $user_cash_rule['user_max_money']; //（个人）每天最多可提现金额
+        $user_min_money = $user_cash_rule['user_min_money']; //（个人）每次最低提现金额
+        // $user_number    = $user_cash_rule['user_number']; //（个人）每天提现次数
+
+        $bank = M()->table('__USER_BANK__ ub')
+            ->join('left join __BANK__ b on b.id = ub.bank_type')
+            ->where(array('ub.user_id'=>$user_id))
+            ->field('ub.*,b.bank_name')
+            ->select();
+
+//        pp($bank);
+
+
+        $this->assign('cash_all', $cash_all);
+        // $this->assign('user_max_money', $user_max_money);
+        $this->assign('user_min_money', $user_min_money);
+        $this->assign('bank', $bank);
+        // $this->assign('user_number', $user_number);
+        $this->display();
+    }
+    //往数据库写入提现数据
+    public function do_cash()
+    {
+        //规则信息
+        $user_id         = cookie('user_id'); //当前登录会员id
+        $time            = intval(date('His', time())); //当前时间强制转为Int 类似 200000 080000这样
+        $user_cash_rule  = M('cash')->where(array('id' => 1))->find(); //会员提现规则
+        $user_max_money  = $user_cash_rule['user_max_money']; //（个人）每天最多可提现金额
+        $user_number     = $user_cash_rule['user_number']; //（个人）每天提现次数
+        $user_begin_time = intval(date('His', $user_cash_rule['user_begin_time'])); //（个人）每天开始时间
+        $user_end_time   = intval(date('His', $user_cash_rule['user_end_time'])); //（个人）结束时间
+        //会员已经提现的信息
+        $map['apply_time'] = array('between', array(mktime(0, 0, 0, date("m"), date("d"), date("Y")), mktime(23, 59, 59, date("m"), date("d"), date("Y"))));
+        //会员今日已提现总额
+        $user_cashed = M('rechargecash')
+            ->where(array('user_id' => $user_id, 'is_ok' => 1))
+            ->where($map)
+            ->group('user_id')
+            ->field('sum(money) as user_cashed_all')
+            ->select();
+        $user_cashed_all = $user_cashed[0]['user_cashed_all'];
+        // 今日已成功提现次数
+        $user_count = M('rechargecash')
+            ->where(array('user_id' => $user_id, 'is_ok' => 1))
+            ->where($map)
+            ->count();
+
+        //1.时间不能超出
+        if ($time < $user_begin_time || $time > $user_end_time) {
+            $json = array(
+                'result' => 0,
+                'msg'    => '十分抱歉，目前不在提现服务时间之内！',
+            );
+            $this->ajaxReturn($json);
+            exit;
+        }
+        //2.额度不能超过
+        if ($user_cashed_all > $user_max_money) {
+            $json = array(
+                'result' => 0,
+                'msg'    => '十分抱歉，今日提现总额已达上限！',
+            );
+            $this->ajaxReturn($json);
+            exit;
+        }
+        //3.提现次数不能超过
+        if ($user_count > $user_number - 1) {
+            $json = array(
+                'result' => 0,
+                'msg'    => '十分抱歉，今日提现次数已达上限！',
+            );
+            $this->ajaxReturn($json);
+            exit;
+        }
+        //写入提现记录表
+        $cash_money     = I('cash_money'); //提现金额
+        //$cash_type      = I('cash_type'); //提现类型 1 zfb 2 wx  3 yhk
+        //$cash_account   = I('cash_account'); // 要提现到的账户
+        $rc             = M('rechargecash');
+        $rc->user_id    = $user_id; //会员id
+        $rc->type       = 2; //提现
+        $rc->money      = $cash_money; //提现金额
+        $rc->apply_time = time(); //申请时间
+        $rc->is_ok      = 0; //待通过
+        $rc->pay_type   = 3; //提现类别 1.支付宝，2.微信，3.银行
+        $rc->user_bank_id = I('cash_type');
+//        if ($cash_type == 1) {
+//            $rc->alipay = $cash_account;
+//        } else if ($cash_type == 2) {
+//            $rc->wx_number = $cash_account;
+//        } else {
+//            $rc->bankcode = $cash_account;
+//        }
+        $rc->note = '会员提现申请';
+        $id       = $rc->add();
+        //扣掉会员余额
+        M('user')->where(array('id' => $user_id))->setDec('balance', $cash_money);
+        if ($id) {
+            $json = array(
+                'result' => 1,
+                'msg'    => '提现申请已提交，请耐心等待审核！',
+            );
+            $this->ajaxReturn($json);
+            exit;
+        }
+    }
+
+}

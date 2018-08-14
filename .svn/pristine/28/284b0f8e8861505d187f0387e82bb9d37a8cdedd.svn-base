@@ -1,0 +1,160 @@
+<?php
+namespace Home\Controller;
+
+use Think\Controller;
+
+class TeacherController extends Controller
+{
+    public function index()
+    {
+        //获取文章分类信息
+        $title = I('title');
+        $type  = I('t_weight');
+        $class = M('article_class')->select();
+        //获取轮播图
+        $pic = M('teacher_lb')->select();
+        // dump($pic);
+        //获取文章信息
+        $map['a.status']      = 1;
+        $map['ar.is_disable'] = 0;
+        $text                 = M()->table('__ARTICLE__ a')
+            ->join('left join __TEACHER__ t on t.id = a.teacher_id')
+            ->join('left join __ARTICLE_COMMENT__ ac on ac.article_id = a.id')
+            ->join('left join __ARTICLE_CLASS__ ar on ar.id = a.class_id')
+            ->group('a.id')
+            ->field('t.id as t_id,t.teacher_name,a.id as a_id,a.content,a.title,a.video,FROM_UNIXTIME(a.time,"%Y") as times,FROM_UNIXTIME(a.time,"%m") as addtime,FROM_UNIXTIME(a.time,"%d") as addtimes,ar.name as class_name,a.nice_num,a.look_num,count(ac.article_id) as numbers')
+            ->where($map)
+            ->select();
+
+        //获取导师信息
+        $teacher = M('teacher')->where(array('is_recommend' => 0))->select();
+        // dump($teacher);
+        // dump($text);
+        $this->assign('text', $text);
+        $this->assign('classs', $class);
+        // $this->assign('teacher', $teacher);
+        $this->assign('pic', $pic);
+        $this->display();
+    }
+    public function teacherinfo()
+    {
+        $arr  = I();
+        $data = M('teacher')->where(array('id' => $arr['teacher_id']))->find();
+        $this->assign('data', $data);
+        $this->display();
+    }
+    public function wzinfo()
+    {
+        $arr = I();
+        // $user_id = cookie('user_id');
+        //浏览量增加
+        M('article')->where($where = array('id' => $arr['a_id']))->setInc('look_num', 1);
+        //获取文章信息
+        $tex = M()->table('__ARTICLE__ a')->where(array('a.id' => $arr['a_id']))
+            ->join('left join __TEACHER__ t on t.id = a.teacher_id')
+            ->field('a.id as a_id,a.title,a.content,a.nice_num,a.look_num,a.video,FROM_UNIXTIME(a.time,"%Y") as times,FROM_UNIXTIME(a.time,"%m") as addtime,FROM_UNIXTIME(a.time,"%d") as addtimes,t.teacher_name')
+            ->find();
+        $num    = M('article_comment')->where(array('article_id' => $arr['a_id']))->select();
+        $number = count($num);
+        //获取评论信息
+        $data = M()->table('__ARTICLE_COMMENT__ ac')
+            ->join('left join __ARTICLE__ a on ac.article_id = a.id')
+            ->join('left join __TEACHER__ t on t.id = a.teacher_id')
+            ->join('left join __USER__ u on u.id = ac.user_id')
+            ->where(array('ac.article_id' => $arr['a_id']))
+        // ->group('a.id')
+            ->field('u.username,t.teacher_name,FROM_UNIXTIME(ac.time,"%m") as yue,FROM_UNIXTIME(ac.time,"%d") as day,ac.content')
+            ->order('ac.time desc')
+            ->select();
+        // }
+        // dump($data);
+        $this->assign('number', $number);
+        $this->assign('tex', $tex);
+        $this->assign('data', $data);
+        $this->display();
+    }
+    //文章评论
+    public function pinl()
+    {
+        $u_id = cookie('user_id');
+        // $u_id             = 1;
+        $a_id             = I("post.id");
+        $content          = I('post.content');
+        $cont             = M('article_comment');
+        $cont->article_id = $a_id;
+        $cont->content    = $content;
+        $cont->user_id    = $u_id;
+        $cont->time       = strtotime(date('Y-m-d H:i:s'));
+        $res              = $cont->add();
+        if ($res) {
+            $json = array(
+                'result' => 0,
+            );
+        } else {
+            $json = array(
+                'result' => 1,
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+    //点赞
+    public function nice()
+    {
+        $a_id = I("post.id");
+        $rel  = M('article')->where($where = array('id' => $a_id))->setInc('nice_num', 1);
+        if ($rel) {
+            $json = array(
+                'result' => 0,
+            );
+        } else {
+            $json = array(
+                'result' => 1,
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+    // public function looks()
+    // {
+    //     $a_id = I("post.id");
+    //     $rel  = M('article')->where($where = array('id' => $a_id))->setInc('look_num', 1);
+    //     if ($rel) {
+    //         $json = array(
+    //             'result' => 0,
+    //         );
+    //     } else {
+    //         $json = array(
+    //             'result' => 1,
+    //         );
+    //     }
+    //     $this->ajaxReturn($json);
+    // }
+
+    public function clacc()
+    {
+        $where['ar.id'] = I("class_id");
+        // $where['ar.id']    = 3;
+        $where['a.status'] = 1;
+        $rel               = $text               = M()->table('__ARTICLE__ a')
+            ->join('left join __ARTICLE_CLASS__ ar on ar.id = a.class_id')
+            ->join('left join __TEACHER__ t on t.id = a.teacher_id')
+            ->join('left join __ARTICLE_COMMENT__ ac on ac.article_id = a.id')
+            ->where($where)
+            ->group('a.id')
+            ->field('t.id as t_id,t.teacher_name,a.id as a_id,a.content,a.title,a.video,FROM_UNIXTIME(a.time,"%Y") as times,FROM_UNIXTIME(a.time,"%m") as addtime,FROM_UNIXTIME(a.time,"%d") as addtimes,ar.name as class_name,a.nice_num,a.look_num,count(ac.article_id) as numbers')
+            ->select();
+        // dump($rel);die;
+        if ($rel) {
+            $json = array(
+                'result' => 0,
+                'data'   => $text,
+                'sss'    => I("class_id"),
+            );
+        } else {
+            $json = array(
+                'result' => 1,
+                'sss'    => I("class_id"),
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+}

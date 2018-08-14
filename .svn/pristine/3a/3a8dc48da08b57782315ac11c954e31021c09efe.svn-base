@@ -1,0 +1,41 @@
+<!--index -->
+<include file="public:index" />
+<!--index-->
+<title>意见反馈</title>
+</head>
+
+<body>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>意见反馈 <span class="c-gray en">&gt;</span> 意见回复  <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回" ><i class="Hui-iconfont">&#xe66b;</i></a><a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="pd-20">
+    <div class="row cl">
+        <label class="form-label col-2">反馈意见：</label>
+        <textarea class="textarea" name="reply" disabled="true">{$data['content']}</textarea>
+    </div>
+    <div class="row cl"><br></div>
+    <?php if ($data['is_reply']==1): ?>
+    <div class="row cl">
+        <label class="form-label col-2">回复：</label>
+        <textarea class="textarea" name="reply" disabled="true">{$data['replytext']}</textarea>
+    </div>
+    <?php else: ?>
+    <form action="{:U('/home/Feedback/replyFeedback')}" method="post/get" name="main_form" class="form" id="form-admin-add">
+        <input name="id" type="hidden" value="{$data['id']}" />
+        <input name="act" type="hidden" value="update" />
+        <div class="row cl">
+            <label class="form-label col-2">回复：</label>
+            <textarea class="textarea" name="reply" placeholder="请输入回复内容..."></textarea>
+        </div>
+        <div class="row cl">
+            <button type="submit" class="btn btn-success">回复</button>
+        </div>
+    </form>
+    <?php endif ?>
+    </div>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<?php
+namespace Home\Model;
+
+use Think\Model;
+
+class OrdersModel extends BaseModel
+{
+
+    /*发货*/
+    public function orderpost($arr)
+    {
+        //走物流。配送方式ID默认为0，表示默认为派送员派送
+        $order              = M('orders');
+        $order->id          = $arr['order_id'];
+        $order->post_status = 2;
+        $order->post_time   = time();
+        $order->post_number = $arr['shipment_number'];
+        $order->post_way    = 1;
+        $order->save();
+
+    }
+
+    public function updateorder($arr)
+    {
+        $order           = M('orders');
+        $order->id       = $arr['order_id'];
+        $order->contact  = $arr['contact'];
+        $order->phone    = $arr['tel'];
+        $order->province = $arr['province'];
+        $order->city     = $arr['city'];
+        $order->district = $arr['district'];
+        $order->address  = $arr['address'];
+        $order->note     = $arr['note'];
+        // $order->address_id = $address_id;
+        $order->save();
+    }
+}

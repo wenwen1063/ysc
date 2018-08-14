@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>地址选择</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="../../CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="../../CSS/BusinessCSS/ShoppingCart/Addressselection.css" rel="stylesheet">
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">地址选择</h1>
+</header>
+<div class="mui-content">
+    <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+        <li class="mui-table-view-cell">
+            <div class="mui-table">
+                <div class="mui-table-cell mui-col-xs-10">
+                    <h4 class="mui-ellipsis">兰州小狼仔 &numsp;&numsp;&numsp;&numsp;147xxxxxxxx</h4>
+                    <p class="mui-h6 mui-ellipsis">福建省厦门市湖里区湖里高新科技术园泉舜集团3#209</p>
+                </div>
+                <div class="mui-text-right">
+                    <span class="span"></span>
+                </div>
+            </div>
+        </li>
+        <li class="mui-table-view-cell">
+            <div class="mui-table">
+                <div class="mui-table-cell mui-col-xs-10">
+                    <h4 class="mui-ellipsis">兰州小狼仔 &numsp;&numsp;&numsp;&numsp;147xxxxxxxx</h4>
+                    <p class="mui-h6 mui-ellipsis">福建省厦门市湖里区湖里高新科技术园泉舜集团3#209</p>
+                </div>
+                <div class="mui-text-right">
+                    <span class="span"></span>
+                </div>
+            </div>
+        </li>
+        <li class="mui-table-view-cell">
+            <div class="mui-table">
+                <div class="mui-table-cell mui-col-xs-10">
+                    <h4 class="mui-ellipsis">兰州小狼仔 &numsp;&numsp;&numsp;&numsp;147xxxxxxxx</h4>
+                    <p class="mui-h6 mui-ellipsis">福建省厦门市湖里区湖里高新科技术园泉舜集团3#209</p>
+                </div>
+                <div class="mui-text-right">
+                    <span class="span"></span>
+                </div>
+            </div>
+        </li>
+        <li class="mui-table-view-cell">
+            <div class="mui-table">
+                <div class="mui-table-cell mui-col-xs-10">
+                    <h4 class="mui-ellipsis">兰州小狼仔 &numsp;&numsp;&numsp;&numsp;147xxxxxxxx</h4>
+                    <p class="mui-h6 mui-ellipsis">福建省厦门市湖里区湖里高新科技术园泉舜集团3#209</p>
+                </div>
+                <div class="mui-text-right">
+                    <span class="span"></span>
+                </div>
+            </div>
+        </li>
+        <li class="mui-table-view-cell">
+            <div class="mui-table">
+                <div class="mui-table-cell mui-col-xs-10">
+                    <h4 class="mui-ellipsis">兰州小狼仔 &numsp;&numsp;&numsp;&numsp;147xxxxxxxx</h4>
+                    <p class="mui-h6 mui-ellipsis">福建省厦门市湖里区湖里高新科技术园泉舜集团3#209</p>
+                </div>
+                <div class="mui-text-right">
+                    <span class="span"></span>
+                </div>
+            </div>
+        </li>
+
+    </ul>
+</div>
+</div>
+<nav class="mui-bar mui-bar-tab">
+    <input type="button" value="确&numsp;定">
+</nav>
+</body>
+</html>

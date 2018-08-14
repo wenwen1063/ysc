@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>忘记密码</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="../../CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="../../CSS/BusinessCSS/BindonAccount/BindonAccount.css" rel="stylesheet">
+</head>
+<body>
+<div id="header">
+    <a id="back" href="../mypage/More/Passwordmanagement.html"
+       class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h2>忘记密码</h2>
+</div>
+
+<div class="list">
+    <img src="../../img/AccountBinding/accountbinding_icon_user.png" alt="" class="">
+    <input type="text" placeholder="手机号码">
+</div>
+
+<div class="list yan">
+    <img src="../../img/AccountBinding/accountbinding_icon_identifyingcode.png" alt="" class="">
+    <input type="text" placeholder="验证码">
+    <p>获取验证码</p>
+</div>
+
+<div class="list">
+    <img src="../../img/AccountBinding/accountbinding_icon_password.png" alt="" class="">
+    <input type="text" placeholder="密码">
+</div>
+
+<div class="list">
+    <img src="../../img/AccountBinding/accountbinding_icon_password.png" alt="" class="">
+    <input type="text" placeholder="确认密码">
+</div>
+
+<div class="tijiao">
+    <input type="button" value="提&numsp;交">
+</div>
+<script src="../../Script/CommonJS/Base.js"></script>
+
+<script>
+    document.getElementById('header').addEventListener('tap', function () {
+        mui.openWindow({
+            url: '../mypage/More/Passwordmanagement.html',
+            id: 'Passwordmanagement'
+        });
+    });
+</script>
+</body>
+</html>

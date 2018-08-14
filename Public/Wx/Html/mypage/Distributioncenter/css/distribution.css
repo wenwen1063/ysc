@@ -1,0 +1,327 @@
+.redbold {
+	color: #FF5353;
+	font-weight: bold;
+}
+
+.margin_l_15 {
+	margin-left: 15px;
+}
+
+.margin_t_15 {
+	margin-top: 15px;
+}
+
+.margin_r_15 {
+	margin-right: 15px;
+}
+
+
+/*.mui-btn-danger{
+	background:#FF5353 !important;
+	color: white !important;
+	border-color: #FF5353 !important;
+}*/
+
+.mui-slider {
+	margin-top: 10px;
+}
+
+.mui-control-content {
+	background-color: white;
+	min-height: 215px;
+}
+
+.mui-control-content .mui-loading {
+	margin-top: 50px;
+}
+
+.mui-segmented-control.mui-segmented-control-inverted~ .mui-slider-progress-bar {
+	background-color: #FF5353;
+}
+
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+	color: #FF5353;
+	border-bottom: 2px solid #FF5353;
+	background: 0 0;
+}
+
+.lookmore {
+	border: none;
+}
+
+.font_size14 {
+	font-size: 14px;
+}
+
+.btnDiv {
+	margin-left: 15px;
+	margin-right: 15px;
+	margin-top: 20px;
+}
+
+.btnDiv button {
+	height: 44px;
+	line-height: 44px;
+	padding: 0;
+	margin-bottom: 0;
+}
+
+.margin_l_10 {
+	margin-left: 10px;
+}
+
+.privilegeget .mui-table-view li:first-child {
+	background: #E1E1EB;
+}
+
+
+/*推广消息*/
+
+.publishinfo .publishinfoDiv {
+	margin-top: 10px;
+	padding: 15px 20px;
+	background: white;
+}
+
+.publishinfo .publishinfoDiv .infoshowDiv {
+	background: #F1F2F6;
+	padding: 10px;
+	border-radius: 5px;
+}
+
+.publishinfo .publishinfoDiv .infoshowDiv p {
+	font-size: 12px;
+	margin-bottom: 0;
+}
+
+.publishbtnDiv {
+	width: 50%;
+	margin: 10px auto;
+	margin-bottom: 0;
+}
+
+.publishinfo .publishbtmDiv {
+	width: 100%;
+	position: relative;
+	margin-top: 10px;
+}
+
+.publishinfo .publishbtmDiv .titleDiv {
+	position: absolute;
+	left: 15%;
+	top: 8%;
+	color: white;
+}
+
+.publishinfo .publishbtmDiv .titleDiv img {
+	border-radius: 50%;
+	width: 50px;
+	vertical-align: middle;
+}
+
+.publishinfo .publishbtmDiv .qrDiv {
+	position: absolute;
+	top: 30.5%;
+	width: 100%;
+	text-align: center;
+}
+
+.publishinfo .publishbtmDiv .savebtnDiv {
+	width: 100%;
+	position: absolute;
+	bottom: 5%;
+}
+
+.publishinfo .publishbtmDiv .savebtnDiv button {
+	background: white;
+	width: 50%;
+	margin: 0 auto;
+}
+
+.border_radicus50 {
+	border-radius: 50%;
+}
+
+
+/*.mui-table-view-cell {
+	padding: 0;
+}*/
+
+.goodsclassify .mui-table-view .mui-col-xs-4 {
+	float: left;
+}
+
+.myrecommand .mui-table-view {
+	background: #EFEFF4;
+}
+
+.myrecommand .mui-table-view .mui-table-cell {
+	padding: 5px;
+}
+
+.myrecommand .mui-table-view .mui-table-cell .content {
+	background: white;
+	padding: 10px;
+	border-radius: 5px;
+}
+
+.myrecommand .mui-table-view:before,
+.myrecommand .mui-table-view:after {
+	background: #EFEFF4;
+}
+
+.clear_both {
+	clear: both;
+}
+
+
+/*分销详情*/
+
+.padding_15 {
+	padding: 15px;
+}
+
+.bg_white {
+	background-color: white;
+}
+
+.search_article {
+	width: 100%;
+	float: left;
+	margin-bottom: 10px;
+}
+
+.time {
+	width: 100%;
+	float: left;
+}
+
+.search_article>div {
+	line-height: 33px;
+}
+
+.time .starttime {
+	width: 45%;
+	float: left;
+}
+
+.time i {
+	width: 10%;
+	float: left;
+	text-align: center;
+}
+
+.time .endtime {
+	width: 45%;
+	float: left;
+}
+
+.distribution {
+	float: left;
+	width: 100%;
+}
+
+.distribution_details {
+	padding-top: 35px;
+	width: 50%;
+	float: left;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.distribution_details .details_bg {
+	position: relative;
+	padding: 5px;
+	border-radius: 5px;
+	background: white;
+}
+
+.distribution_details .details_top {
+	position: absolute;
+	top: -25px;
+	width: 100%;
+}
+
+.distribution_details .details_content {
+	padding-top: 30px;
+}
+
+.distribution_details p {
+	margin-bottom: 0;
+}
+
+.distribution_details .details_content p {
+	font-size: 12px;
+}
+
+.distribution_details p span:last-child {
+	margin-left: 5px;
+}
+
+.red {
+	color: #FF5353;
+}
+
+
+/*收益详情*/
+
+.earnings {
+	margin-bottom: 10px;
+}
+
+.earnings .earnings_details {
+	width: 100%;
+}
+
+.display_inline {
+	display: inline;
+}
+
+.earnings_details .details_content>div {
+	width: 100%;
+	white-space: nowrap;
+}
+
+.earnings_details .details_content>div p {
+	display: inline-block;
+	width: 50%;
+}
+
+.margin_t_15 {
+	margin-top: 15px;
+}
+
+.margin_l_10 {
+	margin-left: 10px;
+}
+
+
+/*分销中心*/
+.distribution_nav ul li.active h5{
+	color: #FF5353;
+} 
+.distribution_nav {
+	width: 100%;
+	background: white;
+	float: left; 
+}
+
+.distribution_nav ul {
+	width: 100%;
+	float: left;
+	padding: 0;
+	margin: 0;
+}
+
+.distribution_nav ul li {
+	list-style: none;
+	float: left;
+	width: 20%;
+	padding:15px 5px 10px 5px;
+	text-align: center;
+	white-space: nowrap;
+}
+
+.distribution_nav ul li img {
+	width: 50px;
+}

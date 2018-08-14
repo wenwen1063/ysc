@@ -1,0 +1,264 @@
+body {
+    overflow-x: hidden;
+}
+
+.header {
+    position: relative;
+    background-color: #ff5353;
+    height: 45px;
+}
+#segmentedControl,
+#item2,
+#item3{
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.mui-title,
+.mui-action-back {
+    font-weight: 100;
+    color: #FFFFFF;
+}
+
+.mui-control-item {
+    border: none;
+    background-color: #fff;
+}
+
+#segmentedControl {
+    border: none;
+}
+
+.mui-segmented-control .mui-control-item {
+    color: #6d6d72;
+    position: relative;
+    top: 5px;
+    border: none;
+}
+
+#segmentedControl .mui-active {
+    position: relative;
+    top: 5px;
+    border: none;
+    color: #fe504f;
+    background-color: #FFFFFF;
+}
+
+#segmentedControl .mui-active span {
+    z-index: 9999;
+    padding-bottom: 5px;
+    border-bottom: 10px solid #fe504f;
+}
+
+#item2,
+#item3 {
+    position: relative;
+    top: 10px;
+}
+
+.mui-table-view-cell input {
+    position: relative;
+}
+
+.mui-table-view-cell,
+.mui-media,
+.mui-col-xs-4,
+.mui-col-sm-3 {
+    background: #FFFFFF;
+}
+
+.mui-table-view-cell .list {
+    float: left;
+    height: 80px;
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eeeeee;
+    width: 33%;
+}
+
+.mui-table-view-cell .bgm {
+    background-size: 100% 100%;
+    background-image: url(../../img/Common/tick_btn_select.png); 
+}
+.mui-table-view-cell .bgm>h5,
+.mui-table-view-cell .bgm>p{
+	color: #FF5353 !important;
+}
+.mui-table-view-cell .list h5 {
+    position: relative;
+    top: 10px;
+    color: #000;
+    text-align: center;
+    font-size: 16px;
+}
+
+.mui-table-view-cell .list p {
+    position: relative;
+    top: 15px;
+    color: #4a4a4a;
+    font-size: 12px;
+    text-align: center;
+}
+
+.footer {
+    border: none;
+}
+
+.money .jie {
+    float: right;
+}
+
+.money .jie span {
+    position: relative;
+    top: 15px;
+    float: left;
+    font-size: 16px;
+    color: #4a4a4a;
+}
+
+.money .jie p {
+    font-size: 16px;
+    color: #fe504f;
+    float: right;
+    margin: 0 10px;
+    margin-right: 20px;
+}
+
+.money .jie input {
+    position: relative;
+    height: 52px;
+    width: 80px;
+    background-color: #fe504f;
+    color: #FFFFFF;
+}
+
+#item3 .mui-table-view-cell .all {
+    width: 240px;
+    height: 35px;
+    margin: 0 auto;
+}
+
+#item3 .mui-table-view-cell .all input {
+    float: left;
+    border-radius: 5px;
+    width: 120px;
+    height: 35px;
+    border: none;
+    background-color: #fe504f;
+    color: #FFFFFF;
+}
+
+#item3 .mui-table-view-cell .all .red {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+#item3 .mui-table-view-cell .all .white {
+    border: 1px solid #fe504f;
+    color: #fe504f;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+#item3 .mui-table-view-cell .money {
+    position: relative;
+    top: 20px;
+}
+
+#item3 .mui-table-view-cell .liuliangs {
+    position: relative;
+    border-top: 10px solid #E0E0E0;
+    width: 100%;
+    height: 165px;
+
+}
+
+.mui-table-view-cell {
+    padding: 0;
+
+}
+
+.mui-input-row input {
+    position: relative;
+    top: 8px;
+    border: none;
+}
+
+#item3 .mui-table-view-cell .liuliangs .liu_list {
+    width: 33%;
+    height: 55px;
+    text-align: center;
+    float: left;
+    border-left: 1px solid #E0E0E0;
+    border-bottom: 1px solid #E0E0E0;
+    padding-top: 20px;
+    font-size: 20px;
+
+}
+
+#item3 .mui-table-view-cell .liuliangs .bgm{
+    background-image: url(../../img/ShoppingCart/shoppingcart_btn_payment_selected.png);
+    background-size:100% 100%;
+    /*background-color: #f5f1ff;*/
+    color:#FF5353;
+}
+
+#item3 .mui-table-view-cell .jiesuans .jielist{
+    width: 100%;
+    height:110px;
+    padding: 0 10px;
+    padding-top: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid #E0E0E0;
+
+}
+
+#item3 .mui-table-view-cell .jiesuans .jielist h5{
+    font-size: 18px;
+    color: #4a4a4a;
+    margin-right: 20px;
+}
+
+#item3 .mui-table-view-cell .jiesuans .jielist del{
+    font-size: 14px;
+    color: #909090;
+    margin-left: 10px;
+}
+
+#item3 .mui-table-view-cell .jiesuans .jielist p{
+    position: relative;
+    top:30px;
+    float: left;
+}
+
+
+#item3 .mui-table-view-cell .jiesuans .jielist input{
+    float: right;
+    padding: 0;
+    margin: 0;
+    background-color: #FF5353;
+    color: #FFFFFF;
+    width: 75px;
+    height:30px;
+}
+
+.mui-table-view-cell.mui-active{
+	background-color: #FFFFFF;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

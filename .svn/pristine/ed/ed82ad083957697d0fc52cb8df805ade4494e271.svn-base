@@ -1,0 +1,166 @@
+<head>
+    <meta charset="utf-8">
+    <title>
+        文章详情
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/ArticleDetails.css" rel="stylesheet">
+    <style>
+    .video {
+        float: weight: 100;
+        padding-top: 10%;
+    }
+    </style>
+
+    <body>
+        <header class="mui-bar mui-bar-nav header">
+            <a href="{:U('/home/teacher/index')}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+            </a>
+            <h1 class="mui-title">
+        文章详情
+    </h1>
+        </header>
+        <nav class="mui-bar mui-bar-tab">
+            <input type="text" id="content" name="content" placeholder="评论">
+            <input class="red" type="button" value="发送" onclick="check()">
+        </nav>
+        <div id="article">
+            <input type="hidden" id="aid" name="aid" value="{$tex['a_id']}">
+            <div class="title">
+                <h4>{$tex['title']}</h4>
+                <h6>发布者: {$tex['teacher_name']} {$tex['times']}.{$tex['addtime']}.{$tex['addtimes']}</h6>
+            </div>
+            <!--    <?php if ($tex['video'] != null): ?>
+            <div class="img">
+                <div style="text-align:center;margin-bottom: 10px;">
+                    <video id="video1" width="100%" autoplay="autoplay">
+                        <source src="__PUBLIC__/Uploads/{$tex['video']}" type="video/mp4" />
+                        <source src="http://www.w3school.com.cn/example/html5/mov_bbb.ogg" type="video/ogg" /> Your browser does not support HTML5 video.
+                    </video>
+                </div>
+            </div>
+            <?php else : ?>
+            <div class="video">
+                <p style="color:red;text-align:center;">暂无相关视频</p>
+            </div>
+            <?php endif ?> -->
+            <div class="mui-card-content-inner">
+                <p>
+                <!-- {$tex['content']} -->
+                <?php echo htmlspecialchars_decode($tex['content']); ?>
+                </p>
+            </div>
+            <div class="fabulous">
+                <div class="list nice">
+                    <img src="__PUBLIC__/Wx/img/Home/home_icon_praise_red.png" alt="">
+                    <span>{$tex['nice_num']}</span>
+                </div>
+                <div class="list">
+                    <img src="__PUBLIC__/Wx/img/Home/home_icon_eye.png" alt="">
+                    <span>{$tex['look_num']}</span>
+                </div>
+                <div class="list">
+                    <img src="__PUBLIC__/Wx/img/Home/home_icon_message.png" alt="">
+                    <span>{$number}</span>
+                </div>
+            </div>
+        </div>
+        <div id="comment">
+            <foreach name='data' item='vo'>
+                <div class="list">
+                    <img src="__PUBLIC__/Wx/img/Home/home_pic_1.png" alt="">
+                    <h5 class="t">{$vo['username']}</h5>
+                    <p class="t">{$vo['yue']}月{$vo['day']}日</p>
+                    <div class="comment">
+                        <p>{$vo['content']}</p>
+
+
+                    </div>
+                    <!--    <div class="img">
+                    <div style="text-align:center;margin-bottom: 10px;">
+                        <video id="video1" width="100%" autoplay="autoplay">
+                            <source src="__PUBLIC__/Uploads/{$tex['video']}" type="video/mp4" />
+                            <source src="http://www.w3school.com.cn/example/html5/mov_bbb.ogg" type="video/ogg" /> Your browser does not support HTML5 video.
+                        </video>
+                    </div>
+                </div> -->
+                </div>
+            </foreach>
+        </div>
+        <script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/index/js/template.js"></script>
+        <script>
+        var gallery = mui('.mui-slider');
+        gallery.slider({
+            interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+
+        });
+        </script>
+        <script type="text/javascript">
+        var a_id = $('#aid').val();
+
+        $(".nice").click(function() {
+            // alert(a_id);
+            $.ajax({
+                url: "{:U('/home/teacher/nice')}",
+                type: "post",
+                data: {
+                    "id": a_id
+                },
+                dataType: "json",
+                success: function(data) {
+                    console.log(data);
+                    if (data['result'] == 0) {
+                        alert('点赞成功！');
+                        window.location.reload();
+                    }
+                    if (data['result'] == 1) {
+                        alert('点赞失败！');
+                    }
+                }
+            })
+        });
+
+        function check() {
+            if ($('#content').val() == "") {
+                alert("评论不能为空!");
+                return false;
+            }
+            pl();
+        }
+
+        function pl() {
+            var content = $('#content').val();
+            // alert(content);
+            $.ajax({
+                url: "{:U('/home/teacher/pinl')}",
+                type: "post",
+                data: {
+                    "id": a_id,
+                    "content": content
+                },
+                dataType: "json",
+                success: function(data) {
+                    // console.log(data);
+                    if (data.result == 0) {
+                        alert('评论成功！');
+                        window.location.reload();
+                    } else {
+                        alert('评论失败！');
+                    }
+                }
+            });
+        }
+        </script>
+    </body>
+    </link>
+    </link>
+    </meta>
+    </meta>
+    </meta>
+    </meta>
+</head>

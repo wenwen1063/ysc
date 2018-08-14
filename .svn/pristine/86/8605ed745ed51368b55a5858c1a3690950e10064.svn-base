@@ -1,0 +1,205 @@
+<head>
+    <meta charset="utf-8">
+    <title>
+        创业社区
+    </title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Entrepreneurship.css" rel="stylesheet">
+    <style type="text/css">
+    .ellipsis {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        color: #444;
+    }
+    </style>
+
+    <body>
+        <header class="mui-bar mui-bar-nav">
+            <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+            </a>
+            <h1 class="mui-title">
+        创业社区
+    </h1>
+        </header>
+        <div class="mui-slider">
+            <div class="mui-slider-group">
+                <foreach name='pic' item='vp'>
+                    <div class="mui-slider-item">
+                        <a href="{$vp['link']}">
+                            <img src="__PUBLIC__/Uploads/{$vp['pic']}" />
+                        </a>
+                    </div>
+                </foreach>
+            </div>
+        </div>
+        <form>
+            <div id="search">
+                <input placeholder="搜索文章 " id="titel" name="titel" type="text" value="">
+                </input>
+            </div>
+        </form>
+        <div class="mui-content mui-row mui-fullscreen ">
+            <!-- <div class="mui-col-xs-3 ">
+                <foreach name='classs' item='vi'>
+                    <div class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical clacc" id="segmentedControls ">
+                        <input type="hidden" class="class_id" name="type" value="{$vi['id']}">
+                        <a class="mui-control-item mui-active ">
+                        {$vi['name']}
+                    </a>
+                    </div>
+                </foreach>
+            </div> -->
+            <div class="mui-col-xs-3">
+                <foreach name='classs' item='vi'>
+                    <div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical clacc">
+                        <!-- <a class="mui-control-item mui-active" href="#content1">资讯分类</a> -->
+                        <input type="hidden" class="class_id" name="type" value="{$vi['id']}">
+                        <a class="mui-control-item">{$vi['name']}</a>
+                    </div>
+                </foreach>
+            </div>
+            <div class="mui-col-xs-9 " id="segmentedControlContents " style="border-left: 1px solid #c8c7cc; ">
+                <if condition="$text eq null">
+                    <div id="content1" class="mui-control-content mui-active">
+                        <div class="img">
+                            <img src="__PUBLIC__/Wx/img/Home/default_noconsulting.png" alt="">
+                            <p>暂无任何资讯消息哦~</p>
+                        </div>
+                    </div>
+                </if>
+                <div class="mui-control-content mui-active " id="content2" style="display: block">
+                    <ul class="mui-table-view ">
+                        <foreach name='text' item='bp'>
+                            <li class="mui-table-view-cell ">
+                                <a href="{:U('/home/teacher/wzinfo',array('a_id'=>$bp['a_id']))}">
+                                    <div class="mui-card ">
+                                        <div class="mui-card-content ">
+                                            <!-- <input type="hidden" id="aid" name="aid" value="{$bp['a_id']}"> -->
+                                            <div class="mui-card-content-inner wen">
+                                                <h4 class="mui-ellipsis ">{$bp['title']}</h4>
+                                                <h5>发布者:{$bp['teacher_name']} &numsp;{$bp['times']}.{$bp['addtime']}.{$bp['addtimes']}</h5>
+                                                <p class="mui-h6 mui-ellipsis ">
+                                                    <!-- {$bp['content']} -->
+                                                    <?php echo htmlspecialchars_decode($bp['content']); ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="mui-card-footer ">
+                                            <div class="Fabulous ">
+                                                <img style="position: relative;top: 2px; " src="__PUBLIC__/Wx/img/Home/home_icon_praise_gray.png " alt=" ">
+                                                <span>{$bp['nice_num']}</span>
+                                            </div>
+                                            <div class="see ">
+                                                <img src="__PUBLIC__/Wx/img/Home/home_icon_eye.png " alt=" ">
+                                                <span>{$bp['look_num']}</span>
+                                            </div>
+                                            <div class="right ">
+                                                <img style="position: relative;top: 3px;margin-left: 1px " src="__PUBLIC__/Wx/img/Home/home_icon_message.png " alt=" ">
+                                                <span>{$bp['numbers']}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </foreach>
+                    </ul>
+                </div>
+                <div class="mui-control-content mui-active " id="content3" style="display: none">
+                    <ul class="mui-table-view " id="content">
+                        <script id="tpl" type="text/template">
+                            <!-- <foreach name='text' item='bp'> -->
+                            {{each data as v i}}
+                            <li class="mui-table-view-cell ">
+                                <a href="__MODULE__/teacher/wzinfo/?a_id={{v.a_id}}">
+                                    <div class="mui-card ">
+                                        <div class="mui-card-content ">
+                                            <!-- <input type="hidden" id="aid" name="aid" value="{$bp['a_id']}"> -->
+                                            <div class="mui-card-content-inner wen">
+                                                <h4 class="mui-ellipsis ">{{v.title}}</h4>
+                                                <h5>发布者:{{v.teacher_name}}&numsp;{{v.times}}.{{v.addtime}}.{{v.addtimes}}</h5>
+                                                <!--  <p class="mui-h6 mui-ellipsis ">
+                                                <?php echo htmlspecialchars_decode($bp['content']); ?>
+                                                </p> -->
+                                                <p class="ellipsis inn" oid="{{v.content}}" style="color:#414141!important;">
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="mui-card-footer ">
+                                            <div class="Fabulous ">
+                                                <img style="position: relative;top: 2px; " src="__PUBLIC__/Wx/img/Home/home_icon_praise_gray.png " alt=" ">
+                                                <span>{{v.nice_num}}</span>
+                                            </div>
+                                            <div class="see ">
+                                                <img src="__PUBLIC__/Wx/img/Home/home_icon_eye.png " alt=" ">
+                                                <span>{{v.look_num}}</span>
+                                            </div>
+                                            <div class="right ">
+                                                <img style="position: relative;top: 3px;margin-left: 1px " src="__PUBLIC__/Wx/img/Home/home_icon_message.png " alt=" ">
+                                                <span>{{v.numbers}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            {{/each}}
+                        </script>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/index/js/template.js"></script>
+        <script>
+        var gallery = mui('.mui-slider');
+        gallery.slider({
+            interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+
+        });
+        </script>
+        <script type="text/javascript">
+        $('.mui-col-xs-3 #segmentedControls .mui-control-item').click(function() {
+            $('.mui-col-xs-3 #segmentedControls .mui-control-item').removeClass('mui-active');
+            $(this).addClass('mui-active');
+        });
+        $('#search').submit(function() {
+        });
+        $(".clacc").click(function() {
+            var class_id = $(this).find('.class_id').val();
+            $.ajax({
+                url: "{:U('/home/teacher/clacc')}",
+                type: "post",
+                data: {
+                    "class_id": class_id
+                },
+                dataType: "json",
+                success: function(data) {
+                    console.log(data);
+                    if (data['result'] == 0) {
+                        var html = template('tpl', data);
+                        $('#content').html(html);
+                        $("#content2").css('display', 'none');
+                        $("#content3").css('display', 'block');
+                    }
+                    if (data['result'] == 1) {
+                        mui.toast('该分类暂无文章！');
+                    }
+                    $("#content").find(".inn").html($("#content").find(".inn").attr('oid'));
+                }
+            })
+        });
+        </script>
+    </body>
+    </link>
+    </link>
+    </meta>
+    </meta>
+    </meta>
+    </meta>
+</head>

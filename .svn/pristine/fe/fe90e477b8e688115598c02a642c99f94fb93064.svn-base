@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="../../../CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="../../../CSS/BusinessCSS/Modifypassword/Modifypassword.css" rel="stylesheet">
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a href="../../mypage/More/Passwordmanagement.html"
+       class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">修改密码</h1>
+</header>
+<div class="list">
+    <img src="../../../img/My/my_icon_change_password.png" alt="">
+    <input type="password" placeholder="请输入原密码">
+</div>
+<div class="list">
+    <img src="../../../img/My/my_icon_change_password.png" alt="">
+    <input type="password" placeholder="请输入新密码">
+</div>
+<div class="list">
+    <img src="../../../img/My/my_icon_change_password.png" alt="">
+    <input type="password" placeholder="请再次确认密码">
+</div>
+<div class="input">
+    <input type="button" value="提&numsp;交">
+</div>
+
+</body>
+</html>

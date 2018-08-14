@@ -1,0 +1,540 @@
+<?php
+namespace Home\Controller;
+
+use Think\Controller;
+
+class OrderController extends Controller
+{
+    public function carindex()
+    {
+        $test = I('test');
+        $this->assign('test', $test);
+        $this->display();
+    }
+//  加入购物车
+    public function addcar()
+    {
+        $data['goods_id']           = I('id');
+        $data['goods_attribute_id'] = I('guige');
+
+        $data['user_id'] = I('user_id');
+        $is_shop         = M('cart')
+            ->where(array('user_id' => I('user_id'), 'goods_id' => I('id'), 'goods_attribute_id' => I('guige')))->find();
+        if ($is_shop) {
+            $data['goods_number'] = intval($is_shop['goods_number']) + intval(I('num'));
+            $result               = M('cart')->where(array("id" => $is_shop['id']))->save($data);
+        } else {
+            $data['goods_number'] = I('num');
+            $result               = M('cart')->add($data);
+        }
+        if ($result) {
+            $json = array(
+                'result'  => 1,
+                'is_shop' => $is_shop,
+            );
+        } else {
+            $json = array(
+                'result'  => 0,
+                'is_shop' => $is_shop,
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+//修改购物车
+    public function updatecar()
+    {
+        $id = I('id');
+        for ($i = 0; $i < count($id); $i++) {
+            $data['id']           = $id[$i]['id'];
+            $data['goods_number'] = $id[$i]['num'];
+            $result               = M('cart')->save($data);
+        }
+        $json = array(
+            'result' => 1,
+        );
+        $this->ajaxReturn($json);
+
+    }
+//  获取购物车信息
+    public function carinfo()
+    {
+        $user_id = I("user_id");
+        // $user_id = 1;
+        $data = M()->table('cart as c')
+            ->join('left join goods as g on c.goods_id=g.id')
+            ->join("left join seller as s on g.seller_id=s.id")
+            ->join("left join goods_attribute_info as ga on g.id=ga.goods_id and ga.goods_attribute_id=c.goods_attribute_id")
+            ->field("c.*,g.goods_name as gname,g.sm_pic,s.name as sname,s.logo,g.seller_id,ga.weight,ga.market_price,ga.shop_price")
+            ->where(array('user_id' => $user_id))->select();
+        $count = count($data);
+//  商家作为key,重组数组
+        $res = array();
+        foreach ($data as $k => $v) {
+            $res[$v['seller_id']]['sname']  = $v['sname'];
+            $res[$v['seller_id']]['logo']   = $v['logo'];
+            $res[$v['seller_id']]['shop'][] = $v;
+        }
+        if ($data) {
+            $json = array(
+                'result' => 1,
+                'data'   => $res,
+                'count'  => $count,
+            );
+        } else {
+            $json = array(
+                'result' => 0,
+                'count'  => $count,
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+
+    public function clearcar()
+    {
+        $user_id = I('user_id');
+        $data    = M("cart")->where(array('user_id' => $user_id))->delete();
+        if ($data) {
+            $json = array(
+                'result' => 1,
+            );
+        } else {
+            $json = array(
+                'result' => 0,
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+//订单页面
+    public function balance()
+    {
+        $user_id = cookie("user_id");
+        $c       = I("");
+        $type    = I("type");
+        // 1直接购买,2购物车购买
+        if ($type == 1) {
+            $data = M()->table('goods as g')
+                ->join("left join seller as s on g.seller_id=s.id")
+                ->join("left join goods_attribute_info as ga on g.id=ga.goods_id")
+                ->field("g.goods_name as gname,g.invoice,g.sm_pic,s.name as sname,s.logo,g.seller_id,g.id as goods_id,ga.weight,ga.market_price,ga.shop_price")
+                ->where(array('g.id' => I('id'), 'ga.goods_attribute_id' => I('guige')))->select();
+//  商家作为key,重组数组
+            $data['0']['goods_number']       = I("num");
+            $data['0']['goods_attribute_id'] = I("guige");
+        } else if ($type == 2) {
+            $json        = I("id");
+            $json        = substr($json, 0, -1);
+            $map['c.id'] = array("in", "$json");
+            $data        = M()->table('cart as c')
+                ->join('left join goods as g on c.goods_id=g.id')
+                ->join('left join goods_attribute_info as ga on c.goods_attribute_id=ga.goods_attribute_id and c.goods_id=ga.goods_id')
+                ->join("left join seller as s on g.seller_id=s.id")
+                ->field("c.*,g.goods_name as gname,g.invoice,g.sm_pic,s.name as sname,s.logo,g.seller_id,ga.weight,ga.market_price,ga.shop_price")
+                ->where($map)->select();
+        }
+//dump($data);
+        //  商家作为key,重组数组
+        $res = array();
+        foreach ($data as $k => $v) {
+//          $seller = M()->table('logistics_seller as ls')
+            //              ->join("left join logistics as l on l.id=ls.logistics_id")
+            //              ->field("ls.*,l.name")
+            //              ->where(array("ls.is_disable" => 0, 'ls.seller_id' => $v['seller_id']))->select();
+            //              dump($seller);
+            //          foreach ($seller as $k1 => $v1) {
+            //              $seller[$k1]['allweight'] = floatval(0);
+            //          }
+            $res[$v['seller_id']]['goods_name'] = $v['sname'];
+            $res[$v['seller_id']]['seller_id']  = $v['seller_id'];
+            $res[$v['seller_id']]['logo']       = $v['logo'];
+            $res[$v['seller_id']]['shop'][]     = $v;
+        }
+//      dump($res);die;
+        foreach ($res as $ky => $vl) {
+            $c  = 0;
+            $id = '';
+            foreach ($vl['shop'] as $key => $value) {
+                $c += $value['weight'] * $value['goods_number'];
+				if($value['invoice']==1){
+				$id.=$value['goods_id'].",";
+			 }
+                if ($value['invoice'] == 1) {
+                    $id .= $value['goods_id'] . ",";
+                }
+            }
+            $res[$ky]['id'] = substr($id, 0, strlen($id) - 1);
+            foreach ($res[$ky]['seller'] as $key1 => $value1) {
+                if (ceil($c - $value1['ykg_cost']) <= 0) {
+                    $money = $value1['perkg_cost'];
+                } else {
+                    $money = ceil($c - $value1['ykg_cost']) * $value1['perkg_cost'];
+                }
+                $res[$ky]['seller'][$key1]['allweight'] = $c;
+                $res[$ky]['seller'][$key1]['alllom']    = $money;
+            }
+        }
+//
+        //              dump($res);
+        // 订单显示默认地址
+        $moadd = M("user_addr")->where(array('default_address' => 1, 'user_id' => $user_id))->find();
+        //所有地址
+        $address = M("user_addr")->where(array('user_id' => $user_id))->select();
+        $this->assign('address', $address);
+        $this->assign("type", $type);
+        $this->assign('moadd', $moadd);
+        $this->assign('goods_info', $res);
+        $this->assign('json', I());
+        $this->display();
+    }
+
+//订单页面商品信息显示，用于发票。
+    public function goodsinfo()
+    {
+        $id = I("id");
+//  $id= explode(",", $id);
+        //  $id=array_unique(array);
+        $map['id'] = array("in", $id);
+        $data      = M("goods")->where($map)->select();
+        $json      = array(
+            'data' => $data,
+        );
+        $this->ajaxReturn($json);
+
+    }
+// 订单修改地址
+    public function changeaddress()
+    {
+        $user_id = cookie("user_id");
+        $address = M("user_addr")->where(array('user_id' => $user_id))->select();
+        $this->assign('address', $address);
+        $this->display();
+    }
+
+    public function getconinfo()
+    {
+        $user_id               = cookie("user_id");
+        $seller_id             = I('seller_id');
+        $mapp['cu.use_status'] = array('eq', 0);
+        $mapp['cu.user_id']    = array('eq', $user_id);
+        $mapp['c.seller_id']   = array('eq', $seller_id);
+        $oupon                 = M()->table('coupon_user as cu')
+            ->join("left join coupon as c on c.id=cu.discount_id")
+            ->field("c.*,cu.id as cu_id")
+            ->where($mapp)->select();
+        $json = array(
+            'data' => $oupon,
+        );
+        $this->ajaxReturn($json);
+
+    }
+
+    public function addorder()
+    {
+        set_time_limit(0);
+        $arr     = I('');
+//		dump($arr);die;
+        $user_id = cookie('user_id');
+//会员购买时收货的地址信息
+        $address_id = I("address");
+        $address    = M("user_addr")->where(array('id' => $address_id))->find();
+////        直接购买
+        $allmoney      = I('total_price');
+        $order_orderNo = orderNo();
+        if ($arr['type'] == 1) {
+////    加入订单表，生产订单
+            $goods_price            = M('goods_attribute_info')->where(array("goods_id" => I('id'), 'goods_attribute_id' => I('goods_attribute_id')))->find();
+            $shop_price             = $goods_price['shop_price'];
+            $data                   = M('orders');
+            $data->user_id          = $user_id;
+            $data->order_number     = $order_orderNo;
+            $data->addtime          = strtotime(date('Y-m-d H:i:s'));
+            $data->total_price      = floatval($shop_price) * intval(I('num'));
+            $data->paid_price       = I('total_price');
+            $data->note             = I("remark");
+            $data->seller_id        = I("seller_id");
+            $data->invoice_goods_id = I("allid");
+            if (I("invoice_content_sel") != '') {
+                $data->is_invoice = 1;
+//个人，单位
+                $data->invoice_type = I("invoice_content_sel");
+//发票抬头
+                $data->invoice_title = I("invoice_content");
+//个人，单位信息
+                $data->invoice_content = I("invoice_title");
+            }
+            $data->province = $address['province'];
+            $data->city     = $address['city'];
+            $data->district = $address['district'];
+            $data->address  = $address['address'];
+            $data->contact  = $address['contact'];
+            $data->phone    = $address['phone'];
+            $order_id       = $data->add();
+//**************************************商家优惠券插入记录
+            if (I("con") != '') {
+                $coupon_user             = M("coupon_user");
+                $coupon_user->order_id   = $order_id;
+                $coupon_user->use_status = 2;
+                $coupon_user->use_time   = strtotime(date('Y-m-d H:i:s'));
+                $coupon_user_id          = $coupon_user->where(array('id' => I("con")))->save();
+            }
+
+//**************************************商家收入表插入记录
+            $seller_revenue            = M('seller_revenue');
+            $seller_revenue->seller_id = I("seller_id");
+            $seller_revenue->type      = 1;
+            $seller_revenue->order_id  = $order_id;
+            $seller_revenue_id         = $seller_revenue->add();
+            //**************************************返点计算
+            $id          = I("id");
+            $num         = I("num");
+            $goods_cj    = M("goods_bouns_info")->where(array('goods_id' => $id, 'state' => 1))->find();
+            $order_goods = M('order_goods');
+//判断返点类型
+            if ($goods_cj['type'] == 0) {
+//平台返点金额
+                $pingtai = M('update_bonus_set')->WHERE(array("id" => 10))->find();
+//平台返点
+                $bonus_platform                 = M("bonus_platform");
+                $bonus_platform->seller_id      = I("seller_id");
+                $bonus_platform->platform_ratio = $pingtai['pingtai_money'];
+                $bonus_platform->platform_total = floatval($shop_price) * intval($num) * (intval($pingtai['pingtai_money']) / 100);
+                $bonus_platform->goods_id=          $goods_cj['goods_id'];
+                $bonus_platform->add();
+                $order_goods->platform_bonus = floatval($shop_price) * intval($num) * (intval($pingtai['pingtai_money']) / 100);
+            } else {
+//***********************搭档返点
+                //会员信息
+                $user_id_0 = M('user')->where(array("id" => $user_id))->find();
+//一级会员返点信息
+                $user_id_1 = M('user')->where(array("id" => $user_id_0['introduce']))->find();
+                if ($user_id_1) {
+//商品1层级返点
+                    $goods_cj1     = M("goods_bouns_info")->where(array('goods_id' => $id, 'bonus_level' => 1, 'partner_id' => $user_id_1['privilege_hierarchy_id'], 'state' => 1))->find();
+                    $bonus_consume = M("bonus_consume");
+                    $money1        = floatval($shop_price) * intval($num) * (intval($goods_cj1['bonus_level_ratio']) / 100);
+                    //***********************消费奖励表插入记录
+                    $bonus_consume                 = M('bonus_consume');
+                    $bonus_consume->user_id        = $user_id_1['id'];
+                    $bonus_consume->hierarchy      = 1;
+                    $bonus_consume->order_id       = $order_id;
+                    $bonus_consume->recommend_user = $user_id_1['introduce'];
+                    $bonus_consume->state          = 0;
+                    $bonus_consume->parent_id      = $user_id_1['privilege_hierarchy_id'];
+                    $bonus_consume->money          = $money1;
+					$bonus_consume->goods_id=          $goods_cj['goods_id'];
+                    $bonus_consume->add();
+                    //***********************会员表修改
+                    $user = M('user');
+                    $user->where(array('id' => $user_id_1['id']))->setInc('reward', floatval($money1)); // 用户的奖励金额加
+                    $user->where(array('id' => $user_id_1['id']))->setInc('reward_freeze', floatval($money1)); // 用户的冻结奖励金额加
+                }
+//二级会员返点信息
+                $user_id_2 = M('user')->where(array("id" => $user_id_1['introduce']))->find();
+                if ($user_id_2) {
+//商品2层级返点
+                    $goods_cj2                     = M("goods_bouns_info")->where(array('goods_id' => $id, 'bonus_level' => 2, 'partner_id' => $user_id_2['privilege_hierarchy_id'], 'state' => 1))->find();
+                    $money2                        = floatval($shop_price) * intval($num) * (intval($goods_cj2['bonus_level_ratio']) / 100);
+                    $bonus_consume                 = M('bonus_consume');
+                    $bonus_consume->user_id        = $user_id_2['id'];
+                    $bonus_consume->hierarchy      = 2;
+                    $bonus_consume->order_id       = $order_id;
+                    $bonus_consume->recommend_user = $user_id_2['introduce'];
+                    $bonus_consume->state          = 0;
+                    $bonus_consume->parent_id      = $user_id_2['privilege_hierarchy_id'];
+                    $bonus_consume->money          = $money2;
+					$bonus_consume->goods_id=          $goods_cj['goods_id'];
+                    $bonus_consume->add();
+                    $user = M('user');
+                    $user->where(array('id' => $user_id_2['id']))->setInc('reward', floatval($money2)); // 用户的奖励金额加
+                    $user->where(array('id' => $user_id_2['id']))->setInc('reward_freeze', floatval($money2)); // 用户的冻结奖励金额加
+                }
+//3级会员返点信息
+                $user_id_3 = M('user')->where(array("id" => $user_id_2['introduce']))->find();
+                if ($user_id_3) {
+//商品3层级返点
+                    $goods_cj3                     = M("goods_bouns_info")->where(array('goods_id' => $id, 'bonus_level' => 3, 'partner_id' => $user_id_3['privilege_hierarchy_id'], 'state' => 1))->find();
+                    $money3                        = floatval($shop_price) * intval($num) * (intval($goods_cj3['bonus_level_ratio']) / 100);
+                    $bonus_consume                 = M('bonus_consume');
+                    $bonus_consume->user_id        = $user_id_3['id'];
+                    $bonus_consume->hierarchy      = 3;
+                    $bonus_consume->order_id       = $order_id;
+                    $bonus_consume->recommend_user = $user_id_3['introduce'];
+                    $bonus_consume->state          = 0;
+                    $bonus_consume->parent_id      = $user_id_3['privilege_hierarchy_id'];
+                    $bonus_consume->money          = $money3;
+					$bonus_consume->goods_id=          $goods_cj['goods_id'];
+                    $bonus_consume->add();
+                    $user = M('user');
+                    $user->where(array('id' => $user_id_3['id']))->setInc('reward', floatval($money3)); // 用户的奖励金额加
+                    $user->where(array('id' => $user_id_3['id']))->setInc('reward_freeze', floatval($money3)); // 用户的冻结奖励金额加
+                }
+                $order_goods->bonus_amount = floatval($money1) + floatval($money2) + floatval($money3);
+            }
+//**************************************订单商品表插入记录
+            $order_goods->goods_id           = $id;
+            $order_goods->goods_number       = I("num");
+            $order_goods->price              = $shop_price;
+            $order_goods->type               = $goods_cj['type'];
+            $order_goods->goods_attribute_id = I('goods_attribute_id');
+            $order_goods->order_id           = $order_id;
+            $order_goods                     = $order_goods->add();
+            $goods_attribute_info_id         = M("goods_attribute_info")->where(array("goods_id" => $id, "goods_attribute_id" => I('goods_attribute_id')))->setDec("stock", $num);
+//购物车购买商品
+        }
+        if ($arr['type'] == 2) {
+            foreach ($arr['goods_info'] as $key => $value) {
+                $data                   = M('orders');
+                $data->user_id          = $user_id;
+                $data->order_number     = $order_orderNo;
+                $data->addtime          = strtotime(date('Y-m-d H:i:s'));
+                $data->total_price      = $value['sellmoney'];
+                $data->paid_price       = $value['nomoney'];
+                $data->note             = I("remark");
+                $data->seller_id        = $value["seller_id"];
+                $data->invoice_goods_id = $value["allid"];
+                if ($value["invoice_content_sel"] != '') {
+                    $data->is_invoice = 1;
+//个人，单位
+                    $data->invoice_type = $value["invoice_content_sel"];
+//发票抬头
+                    $data->invoice_title = $value["invoice_content"];
+//个人，单位信息
+                    $data->invoice_content = $value["invoice_title"];
+                }
+                $data->province = $address['province'];
+                $data->city     = $address['city'];
+                $data->district = $address['district'];
+                $data->address  = $address['address'];
+                $data->contact  = $address['contact'];
+                $data->phone    = $address['phone'];
+                $order_id       = $data->add();
+//**************************************商家优惠券插入记录
+                if ($value['con'] != '') {
+                    $coupon_user             = M("coupon_user");
+                    $coupon_user->order_id   = $order_id;
+                    $coupon_user->use_status = 2;
+                    $coupon_user->use_time   = strtotime(date('Y-m-d H:i:s'));
+                    $coupon_user_id          = $coupon_user->where(array('id' => $value['con']))->save();
+                }
+//**************************************商家收入表插入记录
+                $seller_revenue            = M('seller_revenue');
+                $seller_revenue->seller_id = I("seller_id");
+                $seller_revenue->type      = 1;
+                $seller_revenue->order_id  = $order_id;
+                $seller_revenue_id         = $seller_revenue->add();
+////**************************************返点计算
+
+                $aa    = substr($value['id'], 0, -1);
+                $allid = explode(",", $aa);
+                for ($i = 0; $i < count($allid); $i++) {
+                    $c                               = $allid[$i];
+                    $cart                            = M('cart')->where(array('id' => $allid[$i]))->find();
+                    $cart_id                         = $cart['id'];
+                    $id                              = $cart["goods_id"];
+                    $num                             = $cart["goods_number"];
+                    $goods_attribute_id              = $cart["goods_attribute_id"];
+                    $goods_price                     = M('goods_attribute_info')->where(array("goods_id" => $id, 'goods_attribute_id' => $goods_attribute_id))->find();
+                    $shop_price                      = $goods_price['shop_price'];
+                    $goods_cj                        = M("goods_bouns_info")->where(array('goods_id' => $id, 'state' => 1))->find();
+                    $order_goods                     = M('order_goods');
+                    $order_goods->goods_id           = $id;
+                    $order_goods->goods_number       = $num;
+                    $order_goods->price              = $shop_price;
+                    $order_goods->type               = $goods_cj['type'];
+                    $order_goods->goods_attribute_id = $goods_attribute_id;
+                    $order_goods->order_id           = $order_id;
+                    if ($goods_cj['type'] == 0) {
+////平台返点金额
+                        $pingtai = M('update_bonus_set')->WHERE(array("id" => 10))->find();
+////平台返点
+                        $bonus_platform                 = M("bonus_platform");
+                        $bonus_platform->seller_id      = $value['seller_id'];
+                        $bonus_platform->platform_ratio = $pingtai['pingtai_money'];
+                        $bonus_platform->platform_total = floatval($shop_price) * intval($num) * (intval($pingtai['pingtai_money']) / 100);
+                        $bonus_platform->goods_id=          $goods_cj['goods_id'];
+                        $bonus_platform->add();
+                        $order_goods->platform_bonus = floatval($shop_price) * intval($num) * (intval($pingtai['pingtai_money']) / 100);
+                    } else {
+////***********************搭档返点
+                        ////会员信息
+                        $user_id_0 = M('user')->where(array("id" => $user_id))->find();
+////一级会员返点信息
+                        $user_id_1 = M('user')->where(array("id" => $user_id_0['introduce']))->find();
+                        if ($user_id_1) {
+////商品1层级返点
+                            $goods_cj1     = M("goods_bouns_info")->where(array('goods_id' => $id, 'bonus_level' => 1, 'partner_id' => $user_id_1['privilege_hierarchy_id'], 'state' => 1))->find();
+                            $bonus_consume = M("bonus_consume");
+                            $money1        = floatval($shop_price) * intval($num) * (intval($goods_cj1['bonus_level_ratio']) / 100);
+//                  //***********************消费奖励表插入记录
+                            $bonus_consume                 = M('bonus_consume');
+                            $bonus_consume->user_id        = $user_id_1['id'];
+                            $bonus_consume->hierarchy      = 1;
+                            $bonus_consume->order_id       = $order_id;
+                            $bonus_consume->recommend_user = $user_id_1['introduce'];
+                            $bonus_consume->state          = 0;
+                            $bonus_consume->parent_id      = $user_id_1['privilege_hierarchy_id'];
+                            $bonus_consume->money          = $money1;
+                            $bonus_consume->goods_id=          $goods_cj['goods_id'];
+                            $bonus_consume->add();
+////***********************会员表修改
+                            $user = M('user');
+                            $user->where(array('id' => $user_id_1['id']))->setInc('reward', floatval($money1)); // 用户的奖励金额加
+                            $user->where(array('id' => $user_id_1['id']))->setInc('reward_freeze', floatval($money1)); // 用户的冻结奖励金额加
+                        }
+////二级会员返点信息
+                        $user_id_2 = M('user')->where(array("id" => $user_id_1['introduce']))->find();
+                        if ($user_id_2) {
+//商品2层级返点
+                            $goods_cj2                     = M("goods_bouns_info")->where(array('goods_id' => $id, 'bonus_level' => 2, 'partner_id' => $user_id_2['privilege_hierarchy_id'], 'state' => 1))->find();
+                            $money2                        = floatval($shop_price) * intval($num) * (intval($goods_cj2['bonus_level_ratio']) / 100);
+                            $bonus_consume                 = M('bonus_consume');
+                            $bonus_consume->user_id        = $user_id_2['id'];
+                            $bonus_consume->hierarchy      = 2;
+                            $bonus_consume->order_id       = $order_id;
+                            $bonus_consume->recommend_user = $user_id_2['introduce'];
+                            $bonus_consume->state          = 0;
+                            $bonus_consume->parent_id      = $user_id_2['privilege_hierarchy_id'];
+                            $bonus_consume->money          = $money2;
+							 $bonus_consume->goods_id=          $goods_cj['goods_id'];
+                            $bonus_consume->add();
+                            $user = M('user');
+                            $user->where(array('id' => $user_id_2['id']))->setInc('reward', floatval($money2)); // 用户的奖励金额加
+                            $user->where(array('id' => $user_id_2['id']))->setInc('reward_freeze', floatval($money2)); // 用户的冻结奖励金额加
+                        }
+////3级会员返点信息
+                        $user_id_3 = M('user')->where(array("id" => $user_id_2['introduce']))->find();
+                        if ($user_id_3) {
+//商品3层级返点
+                            $goods_cj3                     = M("goods_bouns_info")->where(array('goods_id' => $id, 'bonus_level' => 3, 'partner_id' => $user_id_3['privilege_hierarchy_id'], 'state' => 1))->find();
+                            $money3                        = floatval($shop_price) * intval($num) * (intval($goods_cj3['bonus_level_ratio']) / 100);
+                            $bonus_consume                 = M('bonus_consume');
+                            $bonus_consume->user_id        = $user_id_3['id'];
+                            $bonus_consume->hierarchy      = 3;
+                            $bonus_consume->order_id       = $order_id;
+                            $bonus_consume->recommend_user = $user_id_3['introduce'];
+                            $bonus_consume->state          = 0;
+                            $bonus_consume->parent_id      = $user_id_3['privilege_hierarchy_id'];
+                            $bonus_consume->money          = $money3;
+							$bonus_consume->goods_id=          $goods_cj['goods_id'];
+                            $bonus_consume->add();
+                            $user = M('user');
+                            $user->where(array('id' => $user_id_3['id']))->setInc('reward', floatval($money3)); // 用户的奖励金额加
+                            $user->where(array('id' => $user_id_3['id']))->setInc('reward_freeze', floatval($money3)); // 用户的冻结奖励金额加
+                        }
+                        $order_goods->bonus_amount = $money1 + $money2 + $money3;
+                    }
+                    //**************************************订单商品表插入记录
+                    $order_goods_id          = M('order_goods')->add();
+                    $cart                    = M('cart')->where(array('id' => $allid[$i]))->delete();
+                    $goods_attribute_info_id = M("goods_attribute_info")->where(array("id" => $cart_id))->setDec("stock", $num);
+                }
+            }
+        }
+        $json = array(
+            'order_ids' => $order_orderNo,
+            'allmoney'  => $allmoney,
+            'result'    => 1,
+        );
+        $this->ajaxReturn($json);
+    }
+
+}

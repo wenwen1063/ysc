@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>吸粉游戏</title>
+		<meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/Wx/CSS/BusinessCSS/Myarticle/mui.min.css" />
+		<link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+		<link href="__PUBLIC__/Wx/CSS/BusinessCSS/attractfansplay.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header">
+			<a href="" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">吸粉游戏</h1>
+		</header>
+		<div class="container"> 
+			<div class="page page0"></div>
+			<div class="page page1"></div>
+			<div class="page page2"></div>
+			<div class="page page3"></div>
+			<div class="page page4"></div>
+			<div class="page page5"></div>
+			<div class="page page6" style="position: relative;">
+				<div class="qrDiv">
+					<img src="__PUBLIC__/Wx/img/xifenimg/ysc.jpg" alt="">
+					<div class="btnDiv">
+						<div class="orangebtn">点击右上角转发朋友圈 </div>
+						<div class="greenbtn" id="greenbtn"> 再试一次 </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery.touchSwipe.min.js"></script>
+<script type="text/javascript">
+
+	$(document).ready(
+		function() {
+			var nowpage = 0;
+			//给class为container的容器加上触滑监听事件
+			$(".container").swipe({
+				swipe: function(event, direction, distance, duration, fingerCount) { //事件，方向，距离（像素为单位），时间，手指数量
+					if(direction == "up") //当向上滑动手指时令当前页面记数器加1
+					{
+						nowpage = nowpage + 1;
+					} else if(direction == "down") //当向下滑动手指时令当前页面记数器减1
+					{
+						nowpage = nowpage - 1;
+					}
+
+					if(nowpage > 6) //因本实例只有5张图片，所以当记数器大于4时令他返回4（从0开始记），避免溢出出错
+					{
+						nowpage = 6;
+					}
+
+					if(nowpage < 0) //道理同上
+					{
+						nowpage = 0;
+					}
+					$(".container").animate({
+						"top": nowpage * -100 + "%"
+					}, 400); //根据当前记数器滚动到相应的高度
+				}
+			});
+		}
+	);
+	$(".greenbtn").click(function(){
+		window.location.href="{:U('/home/User/attractfansplay')}";
+	});
+</script>

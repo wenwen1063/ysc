@@ -1,0 +1,108 @@
+.activecenter .mui-card {
+	margin: 10px 0;
+}
+
+.activecenter .mui-card small {
+	color: #B4B3B8;
+}
+
+.activecenter .mui-card p {
+	margin-bottom: 0;
+}
+
+.box {
+	background: white;
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	overflow-x: scroll;
+	overflow-y: hidden;
+}
+
+.box ul {
+	display: inline;
+	white-space: nowrap;
+	height: 40px;
+	line-height: 40px;
+	margin: 0;
+	padding: 0;
+}
+
+.box ul li {
+	padding: 0 5px;
+	display: inline-block;
+	white-space: nowrap;
+}
+
+.box ul li a {
+	display: inline-block;
+	height: 32px;
+	line-height: 35px;
+	color: #F9A693;
+}
+
+.box ul li.active a {
+	color: #FF5353;
+	border-bottom: 2px solid #FF5353;
+}
+
+.goodsclassify {
+	text-align: left;
+	margin: 10px 0;
+}
+
+.goodsclassify .title {
+	font-size: 16px;
+	color: #444;
+	font-weight: bold;
+}
+
+.goodsclassify .mui-grid-view .mui-media-body {
+	height: auto !important;
+	text-align: left;
+	line-height: 22px !important;
+}
+
+.goodsclassify .mui-grid-view .mui-media-body span {
+	color: #dd524d;
+	font-weight: bold;
+	padding-right: 15px;
+}
+
+.goodsclassify .mui-grid-view .mui-media-body small {
+	text-decoration: line-through;
+	margin-left: 15px;
+}
+
+.goodsclassify .mui-grid-view .mui-media-body button {
+	width: 100%;
+}
+
+.imgTopDiv {
+	position: relative;
+}
+
+.imgTopDiv img.topIcon {
+	position: fixed;
+	z-index: 9999;
+	right: 15px;
+	bottom: 15px;
+	width: 50px;
+}
+
+.imgTopDiv .shoppingcartDiv {
+	position: fixed;
+	z-index: 9999;
+	right: 15px;
+	bottom: 80px;
+}
+
+.imgTopDiv .shoppingcartDiv img {
+	width: 50px;
+}
+
+.imgTopDiv .shoppingcartDiv span {
+	position: absolute;
+	top: 5px;
+	right: 0;
+}

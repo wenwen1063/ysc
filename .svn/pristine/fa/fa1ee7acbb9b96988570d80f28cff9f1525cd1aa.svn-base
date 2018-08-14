@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>订单详情</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="http://dcloud.io/hellomui/css/mui.picker.css" rel="stylesheet"/>
+    <link href="http://dcloud.io/hellomui/css/mui.poppicker.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/ShoppingCart/Orderdetails.css" rel="stylesheet">
+</head>
+
+<style type="text/css">
+.selecteddiv i.active {
+    background: url(__PUBLIC__/Wx/img/ShoppingCart/btn_check.png) no-repeat;
+    background-size: 15px;
+}
+
+.selecteddiv i {
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+    background: url(__PUBLIC__/Wx/img/ShoppingCart/btn_checkoff.png) no-repeat;
+    background-size: 15px;
+    margin-right: 10px;
+    position: relative;
+    top: 1px;
+}
+	.color{
+		background: #f5f5f5;
+	}
+</style>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">订单详情</h1>
+</header>
+<div class="address">
+    <!--oneress被css隐藏了-->
+    
+    <?php if($address==''||$address==null):?>
+	    <div class="oneress">
+	        <p>暂无添加收货地址</p>
+	        <input type="button" id="addaddress" value="添加">
+	    </div>
+    <?php else: ?>
+	    <div class="ress">
+	    	<input type="hidden" name="address_id" id="address_id" value="<?php echo $moadd['id']; ?>" />
+	        <h5 id="moname"><?php echo $moadd['contact']; ?>&numsp;&numsp;&numsp;&numsp;<?php echo $moadd['phone']; ?></h5>
+	        <p id="moinfo"><?php echo $moadd['province']; ?><?php echo $moadd['city']; ?><?php echo $moadd['district']; ?><?php echo $moadd['address']; ?>
+	        </p>
+	        <input type="button" id="changeaddress" value="更换地址">
+	    </div>
+     <?php endif ?>
+</div>
+<div class="border">
+    <img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+    <img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+    <img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+    <img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+    <img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+    <img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+    <img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+    <img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+    <img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+    <img src="__PUBLIC__/Wx/img/My/my_gpdc_line_bar.png" alt="">
+    <img class="blue" src="__PUBLIC__/Wx/img/My/my_address_blue_line.png" alt="">
+</div>
+<div class="content">
+    <div class="list">
+    	<foreach name="goods_info" item="g" >
+        <div class="name">
+            <img class="userm" src="__PUBLIC__/Uploads/{$g['1']}" alt="">
+            <h5>{$g['0']}&numsp;></h5>
+        </div>
+        <div class="commodity">
+        	 <foreach name="g.shop" item="s" >
+            <div class="list">
+                <img class="userm" src="__PUBLIC__/Uploads/{$s['sm_pic']}" alt="">
+                <input type="hidden" class="content1" id="" value="11" />
+                <div class="title">
+                    <h5>{$s['gname']}</h5>
+                    <p>￥<span class="shopmoney">{$s['money']}</span>&numsp;<span>x<span class="shopnum">{$s['goods_number']}</span></span></p>
+                </div>
+            </div>
+             </foreach>
+        </div>
+        </foreach>
+    </div>
+</div>
+
+<div class="zhifu">
+    <div class="title">
+        <span>支付方式</span>
+    </div>
+    <div class="list">
+        <img src="__PUBLIC__/Wx/img/ShoppingCart/shoppingcart_btn_alipay_normal.png" alt="">
+    </div>
+    <div class="list">
+        <img src="__PUBLIC__/Wx/img/ShoppingCart/shoppingcart_btn_wechat_normal.png" alt="">
+    </div>
+    <div class="list">
+        <img src="__PUBLIC__/Wx/img/ShoppingCart/shoppingcart_btn_unionpay_select.png" alt="">
+    </div>
+</div>
+
+<div class="feiyong">
+    <div class="title">
+        <span>费用详情</span>
+    </div>
+    <div class="list">
+        <h5>配送费</h5>
+        <p>邮费&numsp;10元&numsp;></p>
+    </div>
+    <div class="list" id="showUserPicker">
+        <h5>邮费 这里被单机出现选择方案</h5>
+        <a>-￥5&numsp;></a>
+    </div>
+    <div class="list">
+        <h5>配送费</h5>
+        <a>￥5245&numsp;&numsp;</a>
+    </div>
+</div>
+<nav class="mui-bar mui-bar-tab">
+    <div class="right">
+        <a>￥0.00</a>
+        <input type="button" value="提交订单">
+    </div>
+</nav>
+
+<div id="hideadd" style="z-index: 1000;display: none;">
+	<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">地址选择</h1>
+	</header>
+	<div class="mui-content">
+	    <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+	        
+	        <foreach name="address" item="vo" >
+		        <li class="mui-table-view-cell">
+		            <div class="mui-table">
+		                <div class="mui-table-cell mui-col-xs-10">
+		                    <h4 class="mui-ellipsis addname">{$vo['contact']} &numsp;&numsp;&numsp;&numsp;{$vo['phone']}</h4>
+		                    <p class="mui-h6 mui-ellipsis addinfo">{$vo['province']}{$vo['city']}{$vo['district']}{$vo['address']}</p>
+		                </div>
+		                <div class="mui-text-right selecteddiv">
+		                   <i class="" id="{$vo['id']}"></i>
+		                </div>
+		            </div>
+		        </li>
+	        </foreach>
+	    </ul>
+	</div>
+		<nav class="mui-bar mui-bar-tab">
+	    	<input type="button" id="addsure" value="确&numsp;定">
+		</nav>
+</div>
+	
+	
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+<script src="__PUBLIC__/Wx/Script/ActiveXJS/mui.picker.js"></script>
+<script src="__PUBLIC__/Wx/Script/ActiveXJS/mui.poppicker.js"></script>
+<script>
+//  (function ($, doc) {
+//      $.init();
+//      $.ready(function () {
+//          //普通示例
+//          var userPicker = new $.PopPicker();
+//          userPicker.setData([{
+//              value: 'ywj',
+//              text: '优惠一&numsp;&numsp;&numsp;满108减5'
+//          }, {
+//              value: 'aaa',
+//              text: '优惠二&numsp;&numsp;&numsp;满108减5'
+//          }, {
+//              value: 'lj',
+//              text: '优惠三&numsp;&numsp;&numsp;满108减5'
+//          }]);
+//          var showUserPickerButton = doc.getElementById('showUserPicker');
+//          var userResult = doc.getElementById('userResult');
+//          showUserPickerButton.addEventListener('tap', function (event) {
+//              userPicker.show(function (items) {
+//                  userResult.innerText = JSON.stringify(items[0]);
+//                  //返回 false 可以阻止选择框的关闭
+//                  //return false;
+//              });
+//          }, false);
+//          //-----------------------------------------
+//          //级联示例
+//          var cityPicker = new $.PopPicker({
+//              layer: 2
+//          });
+//          cityPicker.setData(cityData);
+//          var showCityPickerButton = doc.getElementById('showCityPicker');
+//          var cityResult = doc.getElementById('cityResult');
+//          showCityPickerButton.addEventListener('tap', function (event) {
+//              cityPicker.show(function (items) {
+//                  cityResult.innerText = "你选择的城市是:" + items[0].text + " " + items[1].text;
+//                  //返回 false 可以阻止选择框的关闭
+//                  //return false;
+//              });
+//          }, false);
+//          //-----------------------------------------
+//          //					//级联示例
+//          var cityPicker3 = new $.PopPicker({
+//              layer: 3
+//          });
+//          cityPicker3.setData(cityData3);
+//          var showCityPickerButton = doc.getElementById('showCityPicker3');
+//          var cityResult3 = doc.getElementById('cityResult3');
+//          showCityPickerButton.addEventListener('tap', function (event) {
+//              cityPicker3.show(function (items) {
+//                  cityResult3.innerText = "你选择的城市是:" + (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+//                  //返回 false 可以阻止选择框的关闭
+//                  //return false;
+//              });
+//          }, false);
+//      });
+//  })(mui, document);
+    
+    $('#changeaddress').click(function(){
+    	 $("#hideadd").show();
+    })
+    
+     $('#addaddress').click(function(){
+    	 mui.openWindow({
+                    url:"__ROOT__/wx.php/home/order/addaddress",
+                    id: 'addaddress'
+		    });
+    })
+     
+     $(".mui-table-view .mui-table-view-cell").click(function(){
+		$(".mui-table-view .mui-table-view-cell").removeClass('color');
+		$(".mui-table-view .mui-table-view-cell i").removeClass('active');
+		$(this).addClass('color');
+		$(this).find("i").addClass('active');
+		$c=$(this).find("i").attr('id');
+	})
+     $("#addsure").click(function(){
+     	$("#hideadd").hide();
+     	$c=$(".active").attr('id');
+     	$("#address_id").val($c);
+		$addname=$(".active").parents(".mui-table").find(".addname").html();
+		$("#moname").html($addname);
+		$addinfo=$(".active").parents(".mui-table").find(".addinfo").html();
+		$("#moinfo").html($addinfo);
+		
+     })
+</script>
+</body>
+</html>

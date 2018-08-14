@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>地址管理</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Myaddress/Addressmanagement.css" rel="stylesheet">
+</head>
+
+<body>
+    <header class="mui-bar mui-bar-nav header">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">地址管理</h1>
+        <a href="{:U('/home/address/addrindex')}"><span class="mui-icon mui-icon-plusempty mui-pull-right"></span></a>
+    </header>
+    <span class="explain">
+    默认收货地址
+</span>
+    <?php if ($add != null): ?>
+    <div class="mui-content">
+        <ul id="OA_task_1" class="mui-table-view">
+            <li class="mui-table-view-cell mui-transitioning">
+                <div class="mui-slider-right mui-disabled">
+                    <a class="mui-btn mui-btn-red" style="transform: translate(0px, 0px);" addressid="{$add['id']}" onclick="delectAddress(this)">
+                        <img src="__PUBLIC__/Wx/img/My/my_address_icon_delete.png" alt="">
+                    </a>
+                </div>
+                <div class="mui-slider-handle" style="transform: translate(0px, 0px);">
+                    <h4>{$add['contact']}&numsp; &numsp;&numsp;<span>{$add['phone']}</span></h4>
+                    <p class="mui-ellipsis">{$add['province']}{$add['city']}{$add['district']}{$add['address']}</p>
+                    <div class="img">
+                        <a href="{:U('/home/address/addrupdate',array('a_id'=>$add['id']))}">
+                            <img src="__PUBLIC__/Wx/img/My/my_address_icon_edit.png" alt="">
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <?php else: ?>
+    <div class="mui-content">
+        <ul id="OA_task_1" class="mui-table-view">
+            <li class="mui-table-view-cell mui-transitioning">
+                <div class="mui-slider-right mui-disabled">
+                    <a class="mui-btn mui-btn-red" style="transform: translate(0px, 0px);">
+                        <img src="__PUBLIC__/Wx/img/My/my_address_icon_delete.png" alt="">
+                    </a>
+                </div>
+                <div class="mui-slider-handle" style="transform: translate(0px, 0px);">
+                    无
+                </div>
+            </li>
+        </ul>
+    </div>
+    <?php endif ?>
+    <span class="explain">
+    收货地址
+</span>
+    <div class="mui-content">
+        <ul id="OA_task_1" class="mui-table-view">
+            <foreach name="data" item="vo">
+                <li class="mui-table-view-cell mui-transitioning">
+                    <div class="mui-slider-right mui-disabled">
+                        <a class="mui-btn mui-btn-red" style="transform: translate(0px, 0px);" values="{$vo['id']}" id="addr" onclick="delectAddress(this)">
+                            <img src="__PUBLIC__/Wx/img/My/my_address_icon_delete.png" alt="">
+                        </a>
+                    </div>
+                    <div class="mui-slider-handle" style="transform: translate(0px, 0px);">
+                        <h4>{$vo['contact']}&numsp; &numsp;&numsp;<span>{$vo['phone']}</span></h4>
+                        <p class="mui-ellipsis">{$vo['province']}&nbsp;&nbsp;{$vo['city']}&nbsp;&nbsp;{$vo['district']}&nbsp;&nbsp;{$vo['address']}</p>
+                        <div class="img">
+                            <a href="{:U('/home/address/addrupdate',array('a_id'=>$vo['id']))}">
+                                <img src="__PUBLIC__/Wx/img/My/my_address_icon_edit.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </foreach>
+        </ul>
+    </div>
+    <div class="Prompt">
+        <p><img src="__PUBLIC__/Wx/img/My/my_address_icon_note.png" alt="">收货地址最多只能添加5个，超出的部分请先删除一个</p>
+        <p>&numsp;&numsp;&numsp;向左滑动可以删除收货地址哦～</p>
+    </div>
+    <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+    <script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+    <script type="text/javascript">
+    function delectAddress(obj) {
+        userid = cookie('user_id');
+        // var userid = 1;
+        mui.confirm('确定删除该收货地址吗?', '删除地址', btnArray, function(e) {
+            if (e.index == 1) {
+
+                var addressid = $("#addr").val();
+                // var addressid = 2;
+                $.ajax({
+                    url: "{:U('/home/address/del')}",
+                    method: 'post',
+                    cache: false,
+                    dataType: 'json',
+                    // data: { values: { userid:userid,addressid:addressid } }
+                    data: {
+                        "userid": userid,
+                        'addressid': addressid,
+                    },
+                }, function(data) {
+                    // api.hideProgress();
+                    console.log(data);
+                    if (data.result == 1) {
+                        // api.sendEvent({
+                        //     name:'addressinfo',
+                        // });
+                        // $api.remove($api.closest(obj, '.mui-table-view-cell'));
+                        mui.alert('<span style="color:green">您已经成功删除！</span>', '提示');
+                        location.reload();
+                    } else {
+                        mui.alert('<span style="color:red">地址删除失败</span>', '错误');
+                    }
+                });
+            }
+        });
+        var btnArray = ['确认', '取消'];
+    }
+    </script>
+</body>
+
+</html>

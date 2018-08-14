@@ -1,0 +1,10 @@
+    <!--客服图标-->
+    <div class="imgkefu">
+        <a href="http://chat8.live800.com/live800/chatClient/chatbox.jsp?companyID=820706&configID=151385&jid=5530154684">
+            <img src="__PUBLIC__/Wx/img/KFRK.png" alt="">
+        </a>
+    </div>
+    <!--回到顶部按钮-->
+    <div class="imgTopDiv">
+        <a href="#"><img src="__PUBLIC__/Wx/img/btn_top.png" alt=""></a>
+    </div>

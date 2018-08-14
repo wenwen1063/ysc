@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品详情</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Storedetails.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/classification/Commoditydetails.css" rel="stylesheet">
+</head>
+<style type="text/css">
+    #goods_introduce_style p{
+        margin:  0 !important;
+        line-height: 0!important;
+    }
+    #goods_introduce_style img{
+        margin:  0 !important;
+        line-height: 0!important;
+    }
+    #buy{
+        position: relative;
+        float: right;
+        margin: 0;
+        padding: 0;
+        height:30px;
+        background-color: #fe504f;
+        color: #FFFFFF;
+        width: 70px;
+        border-radius: 5px;
+        right: 40px;
+        border: none;
+    }
+    .xiang img{
+        width: 100%;
+        height:100%;
+        margin-left:0;
+    }
+</style>
+<body>
+    <header class="mui-bar mui-bar-nav header">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">商品详情</h1>
+    </header>
+    <input type="hidden" id="state" value="{$data[0]['state']}">
+<div class="mui-slider" style="height: 414px">
+    <div class="mui-slider-group">
+            <foreach name="pic" item="v">
+                <div class="mui-slider-item"><a href="#"><img src="__PUBLIC__/Uploads/{$v['pic']}" style="height: 276px"/></a></div>
+            </foreach>
+    </div>
+    <div class="mui-slider-indicator">
+        <div class="mui-indicator mui-active"></div>
+        <div class="mui-indicator"></div>
+        <div class="mui-indicator"></div>
+        <div class="mui-indicator"></div>
+    </div>
+    <div class="name">
+        <h4>{$data[0]['goods_name']}</h4>
+        <div class="dui">
+            <p>已兑 &numsp;{$data[0]['ratio']}%</p>
+            <p class="mui-progressbar mui-progressbar-warning" data-progress="30"><span style="transform: translate3d(-{$data[0]['ratio2']}%, 0px, 0px);"></span></p>
+        </div>
+        <div class="money">
+            <img src="__PUBLIC__/Wx//img/Home/home_exchange_icon_yellow.png" alt=""><span>&numsp;{$data[0]['gold_price']}&numsp;</span>
+            <del>价值: ￥{$data[0]['money']}</del>
+            <!--<button id="buy" onchange="goldmallbuy()">兑换</button>-->
+            <input type="button" value="兑换" id="buy" >
+        </div>
+
+    </div>
+</div>
+
+<div id="content">
+    <div class="title" style="width: 95px;height: 60px">
+        <h4>商品详情</h4>
+    </div>
+    <div class="xiang" id="goods_introduce_style" >{$data[0]['goods_introduce']}</div>
+</div>
+
+    <!--查看属性-->
+    <div class="fixedbox" style="display: none;" id="chooseattrbox">
+        <div class="fixedbox_body closefun m_f_vote">
+            <img class="closebtn" src="__PUBLIC__/Wx/img/Classification/closebtn.png" alt="" id="closebtn">
+            <div style="text-align: left;">
+                <h5>请选择规格</h5>
+                <div class="floatattr">
+                    <ul>
+                        <foreach name="attr" item="v">
+                            <if condition="$key eq 0">
+                                <li class="active" id="{$v['ga_id']}"><span class="spanclass">{$v['ga_name']}</span></li>
+                                <else />
+                                <li class="" id="{$v['ga_id']}"><span class="spanclass">{$v['ga_name']}</span></li>
+                            </if>
+                        </foreach>
+                    </ul>
+                </div>
+                <!--<h5 style="clear: both;">数量</h5>-->
+                <div class="count">
+                    <span style="margin-left:10px;"><h5 style="display:inline;">库存:</h5></span><span id="change_stock">{$attr[0]['stock']}</span>
+                    <span style="margin-left:10px;"><h5 style="display:inline;">重量:</h5></span><span><label id="change_weight">{$attr[0]['weight']}</label>kg</span>
+                </div>
+                <h5>所需金币</h5>
+                <img src="__PUBLIC__/Wx//img/Home/home_exchange_icon_yellow.png" alt=""><span>&numsp;{$data[0]['gold_price']}&numsp;</span>
+                <del>价值: ￥{$data[0]['money']}</del>
+                <div class="mui-text-center">
+                    <div class="mui-btn mui-btn-danger buy_now"  style="margin-left: 10px;" onclick="return gopay({$data[0]['id']})">立即购买</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+
+</body>
+<script>
+    var gallery = mui('.mui-slider');
+    gallery.slider({
+        interval: 2000 //自动轮播周期，若为0则不自动播放，默认为0；
+    });
+    var goods_id = "<?php echo $attr[0]['goods_id'];?>"; //商品id
+    $('.floatattr ul li').click(function() {
+        $('.floatattr ul li').removeClass('active');
+        $(this).addClass('active');
+        var ga_id = $(this).attr('id'); //点击的规格id
+        $.ajax({
+            url: "{:U('/home/goods/attrchange')}",
+            type: "post",
+            data: {
+                "id": goods_id,
+                "ga_id": ga_id
+            },
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if(data.result == 1) {
+                    // alert(data.data.weight)
+                    $('#change_weight').html(data.data.weight);
+                    $('#change_stock').html(data.data.stock);
+                }
+            }
+        });
+    });
+
+    $('#buy').click(function(){
+        $('#chooseattrbox').css('display', 'block');
+    })
+    $('#closebtn').click(function() {
+        $('#chooseattrbox').css('display', 'none');
+    });
+    function gopay(id){
+        $state = $('#state').val();
+        var ga_id = $('.active').attr('id'); //所选商品的规格id
+        if($state == 1){
+            alert("商品已经兑换完");
+            return false;
+        }
+        if($state == 2){
+            alert("活动还没有开始");
+            return false;
+        }
+        if($state == 3){
+            alert("活动已结束，下次早点来！");
+            return false;
+        }
+        $.ajax({
+            url:"{:U('/home/goldmall/gopay')}",
+            type:"post",
+            data:{"id":id,"ga_id":ga_id,'goods_id':goods_id},
+            dataType:"json",
+            success:function(data){
+                if(data['result'] == 1){
+                    alert("商品已被抢完了");
+                }
+                if(data['result'] == 2){
+                    alert("活动还没有开始");
+                }
+                if(data['result'] == 3){
+                    alert("活动已结束，下次早点来！");
+                }
+                if(data['result'] == 4){
+                    alert("积分不足");
+                }
+                if(data['result'] == 5){
+                    window.location.href="__ROOT__/wx.php/home/goldmall/balance?goods_id="+ goods_id+"&ga_id="+ga_id+"&id="+id
+                }
+
+            }
+
+        });
+//        alert($state);
+    }
+
+</script>
+</html>

@@ -1,0 +1,79 @@
+<!--index -->
+<include file="public:index" />
+<!--index-->
+<title>返佣默认设置</title>
+</head>
+
+<body>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 系统 <span class="c-gray en">&gt;</span> 系统设置 <span class="c-gray en">&gt;</span> 返佣默认设置<span class="c-gray en">&gt;</span> 新增 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回"><i class="Hui-iconfont">&#xe66b;</i></a><a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    
+    <div class="pd-20">
+        <form action="{:U('/home/bonusdefaultset/bonusdefaultsetindex')}" method="post" enctype="multipart/form-data" name="main_form" class="form form-horizontal" id="form-admin-add">
+            <div class="row cl">
+                <label class="form-label col-2">平台奖金默认设置(现价百分比)：</label>
+                 <div class="formControls col-3">
+                 	<input type="hidden" class="input-text"  value="{$data['pingtai_money']}"  name="pingtaihide">
+                   <input type="text" class="input-text"  value="{$data['pingtai_money']}" placeholder="平台奖金比例" name="pingtai">
+                   </div>
+        </div>
+            <div class="row cl">
+                <label class="form-label col-2">搭档奖金默认设置(现价百分比)：</label>
+            </div>
+        <foreach name="sale" item="v">
+            <div class="row cl" id="">
+                <input type="hidden" name="partner_ids[]" value="{$key}">
+                <label class="form-label col-3">{$v[0]['name']}：</label>
+                <label class="form-label col-0">层级1</label>
+                <div class="formControls col-1">
+                    <input type="text" class="input-text" value="{$v[0]['rate']}" placeholder="层级1奖金比例" name="first_level[]">
+                </div>
+                <label class="form-label col-0">层级2</label>
+                <div class="formControls col-1">
+                    <input type="text" class="input-text" value="{$v[1]['rate']}" placeholder="层级2奖金比例" name="second_level[]">
+                </div>
+                <label class="form-label col-0">层级3</label>
+                <div class="formControls col-1">
+                    <input type="text" class="input-text" value="{$v[2]['rate']}" placeholder="层级3奖金比例" name="third_level[]">
+                </div>
+            </div>
+        </foreach>
+
+            <div class="row cl">
+                <label class="form-label col-2">搭档升级返佣默认设置(固定多少元)：</label>
+            </div>
+        <foreach name="update" item="v">
+            <div class="row cl" id="">
+                <input type="hidden" name="partner_ids2[]" value="{$key}">
+                <label class="form-label col-3">{$v[0]['name']}：</label>
+                <label class="form-label col-0">层级1</label>
+                <div class="formControls col-1">
+                    <input type="text" class="input-text" value="{$v[0]['amount']}" placeholder="层级1返佣金额" name="first_level2[]">
+                </div>
+                <label class="form-label col-0">层级2</label>
+                <div class="formControls col-1">
+                    <input type="text" class="input-text" value="{$v[1]['amount']}" placeholder="层级2返佣金额" name="second_level2[]">
+                </div>
+                <label class="form-label col-0">层级3</label>
+                <div class="formControls col-1">
+                    <input type="text" class="input-text" value="{$v[2]['amount']}" placeholder="层级3返佣金额" name="third_level2[]">
+                </div>
+            </div>
+        </foreach>
+		
+            <div class="row cl">
+                <div class="col-9 col-offset-3">
+                    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;" onclick="return check()"> &nbsp;&nbsp;
+                    <!-- <input class="btn btn-primary radius" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;" > -->
+                </div>
+            </div>
+
+        </form>
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+function check() {
+    return true;
+}
+</script>

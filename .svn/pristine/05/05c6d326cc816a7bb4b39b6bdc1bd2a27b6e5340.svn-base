@@ -1,0 +1,157 @@
+<?php
+/**
+ *个人中心
+ *author:qql
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class MyarticleController extends Controller
+{
+    public function myarticle()
+    {
+        $search = I();
+        if($search != null){
+//            dump($search);
+            if($search['status'] != null){
+                $status = I('status');
+                $map['a.status'] = array("like","%$status%");
+            }
+            if($search['title'] != null){
+                $title = I('title');
+                $map['a.title'] = array("like","%$title%");
+            }
+            if($search['start_time'] != null && $search['end_time'] != null){
+                $start_time = strtotime($search['start_time']);
+                $end_time   = strtotime($search['end_time']);
+                $map['a.time'] = array('between',array($start_time,$end_time));
+            }
+            $data = M()->table('__ARTICLE__ a')
+                ->join('left join __ARTICLE_CLASS__ ac on ac.id = a.class_id')
+                ->where($map)
+                ->field('a.*,ac.gold_number')
+                ->select();
+//            pp($data);
+        }else{
+            $teacher_id = M('teacher')->where(array('user_id'=>cookie('user_id')))->getField('id');
+            $data = M()->table('__ARTICLE__ a')
+                ->join('left join __ARTICLE_CLASS__ ac on ac.id = a.class_id')
+                ->order('a.id desc')
+                ->field('a.*,ac.gold_number')
+                ->select();
+//            pp($data);
+        }
+        for($i=0;$i<count($data);$i++){
+            $data[$i]['count'] = M('article_comment')->where(array('article_id'=>$data[$i]['id']))->count();
+        }
+//        pp($data);
+        $this->assign("data", $data);
+        $this->assign("search", $search);
+        $this->display();
+    }
+    //文章详情
+    public function articleinfo()
+    {
+        $data = M()->table('__ARTICLE__ a')
+            ->join('left join __ARTICLE_CLASS__ acl on acl.id = a.class_id ')
+            ->where(array('a.id'=>I('id')))
+            ->field('a.*,acl.gold_number as gold_number')
+            ->find();
+        //回复数
+        $data['count'] = M('article_comment')->where(array('article_id'=>$data['id']))->count();
+
+        $reply = M()->table('__ARTICLE_COMMENT__ ac')
+            ->join('left join __USER__ u on u.id = ac.user_id')
+            ->where(array('article_id'=>$data['id']))
+            ->field('ac.content,ac.time,u.username,u.avatar')
+            ->select();
+//        $data['reply'] = $reply;
+
+
+//        pp($data);
+        $this->assign('data',$data);
+        $this->assign('reply',$reply);
+        $this->display();
+    }
+    //文章删除
+    public function articledel(){
+//        pp(I());
+        $res = M('article')->where(array('id'=>I('id')))->delete();
+        $res2 = M('article_comment')->where(array('article_id'=>I('id')))->delete();
+
+        $this->success('删除成功！',U('/home/Myarticle/myarticle'));
+    }
+
+    //文章新增
+    public function addarticle()
+    {
+        $arr = I();
+//        dump($arr['class_id']);
+        if($arr != null){
+            $teacher_id = M('teacher')->where(array('user_id'=>cookie('user_id')))->getField('id');
+            $data = M('article');
+            $tmp  = "WZ" . date('Ymd', time()) . rand(100, 999); //文章编号
+            $data->article_number  = $tmp;
+            $data->title           = $arr['title'];
+            $data->content         = $arr['content'];
+            $data->teacher_id      = $teacher_id;
+            $data->time            = time();
+            $data->class_id        = $arr['class_id'];
+            $data->status          = 0;
+            $res = $data->add();
+            if($res){
+                $this->success('发布成功，等待审核！',U('/home/Myarticle/myarticle'));
+            }else{
+                $this->error('发布失败！');
+            }
+//            pp($arr);
+        }else{
+            $class = M('article_class')->where(array('is_disable'=>0))->field('id,name')->select();
+//            pp($class);
+        }
+
+        $this->assign('class',$class);
+        $this->display();
+    }
+    //编辑文章
+    public function editarticle()
+    {
+        $arr = I();
+        if($arr['title'] != null){
+//            pp($arr);
+            $data = M('article');
+            $data->id              = $arr['id'];
+            $data->title           = $arr['title'];
+            $data->content         = $arr['content'];
+            $data->teacher_id      = $arr['teacher_id'];
+            $data->class_id        = $arr['class_id'];
+            $data->status          = 0;
+            $res = $data->save();
+            if($res){
+                $this->success('编辑成功，等待审核！',U('/home/Myarticle/myarticle'));
+            }else{
+                $this->error('编辑失败！');
+            }
+
+        }else{
+            $data = M()->table('__ARTICLE__ a')
+                ->join('left join __ARTICLE_CLASS__ acl on acl.id = a.class_id ')
+                ->where(array('a.id'=>I('id')))
+                ->field('a.*,acl.name as class_name')
+                ->find();
+
+            $class_id = array('neq',$data['class_id']);
+            $class = M('article_class')->where(array('id'=>$class_id))->select();
+
+//            pp($class);
+        }
+        $this->assign('data',$data);
+        $this->assign('class',$class);
+        $this->display();
+    }
+
+
+
+
+}

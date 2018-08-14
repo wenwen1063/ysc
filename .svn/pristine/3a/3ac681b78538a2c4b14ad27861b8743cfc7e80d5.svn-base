@@ -1,0 +1,59 @@
+<?php
+namespace Home\Controller;
+
+use Think\Controller;
+
+class InformationController extends Controller
+{
+    public function index()
+    {
+        // $user_id = cookie('user_id');
+        // $user_id = 1;
+        // $user    = M('user')->where(array('id' => $user_id))->field('id,avatar,username')->find();
+        // dump($user);
+        // $this->assign('user', $user);
+        $where['is_disable'] = 0;
+        $class               = M('infor_class')->where($where)->select();
+        $info                = M('information')->field('id,title,FROM_UNIXTIME(creat_time,"%Y") as times,FROM_UNIXTIME(creat_time,"%m") as addtime,pic,FROM_UNIXTIME(creat_time,"%d") as addtimes,content')->select();
+        // dump($info);
+        // dump($class);
+        $this->assign('info', $info);
+        $this->assign('class', $class);
+        $this->display();
+    }
+    //分类资讯
+    public function classinfo()
+    {
+        // $id = I('post.class_id');
+        // $id              = 4;
+        // $map['class_id'] = $id;
+        $map['class_id'] = I('post.class_id');
+        $rel             = $info             = M('information')
+            ->where($map)
+            ->field('id as i_id,title,pic,FROM_UNIXTIME(creat_time,"%Y") as times,FROM_UNIXTIME(creat_time,"%m") as addtime,FROM_UNIXTIME(creat_time,"%d") as addtimes,content')
+            ->select();
+        if ($rel) {
+            $json = array(
+                'result' => 0,
+                'data'   => $info,
+            );
+        } else {
+            $json = array(
+                'result' => 1,
+            );
+        }
+        // $json = array(
+        //     'id' => $id,
+        // );
+        $this->ajaxReturn($json);
+    }
+    public function infor()
+    {
+        $arr = I();
+        // $id   = 5;
+        $data = M('information')->where(array('id' => $arr['id']))
+            ->field('id as i_id,title,pic,FROM_UNIXTIME(creat_time,"%Y") as times,FROM_UNIXTIME(creat_time,"%m") as addtime,FROM_UNIXTIME(creat_time,"%d") as addtimes,content')->find();
+        $this->assign('data', $data);
+        $this->display();
+    }
+}

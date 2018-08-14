@@ -1,0 +1,34 @@
+<head>
+    <meta charset="utf-8">
+    <title>会员信息</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../CSS/CommonCSS/Base.css">
+    <link rel="stylesheet" href="../../../CSS/BusinessCSS/Memberinformation/Memberinformation.css">
+
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a href="../Mypage.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">会员信息</h1>
+</header>
+<div class="mui-card">
+    <ul class="mui-table-view">
+        <li class="mui-table-view-cell">会员头像<span class="mui-badge">
+            <img src="../../../img/Home/home_pic_2.png" alt="">
+        </span></li>
+
+        <li class="mui-table-view-cell">会员名称<span class="mui-badge">
+            阿帆
+        </span></li>
+        <li class="mui-table-view-cell">手机号码<span class="mui-badge">
+            147xxxxxxxx
+        </span></li>
+        <li class="mui-table-view-cell">常用邮箱<span class="mui-badge">
+           123456@qq.com
+        </span></li>
+    </ul>
+</div>
+</body>
+</html>

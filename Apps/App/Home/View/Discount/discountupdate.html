@@ -1,0 +1,187 @@
+<!--index -->
+<include file="public:index" />
+<!--index-->
+<script type="text/javascript" src="__PUBLIC__/timejs/laydate.js"></script>
+<title>优惠券编辑</title>
+</head>
+
+<body>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 系统 <span class="c-gray en">&gt;</span> 优惠券管理 <span class="c-gray en">&gt;</span> 优惠券列表 <span class="c-gray en">&gt;</span> 编辑
+        <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回"><i class="Hui-iconfont">&#xe66b;</i></a>
+        <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
+    <div class="pd-20">
+        <form action="{:U('/home/discount/discountupdate')}" method="post" name="main_form" class="form form-horizontal" id="form-admin-add">
+            <!-- <input type="hidden" value="{$result['name']}" name="prename"> -->
+            <input type="hidden" value="{$result['id']}" name="id">
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>名称：</label>
+                <div class="formControls col-5">
+                    <input type="text" class="input-text" value="{$result['name']}" placeholder="请输入优惠券名称" id="name" name="name" datatype="*2-16">
+                </div>
+                <div class="col-4"> </div>
+            </div>
+
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>商家信息（不可修改）：</label>
+                <div class="formControls col-5">
+
+                    <if condition="$result['seller_id'] eq 0">
+                        <!--<input type="text" class="input-text" value="全平台" placeholder="" id="sn" name="sn" datatype="*2-16" readonly>-->
+                        <else/>
+                        <input type="text" class="input-text" value="{$result['s_name']} " placeholder="" id="sn" name="sn" datatype="*2-16" readonly>
+                    </if>
+
+                </div>
+                <div class="col-4"> </div>
+            </div>
+
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>面值：</label>
+                <div class="formControls col-5">
+                    <input type="text" class="input-text" value="{$result['money']}" placeholder="请输入面值" id="money" name="money" datatype="*2-16" onkeyup="if(/\D/.test(this.value)){alert('只能输入数字');this.value='';}">
+                </div>
+                <div class="col-4"> </div>
+            </div>
+
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>限制使用金额：</label>
+                <div class="formControls col-5">
+                    <input type="text" class="input-text" value="{$result['use_condition']}" placeholder="请输入限制使用金额" id="use_condition" name="use_condition" datatype="*2-16" onkeyup="if(/\D/.test(this.value)){alert('只能输入数字');this.value='';}">
+                </div>
+                <div class="col-4"> </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>领取用户：</label>
+                <div class="formControls col-5">
+                <if condition="$result['get_user'] eq 1">
+                    <div class="radio-box">
+                        <input type="radio" name="get_user" value="1" checked="true">
+                        <label>普通用户</label>
+                    </div>
+                    <div class="radio-box">
+                        <input type="radio" name="get_user" value="0">
+                        <label>新用户</label>
+                    </div>
+                <else/>
+                    <div class="radio-box">
+                        <input type="radio" name="get_user" value="1">
+                        <label>普通用户</label>
+                    </div>
+                    <div class="radio-box">
+                        <input type="radio" name="get_user" value="0" checked="true">
+                        <label>新用户</label>
+                    </div>
+                </if>
+                </div>
+                <div class="col-4"> </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>生效起始时间：</label>
+                <div class="formControls col-5">
+                    <input placeholder="开始时间" class="laydate-icon" style="height:29px;" value="{$result['start_time']|date='Y-m-d H:i:s',###}" name="start_time" id="start_time" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                </div>
+                <div class="col-4"> </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>生效截至时间：</label>
+                <div class="formControls col-5">
+                    <input placeholder="结束时间" class="laydate-icon" style="height:29px;" value="{$result['end_time']|date='Y-m-d H:i:s',###}" name="end_time" id="end_time" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                </div>
+                <div class="col-4"> </div>
+            </div>
+
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>发行量：</label>
+                <div class="formControls col-5">
+                    <input type="text" class="input-text" value="{$result['out_number']}" placeholder="请输入发行量" id="out_number" name="out_number" datatype="*2-16" onkeyup="if(/\D/.test(this.value)){alert('只能输入数字');this.value='';}">
+                </div>
+                <div class="col-4"> </div>
+            </div>
+
+            <div class="row cl">
+                <div class="col-9 col-offset-3">
+                    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;" onclick="return check()">
+                    <input class="btn btn-primary radius" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;">
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/laypage/1.2/laypage.js"></script>
+    <!-- <script type="text/javascript" src="__PUBLIC__/admin/lib/My97DatePicker/WdatePicker.js"></script> -->
+    <script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript">
+        var day=getNowFormatDate();
+        function check() {
+            if($('#name').val() == "" || $('#name').val() == null) {
+                alert("优惠券名称不能为空!");
+                return false;
+            }
+            if($('#money').val() == "" || $('#money').val() == null) {
+                alert("面值不能为空!");
+                return false;
+            }
+            if($('#money').val() <= 0) {
+                alert("面值不能小于等于0!");
+                return false;
+            }
+            if(Number($('#money').val()) > Number($('#use_condition').val())) {
+                alert("面值不能大于使用条件金额!");
+                return false;
+            }
+            if($('#use_condition').val() == "" || $('#use_condition').val() == null) {
+                alert("限制使用金额不能为空!");
+                return false;
+            }
+            if($('#use_condition').val() <= 0) {
+                alert("限制使用金额不能小于等于0!");
+                return false;
+            }
+            if($('#start_time').val() == "" || $('#start_time').val() == null) {
+                alert("有效起始时间不能为空!");
+                return false;
+            }
+            if($('#start_time').val() >= $('#end_time').val()) {
+                alert("有效起始时间不能大于等于结束时间!");
+                return false;
+            }
+            if($('#end_time').val() < day) {
+                alert('有效截止日期不能小于当前时间')
+                return false;
+            }
+            if($('#end_time').val() == "" || $('#end_time').val() == null) {
+                alert('有效截止时间不能为空')
+                return false;
+            }
+            if($('#out_number').val() == "" || $('#out_number').val()<=0) {
+                alert("发行量不能为空或者小于等于0!");
+                return false;
+            }
+            return true;
+        }
+        function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+    }
+        !function(){
+            laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
+            laydate({elem: '#demo'});//绑定元素
+        }();
+    </script>
+</body>
+</html>

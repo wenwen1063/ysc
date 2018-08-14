@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>编辑文章</title>
+		<meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+		<link href="__PUBLIC__/Wx/CSS/BusinessCSS/Myarticle/article.css" rel="stylesheet">
+
+		<script src="__PUBLIC__/Wx/CSS/BusinessCSS/Myarticle/ueditor/ueditor.config.js"></script>
+		<script src="__PUBLIC__/Wx/CSS/BusinessCSS/Myarticle/ueditor/ueditor.all.min.js"></script>
+			<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+		<style>
+			#edui149_body{
+				width: 95%;
+				z-index: 10000;
+			}
+			#edui149_content{
+				width: 380px;
+			}
+			#edui1_imagescale{
+				width: 300px;
+			}
+
+			#edui161_body{
+				width: 380px;
+			}
+			#edui161_content{
+				width: 100%;
+			}
+		</style>
+	</head>
+
+	<body class="bg_white">
+	<form action="{:U('/home/Myarticle/editarticle')}" method="post/get" >
+		<header class="mui-bar mui-bar-nav header">
+			<a href="{:U('/home/Myarticle/articleinfo',array('id'=>$data['id']))}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">编辑文章</h1>
+			<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">保存</button>
+		</header>
+		<input type="hidden" value="{$data['id']}" name="id">
+		<input type="hidden" value="{$data['teacher_id']}" name="teacher_id">
+		<div class="padding_15 add_article">
+
+			<div class="mui-input-row " style="border-bottom: 1px solid #E2E2E2">
+				<select name="class_id" class="ddl_btn" style="height: 20px" id="class_id">
+					<option value="{$data['class_id']}">{$data['class_name']}</option>
+					<option value="">请选择分类</option>
+					<foreach name="class" item="v">
+						<option value="{$v['id']}">{$v['name']}</option>
+					</foreach>
+				</select>
+			</div>
+
+			<div class="mui-input-row">
+				<input type="text" class="input_b mui-ellipsis" placeholder="文章标题" value="{$data['title']}" name="title">
+			</div>
+			<!--<div class="mui-input-row">-->
+				<!--<textarea id="textarea" rows="5" placeholder="文章内容" name="content">{$data['content']}</textarea>-->
+			<!--</div>-->
+
+			<div class="row cl" style="width: 100%">
+
+				<label class="form-label col-8"><span class="c-red"></span>文章内容</label>
+				<div class="formControls " >
+					<script id="container_content" name="content" type="text/plain"><?php echo htmlspecialchars_decode($data['content']); ?></script>
+				</div>
+			</div>
+
+			<div>
+				<img class="uploadImg" src="../img/uploadImg.png" alt="">
+			</div>
+		</div>
+		</form>
+	</body>
+	<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+	<script>
+		var ue = UE.getEditor('container_content');
+	</script>
+</html>

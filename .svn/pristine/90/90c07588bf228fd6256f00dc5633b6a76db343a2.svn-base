@@ -1,0 +1,105 @@
+<!--index -->
+<include file="public:index" />
+<!--index-->
+<title>资讯管理</title>
+</head>
+
+<body>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 系统 <span class="c-gray en">&gt;</span> 资讯管理 <span class="c-gray en">&gt;</span> 资讯信息详情
+    <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回" ><i class="Hui-iconfont">&#xe66b;</i></a>
+    <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="pd-20">
+        <div class="text-c">
+            <br>
+        </div>
+        <table class="table table-border table-bordered table-bg">
+            <thead>
+                <tr>
+                    <th scope="col" colspan="13" style="text-align:center;">资讯信息详情</th>
+                </tr>
+                <tr class="text-c">
+                    <th width="20">资讯主题</th><td>{$data['title']}</td>
+                </tr>
+                <tr class="text-c">
+                    <th width="20">资讯内容</th><td width="40">{$data['content']}</td>
+                </tr>
+                <tr class="text-c">
+                    <th width="20">资讯分类</th><td>{$data['name']}</td>
+                </tr>
+                <tr class="text-c">
+                    <th width="20">发布时间</th><td>{$data['creat_time'] | date='Y-m-d H:i:s',###}</td>
+                </tr>
+                <tr class="text-c">
+                    <th width="20">发布人</th><td>{$data['admin_user']}</td>
+                </tr>
+                <tr class="text-c">
+                    <th width="20">资讯图片</th><td><?php if ($data['pic']!=null): ?><img height="60" src="__PUBLIC__/Uploads/{$data['pic']}"><?php endif?></td>
+                </tr>
+                <tr class="text-c">
+                    <th width="20">阅读量</th><td>{$data['read_num']}</td>
+                </tr>
+                <tr class="text-c">
+                    <th width="20">点赞量</th><td>{$data['click_num']}</td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+<script type="text/javascript">
+/*
+    参数解释：
+    title   标题
+    url     请求的url
+    id      需要操作的数据id
+    w       弹出层宽度（缺省调默认值）
+    h       弹出层高度（缺省调默认值）
+*/
+/*用户-查看*/
+function member_show(title,url,id,w,h){
+    layer_show(title,url,w,h);
+}
+
+function change_status(member_id, status) {
+    var requestURL ='{:U('/home/member/reason')}';
+    if (member_id != '') {
+        requestURL += '?id='+member_id;
+    }
+    layer_show('', requestURL, '500','400');
+}
+
+
+
+
+/*管理员-编辑*/
+function admin_edit(title,url,id,w,h){
+    layer_show(title,url,w,h);
+}
+//批量删除判断是否选择
+ function delmember(){
+        var chks=document.getElementsByTagName('input');
+        var bl=true;
+        for(var i=0;i<chks.length;i++)
+        {
+            if(chks[i].checked)
+            {
+                bl=false;
+                break;
+            }
+        }
+        if(bl){
+            alert('最少选择一个');
+            return false;
+        }else{
+            document.forms.result_form.action="{:U('/home/member/delmember/del')}";
+            document.forms.result_form.submit();
+        }
+        return false;
+}
+</script>
+</body>
+</html>

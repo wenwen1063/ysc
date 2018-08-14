@@ -1,0 +1,202 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+class LoginController extends Controller {
+	public function index(){
+		$this->display();
+	}
+	public function register(){
+		$userphone = I('post.userphone');
+//      $userphone        = 15750719043;
+//      $userphone        = 15759271721;
+		$password = I('post.password');
+		$model = M('User');
+		$isphone=$model->field('id')->where("userphone=".$userphone)->find();
+		 if($isphone['id']){
+                 $json = array(
+                    'result'=>3,
+                    'msg'=>'该手机号码已被绑定，您可以找回密码。',
+                    );
+            }
+            // 账号不存在
+            else{
+                $data["userphone"]=$userphone;
+                $data["password"]= md5(I("post.password").C('MD5_KEY'));
+                $data["addtime"] = $_SERVER[REQUEST_TIME];
+                $top_id = session('top_id');
+                if($top_id){
+                    $data['introduce'] = $top_id;
+                }
+
+                if($id = $model->data($data)->add())
+                {
+                	$userinfo=$model->where('id='.$id)->find();
+                    $json = array(
+                        'result'=>1, 
+                        'data'=>$userinfo,
+                        'msg'=>'绑定成功！',
+                        );
+                }
+                else{
+                    $json = array(
+                        'result'=>11,
+                        'msg'=>'绑定，请稍后重试。',
+                        );
+                }
+            }
+//          $json = array(
+//                      'result'=>11,
+//                      'msg'=>$userphone,
+//                      );
+            $this->ajaxReturn($json);
+	}
+    
+    public function repassword(){
+    	$this->display();
+    }
+    
+    public function resetPasswd()
+    {
+        $userphone = I("post.userphone");
+        $password  = md5(I("post.pwd") . C('MD5_KEY'));
+        $model     = M("user");
+        //先判断当前账号是否禁用
+        $map['is_delete'] = 0;
+        $userinfo         = $model->where('userphone=' . $userphone)->where($map)->find();
+        if ($userinfo['is_disable'] == 1) {
+            $json = array(
+                'result'  => 1,
+                'msg' => '当前账号已被禁用!',
+            );
+            $this->ajaxReturn($json);
+            exit();
+        }
+        // 修改相同密码
+        if ($userinfo['password'] == $password) {
+            $json = array(
+                'result'  => 3,
+                'msg' => '修改密码不能与原密码相同！',
+            );
+            $this->ajaxReturn($json);
+            exit();
+        }
+        //账号是否存在
+        if (isset($userinfo)) {
+            $data['password'] = $password;
+            $result           = $model->where('userphone=' . $userphone)->data($data)->where($map)->save();
+            if ($result) {
+                $json = array(
+                    'result'  => 0,
+                    'msg' => '修改密码成功！',
+                );
+            }
+            //修改失败
+            else {
+                $json = array(
+                    'result'  => 4,
+                    'msg' => '修改失败！',
+                );
+                $this->ajaxReturn($json);
+                exit();
+            }
+        }
+        //账号不存在
+        else {
+            $json = array(
+                'result'  => 5,
+                'msg' => '手机号码尚被绑定！',
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+    
+     public function sms()
+    {
+        $userphone        = I('post.userphone');
+//      $userphone        = 15750719043;
+        $isRegister       = 1;
+        $map['is_delete'] = 0;
+        //检查手机号是否未注册，返回值为1表示未注册
+        $isset = M('User')->where('userphone=' . $userphone)->where($map)->find();
+        if (!empty($isRegister) && isset($isset)) {
+            //如果是注册，所填写的手机号码必须为未注册过
+            $json = array(
+                'result'  => 3,
+                'msg' => '当前手机号已被绑定!',
+            );
+            $this->ajaxReturn($json);
+            exit();
+        }
+
+        if (empty($isRegister) && !isset($isset)) {
+            //其他情况，如果手机未注册来获取短信的，须提示错误
+            $json = array(
+                'result'  => 1,
+                'msg' => '当前手机号未被绑定!',
+            );
+            $this->ajaxReturn($json);
+            exit();
+        }
+
+        $CheckCode = rand(100000, 999999);
+        $msg       = '【益商城】您的验证码为' . $CheckCode . '。请不要把验证码泄露给他人，如非本人操作，可不用理会。';
+        $isok = sendSMS($userphone, $msg, 'false', '');
+
+        if ($isok) {
+            $json = array(
+                'result'  => 0,
+                'msg' => '服务器已发送验证码!',
+                'userphone' => $userphone,
+                'ckcode'  => $CheckCode,
+            );
+        } else {
+            $json = array(
+                'result'  => 2,
+                'msg' => '验证码获取失败!',
+            );
+        }
+        $this->ajaxReturn($json);
+    }
+    
+    public function pwd_sms()
+    {
+//      $userphone = I('userphone');
+        $userphone= 15750719403;
+        $isRegister = 1;
+        //检查手机号是否未注册，返回值为1表示未注册
+        $isset = M('user')->where($where = array('userphone' => $phone, 'is_delete' => 0))->find();
+        if (isset($isset)) {
+            cookie('rephone', null);
+            cookie('rephone', $phone);
+            $clapi     = new \Org\Util\SmsApi;
+            $CheckCode = rand(100000, 999999);
+            $msg       = '【益商城】验证码：' . $CheckCode . '。请不要把验证码泄露给其他人。如非本人操作，可不用理会';
+            $result    = $clapi->sendSMS($userphone, $msg);
+            $result    = $clapi->execResult($result);
+            cookie('ckcode', null); //防修改
+            if (isset($result[1]) && $result[1] == 0) {
+                cookie('ckcode', $CheckCode);
+                $json = array(
+                    'result' => 1,
+                    'ckcode' => $CheckCode,
+                    'phone'  => $userphone,
+                );
+            } else {
+                $json = array(
+                    'result' => 0,
+                    're'     => $result,
+                    'msg'    => '验证码发送失败，请稍后再试',
+                );
+            }
+            $this->ajaxReturn($json);
+        } else {
+            $json = array(
+                'result' => 3,
+                'msg'    => '该手机号码未绑定',
+            );
+            $this->ajaxReturn($json);
+        }
+
+    }
+}
+?>

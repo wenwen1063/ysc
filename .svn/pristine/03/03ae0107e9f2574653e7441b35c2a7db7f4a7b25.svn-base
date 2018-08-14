@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>申请售后服务</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="http://dcloud.io/hellomui/css/mui.picker.css" rel="stylesheet"/>
+    <link href="http://dcloud.io/hellomui/css/mui.poppicker.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/ShoppingCart/Orderdetails.css" rel="stylesheet">
+</head>
+<style>
+			.titlebtn {
+				background: white;
+				padding: 15px 10px;
+				font-size: 14px;
+			}
+			
+			.titlebtn .title {
+				border-bottom: 1px solid #ddd;
+				padding-bottom: 5px;
+			}
+			
+			.titlebtn .btn_div {
+				padding-top: 10px;
+			}
+			
+			.btn_red {
+				border-radius: 3px;
+				display: inline-block;
+				text-align: center;
+				font-size: 14px !important;
+				border: 1px solid #ff5353 !important;
+				background: #ff5353 !important;
+				color: white !important;
+				height: 35px;
+				padding: 5px 10px !important;
+			}
+			
+			.btn_red_outlined {
+				border: 1px solid #ff5353 !important;
+				color: #ff5353 !important;
+				background: white !important;
+			}
+			
+			.checkimg {
+				vertical-align: middle;
+				width: 20px;
+			}
+			
+			.margin_10 {
+				margin: 10px;
+			}
+			
+			.margin_l_10 {
+				margin-left: 10px;
+			}
+			
+			.margin_t_10 {
+				margin-top: 10px;
+			}
+			
+			.margin_r_10 {
+				margin-right: 10px;
+			}
+			
+			.inputtxt {
+				margin-top: 10px;
+			}
+			
+			.redbtn_div {
+				margin-left: 10px;
+				margin-right: 10px;
+				margin-top: 30px;
+			}
+			/*优惠券*/
+			
+			.flex-container {
+				display: -webkit-flex;
+				display: flex;
+				-webkit-justify-content: space-around;
+				justify-content: space-around;
+				width: 100%;
+				/*height: 120px;*/
+				background-color: lightgrey;
+				padding: 0.5rem;
+				background: url(__PUBLIC__/Wx/img/Common/coupon_bg_unused.png) no-repeat;
+				background-size: 100% 120px;
+			}
+			
+			.flex-container h4 {
+				margin: 0;
+			}
+			
+			.item1 {
+				width: 4rem;
+				height: 4rem;
+			}
+			
+			.item1 img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.item2 {
+				display: -webkit-flex;
+				display: flex;
+				-webkit-flex: 2;
+				flex: 2;
+				-webkit-flex-direction: column;
+				flex-direction: column;
+				-webkit-align-content: flex-end;
+				align-content: flex-end;
+				padding-left: 0.4rem;
+			}
+			
+			.item2 .validdate {
+				margin-top: auto;
+				color: #A2A2A2;
+			}
+			
+			.item3 {
+				display: -webkit-flex;
+				display: flex;
+				-webkit-flex: 1;
+				flex: 1;
+				-webkit-flex-direction: column;
+				flex-direction: column;
+				-webkit-align-items: center;
+				align-items: center;
+			}
+		</style>
+<style type="text/css">
+.selecteddiv i.active {
+    background: url(__PUBLIC__/Wx/img/ShoppingCart/btn_check.png) no-repeat;
+    background-size: 15px;
+}
+
+.selecteddiv i {
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+    background: url(__PUBLIC__/Wx/img/ShoppingCart/btn_checkoff.png) no-repeat;
+    background-size: 15px;
+    margin-right: 10px;
+    position: relative;
+    top: 1px;
+}
+	.color{
+		background: #f5f5f5;
+	}
+</style>
+<body>
+
+<!--发票-->
+<div id="hidafa">
+	<form class="mui-input-group" action="{:U('/home/customer/apply')}" id="main_form" method="post" enctype="multipart/form-data" name="main_form">
+	
+	<!--<header class="mui-bar mui-bar-nav header">
+    <a class=" mui-icon mui-icon-left-nav mui-pull-left" style="opacity: .3;" id="hideadda"></a>
+    <h1 class="mui-title">申请售后服务</h1>
+	</header>-->
+			<div class="titlebtn">
+				<div class="title">申请售后商品</div>
+				<div class="btn_div" id="goodsinfos">
+					<input type="hidden" name="goodsid" id="goodsid" value=""/>
+					<foreach name="info" item="vo">
+					    <input type="button" style="margin-right: 10px;" class="btn_red sel" money="{$vo.shop_price}" id="{$vo.goods_id}" onclick="selectgoods(this)" value="{$vo.goods_name}"/>
+					</foreach>
+				</div>
+			</div>
+			<div class="titlebtn">
+				<div class="title">售后类型</div>
+				<div class="btn_div" id="customer_type">
+					<input type="hidden" name="type" id="status" value="" />
+					<input type="button" class="btn_red sel" oid="1" onclick="selecttype(this)" value="退款"/>
+					<input type="button" class="btn_red btn_red_outlined" oid="2" onclick="selecttype(this)" value="退货"/>
+					<input type="button" class="btn_red btn_red_outlined" oid="3" onclick="selecttype(this)" value="换货"/>
+				</div>
+			</div>
+			<input type="hidden" name="order_id" id="order_id" value="{$info['0']['id']}" />
+			<input type="hidden" name="seller_id" id="seller_id" value="{$info['0']['seller_id']}" />
+			<div class="titlebtn" id="money">
+				<div class="title">退款金额</div>
+				<div class="btn_div">
+					<input type="hidden" name="cummoney" id="cummoney" value="{$info['0']['paid_price']}" />
+					<input class="btn_red btn_red_outlined" id="allmoney" name="allmoney" type="button" value="{$info['0']['paid_price']}"/>
+				</div>
+			</div>
+			
+			<!--<div class="titlebtn margin_t_10">
+				<div class="title">申请售后原因</div>
+				<div class="btn_div">
+					<input class="checkimg" type="radio" name="fapiaon" id="" value="1" />
+			     		电脑配件
+				</div>
+				<div class="btn_div">
+					<input class="checkimg" type="radio" name="fapiaon" id="" value="2" />
+			     		办公用品(附购物清单)
+				</div>
+				<div class="btn_div">
+					<input class="checkimg" type="radio" name="fapiaon" id="" value="3" />
+			     		耗材
+				</div>
+				<div class="btn_div">
+					<input class="checkimg" type="radio" name="fapiaon" id="" value="4" />
+			     		明细
+				</div>
+			</div>-->
+			<div class="titlebtn margin_t_10">
+				<div class="title">问题描述</div>
+				<input class="inputtxt" name="remark"  type="text" placeholder="请填写问题描述,2-200字" />
+			</div>
+			<div class="titlebtn margin_t_10">
+			<div class="title">上传照片(最多2张)</div>
+                    <div class="btn_div">
+                        <input type="file" id="file1" style="display:none;" onchange="change1()" name="id_front">
+                        <img src="__PUBLIC__/Wx/img/Home/home_add_icon.png" width="50px" id="img-change1">
+                    </div>
+                    <div class="btn_div">
+                        <input type="file" id="file2" style="display:none;" onchange="change2()" name="id_back">
+                        <img src="__PUBLIC__/Wx/img/Home/home_add_icon.png"  width="50px" id="img-change2">
+                    </div>
+            </div>        
+			
+			<div class="redbtn_div">
+				<input type="hidden" id="hidefacon" value="" />
+				<input class="btn_red fapiaosure" type="button" style="width: 100%;" value="确 定">
+			</div>
+		</div>
+</form>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+<script src="__PUBLIC__/Wx/Script/ActiveXJS/mui.picker.js"></script>
+<script src="__PUBLIC__/Wx/Script/ActiveXJS/mui.poppicker.js"></script>
+
+<script type="text/javascript">
+  $con="<?php echo $con ?>";
+  $paid_price="<?php echo $info[0]['paid_price'] ?>";
+//商品选择
+function selectgoods(obj){
+	$ys=$(obj).hasClass('btn_red_outlined');
+	if($ys){
+	$(obj).removeClass('btn_red_outlined');
+	 $(obj).addClass('sel');
+	}else{
+		$(obj).removeClass('sel');
+		$(obj).addClass('btn_red_outlined');	
+	}
+	money();
+}
+//类型选择
+function selecttype(obj){
+	 $(obj).parents("#customer_type").find('.btn_red').addClass('btn_red_outlined');
+	 $(obj).parents("#customer_type").find('.btn_red').removeClass('sel');
+	 $(obj).removeClass('btn_red_outlined');
+	 $(obj).addClass('sel');
+	 $type=$(obj).attr('oid');
+//	 alert($type);
+	 if($type==1){
+	 	  money();
+	 	$("#money").show();
+	 }else{
+	 	$("#money").hide();
+	 }
+}
+
+function money(){
+	$allmoney=0;
+	    $("#goodsinfos").find(".sel").each(function(){
+    	$id=$(this).attr('money');
+    	console.log($id);
+    	$allmoney+=parseFloat($id)-parseFloat($id)*(parseFloat($con)/(parseFloat($con)+parseFloat($paid_price)));
+    });
+    $("#allmoney").val($allmoney.toFixed(2));
+    $("#cummoney").val($allmoney.toFixed(2));
+    
+}
+
+//提交申请
+$(".fapiaosure").click(function(){
+	$allid='';
+	$("#goodsinfos").find(".sel").each(function(){
+    	$id=$(this).attr('id');
+    	$allid+=$id+",";
+    })
+	$allid=$allid.substring(0,$allid.length-1);
+	$('#goodsid').val($allid);
+	$ss=$("#customer_type").find(".sel").attr('oid');
+	$("#status").val($ss);
+	if($allid==''){
+		mui.toast('请选择申请售后的商品');
+	}
+	$("#main_form").submit();
+})
+</script>
+<!--图片上传-->
+<script type="text/javascript">
+	    $("#img-change1").click(function () {
+        $("#file1").click();
+    });
+    $("#img-change2").click(function () {
+        $("#file2").click();
+    });
+    function change1() {
+        var pic = document.getElementById("img-change1"),
+            file = document.getElementById("file1");
+
+        var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
+
+         // gif在IE浏览器暂时无法显示
+         if(ext!='png'&&ext!='jpg'&&ext!='jpeg'){
+             mui.toast("图片的格式必须为png或者jpg或者jpeg格式！");
+             return;
+         }
+         var isIE = navigator.userAgent.match(/MSIE/)!= null,
+             isIE6 = navigator.userAgent.match(/MSIE 6.0/)!= null;
+
+         if(isIE) {
+            file.select();
+            var reallocalpath = document.selection.createRange().text;
+
+            // IE6浏览器设置img的src为本地路径可以直接显示图片
+             if (isIE6) {
+                pic.src = reallocalpath;
+             }else {
+                // 非IE6版本的IE由于安全问题直接设置img的src无法显示本地图片，但是可以通过滤镜来实现
+                 pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image',src=\"" + reallocalpath + "\")";
+                 // 设置img的src为base64编码的透明图片 取消显示浏览器默认图片
+                 pic.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+             }
+         }else {
+            html5Reader1(file);
+         }
+    }
+    function html5Reader1(file){
+        var file = file.files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(e){
+            var pic = document.getElementById("img-change1");
+            pic.src=this.result;
+        }
+    }
+
+    function change2() {
+        var pic = document.getElementById("img-change2"),
+            file = document.getElementById("file2");
+
+        var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
+
+         // gif在IE浏览器暂时无法显示
+         if(ext!='png'&&ext!='jpg'&&ext!='jpeg'){
+             mui.toast("图片的格式必须为png或者jpg或者jpeg格式！");
+             return;
+         }
+         var isIE = navigator.userAgent.match(/MSIE/)!= null,
+             isIE6 = navigator.userAgent.match(/MSIE 6.0/)!= null;
+
+         if(isIE) {
+            file.select();
+            var reallocalpath = document.selection.createRange().text;
+
+            // IE6浏览器设置img的src为本地路径可以直接显示图片
+             if (isIE6) {
+                pic.src = reallocalpath;
+             }else {
+                // 非IE6版本的IE由于安全问题直接设置img的src无法显示本地图片，但是可以通过滤镜来实现
+                 pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image',src=\"" + reallocalpath + "\")";
+                 // 设置img的src为base64编码的透明图片 取消显示浏览器默认图片
+                 pic.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+             }
+         }else {
+            html5Reader2(file);
+         }
+    }
+    function html5Reader2(file){
+        var file = file.files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(e){
+            var pic = document.getElementById("img-change2");
+            pic.src=this.result;
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!--index -->
+<include file="public:index"   />
+<!--index-->
+<title>商品管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+ 系统 <span class="c-gray en">&gt;</span>
+  商品管理 <span class="c-gray en">&gt;</span>
+   商品规格分类 <span class="c-gray en">&gt;</span>
+   编辑
+   <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回" ><i class="Hui-iconfont">&#xe66b;</i></a><a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20">
+    <form action="{:U('/home/goodsattribute/goodsattributeupdate')}" method="post" enctype="multipart/form-data" name="main_form" class="form form-horizontal" id="form-admin-add">
+      <input type="hidden" name="id" value="{$data['id']}">
+      <input type="hidden" name="rename" value="{$data['name']}">
+      <input type="hidden" name="rclasssan" value="{$data['class_san_id']}">
+
+        <div class="row cl">
+            <label class="form-label col-3"><span class="c-red">*</span>一级分类：</label>
+            <div class="formControls col-6">
+                <select class="classone" size="1" name="classone" id="classone">
+                    <option value="" >请选择一级分类</option>
+                    <foreach name='classone' item='v' >
+                        <option value="{$v['id']}" >{$v['name']}</option>
+                    </foreach>
+                </select>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-3"><span class="c-red">*</span>二级分类：</label>
+            <div class="formControls col-6" id="classtwo2">
+                <script id="classtwo" type="text/template">
+                    <div>
+                        <select class="classtwo" size="1" id="classtwo1" name="classtwo">
+                            <option value="" >请选择二级分类</option>
+                            {{each data as item i}}
+                            <option value="{{item.id}}">{{item.name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </script>
+
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-3"><span class="c-red">*</span>三级分类：</label>
+            <div class="formControls col-6" id="classsan2">
+                <script id="classsan" type="text/template">
+                    <div>
+                        <select class="classsan" size="1" id="classsan1" name="classsan">
+                            <option value="" >请选择三级分类</option>
+                            {{each data as item i}}
+                            <option value="{{item.id}}">{{item.name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </script>
+
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-3"><span class="c-red">*</span>分类名称：</label>
+            <div class="formControls col-5">
+                <input type="text" class="input-text" value="{$data['name']}" placeholder="请输入分类名称" id="name" name="name" datatype="*2-16">
+            </div>
+            <div class="col-4"> </div>
+        </div>
+
+        <div class="row cl">
+            <div class="col-9 col-offset-3">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;" onclick="return check()">
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/index/js/template.js"></script>
+<script>
+    $(function(){
+        $("#classone").change(function(){
+            var classone = $("#classone").val();
+            $.ajax({
+                type: "get",
+                url: "{:U('/home/search/classtwo')}",
+                async: false,
+                data: {"classone":classone},
+                dataType: "json",
+                success: function(data){
+                    var data = {
+                        data
+                    }
+                    var html = template('classtwo', data);
+                    document.getElementById('classtwo2').innerHTML = html;
+                }
+            })
+
+        })
+    })
+
+    $("#classtwo2").change(function(){
+
+        var classtwo = $("#classtwo1").val();
+        $.ajax({
+            type: "get",
+            url: "{:U('/home/search/classsan')}",
+            async: false,
+            data: {"classtwo":classtwo},
+            dataType: "json",
+            success: function(data){
+                var data = {
+                    data
+                }
+                var html = template('classsan', data);
+                document.getElementById('classsan2').innerHTML = html;
+            }
+        })
+    })
+
+
+</script>
+<script type="text/javascript">
+function check(){
+    if($('#name').val()==""){
+        alert("分类名称不能为空!");
+        return false;
+    }
+    return true;
+}
+
+</script>

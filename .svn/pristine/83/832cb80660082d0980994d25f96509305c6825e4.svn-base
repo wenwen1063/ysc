@@ -1,0 +1,206 @@
+<!--index -->
+  <include file="public:index"   />
+<!--index-->
+
+<title>编辑</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+ 系统 <span class="c-gray en">&gt;</span>
+  会员管理 <span class="c-gray en">&gt;</span>
+   会员列表 <span class="c-gray en">&gt;</span>
+   编辑
+   <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回" ><i class="Hui-iconfont">&#xe66b;</i></a><a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20">
+  <form action="{:U('/home/member/memberupdate')}" method="post" name="main_form" class="form form-horizontal" id="form-member-add">
+     <input type="hidden" name="id" value="{$data['id']}">
+    <input type="hidden" name="pwd" value="{$data['password']}">
+    <input type="hidden" name="rmember" value="{$data['member']}">
+    <div class="row cl">
+      <label class="form-label col-3"></span>账号:</label>
+      <div class="formControls col-5">
+        <input type="text" class="input-text" value="{$data['member']}" id="member" name="member" datatype="*2-16">
+      </div>
+      <div class="col-4"> </div>
+    </div>
+
+    <div class="row cl">
+      <label class="form-label col-3"></span>手机号码：</label>
+      <div class="formControls col-5">
+        <input type="text" class="input-text" value="{$data['phone']}" name="phone" id="phone" datatype="*2-16">
+      </div>
+      <div class="col-4"> </div>
+    </div>
+
+		<div class="row cl">
+      <label class="form-label col-3"></span>用户名：</label>
+      <div class="formControls col-5">
+        <input type="text" class="input-text" value="{$data['name']}" name="name" id="name" datatype="m">
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    <div class="row cl">
+      <label class="form-label col-3"></span>密码：</label>
+      <div class="formControls col-5">
+        <input type="password" class="input-text" value="{$data['password']}" name="password" id="password" datatype="m">
+      </div>
+      <div class="col-4"> </div>
+    </div>
+
+    <div class="row cl">
+      <label class="form-label col-3"></span>邮箱@：</label>
+      <div class="formControls col-5">
+        <input type="email" class="input-text" value="{$data['email']}" name="email" id="email">
+      </div>
+      <div class="col-4"> </div>
+    </div>
+    
+		<div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>所属公司名称：</label>
+      <div class="formControls col-5">
+			<select class="select" size="1" name="company_id">
+				<option value="{$data['company_id']}">{$data['company_name']}</option>
+						  <foreach name='result' item='v'>             
+              <if condition="$data['company_id'] eq $v['id']">
+              	<else />  
+              	<option value="{$v['id']}">{$v['name']}</option>
+</if>
+            </foreach>
+			</select>
+      </div>
+      <div class="col-4"> </div>
+   </div> 
+   
+   <div class="row cl">
+      <label class="form-label col-3"><span class="c-red">*</span>会员身份：</label>
+      <div class="formControls col-5">
+      		<select class="select" size="1" name="identity" id="identity">
+      			<if condition="$data['identity'] eq 0">
+              <option value="0">个人</option>
+              <option value="1">公司</option>
+              <else />
+              <option value="1">公司</option>
+              <option value="0">个人</option>
+              </if>
+			</select>
+      </div>
+      <div class="col-4"> </div>
+    </div> 
+
+	<div class="row cl hiddendiv" style="display: none;">
+      <label class="form-label col-3"></span>公司名称：</label>
+      <div class="formControls col-5">
+        <input type="text" class="input-text" value="{$data['companyname']}" name="companyname" id="companyname" datatype="*2-16">
+      </div>
+      <!--<div class="col-4"> </div>-->
+    </div>
+    <div class="row cl hiddendiv" style="display: none;">
+      <label class="form-label col-3"></span>公司地址：</label>
+      <div class="formControls col-5">
+        <input type="text" class="input-text" value="{$data['companyphone']}" name="companyphone" id="companyphone" datatype="*2-16">
+      </div>
+      <!--<div class="col-4"> </div>-->
+    </div>
+    <div class="row cl hiddendiv" style="display: none;">
+      <label class="form-label col-3"></span>公司电话：</label>
+      <div class="formControls col-5">
+        <input type="text" class="input-text" value="{$data['companyaddr']}" name="companyaddr" id="companyaddr" datatype="*2-16">
+      </div>
+      <!--<div class="col-4"> </div>-->
+    </div>
+    <div class="row cl">
+      <label class="form-label col-3">状态：</label>
+      <div class="formControls col-5"> <span class="select-box">
+        <select class="select" size="1" name="is_disable">
+        	 <?php if ($data['is_disable']==0): ?>
+            <option value="0">启用</option>
+            <option value="1">禁用</option>
+            <?php else: ?>
+            	<option value="1">禁用</option>
+            	<option value="0">启用</option>
+            <?php endif ?>
+        </select>
+        </span>
+        </div>
+      <div class="col-4"> </div>
+    </div>
+    <!--企业类型-->
+    
+    <div class="row cl">
+      <label class="form-label col-3">备注：</label>
+      <div class="formControls col-5">
+        <textarea name="remark" cols="" rows="" class="textarea"  placeholder="说点什么...输入字符" datatype="*10-100" dragonfly="true" onKeyUp="textarealength(this,100)">{$data['remark']}</textarea>
+        <p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
+      </div>
+      <div class="col-4"> </div>
+    </div>
+
+    <div class="row cl">
+      <div class="col-9 col-offset-3">
+        <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;" onclick="return check()">
+      </div>
+    </div>
+  </form>
+</div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+function check(){
+    //form1是form中的name属性
+    var _form = document.main_form;
+     if(trim(_form.username.value)==""){
+        alert("企业名称不为空!");
+        return false;
+    }
+    if(trim(_form.userphone.value)==""){
+        alert("账号不为空!");
+        return false;
+    }
+    if(trim(_form.password.value)==""){
+        alert("密码不为空!");
+        return false;
+    }
+     if(trim(_form.password.value).length<6){
+        alert("密码不为少于6位!");
+        return false;
+    }
+    return true;
+}
+$(function(){
+	if($("#identity").val()==1){
+		$(".hiddendiv").show();
+	}else{
+		$(".hiddendiv").hide();
+	}	
+})
+$("#identity").change(function(){
+	if($("#identity").val()==1){
+		$(".hiddendiv").show();
+	}else{
+		$(".hiddendiv").hide();
+	}	
+})
+
+function trim(s) {
+   var count = s.length;
+   var st    = 0;       // start
+   var end   = count-1; // end
+
+   if (s == "") return s;
+   while (st < count) {
+     if (s.charAt(st) == " ")
+       st ++;
+     else
+       break;
+   }
+   while (end > st) {
+     if (s.charAt(end) == " ")
+       end --;
+     else
+       break;
+   }
+   return s.substring(st,end + 1);
+ }
+</script>
+</body>
+</html>

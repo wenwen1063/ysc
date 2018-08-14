@@ -1,0 +1,82 @@
+<!--index -->
+  <include file="public:index"   />
+<!--index-->
+<title>商品管理</title>
+</head>
+<style type="text/css">
+    .left_ul{
+        list-style-type:none;
+        /*border:1px solid rgb(179,179,179);*/
+    }
+    .left_ul_li{
+        text-align: center;
+        border-bottom: 1px solid rgb(179,179,179);
+    }
+</style>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+ 系统 <span class="c-gray en">&gt;</span>
+  商家管理 <span class="c-gray en">&gt;</span>
+   商家返点设置
+   <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20 col-xs-2 col-sm-2 col-md-2 col-lg-2">
+    <ul class="left_ul">
+            <a href="{:U('/home/seller/bonus',array('seller_id'=>null))}"><li class="maincolor left_ul_li" id="seller_all">全部商家</li></a>
+        <foreach name='seller' item='v'>
+            <a href="{:U('/home/seller/bonus',array('seller_id'=>$v['id']))}"><li class="maincolor left_ul_li {$v['id']}" id="{$v['id']}">{$v['name']}</li></a>
+        </foreach>
+    </ul>
+</div>
+<div class="pd-20 col-xs-2 col-sm-2 col-md-2 col-lg-10">
+<div class="pd-20">
+        <form action="{:U('/home/seller/bonus_updata')}" method="post" enctype="multipart/form-data" name="main_form" class="form form-horizontal" id="form-admin-add">
+            <input type="hidden" name="seller_id" id="seller_id" value="{$seller_id}" />
+            <div class="row cl">
+                <label class="form-label col-2">搭档奖金默认设置(现价百分比)：</label>
+            </div>
+        <foreach name="sale" item="v">
+            <div class="row cl" id="">
+                <input type="hidden" name="partner_ids[]" value="{$key}">
+                <label class="form-label col-3">{$v[0]['name']}：</label>
+                <label class="form-label col-0">层级1</label>
+                <div class="formControls col-1">
+                    <input type="text" class="input-text" value="{$v[0]['rate']}" placeholder="层级1奖金比例" name="first_level[]">
+                </div>
+                <label class="form-label col-0">层级2</label>
+                <div class="formControls col-1">
+                    <input type="text" class="input-text" value="{$v[1]['rate']}" placeholder="层级2奖金比例" name="second_level[]">
+                </div>
+                <label class="form-label col-0">层级3</label>
+                <div class="formControls col-1">
+                    <input type="text" class="input-text" value="{$v[2]['rate']}" placeholder="层级3奖金比例" name="third_level[]">
+                </div>
+            </div>
+        </foreach>
+        <div class="row cl">
+                <div class="col-9 col-offset-3">
+                    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;" onclick="return check()"> &nbsp;&nbsp;
+                    <!-- <input class="btn btn-primary radius" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;" > -->
+                </div>
+            </div>
+        </form>
+       </div>
+</body>
+</html>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+<script type="text/javascript">
+    var seller_id = "<?php echo $seller_id; ?>";
+    if(seller_id == 0){
+        $('.left_ul li').css('color','#06c');
+        $('.left_ul #seller_all').css('color','black');
+    }else{
+        $('.left_ul li').css('color','#06c');
+//      $(".left_ul li[id*="+seller_id+"]").css('color','black');
+        
+        $(".left_ul").find("#"+seller_id+"").css('color','black');
+    }
+</script>

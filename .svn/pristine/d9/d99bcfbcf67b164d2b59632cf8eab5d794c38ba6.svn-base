@@ -1,0 +1,613 @@
+<!--index -->
+<include file="public:index"   />
+<!--index-->
+<style type="text/css">
+    .file {
+        position: relative;
+        display: inline-block;
+        background: #D0EEFF;
+        border: 1px solid #99D3F5;
+        border-radius: 4px;
+        padding: 4px 12px;
+        overflow: hidden;
+        color: #1E88C7;
+        text-decoration: none;
+        text-indent: 0;
+        line-height: 20px;
+    }
+    .file input {
+        position: absolute;
+        font-size: 100px;
+        right: 0;
+        top: 0;
+        opacity: 1;
+    }
+    .file:hover {
+        background: #AADFFD;
+        border-color: #78C3F3;
+        color: #004974;
+        text-decoration: none;
+    }
+</style>
+<style type="text/css">
+    .searchable-select-hide {
+        display: none;
+    }
+
+    .searchable-select {
+        display: inline-block;
+        min-width: 200px;
+        font-size: 14px;
+        line-height: 1.428571429;
+        color: #555;
+        vertical-align: middle;
+        position: relative;
+        outline: none;
+    }
+
+    .searchable-select-holder {
+        padding: 6px;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        min-height: 30px;
+        box-sizing: border-box;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+
+    .searchable-select-caret {
+        position: absolute;
+        width: 0;
+        height: 0;
+        box-sizing: border-box;
+        border-color: black transparent transparent transparent;
+        top: 0;
+        bottom: 0;
+        border-style: solid;
+        border-width: 5px;
+        margin: auto;
+        right: 10px;
+    }
+
+    .searchable-select-dropdown {
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        padding: 4px;
+        border-top: none;
+        top: 28px;
+        left: 0;
+        right: 0;
+        z-index: 999
+    }
+
+    .searchable-select-input {
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        outline: none;
+        padding: 4px;
+        width: 100%;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    .searchable-scroll {
+        margin-top: 4px;
+        position: relative;
+    }
+
+    .searchable-scroll.has-privious {
+        padding-top: 16px;
+    }
+
+    .searchable-scroll.has-next {
+        padding-bottom: 16px;
+    }
+
+    .searchable-has-privious {
+        top: 0;
+    }
+
+    .searchable-has-next {
+        bottom: 0;
+    }
+
+    .searchable-has-privious,
+    .searchable-has-next {
+        height: 16px;
+        left: 0;
+        right: 0;
+        position: absolute;
+        text-align: center;
+        z-index: 10;
+        background-color: white;
+        line-height: 8px;
+        cursor: pointer;
+    }
+
+    .searchable-select-items {
+        max-height: 400px;
+        overflow-y: scroll;
+        position: relative;
+    }
+
+    .searchable-select-items::-webkit-scrollbar {
+        display: none;
+    }
+
+    .searchable-select-item {
+        padding: 5px 5px;
+        cursor: pointer;
+        min-height: 30px;
+        box-sizing: border-box;
+    }
+
+    .searchable-select-item.hover {
+        background: #555;
+        color: white;
+    }
+
+    .searchable-select-item.selected {
+        background: #28a4c9;
+        color: white;
+    }
+
+    .file {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        background: #3bb4f2;
+        padding: 4px 12px;
+        color: #fff;
+        text-align: center;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .file input {
+        position: absolute;
+        font-size: 100px;
+        right: 0;
+        top: 0;
+        opacity: 1;
+    }
+
+    .file:hover {
+        background: #AADFFD;
+        border-color: #78C3F3;
+        color: #004974;
+        text-decoration: none;
+    }
+</style>
+<title>新增</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+    系统 <span class="c-gray en">&gt;</span>
+    商家管理 <span class="c-gray en">&gt;</span>
+    商家营收明细 <span class="c-gray en">&gt;</span>
+    提现
+    <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回" ><i class="Hui-iconfont">&#xe66b;</i></a><a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20">
+    <form action="{:U('/home/Sellerrevenue/sellercash')}" method="post" enctype="multipart/form-data" >
+    <table class="table table-border table-bordered table-bg mt-20 col-12">
+        <thead>
+        <tr>
+            <th colspan="2" scope="col">资金详情</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>商家名称</td>
+            <td>{$seller['name']}</td>
+        </tr>
+        <tr>
+            <td>商家余额</td>
+            <td>￥{$seller['balance']}</td>
+        </tr>
+        <tr>
+            <td>可提现余额</td>
+            <td>￥{$seller['withdrawals']}</td>
+        </tr>
+        <tr>
+            <td>已提现余额</td>
+            <td>￥{$seller['already_withdrawals']}</td>
+        </tr>
+        <tr>
+            <td>冻结金额</td>
+            <td>￥{$seller['freeze']}</td>
+        </tr>
+        </tbody>
+        <table class="table table-border table-bordered table-bg col-12" style="margin-bottom: 25px">
+            <thead>
+            <tr>
+                <th scope="col" colspan="15">地址列表</th>
+            </tr>
+            <tr class="text-c">
+                <th width="40">选择</th>
+                <th width="40">账户类型</th>
+                <th width="40">银行名称</th>
+                <th width="40">银行卡号</th>
+                <th width="40">持有人姓名</th>
+                <th width="40">默认账户</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name='bank' item='v'>
+                <tr class="text-c">
+                    <td>
+                        <if condition="$v['default_accounts'] eq 1">
+                            <input type="radio" name="bank_id" value="{$v['id']}"  checked="true" class="radio">
+                            <else />
+                            <input type="radio" name="bank_id" value="{$v['id']}" class="radio">
+                        </if>
+                    </td>
+                    <td>
+                        <if condition="$v['type'] eq 0">
+                            公账
+                            <else />个人
+                         </if>
+                    </td>
+                    <td>{$v['bank_name']}</td>
+                    <td>{$v['accounts']}</td>
+                    <td>{$v['name']}</td>
+                    <td>
+                        <if condition="$v['default_accounts']  eq 1">
+                            是
+                            <else />否
+                        </if>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+    </table>
+
+    <div class="row cl" style="margin-left: 15%;">
+        <label class="form-label col-1"><span class="c-red">*</span>提现金额：</label>
+        <div class="formControls col-5">
+            <input type="text" class="input-text" value="" placeholder="请输入提现金额" name="money" id="money" datatype="/^\d+(\.\d+)?$/"      maxlength="13" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+        </div>
+        <div class="col-4"> </div>
+    </div>
+
+    <div class="row cl" style="margin-top: 15px">
+        <div class="col-10 col-offset-3">
+            <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;" onclick="return check()">
+        </div>
+    </div>
+</form>
+
+</div>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/lib/icheck/jquery.icheck.min.js"></script>
+<script src="__PUBLIC__/assets/js/jquery.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/assets/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/assets/js/jquery.cityselect.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    function check(){
+        $keti = "<?php echo $seller['withdrawals'] ?>";
+        $money = $("#money").val();
+        //当日剩余可提现金额数
+        $left_money = "<?php echo $left_money ?>";
+        //每次提现最小金额
+        $min_money = "<?php echo $min_money ?>";
+//        alert($left_money);
+        if($money == null || $money ==""){
+            alert('请填写提现金额！');
+            return false;
+        }
+        if(Number($money) > $keti){
+            alert('金额大于可提现金额！');
+            return false;
+        }
+        if(Number($money) < $min_money){
+            alert('每次提现的最小金额为'+$min_money);
+            return false;
+        }
+        if(Number($money) > $left_money){
+            alert('今日剩余可以提现金额为'+$left_money);
+            return false;
+        }
+        return true;
+    }
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('#seller_select').searchableSelect();
+    });
+    var strid = '';
+    (function($) {
+
+        // a case insensitive jQuery :contains selector
+        $.expr[":"].searchableSelectContains = $.expr.createPseudo(function(arg) {
+            return function(elem) {
+                return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+            };
+        });
+
+        $.searchableSelect = function(element, options) {
+            this.element = element;
+            this.options = options || {};
+            this.init();
+
+            var _this = this;
+
+            this.searchableElement.click(function(event) {
+                // event.stopPropagation();
+                _this.show();
+            }).on('keydown', function(event) {
+                if (event.which === 13 || event.which === 40 || event.which == 38) {
+                    event.preventDefault();
+                    _this.show();
+                }
+            });
+
+
+            $(document).on('click', null, function(event) {
+                if (_this.searchableElement.has($(event.target)).length === 0)
+                    _this.hide();
+            });
+
+            this.input.on('keydown', function(event) {
+                event.stopPropagation();
+                if (event.which === 13) { //enter
+                    event.preventDefault();
+                    _this.selectCurrentHoverItem();
+                    _this.hide();
+                } else if (event.which == 27) { //ese
+                    _this.hide();
+                } else if (event.which == 40) { //down
+                    _this.hoverNextItem();
+                } else if (event.which == 38) { //up
+                    _this.hoverPreviousItem();
+                }
+            }).on('keyup', function(event) {
+                if (event.which != 13 && event.which != 27 && event.which != 38 && event.which != 40)
+                    _this.filter();
+            })
+
+        }
+
+        var $sS = $.searchableSelect;
+
+        $sS.fn = $sS.prototype = {
+            version: '0.0.1'
+        };
+
+        $sS.fn.extend = $sS.extend = $.extend;
+
+        $sS.fn.extend({
+            init: function() {
+                var _this = this;
+                this.element.hide();
+
+                this.searchableElement = $('<div tabindex="0" class="searchable-select"></div>');
+                this.holder = $('<div class="searchable-select-holder"></div>');
+                this.dropdown = $('<div class="searchable-select-dropdown searchable-select-hide"></div>');
+                this.input = $('<input type="text" class="searchable-select-input" />');
+                this.items = $('<div class="searchable-select-items"></div>');
+                this.caret = $('<span class="searchable-select-caret"></span>');
+
+                this.scrollPart = $('<div class="searchable-scroll"></div>');
+                this.hasPrivious = $('<div class="searchable-has-privious">...</div>');
+                this.hasNext = $('<div class="searchable-has-next">...</div>');
+
+                this.hasNext.on('mouseenter', function() {
+                    _this.hasNextTimer = null;
+
+                    var f = function() {
+                        var scrollTop = _this.items.scrollTop();
+                        _this.items.scrollTop(scrollTop + 20);
+                        _this.hasNextTimer = setTimeout(f, 50);
+                    }
+
+                    f();
+                }).on('mouseleave', function(event) {
+                    clearTimeout(_this.hasNextTimer);
+                });
+
+                this.hasPrivious.on('mouseenter', function() {
+                    _this.hasPriviousTimer = null;
+
+                    var f = function() {
+                        var scrollTop = _this.items.scrollTop();
+                        _this.items.scrollTop(scrollTop - 20);
+                        _this.hasPriviousTimer = setTimeout(f, 50);
+                    }
+
+                    f();
+                }).on('mouseleave', function(event) {
+                    clearTimeout(_this.hasPriviousTimer);
+                });
+
+                this.dropdown.append(this.input);
+                this.dropdown.append(this.scrollPart);
+
+                this.scrollPart.append(this.hasPrivious);
+                this.scrollPart.append(this.items);
+                this.scrollPart.append(this.hasNext);
+
+                this.searchableElement.append(this.caret);
+                this.searchableElement.append(this.holder);
+                this.searchableElement.append(this.dropdown);
+                this.element.after(this.searchableElement);
+
+                this.buildItems();
+                this.setPriviousAndNextVisibility();
+            },
+
+            filter: function() {
+                var text = this.input.val();
+                this.items.find('.searchable-select-item').addClass('searchable-select-hide');
+                this.items.find('.searchable-select-item:searchableSelectContains(' + text + ')').removeClass('searchable-select-hide');
+                if (this.currentSelectedItem.hasClass('searchable-select-hide') && this.items.find('.searchable-select-item:not(.searchable-select-hide)').length > 0) {
+                    this.hoverFirstNotHideItem();
+                }
+
+                this.setPriviousAndNextVisibility();
+            },
+
+            hoverFirstNotHideItem: function() {
+                this.hoverItem(this.items.find('.searchable-select-item:not(.searchable-select-hide)').first());
+            },
+
+            selectCurrentHoverItem: function() {
+                if (!this.currentHoverItem.hasClass('searchable-select-hide'))
+                    this.selectItem(this.currentHoverItem);
+            },
+
+            hoverPreviousItem: function() {
+                if (!this.hasCurrentHoverItem())
+                    this.hoverFirstNotHideItem();
+                else {
+                    var prevItem = this.currentHoverItem.prevAll('.searchable-select-item:not(.searchable-select-hide):first')
+                    if (prevItem.length > 0)
+                        this.hoverItem(prevItem);
+                }
+            },
+
+            hoverNextItem: function() {
+                if (!this.hasCurrentHoverItem())
+                    this.hoverFirstNotHideItem();
+                else {
+                    var nextItem = this.currentHoverItem.nextAll('.searchable-select-item:not(.searchable-select-hide):first')
+                    if (nextItem.length > 0)
+                        this.hoverItem(nextItem);
+                }
+            },
+
+            buildItems: function() {
+                var _this = this;
+                this.element.find('option').each(function() {
+                    var item = $('<div class="searchable-select-item" data-value="' + $(this).attr('value') + '">' + $(this).text() + '</div>');
+
+                    if (this.selected) {
+                        _this.selectItem(item);
+                        _this.hoverItem(item);
+                    }
+
+                    item.on('mouseenter', function() {
+                        $(this).addClass('hover');
+                    }).on('mouseleave', function() {
+                        $(this).removeClass('hover');
+                    }).click(function(event) {
+                        event.stopPropagation();
+                        _this.selectItem($(this));
+                        _this.hide();
+                    });
+
+                    _this.items.append(item);
+                });
+
+                this.items.on('scroll', function() {
+                    _this.setPriviousAndNextVisibility();
+                })
+            },
+            show: function() {
+                this.dropdown.removeClass('searchable-select-hide');
+                this.input.focus();
+                this.status = 'show';
+                this.setPriviousAndNextVisibility();
+            },
+
+            hide: function() {
+                if (!(this.status === 'show'))
+                    return;
+
+                if (this.items.find(':not(.searchable-select-hide)').length === 0)
+                    this.input.val('');
+                this.dropdown.addClass('searchable-select-hide');
+                this.searchableElement.trigger('focus');
+                this.status = 'hide';
+            },
+
+            hasCurrentSelectedItem: function() {
+                return this.currentSelectedItem && this.currentSelectedItem.length > 0;
+            },
+            selectItem: function(item) {
+                if (this.hasCurrentSelectedItem())
+                    this.currentSelectedItem.removeClass('selected');
+
+                this.currentSelectedItem = item;
+                item.addClass('selected');
+
+                this.hoverItem(item);
+
+                this.holder.text(item.text());
+                var value = item.data('value');//当前选择的门店的value
+
+                this.holder.data('value', value);
+                this.element.val(value);
+                // alert(value);
+                // alert(name);
+
+                if (this.options.afterSelectItem) {
+                    this.options.afterSelectItem.apply(this);
+                }
+
+            },
+
+            hasCurrentHoverItem: function() {
+                return this.currentHoverItem && this.currentHoverItem.length > 0;
+            },
+
+            hoverItem: function(item) {
+                if (this.hasCurrentHoverItem())
+                    this.currentHoverItem.removeClass('hover');
+
+                if (item.outerHeight() + item.position().top > this.items.height())
+                    this.items.scrollTop(this.items.scrollTop() + item.outerHeight() + item.position().top - this.items.height());
+                else if (item.position().top < 0)
+                    this.items.scrollTop(this.items.scrollTop() + item.position().top);
+
+                this.currentHoverItem = item;
+                item.addClass('hover');
+            },
+
+            setPriviousAndNextVisibility: function() {
+                if (this.items.scrollTop() === 0) {
+                    this.hasPrivious.addClass('searchable-select-hide');
+                    this.scrollPart.removeClass('has-privious');
+                } else {
+                    this.hasPrivious.removeClass('searchable-select-hide');
+                    this.scrollPart.addClass('has-privious');
+                }
+
+                if (this.items.scrollTop() + this.items.innerHeight() >= this.items[0].scrollHeight) {
+                    this.hasNext.addClass('searchable-select-hide');
+                    this.scrollPart.removeClass('has-next');
+                } else {
+                    this.hasNext.removeClass('searchable-select-hide');
+                    this.scrollPart.addClass('has-next');
+                }
+            }
+        });
+
+        $.fn.searchableSelect = function(options) {
+            this.each(function() {
+                var sS = new $sS($(this), options);
+            });
+
+            return this;
+        };
+
+    })(jQuery);
+
+    function outputObj(obj) {
+        var description = "";
+        for (var i in obj) {
+            description += i + " = " + obj[i] + "\n";
+        }
+        alert(description);
+    }
+</script>
+</body>
+</html>

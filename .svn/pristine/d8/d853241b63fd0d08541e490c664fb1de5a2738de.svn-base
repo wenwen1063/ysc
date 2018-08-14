@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>文章详情</title>
+		<meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+		<link href="__PUBLIC__/Wx/CSS/BusinessCSS/Myarticle/article.css" rel="stylesheet">
+			<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+		<style>
+			.article img{
+				width: 100%;
+			}
+			.article p{
+				word-wrap:break-word;
+				word-break:normal;
+			}
+
+			.article video{
+				width: 100%;
+			}
+		</style>
+	</head>
+
+	<body class="bg_white">
+		<!--<header class="mui-bar mui-bar-nav header">
+			<a href="{:U('/home/myarticle/myarticle')}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">文章详情</h1>
+		</header>-->
+		<div class="padding_15">
+			<!--文章详情内容-->
+			<div class="mui-card article_details">
+				<div class="mui-card-header border_b" style="position: relative;">
+					<span class="title  mui-text-center">{$data['title']}</span>
+
+					<?php if($data['status']==0): ?>
+					<i class="waitcheck" style="position: absolute;right: 15px;">待审核</i>
+					<?php elseif($data['status']==1): ?>
+					<i class="waitcheck checked" style="position: absolute;right: 15px;">已审核</i>
+					<?php else: ?>
+					<i class="waitcheck nopass" style="position: absolute;right: 15px;">不通过</i>
+					<?php endif ?>
+
+					<!--<i class="waitcheck"  style="display:none;position: absolute;right: 15px;">待审核</i>-->
+					<!--<i class="waitcheck checked" style="display:none;position: absolute;right: 15px;">已审核</i>-->
+					<!--<i class="waitcheck nopass" style="display:block;position: absolute;right: 15px;">不通过</i>	-->
+				</div>
+				<div class="mui-card-content">
+					<div class="mui-card-content-inner">
+						<p class="mui-text-center">时间:<span>{$data['time']|date='Y-m-d H:i:s',###}</span></p>
+						<div class="article">
+							<!--<p>{$data['content']}</p>-->
+							<?php echo htmlspecialchars_decode($data['content']); ?>
+							<!--<p>文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...文章内容...</p>-->
+						</div>
+					</div>
+				</div>
+				<div class="mui-card-footer" style="margin-bottom: 40px">
+					<p class="mui-card-link"><img src="__PUBLIC__/Wx/img/Myarticle/credits.png" alt=""><span class="padding_l_10">{$data['gold_number']}</span></p>
+					<p class="mui-card-link"><img class="imgHeight20" src="__PUBLIC__/Wx/img/Myarticle/like_red.png" alt=""><span class="padding_l_10">{$data['nice_num']}</span></p>
+					<p class="mui-card-link"><img src="__PUBLIC__/Wx/img/Myarticle/browse.png" alt=""><span class="padding_l_10">{$data['look_num']}</span></p>
+					<p class="mui-card-link"><img src="__PUBLIC__/Wx/img/Myarticle/checked.png" alt=""><span class="padding_l_10">{$data['count']}</span></p>
+				</div>
+			</div>
+			<!--评价-->
+			<div class="evaluate" style="margin-bottom: 50px">
+				<foreach name="reply" item="v">
+					<div class="mui-card-header mui-card-media">
+						<img src="__PUBLIC__/uploads/{$v['avatar']}" />
+						<div class="mui-media-body">
+							<h4>{$v['username']}</h4>
+							<p>发表于 {$v['time']|date='Y-m-d H:i:s',###}</p>
+							<div class="mui-input-row">
+								<input type="text" class="mui-ellipsis" placeholder="" value="{$v['content']}">
+							</div>
+						</div>
+					</div>
+				</foreach>
+			</div>
+		</div>
+		<!--待审核 不通过-->
+		<!--<?php if($data['status']==1): ?>-->
+		<!--<?php else: ?>-->
+
+		<!--<?php endif ?>-->
+
+		<nav class="mui-bar mui-bar-tab">
+			<?php if($data['status']==1): ?>
+			<a href="{:U('/home/Myarticle/articledel',array('id'=>$data['id']))}"><input type="button" value="删除文章" style="width: 100%;"></a>
+			<?php else: ?>
+			<a href="{:U('/home/Myarticle/articledel',array('id'=>$data['id']))}"><input class="del" type="button" value="删除文章"></a>
+			<a href="{:U('/home/Myarticle/editarticle',array('id'=>$data['id']))}"><input type="button" value="编辑文章" style="width: 50%;"></a>
+			<?php endif ?>
+		</nav>
+	</body>
+	<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+
+	<script type="text/javascript">
+
+		$(function(){
+
+			$('video').attr('preload','block');
+			$('video').attr('autoplay','autoplay');
+//			var video=getElementsByTagName('video');
+//			video.play();
+//			$("video").click(function(){
+//				this.play();
+//			})
+//
+//
+//
+		})
+
+
+
+
+	</script>
+
+</html>

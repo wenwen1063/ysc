@@ -1,0 +1,21 @@
+.imgTopDiv {
+    position: relative;
+}
+.imgTopDiv img {
+    position: fixed;
+    z-index: 9999;
+    right: 15px;
+    bottom: 65px;
+    width: 35px;
+}
+.imgkefu {
+    position: relative;
+}
+.imgkefu img {
+    position: fixed;
+    z-index: 9999;
+    right: 15px;
+    bottom: 50px;
+    width: 35px;
+    top: 77%;
+}

@@ -1,0 +1,89 @@
+.all img{
+    width: 19px;
+    height:19px;
+    float: left;
+    margin-right: 10px;
+}
+
+.all {
+    position: relative;
+    top:15px;
+    left:15px;
+    width:60px;
+    float: left;
+    height:15px;
+}
+
+.mui-bar .quxiao{
+    float: right;
+}
+
+.mui-bar .quxiao input{
+    position: relative;
+    top:8px ;
+    height:35px;
+    width: 100px;
+    background-color: #fe504f;
+    color: #FFFFFF;
+    right:15px;
+    border-radius: 5px;
+}
+.body img{
+    width: 50px;
+    height:50px;
+    margin-bottom: 20px;
+}
+.body{
+    position: relative;
+    margin-top: 50%;
+    width: 100%;
+    text-align: center;
+}
+.content{
+    margin-bottom: 45px;
+    position: relative;
+    top:10px;
+}
+.content .list{
+    border-bottom: 1px solid #e0e0e0;
+    height:60px;
+    background-color: #fff;
+    width: 100%;
+    padding: 10px;
+}
+.content .list .img .xuan{
+    position: relative;
+    width: 19px;
+    height:19px;
+    margin-right: 10px;
+    top:10px;
+    float: left;
+}
+
+.content .list .img .userm{
+    width: 40px;
+    float: left;
+    height:40px;
+}
+
+.content .list .name{
+    float: left;
+    position: relative;
+    left:10px;
+    bottom: 3px;
+}
+
+.content .list .name h5{
+    color: #4a4a4a;
+}
+
+.content .list .follow{
+    float: right;
+}
+
+.content .list .follow img{
+    position: relative;
+    top:10px;
+    width: 18px;
+    height:20px;
+}

@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css">
+    <!--<link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/payment.css">-->
+    <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/PartnerSpecial/partnerspecial.css">
+    	<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+    <title>商品详情</title>
+</head>
+
+<body>
+<!--<header class="mui-bar mui-bar-nav header">
+    <a href="partnerspecial.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">商品详情</h1>
+</header>-->
+<div>
+    <!--商品轮播-->
+    <div class="mui-slider">
+        <div class="mui-slider-group">
+            <foreach name="pic" item="v">
+                <div class="mui-slider-item">
+                    <a href="#"><img src="__PUBLIC__/Uploads/{$v['pic']}" alt="" style="height: 248px"></a>
+                </div>
+            </foreach>
+            <!--<div class="mui-slider-item">
+                <a href="#"><img src="__PUBLIC__/Wx/img/l2.png" alt="" /></a>
+            </div>
+            <div class="mui-slider-item">
+                <a href="#"><img src="__PUBLIC__/Wx/img/l3.png" alt="" /></a>
+            </div>-->
+        </div>
+    </div>
+    <!--pos机/xxx培训-->
+    <div class="insuranceAll goodsdetails">
+        <p class="title">{$data[0]['name']}</p>
+        <p><span class="mui-badge mui-badge-danger mui-badge-inverted">￥{$data[0]['shop_price']}</span><small>￥{$data[0]['market_price']}</small></p>
+    </div>
+    <!--商品详情-->
+    <div id="content">
+        <div class="title">
+            <h4>商品详情</h4>
+        </div>
+        <div class="img">
+            <?php echo htmlspecialchars_decode($data[0]['goods_introduce']); ?>
+        </div>
+    </div>
+</div>
+<!--<div class="imgTopDiv">
+    <img src="__PUBLIC__/Wx/img/btn_top.png" alt="">
+</div>-->
+<nav class="mui-bar mui-bar-tab">
+    <!--<form action="{:U('/home/Special/check',array('id'=>$data[0]['id']))}">
+        <input type="hidden" value="{$data[0]['id']}" name="id">
+        <input type="submit" value="免费领取">
+    </form>-->
+
+    <input type="button" value="免费领取" onclick="return buypos({$data[0]['id']})">
+</nav>
+<script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+</body>
+
+</html>
+<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+    //获得slider插件对象
+    var gallery = mui('.mui-slider');
+    gallery.slider({
+        interval: 2000 //自动轮播周期，若为0则不自动播放，默认为0；
+    });
+</script>
+<script>
+    function buypos(id){
+//        alert(id)
+        $.ajax({
+            url:"{:U('/home/Special/check')}",
+            type:'post',
+            data:{'id':id},
+            dataType:"json",
+            success:function(data){
+//                alert(data['result'])
+                if(data['result'] == 0){
+                    alert('您不是搭档，请先升级为搭档');
+                }
+                if(data['result'] == 1){
+//                    alert(data['id'])
+                    window.location.href="__ROOT__/wx.php/home/Special/address?id="+id;
+
+                }
+            }
+        })
+    }
+</script>

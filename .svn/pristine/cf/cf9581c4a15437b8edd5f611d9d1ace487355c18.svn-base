@@ -1,0 +1,71 @@
+<!--index -->
+<include file="public:index" />
+<!--index-->
+<title>赠送</title>
+</head>
+
+<body>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 系统 <span class="c-gray en">&gt;</span> 充值提现 <span class="c-gray en">&gt;</span> 用户赠送 <span class="c-gray en">&gt;</span>
+        <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回"><i class="Hui-iconfont">&#xe66b;</i></a>
+        <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
+    <div class="pd-20">
+        <form action="{:U('/home/rechargecash/rechargesend')}" method="post" name="main_form" class="form form-horizontal" id="form-admin-add">
+            <!-- <input type="hidden" value="{$result['name']}" name="prename"> -->
+            <!-- <input type="hidden" value="{$result['id']}" name="id"> -->
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>会员帐号：</label>
+                <div class="formControls col-5">
+                    <input type="text" class="input-text" placeholder="请输入会员帐号" id="username" name="username" datatype="*2-16">
+                </div>
+                <div class="col-4"> </div>
+            </div>
+
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>赠送金额：</label>
+                <div class="formControls col-5">
+                    <input type="text" class="input-text" placeholder="请输入金额" id="money" name="money" datatype="*2-16" onkeyup="if(/\D/.test(this.value)){alert('只能输入数字');this.value='';}">
+                </div>
+                <div class="col-4"> </div>
+            </div>
+
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>备注：</label>
+                <div class="formControls col-5">
+                    <input type="text" class="input-text" placeholder="请输入备注" id="note" name="note" datatype="*2-16">
+                </div>
+                <div class="col-4"> </div>
+            </div>
+
+            <div class="row cl">
+                <div class="col-9 col-offset-3">
+                    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;" onclick="return check()">
+                    <input class="btn btn-primary radius" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;">
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript">
+        function check() {
+            if($('#username').val() == "" || $('#username').val() == null) {
+                alert("用户帐号不能为空!");
+                return false;
+            }
+            if($('#money').val() == "" || $('#money').val() == null) {
+                alert("金额不能为空!");
+                return false;
+            }
+            if($('#note').val() == "" || $('#note').val() == null) {
+                alert("备注不能为空!");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

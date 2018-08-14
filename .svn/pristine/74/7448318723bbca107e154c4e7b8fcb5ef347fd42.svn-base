@@ -1,0 +1,73 @@
+<!--index -->
+<include file="public:index" />
+<!--index-->
+<title>公告</title>
+</head>
+
+<body>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 公告通知 <span class="c-gray en">&gt;</span> 公告信息<span class="c-gray en">&gt;</span> 新增 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回"><i class="Hui-iconfont">&#xe66b;</i></a><a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="pd-20">
+        <form action="{:U('/home/Notice/noticeadd')}" method="post" name="main_form" class="form form-horizontal" id="form-admin-add">
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>标题：</label>
+                <div class="formControls col-5">
+                    <input type="text" class="input-text" value="" placeholder="请输入标题" id="title" name="title" datatype="*2-16">
+                </div>
+                <div class="col-4"> </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>内容：</label>
+                <div class="formControls col-5">
+                    <textarea type='text' class="content" value='' name="content" style="height: 200px;width: 680px;resize: none;"></textarea>
+                </div>
+            </div>
+            <div class="row cl">
+                <div class="col-9 col-offset-3">
+                    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;" onclick="return check()">
+                    <input class="btn btn-primary radius" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;">
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/icheck/jquery.icheck.min.js"></script>
+    <script type="text/javascript">
+    function check() {
+        //form1是form中的name属性
+        var _form = document.main_form;
+        if (trim(_form.title.value) == "") {
+            alert("标题不能为空!");
+            return false;
+        }
+
+        if (trim(_form.content.value) == "") {
+            alert("内容不能为空!");
+            return false;
+        }
+        return true;
+    }
+
+    function trim(s) {
+        var count = s.length;
+        var st = 0; // start
+        var end = count - 1; // end
+
+        if (s == "") return s;
+        while (st < count) {
+            if (s.charAt(st) == " ")
+                st++;
+            else
+                break;
+        }
+        while (end > st) {
+            if (s.charAt(end) == " ")
+                end--;
+            else
+                break;
+        }
+        return s.substring(st, end + 1);
+    }
+    </script>
+</body>
+
+</html>

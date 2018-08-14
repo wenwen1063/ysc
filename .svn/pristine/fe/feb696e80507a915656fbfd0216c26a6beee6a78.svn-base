@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的收藏</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/Mycollection/Mycollection.css" rel="stylesheet">
+    <style type="text/css">
+        .pichide {
+            display: none;
+        }
+        .picshow {
+            dispaly: block;
+        }
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a href="{:U('home/user/userindex')}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">我的收藏</h1>
+</header>
+<if condition="$data  eq null">
+
+    <div class="none" style="display: block">
+        <img src="__PUBLIC__/Wx/img/My/default_nocollection.png" alt="">
+        <p>暂无任何收藏的商品</p>
+    </div>
+    <else/>
+<div class="content">
+
+    <foreach name="data" item="v">
+
+        <div class="list">
+        <a href="__ROOT__/wx.php/home/goods/goodsinfo?id={$v['goods_id']}">
+            <div class="img">
+                <img src="__PUBLIC__/Uploads/{$v['sm_pic']}" alt="">
+            </div>
+        </a>
+            <div class="name">
+                <h5 style="display: block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 75%;color: #444;">{$v['goods_name']}</h5>
+                <p>{$v['shop_price']}</p>
+
+                <img class="xuan selleroff" src="__PUBLIC__/Wx/img/My/my_icon_checkoff.png" alt="">
+                <img class="xuan sellerred pichide" src="__PUBLIC__/Wx/img/My/my_icon_check_red.png" alt="">
+
+                <input type="hidden" value="{$v['goods_id']}" name="goods_id" class="input">
+            </div>
+        </div>
+    </foreach>
+</div>
+</if>
+
+<nav class="mui-bar mui-bar-tab">
+    <!--<img src="__PUBLIC__/Wx/img/My/my_icon_checkoff.png">-->
+
+    <img id="allselect" src="__PUBLIC__/Wx/img/My/my_icon_checkoff.png" alt="">
+    <img id="all" src="__PUBLIC__/Wx/img/My/my_icon_check_red.png" alt="" style="display: none;">
+
+    <p>全选</p>
+    <input type="button" value="取消收藏" id="del">
+</nav>
+
+<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+
+<script type="text/javascript">
+    //单选
+    var chooseId = '';
+    $(".selleroff").click(function() {
+        $(this).removeClass('picshow');
+        $(this).addClass('pichide');
+
+        $(this).parent('.name').find('.sellerred').removeClass('pichide');
+        $(this).parent('.name').find('.sellerred').addClass('picshow');
+        chooseId = shopselect();
+    });
+    //单不选
+    $(".sellerred").click(function() {
+        $(this).removeClass('picshow');
+        $(this).addClass('pichide');
+        $(this).parent('.name').find('.selleroff').removeClass('pichide');
+        chooseId = shopselect();
+    });
+
+    //全选
+    $("#allselect").click(function() {
+        $(this).hide();
+        $("#all").show();
+
+        $(".sellerred").addClass('picshow');
+        $(".sellerred").removeClass('pichide');
+        $(".selleroff").removeClass('picshow');
+        $(".selleroff").addClass('pichide');
+        chooseId = shopselect();
+    });
+    //全不选
+    $("#all").click(function() {
+        $(this).hide();
+        $("#allselect").show();
+
+        $(".selleroff").removeClass('pichide');
+        $(".sellerred").removeClass('picshow');
+        $(".sellerred").addClass('pichide');
+        chooseId = shopselect();
+    });
+    function shopselect(){
+        var aIds = [];
+        $(".picshow").each(function() {
+            var goods_id = '';
+            goods_id = $(this).parent().children("input").val();
+            aIds.push(goods_id);
+        });
+        return aIds;
+    }
+
+    $("#del").click(function(){
+        console.log(chooseId);
+        if(chooseId.length == 0){
+            alert('至少选择一个！')
+        }else{
+            $.ajax({
+
+                url:"{:U('/home/User/delcollection')}",
+                type:"post",
+                data:{'id':chooseId},
+                dataType:"json",
+                success:function(data){
+                    if(data['result'] == 0){
+                        alert(data.msg);
+                    }
+                    if(data['result'] == 1){
+                        alert(data.msg);
+                        window.location.href="{:U('/home/User/mycollection')}";
+                    }
+                }
+            })
+        }
+    })
+
+
+
+
+</script>
+
+</body>
+</html>

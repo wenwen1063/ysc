@@ -1,0 +1,110 @@
+html {
+    overflow-x: hidden;
+}
+
+.header {
+    position: relative;
+    background-color: #ff5353;
+    height: 45px;
+}
+
+.mui-title, .mui-action-back {
+    font-weight: 100;
+    color: #FFFFFF;
+}
+
+.mui-slider {
+    position: relative;
+    height: 375px;
+    width: 100%;
+}
+
+.mui-slider-indicator {
+
+    position: relative;
+    bottom: 30px;
+}
+
+.mui-slider .name {
+    padding-top: 10px;
+    height: 120px;
+    width: 100%;
+    background-color: #FFFFFF;
+    position: relative;
+    padding-left: 20px;
+}
+
+.mui-slider .name h4 {
+    font-size: 18px;
+    color: #4a4a4a;
+    font-weight: 100;
+}
+
+.mui-slider .dui {
+    width: 100%;
+    float: left;
+    position: relative;
+
+}
+
+.mui-slider .dui p {
+    width: 30%;
+    float: left;
+}
+
+.mui-slider .dui .mui-progressbar {
+    position: relative;
+    top: 10px;
+    float: left;
+    width: 60%;
+}
+
+.mui-progressbar span {
+    background-color: #ff8400;
+}
+
+.mui-slider .money h4 {
+    font-weight: 100;
+    font-size: 18px;
+    color: #fe504f;
+}
+
+.mui-slider .money del {
+    font-size: 15px;
+    margin-left: 20px;
+    color: #7f7f7f;
+}
+#content{
+    position: relative;
+    top:10px;
+    background-color: #FFFFFF;
+}
+#content .title {
+    width: 72px;
+    height: 35px;
+    margin: 0 auto;
+}
+
+#content .title h4 {
+    position: relative;
+    top: 8px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #fe504f;
+    font-weight: 100;
+}
+
+#content .img img {
+    margin-top: 10px;
+    width: 100%;
+    height: 400px;
+}
+
+
+
+
+
+
+
+
+
+

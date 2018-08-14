@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css">
+		<link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/Pos/details.css">
+		<link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/Extension.css">
+		<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+		<title>推广工具</title>
+	</head>
+<style type="text/css">
+	.xiang img{
+		width: 100%;
+		height:100%;
+		margin-left:0;
+	}
+	.buy{
+		padding-top: 5px;
+		position: relative;
+		font-size: 12px;
+		float: left;
+		height: 30px;
+		width: 50px;
+	}
+
+</style>
+	<body>
+		<!--<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">推广工具</h1>
+		</header>-->
+		<input type="hidden" id="toolid" value="{$data['id']}">
+
+		<div class="mui-slider">
+			<div class="mui-slider-group">
+				<foreach name="pic" item="v">
+					<div class="mui-slider-item">
+						<a href="#"><img src="__PUBLIC__/Uploads/{$v['pic']}"  style="height: 276px"></a>
+						<!--<a href="#"><img src="__PUBLIC__/Wx/img/Classification/classification_pic_big.png" ></a>-->
+					</div>
+				</foreach>
+			</div>
+			<div class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+			</div>
+			<div id="mess" style="height: 100px">
+				<h5>{$data['name']}</h5>
+				<p> <span id="money">
+					￥{$data['shop_price']}
+				</span> <del>￥{$data['market_price']}</del>&ensp;&ensp;&ensp;&ensp;库存：{$data['stock']}&ensp;&ensp;&ensp;&ensp;销量：{$data['virtual_sell_amount']}</p>
+				<p><span>
+					<?php if($isnot != null): ?>
+					<input type="button" class="buy" value="已购买" style="background-color: #8f8f94;width: 80px;color: white" >
+					<?php elseif($isnot2 != null): ?>
+					<input type="button" class="buy" value="已领取" style="background-color: #8f8f94;width: 80px;color: white" >
+					<?php else: ?>
+					<input type="button" class="buy" value="购买" style="color: #ff5353;border: 1px solid #ff5353" onclick= "return download({$data['id']})">
+					<?php endif  ?>
+
+
+
+				</span></p>
+			</div>
+		</div>
+
+		<div id="download" >
+			<div class="img">
+				<div style="text-align:center;margin-bottom: 10px;">
+					<!--<button style="width: 100%;height: 400px;border: 1px solid #000000;position: absolute;opacity: 0;z-index: 999;" onclick="playPause()">播放/暂停</button>-->
+					<video id="video1" width="100%"  autoplay="autoplay">
+						<source src="__PUBLIC__/Uploads/{$data['video']}" type="video/mp4" />
+						<source src="http://www.w3school.com.cn/example/html5/mov_bbb.ogg" type="video/ogg" /> Your browser does not support HTML5 video.
+					</video>
+				</div>
+			</div>
+			<div class="onclick" style="height: 100px">
+				<?php if($isnot != null): ?>
+				<a href="http://chat8.live800.com/live800/chatClient/chatbox.jsp?companyID=820706&configID=151385&jid=5530154684"><input class="button" type="button" value="联系客服下载" ></a>
+				<!--<a href="{:U('/home/Extension/loadvideo',array('filename'=>11))}" download><input class="button" type="button" value="点击下载" ></a>-->
+				<?php elseif($isnot2 != null): ?>
+				<a href="http://chat8.live800.com/live800/chatClient/chatbox.jsp?companyID=820706&configID=151385&jid=5530154684"><input class="button" type="button" value="联系客服下载" ></a>
+				<?php else: ?>
+				<a href="http://chat8.live800.com/live800/chatClient/chatbox.jsp?companyID=820706&configID=151385&jid=5530154684"><input class="button" type="button" id="loadvideo" value="联系客服下载" style="display: none;"></a>
+				<?php endif  ?>
+			</div>
+			<div class="introduce">
+				<span>软件介绍</span>
+			</div>
+			<div class="content">
+				<span class="xiang"><?php echo htmlspecialchars_decode($data['details']); ?></span>
+			</div>
+			<!--<div class="buy">
+				<input type="button" value="购买软件" onclick="return buy({$data['id']})">
+			</div>-->
+		</div>
+
+		<div id="popup" style="display: none">
+			<div class="title">
+				<span>系统监测到您还未购买软件，无法下载，是否马上购买?</span>
+			</div>
+			<div class="button">
+				<input type="button" value="取消" id="off">
+				<a href="{:U('/home/Extension/toolpay',array('id'=>$data['id']))}"><input class="red" type="button" value="确定" ></a>
+			</div>
+		</div>
+
+
+	</body>
+	<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+	<script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+	<script language="javascript" src="http://chat8.live800.com/live800/chatClient/monitor.js?jid=5530154684&companyID=820706&configID=151384&codeType=custom"></script>
+	<script>
+		function download(id){
+			$.ajax({
+				url:"{:U('/home/extension/download')}",
+				type:"post",
+				data:{'id':id},
+				dataType:"json",
+				success:function(data){
+					if(data['result'] == 1){
+						mui.toast(data.msg);
+					}
+					if(data['result'] == 2){
+						$('#popup').css('display','block');
+					}
+					if(data['result'] == 3){
+						mui.toast(data.msg);
+					}
+				}
+			});
+		}
+		$("#off").click(function(){
+			$('#popup').css('display','none');
+		});
+		function buy(id,stock,as,vsa){
+			if(stock<=0){
+				mui.toast('已售罄')
+			}
+			$.ajax({
+				url:"{:U('/home/extension/buy')}",
+				type:"post",
+				data:{'id':id,'stock':stock,'as':as,'vsa':vsa},
+				dataType:"json",
+				success:function(data){
+					if(data == 1){
+						$('#popup').css('display','none');
+						$('#loadvideo').css('display','block');
+						mui.toast('购买成功！');
+
+
+					}
+					if(data == 0){
+						mui.toast('购买失败')
+					}
+				}
+			});
+		}
+	</script>
+	<script type="text/javascript">
+		//获得slider插件对象
+		var gallery = mui('.mui-slider');
+		gallery.slider({
+			interval: 2000 //自动轮播周期，若为0则不自动播放，默认为0；
+		});
+		var myVideo = document.getElementById("video1");
+
+		function playPause() {
+			if(myVideo.paused)
+				myVideo.play();
+			else
+				myVideo.pause();
+		}
+	</script>
+</html>

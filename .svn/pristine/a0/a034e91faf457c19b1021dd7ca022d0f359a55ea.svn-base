@@ -1,0 +1,198 @@
+<?php
+/**
+ *商家
+ *author:cyl
+ */
+namespace Home\Controller;
+
+use Think\Controller;
+
+class SellerController extends Controller
+{
+    //商家中心页面
+    public function sellercenter()
+    {
+        $data = M('seller')
+            ->where(array('is_disable' => 0))
+            ->field('id,name,logo')
+            ->select();
+        $this->assign('data', $data);
+        $this->display();
+    }
+
+    //商家详情
+    public function sellerinfo()
+    {
+        $id = I('id'); //商家id
+        //商家基本信息
+        $seller = M('seller')
+            ->where(array('id' => $id))
+            ->field('id,name,synopsis,logo,ad_pic')
+            ->find();
+        //商家商品
+        $goods = M()->table('__GOODS__ g')
+            ->where(array('s.id' => $id, 'g.is_on_sale' => 1, 'g.is_delete' => 0))
+            ->join('left join __SELLER__ s on s.id=g.seller_id')
+            ->join('left join __GOODS_ATTRIBUTE_INFO__ gai on gai.goods_id=g.id')
+            ->field('g.id,g.sm_pic,g.goods_name,min(gai.shop_price) as min_shop_price')
+            ->group('g.id')
+            ->select();
+        //是否关注该商家
+        $myattention = M('myattention')
+            ->where(array('user_id'=>cookie('user_id'),'seller_id'=>$id))
+            ->select();
+
+//         pp($myattention);
+        $this->assign('seller', $seller);
+        $this->assign('goods', $goods);
+        $this->assign('myattention', $myattention);
+        $this->display();
+    }
+    //关注
+    public function guanzhu()
+    {
+        $seller_id = I('id');
+        $data             = M('myattention');
+        $data->user_id    = cookie('user_id');
+        $data->seller_id  = $seller_id;
+        $res              = $data->add();
+        if($res){
+            $json = array(
+                'result'=>1,
+            );
+        }
+        $this->ajaxReturn($json);
+
+    }
+
+    //商家入驻申请--商家
+    public function sellerapply()
+    {
+        //接收表单数据
+        $arr = I();
+        if ($arr != null) {
+            // pp($arr);
+            $seller               = M('seller');
+            $seller->number       = 'SJ' . date('YmdHis', time()) . rand(1000, 9999); // 商家编号
+            $seller->name         = $arr['name']; // 商家名称
+            $seller->company_name = $arr['company_name']; // 公司名称
+            $seller->contact      = $arr['contact']; // 联系人
+            $seller->tel          = $arr['tel']; // 电话
+            $seller->phone        = $arr['phone']; // 手机
+            $seller->qq           = $arr['qq']; // qq
+            $seller->wechat       = $arr['wechat']; // wechat
+            $seller->province     = $arr['prov']; // province
+            $seller->city         = $arr['city']; // city
+            $seller->district     = $arr['dist']; // dist
+            $seller->address      = $arr['address']; // address
+            $seller->time         = time(); //新增时间
+
+            $upload           = new \Think\Upload(); // 实例化上传类
+            $upload->maxSize  = 3145728; // 设置附件上传大小
+            $upload->exts     = array('jpg', 'gif', 'png', 'jpeg'); // 设置附件上传类型
+            $upload->rootPath = './Public/Uploads/'; // 设置附件上传根目录
+            $upload->savePath = ''; // 设置附件上传（子）目录
+            // 上传文件
+            $info = $upload->upload();
+            //身份证 正面
+            if ($info['id_front']['savepath'] . $info['id_front']['savename'] != null) {
+                $seller->corporationid_front = $info['id_front']['savepath'] . $info['id_front']['savename'];
+            }
+            //身份证 反面
+            if ($info['id_back']['savepath'] . $info['id_back']['savename'] != null) {
+                $seller->corporationid_back = $info['id_back']['savepath'] . $info['id_back']['savename'];
+            }
+            //营业执照
+            if ($info['yyzz_img']['savepath'] . $info['yyzz_img']['savename'] != null) {
+                $seller->license = $info['yyzz_img']['savepath'] . $info['yyzz_img']['savename'];
+            }
+            //经营许可
+            if ($info['jyxk_img']['savepath'] . $info['jyxk_img']['savename'] != null) {
+                $seller->business_certificate = $info['jyxk_img']['savepath'] . $info['jyxk_img']['savename'];
+            }
+            //其他
+            if ($info['other_img']['savepath'] . $info['other_img']['savename'] != null) {
+                $seller->other = $info['other_img']['savepath'] . $info['other_img']['savename'];
+            }
+            $seller->is_disable     = 1; //禁用（还未通过审核 审核过启用）
+            $seller->disable_reason = '商家申请入驻待审核';
+            $res                    = $seller->add(); //商家id
+
+            $seller_a            = M('seller_account');
+            $seller_a->seller_id = $res;
+            $seller_a->type      = $arr['apply_type']; //申请类型 0商家 1个人
+            $seller_a->name      = $arr['open_name']; //账户名称
+            $seller_a->accounts  = $arr['open_account']; //帐号
+            $seller_a->open_bank = $arr['open_bank']; //开户行
+            $res2                = $seller_a->add();
+            if ($res2) {
+                $this->success('申请提交成功，请等待审核！', U('/home/index/index'), 2);
+            }
+        } else {
+            $this->display();
+        }
+    }
+
+    //商家入驻申请--个人
+    public function sellerapplypersonal()
+    {
+        //接收表单数据
+        $arr = I();
+        if ($arr != null) {
+            // pp($arr);
+            $seller           = M('seller');
+            $seller->number   = 'SJ' . date('YmdHis', time()) . rand(1000, 9999); // 商家编号
+            $seller->name     = $arr['name']; // 商家名称
+            $seller->contact  = $arr['contact']; // 联系人
+            $seller->tel      = $arr['tel']; // 电话
+            $seller->phone    = $arr['phone']; // 手机
+            $seller->qq       = $arr['qq']; // qq
+            $seller->wechat   = $arr['wechat']; // wechat
+            $seller->province = $arr['prov']; // province
+            $seller->city     = $arr['city']; // city
+            $seller->district = $arr['dist']; // dist
+            $seller->address  = $arr['address']; // address
+            $seller->time     = time(); //新增时间
+
+            $upload           = new \Think\Upload(); // 实例化上传类
+            $upload->maxSize  = 3145728; // 设置附件上传大小
+            $upload->exts     = array('jpg', 'gif', 'png', 'jpeg'); // 设置附件上传类型
+            $upload->rootPath = './Public/Uploads/'; // 设置附件上传根目录
+            $upload->savePath = ''; // 设置附件上传（子）目录
+            // 上传文件
+            $info = $upload->upload();
+            //身份证 正面
+            if ($info['id_front']['savepath'] . $info['id_front']['savename'] != null) {
+                $seller->corporationid_front = $info['id_front']['savepath'] . $info['id_front']['savename'];
+            }
+            //身份证 反面
+            if ($info['id_back']['savepath'] . $info['id_back']['savename'] != null) {
+                $seller->corporationid_back = $info['id_back']['savepath'] . $info['id_back']['savename'];
+            }
+            //其他
+            if ($info['other_img']['savepath'] . $info['other_img']['savename'] != null) {
+                $seller->other = $info['other_img']['savepath'] . $info['other_img']['savename'];
+            }
+            $seller->is_disable     = 1; //禁用（还未通过审核 审核过启用）
+            $seller->disable_reason = '个人商家申请入驻待审核';
+            $res                    = $seller->add(); //商家id
+
+            $seller_a            = M('seller_account');
+            $seller_a->seller_id = $res;
+            $seller_a->type      = $arr['apply_type']; //申请类型 0商家 1个人
+            $seller_a->name      = $arr['open_name']; //账户名称
+            $seller_a->accounts  = $arr['open_account']; //帐号
+            $seller_a->open_bank = $arr['open_bank']; //开户行
+            $seller_a->bank_type = $arr['bank_type']; //银行类型
+            $res2                = $seller_a->add();
+            if ($res2) {
+                $this->success('申请提交成功，请等待审核！', U('/home/index/index'), 2);
+            }
+        } else {
+            $bank = M('bank')->where(array('is_delete' => 0, 'is_disable' => 0))->field('id,bank_name')->select();
+            $this->assign('bank', $bank);
+            $this->display();
+        }
+    }
+
+}

@@ -1,0 +1,83 @@
+<!--index -->
+<include file="public:index" />
+<!--index-->
+<script type="text/javascript" src="__PUBLIC__/timejs/laydate.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/css/H-ui.admin.css"></script>
+<style type="text/css">
+	.box {
+		text-align: center;
+		font-size: 18px;
+		color: white;
+		-webkit-border-radius: 15px;
+		-moz-border-radius: 15px;
+	}
+</style>
+<title>固定客户季度清算</title>
+</head>
+
+<body>
+
+	<div class="content_wrap" style="width: 100%;">
+		<div style="width:10%;height:100%;float:left;">
+			<ul id="treeDemo" class="ztree" style="border: none;background-color: #FFFFFF;overflow:hidden ;font-size: 18px;"></ul>
+		</div>
+		<div style="width: 85%;float:right;height:800px;border:none">
+			<iframe src="{:U('Home/statist/member_forms')}" width="100%" height="100%" style="border:none"></iframe>
+		</div>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/admin/lib/laypage/1.2/laypage.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/admin/lib/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+	<script src="__PUBLIC__/admin/js/api.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+	<link rel="stylesheet" href="__PUBLIC__/admin/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="__PUBLIC__/admin/lib/zTree/v3/js/jquery.ztree.core-3.5.js"></script>
+	<SCRIPT type="text/javascript">
+		$(document).ready(function() {
+			$.ajax({
+				type: "post",
+				url: "{:U('Home/statist/ttt')}",
+				data: {
+					id: 1,
+				},
+				async: true,
+				success: function(infor) {
+					var setting = {
+						view: {
+							dblClickExpand: false,
+							showLine: true,
+							selectedMulti: false
+						},
+						data: {
+							simpleData: {
+								enable: true,
+								idKey: "id",
+								pIdKey: "pId",
+								rootPId: ""
+							}
+						}
+					};
+					console.log(infor);
+					console.log(infor['c']);
+					$info = infor['c'];
+					var zNodes = $info;
+					console.log(zNodes);
+					$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+				}
+			});
+		});
+
+		function getinfo(obj) {
+			var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+			var selected = treeObj.getSelectedNodes();
+			var tId = selected[0].tId;
+			console.log(tId);
+			console.log(obj);
+			$('iframe').attr('src', "{:U('Home/statist/member_forms')}?tid=" + obj);
+		}
+	</SCRIPT>
+</body>
+
+</html>

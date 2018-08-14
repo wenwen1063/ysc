@@ -1,0 +1,43 @@
+body {
+    overflow-x: hidden;
+    background-color: #fff;
+}
+
+.header {
+    position: relative;
+    background-color: #ff5353;
+    height: 45px;
+}
+
+.mui-title, .mui-action-back {
+    font-weight: 100;
+    color: #FFFFFF;
+}
+
+.title h4 {
+    margin: 10px;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 100;
+}
+
+.title p {
+    position: relative;
+    left: 10px;
+}
+
+.img img {
+    padding: 0 10px;
+    position: relative;
+    top: 10px;
+    height: 150px;
+    width: 100%;
+}
+
+.content p {
+    letter-spacing: 2px;
+    padding: 0 10px;
+    position: relative;
+    top: 20px;
+    font-size: 15px;
+}

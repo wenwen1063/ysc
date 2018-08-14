@@ -1,0 +1,125 @@
+        <style>
+            /*底部栏*/
+
+            #footer .mui-tab-item:nth-child(1) .mui-icon {
+                background: url(__PUBLIC__/Wx/img/TabBarController/tabbarcontroller_icon_home_normal.png) no-repeat;
+                background-size: 20px 20px;
+            }
+
+            #footer .mui-tab-item:nth-child(1).mui-active .mui-icon {
+                background: url(__PUBLIC__/Wx/img/TabBarController/tabbarcontroller_icon_home_press.png) no-repeat;
+                background-size: 20px 20px;
+            }
+
+            #footer .mui-tab-item:nth-child(2) .mui-icon {
+                background: url(__PUBLIC__/Wx/img/TabBarController/tabbarcontroller_icon_classification_normal.png) no-repeat;
+                background-size: 20px 20px;
+            }
+
+            #footer .mui-tab-item:nth-child(2).mui-active .mui-icon {
+                background: url(__PUBLIC__/Wx/img/TabBarController/tabbarcontroller_icon_classification_press.png) no-repeat;
+                background-size: 20px 20px;
+            }
+
+            #footer .mui-tab-item:nth-child(3) .mui-icon {
+                background: url(__PUBLIC__/Wx/img/TabBarController/tabbarcontroller_icon_qrcode_normal.png) no-repeat;
+                background-size: 20px 20px;
+            }
+
+            #footer .mui-tab-item:nth-child(3).mui-active .mui-icon {
+                background: url(__PUBLIC__/Wx/img/TabBarController/tabbarcontroller_icon_qrcode_press.png) no-repeat;
+                background-size: 20px 20px;
+            }
+
+            #footer .mui-tab-item:nth-child(4) .mui-icon {
+                background: url(__PUBLIC__/Wx/img/TabBarController/tabbarcontroller_icon_shoppingcart_normal.png) no-repeat;
+                background-size: 20px 20px;
+            }
+
+            #footer .mui-tab-item:nth-child(4).mui-active .mui-icon {
+                background: url(__PUBLIC__/Wx/img/TabBarController/tabbarcontroller_icon_shoppingcart_press.png) no-repeat;
+                background-size: 20px 20px;
+            }
+
+            #footer .mui-tab-item:nth-child(5) .mui-icon {
+                background: url(__PUBLIC__/Wx/img/TabBarController/tabbarcontroller_icon_my_normal.png) no-repeat;
+                background-size: 20px 20px;
+            }
+
+            #footer .mui-tab-item:nth-child(5).mui-active .mui-icon {
+                background: url(__PUBLIC__/Wx/img/TabBarController/tabbarcontroller_icon_my_press.png) no-repeat;
+                background-size: 20px 20px;
+            }
+        </style>
+        <nav id="footer" class="mui-bar mui-bar-tab footer">
+            <a id="one" class="mui-tab-item mui-active">
+                <span class="mui-icon">
+               <!--  <img src="__PUBLIC__/Wx/img/TabBarController/tabbarcontroller_icon_home_press.png" alt=""> -->
+                </span>
+                <span class="mui-tab-label">首页</span>
+            </a>
+            <a id="two" class="mui-tab-item">
+                <span class="mui-icon"><!-- <img
+                        src="__PUBLIC__/Wx/img/TabBarController/tabbarcontroller_icon_classification_normal.png"
+                        alt=""> --></span>
+                <span class="mui-tab-label">分类</span>
+            </a>
+            <a id="code" class="mui-tab-item">
+                <span class="mui-icon"><!-- <img src="__PUBLIC__/Wx/img/TabBarController/tabbarcontroller_icon_qrcode_normal.png"
+                                            alt=""> --></span>
+                <span class="mui-tab-label">二维码</span>
+            </a>
+            <a id="three" class="mui-tab-item">
+                <span class="mui-icon"><!-- <img src="__PUBLIC__/Wx/img/TabBarController/tabbarcontroller_icon_shoppingcart_normal.png" alt=""> --></span>
+                <span class="mui-tab-label">购物车</span>
+            </a>
+            <a id="four" class="mui-tab-item">
+                <span class="mui-icon"><!-- <img src="__PUBLIC__/Wx/img/TabBarController/tabbarcontroller_icon_my_normal.png" alt=""> --></span>
+                <span class="mui-tab-label">我的</span>
+            </a>
+        </nav>
+        <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+        <script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+        <script>
+            var gallery = mui('.mui-slider');
+            gallery.slider({
+                interval: 2000 //自动轮播周期，若为0则不自动播放，默认为0；
+            });
+            var test = "<?php echo $test;?>";
+            if(test == ''){
+                test = 'one';
+            }
+            $('#footer .mui-tab-item').removeClass('mui-active');
+            $("#"+test).addClass('mui-active');
+
+            document.getElementById('one').addEventListener('tap', function() {
+                mui.openWindow({
+                    url: "{:U('/home/index/index?test=one')}",
+                    id: 'classification'
+                });
+            });
+            document.getElementById('code').addEventListener('tap', function() {
+                mui.openWindow({
+                    url: "{:U('/home/two/two?test=code')}",
+                    id: 'classification'
+                });
+            });
+            document.getElementById('two').addEventListener('tap', function() {
+                mui.openWindow({
+                    url: "{:U('/home/goodsclass/goodsclassindex?test=two')}",
+                    id: 'classification'
+                });
+            });
+            document.getElementById('three').addEventListener('tap', function() {
+                mui.openWindow({
+                    url: "{:U('/home/order/carindex?test=three')}",
+                    id: 'classification'
+                });
+            });
+            document.getElementById('four').addEventListener('tap', function() {
+                mui.openWindow({
+                    url: "{:U('/home/user/userindex?test=four')}",
+                    id: 'classification'
+                });
+            });
+        </script>

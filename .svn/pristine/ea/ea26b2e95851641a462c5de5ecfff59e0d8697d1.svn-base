@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的收藏</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="../../../CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="../../../CSS/BusinessCSS/Mycollection/Mycollection.css" rel="stylesheet">
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a href="../Mypage.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">我的收藏</h1>
+</header>
+
+<div class="none">
+    <img src="../../../img/My/default_nocollection.png" alt="">
+    <p>暂无任何收藏的商品</p>
+</div>
+<div class="content">
+    <div class="list">
+        <div class="img">
+            <img src="../../../img/Common/pic_1.png" alt="">
+        </div>
+        <div class="name">
+            <h5>多肉组合盆栽</h5>
+            <p>￥89.5</p>
+            <img src="../../../img/My/my_icon_check_green.png" alt="">
+        </div>
+    </div>
+    <div class="list">
+        <div class="img">
+            <img src="../../../img/Common/pic_1.png" alt="">
+        </div>
+        <div class="name">
+            <h5>多肉组合盆栽</h5>
+            <p>￥89.5</p>
+            <img src="../../../img/My/my_icon_checkoff.png" alt="">
+        </div>
+    </div>
+    <div class="list">
+        <div class="img">
+            <img src="../../../img/Common/pic_1.png" alt="">
+        </div>
+        <div class="name">
+            <h5>多肉组合盆栽</h5>
+            <p>￥89.5</p>
+            <img src="../../../img/My/my_icon_check_green.png" alt="">
+        </div>
+    </div>
+    <div class="list">
+        <div class="img">
+            <img src="../../../img/Common/pic_1.png" alt="">
+        </div>
+        <div class="name">
+            <h5>多肉组合盆栽</h5>
+            <p>￥89.5</p>
+            <img src="../../../img/My/my_icon_checkoff.png" alt="">
+        </div>
+    </div>
+    <div class="list">
+        <div class="img">
+            <img src="../../../img/Common/pic_1.png" alt="">
+        </div>
+        <div class="name">
+            <h5>多肉组合盆栽</h5>
+            <p>￥89.5</p>
+            <img src="../../../img/My/my_icon_check_green.png" alt="">
+        </div>
+    </div>
+    <div class="list">
+        <div class="img">
+            <img src="../../../img/Common/pic_1.png" alt="">
+        </div>
+        <div class="name">
+            <h5>多肉组合盆栽</h5>
+            <p>￥89.5</p>
+            <img src="../../../img/My/my_icon_checkoff.png" alt="">
+        </div>
+    </div>
+    <div class="list">
+        <div class="img">
+            <img src="../../../img/Common/pic_1.png" alt="">
+        </div>
+        <div class="name">
+            <h5>多肉组合盆栽</h5>
+            <p>￥89.5</p>
+            <img src="../../../img/My/my_icon_check_green.png" alt="">
+        </div>
+    </div>
+    <div class="list">
+        <div class="img">
+            <img src="../../../img/Common/pic_1.png" alt="">
+        </div>
+        <div class="name">
+            <h5>多肉组合盆栽</h5>
+            <p>￥89.5</p>
+            <img src="../../../img/My/my_icon_checkoff.png" alt="">
+        </div>
+    </div>
+</div>
+
+<nav class="mui-bar mui-bar-tab">
+    <img src="../../../img/My/my_icon_checkoff.png">
+    <p>全选</p>
+    <input type="button" value="取消收藏">
+</nav>
+<script src="../../../Script/CommonJS/Base.js"></script>
+<script>
+    function text() {
+        for (var i = 0;i<mui('.list').length;i++){
+            mui('.list')[i].style.display = 'block'
+        }
+        mui('.none')[0].style.display = 'none'
+        setTimeout(function () {
+            for (var i = 0;i<mui('.list').length;i++){
+                mui('.list')[i].style.display = 'none'
+            }
+            mui('.none')[0].style.display = 'block'
+            setTimeout(function () {
+                text()
+            },1000)
+        },1000)
+    }
+//    text()
+</script>
+</body>
+</html>

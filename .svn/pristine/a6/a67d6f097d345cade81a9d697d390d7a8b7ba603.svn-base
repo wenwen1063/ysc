@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>成为搭档</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/partners.css" rel="stylesheet">
+    <link href="__PUBLIC__/Wx/CSS/BusinessCSS/editstyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="__PUBLIC__/Wx/CSS/BusinessCSS/index.css">
+    <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+    <style>
+    html,
+    body {
+        /*font-size: 14px;*/
+        height: 100% !important;
+        background: #F1F2F6 !important;
+        color: #444 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        font-family: sans-serif !important;
+        font-style: normal !important;
+        margin: auto !important;
+        /*text-align: center !important;*/
+    }
+
+    .clear_both {
+        clear: both;
+    }
+
+    #header {
+        float: left;
+    }
+
+    #header img {
+        height: 100%;
+        float: left;
+    }
+
+    .float_div {
+        width: 100%;
+        background: #fff;
+        float: left;
+    }
+
+    .float_div .width_33 {
+        width: 33.33333%;
+        float: left;
+        display: inline-block;
+        text-align: center;
+        padding: 20px 10px;
+    }
+
+    .float_div .width_33:not(:last-child) {
+        border-right: 1px solid #eee;
+    }
+
+    .float_div .width_33 h5 {
+        color: #33e060;
+        font-size: 15px;
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
+    .float_div .width_33:nth-child(2) h5 {
+        color: #E567D2;
+    }
+
+    .float_div .width_33:nth-child(3) h5 {
+        color: #FEBA00;
+    }
+
+    .float_div .width_33 img {
+        width: 100%;
+        width: 60px;
+    }
+
+    #content {
+        height: auto;
+    }
+    </style>
+</head>
+
+<body style="margin-bottom: 0;">
+    <!--<header class="mui-bar mui-bar-nav header">
+        <a href="{:U('/home/index/index')}" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">成为搭档</h1>
+    </header>-->
+    <div id="header">
+        <img src="__PUBLIC__/Uploads/{$hai['img']}" alt="">
+    </div>
+    <div class="float_div">
+        <foreach name="data" item="v">
+            <div class="width_33 power">
+                <input type="hidden" name="p_id" id="p_id" value="{$v['id']}">
+                <h5 onclick="partner()">{$v['name']}</h5>
+                <img src="__PUBLIC__/Uploads/{$v['ico']}" alt="">
+            </div>
+        </foreach>
+    </div>
+    <div class="clear_both"></div>
+    <!--<div id="classification">
+            <foreach name="data" item="v">
+                <div class="list power">
+                    <input type="hidden" name="p_id" id="p_id" value="{$v['id']}">
+                      <input type="hidden" name="software" id="software" value="{$v['software_cost']}">
+            <input type="hidden" name="amount" id="amount" value="{$v['consumption_amount']}">
+                    <p style="color: #33e060" onclick="partner()">{$v['name']}</p>
+                    <div class="img">
+                        <img src="__PUBLIC__/Uploads/{$v['ico']}" alt="">
+                    </div>
+                </div>
+            </foreach>
+        </div>-->
+    <div id="content">
+        <div class="titlediv">
+            <span class="spanttl">搭档规则</span>
+        </div>
+        <div class="titlediv_left">
+            <span class="spanttl">搭档条件</span>
+        </div>
+        <div class="tiao">
+            <foreach name="datas" item="va">
+                <p>{$va['name']}:支付软件使用费<span>{$va['software_cost']}</span>元,或累计消费<span>{$va['consumption_amount']}</span>元</p>
+            </foreach>
+        </div>
+        <div class="titlediv_left padded_t_0">
+            <span class="spanttl">搭档福利</span>
+        </div>
+        <div class="te">
+            <table border="1">
+                <tr>
+                    <th></th>
+                    <foreach name="datas" item="vb">
+                        <th>{$vb['name']}</th>
+                    </foreach>
+                </tr>
+                <tr>
+                    <td>软件使用</td>
+                    <td>{$info['rcg']}</td>
+                    <td>{$info['rjy']}</td>
+                    <td>{$info['rgz']}</td>
+                </tr>
+                <tr>
+                    <td>交通意外险</td>
+                    <td>{$info['jcg']}</td>
+                    <td>{$info['jjy']}</td>
+                    <td>{$info['jgz']}</td>
+                </tr>
+                <tr>
+                    <td>线上培训</td>
+                    <td>{$info['xcg']}</td>
+                    <td>{$info['xjy']}</td>
+                    <td>{$info['xgz']}</td>
+                </tr>
+                <tr>
+                    <td>收款工具</td>
+                    <td>{$info['scg']}</td>
+                    <td>{$info['sjy']}</td>
+                    <td>{$info['sgz']}</td>
+                </tr>
+                <tr>
+                    <td>话费折扣</td>
+                    <td>{$info['hcg']}</td>
+                    <td>{$info['hjy']}</td>
+                    <td>{$info['hgz']}</td>
+                </tr>
+                <tr>
+                    <td>流量折扣</td>
+                    <td>ndsp{$info['lcg']}</br>{$info['lscg']}</td>
+                    <td>{$info['ljy']}</br>{$info['lsjy']}</td>
+                    <td>{$info['lgz']}</br>{$info['lsgz']}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="titlediv_left padded_t_0">
+            <span class="spanttl">搭档返佣</span>
+        </div>
+        <div class="fan">
+            <table border="1">
+                <tr>
+                    <th style="color:#6ac4ff;">推荐奖励</th>
+                    <th>草根搭档</th>
+                    <th>精英搭档</th>
+                    <th>贵族搭档</th>
+                </tr>
+                <tr>
+                    <td>一级</td>
+                    <foreach name="pone" item="p">
+                        <td>{$p['amount']}</td>
+                    </foreach>
+                </tr>
+                <tr>
+                    <td>二级</td>
+                    <foreach name="ptwo" item="o">
+                        <td>{$o['amount']}</td>
+                    </foreach>
+                </tr>
+                <tr>
+                    <td>三级</td>
+                    <foreach name="pth" item="u">
+                        <td>{$u['amount']}</td>
+                    </foreach>
+                </tr>
+            </table>
+        </div>
+        <div class="fan" style="position: relative;">
+            <table border="1">
+                <tr>
+                    <th style="color:#6ac4ff;">销售奖励</th>
+                    <th>草根搭档</th>
+                    <th>精英搭档</th>
+                    <th>贵族搭档</th>
+                </tr>
+                <tr>
+                    <td>一级</td>
+                    <foreach name="xiaos" item="l">
+                        <td>{$l['rate']}%</td>
+                    </foreach>
+                </tr>
+                <tr>
+                    <td>二级</td>
+                    <foreach name="xiaor" item="k">
+                        <td>{$k['rate']}%</td>
+                    </foreach>
+                </tr>
+                <tr>
+                    <td>三级</td>
+                    <foreach name="xiaoa" item="j">
+                        <td>{$j['rate']}%</td>
+                    </foreach>
+                </tr>
+                <tr style="border-color: #E0E0E0;height: 40px;">
+                    <td colspan="4" style="border: none;">备注: <span style="color: #FE504F;">因产品而异，相应搭档级别最高可享受以上对应奖励</span>
+                    </td>
+                    <td class="td"></td>
+                    <td class="td"></td>
+                    <td class="td"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="titlediv_left padded_t_0">
+            <span class="spanttl">搭档介绍</span>
+        </div>
+        <div class="jie">
+                <p>{$info['cgname']}</p>
+           </div>
+            
+        <!--<foreach name="data" item="je">-->
+            <!--<div class="jie">
+                <p>{$je['name']}:{$je['introduce']}</p>
+            </div>-->
+        <!--</foreach>-->
+    </div>
+    <div id="popupnones" style="display: none">
+        <div class="popup" style="left:12.5% ;width: 75%;top:50%">
+            <span class="name" id="pname">草根搭档</span>
+            <div class="money">
+                <input type="hidden" id="pp_id" name="pp_id" value="">
+                <p class="zhifu">支付软件使用费
+                    <a id="fee">0</a>元
+                    <input class="sss" type="button" value="申请">
+                </p>
+                <p class="xiaofei">累计消费金额
+                    <a id="amount" class="price">0</a>元
+                    <input type="button" class="aaa" value="申请">
+                </p>
+            </div>
+        </div>
+    </div>
+    <script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/index/js/template.js"></script>
+    <script type="text/javascript">
+    $(".power").click(function() {
+        var id = $(this).children("input").val();
+        $.ajax({
+            url: "{:U('/home/partners/bpartner')}",
+            type: "post",
+            data: {
+                "id": id
+            },
+            dataType: "json",
+            success: function(data) {
+                console.log(data);
+                if (data['result'] == 0) {
+                    $('#pname').html(data['name']);
+                    $('#fee').html(data['fee']);
+                    $('#amount').html(data['amount']);
+                    $("#popupnones").css('display', 'block');
+                }
+                if (data['result'] == 1) {
+                    mui.toast('错误');
+                }
+                $("#popupnones").click(function() {
+                    $("#popupnones").css('display', 'none');
+                });
+                $(".sss").click(function() {
+                    window.location.href = "__ROOT__/wx.php/home/extension/extensionlist";
+                });
+                $(".aaa").click(function() {
+                    var price = $(this).find('.price').val();
+                    $.ajax({
+                        url: "{:U('/home/partners/bpartner')}",
+                        type: "post",
+                        data: {
+                            "id": id,"price":price
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            console.log(data);
+                            if (data['result'] == 0) {
+                                mui.toast('申请成功！');
+                                // $('#pname').html(data['name']);
+                                // $('#fee').html(data['fee']);
+                                // $('#amount').html(data['amount']);
+                                // $("#popupnones").css('display', 'block');
+                            }
+                            if (data['result'] == 1) {
+                                mui.toast('错误！');
+                            }
+                        }
+                    })
+                });
+            }
+        })
+    });
+    </script>
+    <!--  <script>
+
+    function all() {
+        var p_id = $(this).children("input").val();
+        var number = $('#amount').val();
+        $.ajax({
+            url: "{:U('/home/partners/bepartner')}",
+            type: "post",
+            data: {
+                "p_id": p_id,
+                "all_fee": number
+            },
+            dataType: "json",
+            success: function(data) {
+                console.log(data);
+                if (data['result'] == 0) {
+                }
+                if (data['result'] == 1) {
+                }
+            }
+        })
+    }
+    </script> -->
+</body>
+
+</html>

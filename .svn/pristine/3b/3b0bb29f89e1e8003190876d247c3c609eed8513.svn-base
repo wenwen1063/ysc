@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>提交订单</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="../../CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="../../CSS/BusinessCSS/ShoppingCart/placeorder.css" rel="stylesheet">
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">提交订单</h1>
+</header>
+<div class="yes">
+    <img src="../../img/ShoppingCart/default_success.png" alt="">
+    <p>订单提交成功！请耐心等待</p>
+    <div class="input">
+        <input type="button" value="去逛逛首页">
+        <input class="red" type="button" value="查看订单">
+    </div>
+</div>
+</body>
+</html>

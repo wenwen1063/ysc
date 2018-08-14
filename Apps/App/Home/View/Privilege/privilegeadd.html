@@ -1,0 +1,765 @@
+<!--index -->
+<include file="public:index" />
+<link href="__PUBLIC__/admin/lib/icheck/icheck.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/admin/lib/Hui-iconfont/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/admin/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/ueditor/ueditor.config.js"></script>
+<script src="__PUBLIC__/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/timejs/laydate.js"></script>
+<sc>
+	<!--index-->
+	<style type="text/css">
+		.file {
+			position: relative;
+			display: inline-block;
+			cursor: pointer;
+			background: #3bb4f2;
+			padding: 4px 12px;
+			color: #fff;
+			text-align: center;
+			border-radius: 3px;
+			overflow: hidden;
+		}
+		
+		.file input {
+			position: absolute;
+			font-size: 100px;
+			right: 0;
+			top: 0;
+			opacity: 1;
+		}
+		
+		.file:hover {
+			background: #AADFFD;
+			border-color: #78C3F3;
+			color: #004974;
+			text-decoration: none;
+		}
+	</style>
+	<style type="text/css">
+		.searchable-select-hide {
+			display: none;
+		}
+		
+		.searchable-select {
+			display: inline-block;
+			min-width: 200px;
+			font-size: 14px;
+			line-height: 1.428571429;
+			color: #555;
+			vertical-align: middle;
+			position: relative;
+			outline: none;
+		}
+		
+		.searchable-select-holder {
+			padding: 6px;
+			background-color: #fff;
+			background-image: none;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			min-height: 30px;
+			box-sizing: border-box;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+			-webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+			transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+		}
+		
+		.searchable-select-caret {
+			position: absolute;
+			width: 0;
+			height: 0;
+			box-sizing: border-box;
+			border-color: black transparent transparent transparent;
+			top: 0;
+			bottom: 0;
+			border-style: solid;
+			border-width: 5px;
+			margin: auto;
+			right: 10px;
+		}
+		
+		.searchable-select-dropdown {
+			position: absolute;
+			background-color: #fff;
+			border: 1px solid #ccc;
+			border-bottom-left-radius: 4px;
+			border-bottom-right-radius: 4px;
+			padding: 4px;
+			border-top: none;
+			top: 28px;
+			left: 0;
+			right: 0;
+			z-index: 999
+		}
+		
+		.searchable-select-input {
+			margin-top: 5px;
+			border: 1px solid #ccc;
+			outline: none;
+			padding: 4px;
+			width: 100%;
+			box-sizing: border-box;
+			width: 100%;
+		}
+		
+		.searchable-scroll {
+			margin-top: 4px;
+			position: relative;
+		}
+		
+		.searchable-scroll.has-privious {
+			padding-top: 16px;
+		}
+		
+		.searchable-scroll.has-next {
+			padding-bottom: 16px;
+		}
+		
+		.searchable-has-privious {
+			top: 0;
+		}
+		
+		.searchable-has-next {
+			bottom: 0;
+		}
+		
+		.searchable-has-privious,
+		.searchable-has-next {
+			height: 16px;
+			left: 0;
+			right: 0;
+			position: absolute;
+			text-align: center;
+			z-index: 10;
+			background-color: white;
+			line-height: 8px;
+			cursor: pointer;
+		}
+		
+		.searchable-select-items {
+			max-height: 400px;
+			overflow-y: scroll;
+			position: relative;
+		}
+		
+		.searchable-select-items::-webkit-scrollbar {
+			display: none;
+		}
+		
+		.searchable-select-item {
+			padding: 5px 5px;
+			cursor: pointer;
+			min-height: 30px;
+			box-sizing: border-box;
+		}
+		
+		.searchable-select-item.hover {
+			background: #555;
+			color: white;
+		}
+		
+		.searchable-select-item.selected {
+			background: #28a4c9;
+			color: white;
+		}
+	</style>
+	<title>新增搭档权限</title>
+	</head>
+
+	<body>
+		<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 系统 <span class="c-gray en">&gt;</span> 分销管理 <span class="c-gray en">&gt;</span> 搭档权限 <span class="c-gray en">&gt;</span> 新增
+			<a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回"><i class="Hui-iconfont">&#xe66b;</i></a>
+			<a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+		</nav>
+		<div class="pd-20">
+			<form action="{:U('/home/privilege/privilegeadd')}" name="main_form" method="post" class="form form-horizontal" id="form-article-add" enctype="multipart/form-data">
+				<input type="hidden" name="partner_id" id="partner_id" value="{$partner_id}" />
+				<div class="row cl">
+					<label class="form-label col-2"><span class="c-red">*</span>特权名称：</label>
+					<div class="formControls col-4">
+						<input type="text" class="input-text" value="" placeholder="输入特权名称" id="name" name="name">
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-2"><span class="c-red">*</span>产品类型：</label>
+					<div class="formControls col-4">
+						<select class="select" size="1" name="type" id="shoptype">
+							<option value="0">软件</option>
+							<option value="1">保险</option>
+							<option value="2">话费</option>
+							<option value="3">流量</option>
+							<option value="4">线上培训</option>
+							<option value="5">收款工具</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="row cl shopdiv" id="shopgood">
+					<label class="form-label col-2"><span class="c-red">*</span>特权产品：</label>
+					<div class="formControls col-4" id="goodss">
+						<!--<select class="select" size="1" id="privilege_products" name="privilege_products">
+
+            </select>-->
+					</div>
+				</div>
+
+				<div class="row cl shopdiv" id="shopnum">
+					<label class="form-label col-2"><span class="c-red">*</span>数量：</label>
+					<div class="formControls col-4">
+						<input type="text" class="input-text" value="" placeholder="输入特权名称" id="number" name="number">
+					</div>
+				</div>
+
+				<div class="row cl shopdiv" id="shopterm">
+					<label class="form-label col-2"><span class="c-red">*</span>使用期限：</label>
+					<div class="formControls col-4">
+						<select class="select" size="1" name="term" id="term">
+							<option value="1">一年期限</option>
+							<option value="2">二年期限</option>
+							<option value="3">三年期限</option>
+							<option value="4">四年期限</option>
+							<option value="5">五年期限</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="row cl shopdiv" id="shopflow">
+					<label class="form-label col-2"><span class="c-red">*</span>流量类型：</label>
+					<div class="formControls col-4">
+						<select class="select" size="1" name="flow_type">
+							<option value="2">省内流量</option>
+							<option value="1">国内流量</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="row cl shopdiv" id="shoprebate">
+					<label class="form-label col-2"><span class="c-red">*</span>折扣：</label>
+					<div class="formControls col-4">
+						<input type="text" class="input-text" value="" placeholder="输入折扣" id="rebate" name="rebate">
+					</div>
+				</div>
+
+				<div class="row cl shopdiv" id="shopfrequency">
+					<label class="form-label col-2"><span class="c-red">*</span>折扣频率：</label>
+					<div class="formControls col-4">
+						<select class="select" size="1" name="rebate_frequency">
+							<option value="1">每月</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="row cl shopdiv" id="shopquota">
+					<label class="form-label col-2"><span class="c-red">*</span>折扣限额：</label>
+					<div class="formControls col-4">
+						<input type="text" class="input-text" value="" placeholder="输入折扣限额" id="rebate_quota" name="rebate_quota">
+					</div>
+				</div>
+
+				<div class="row cl">
+					<label class="form-label col-2"><span class="c-red">*</span>产品图标：</label>
+					<div class="formControls col-5" style="width:10%;">
+						<a href="javascript:;" class="file">选择图片<input onchange="change()" type="file" id="sm_pic" name="sm_pic"></a>
+						<p></p>
+						<p id="smtext">
+							<img id="smpic" name="smpic" higth="100" width="100" />
+						</p>
+					</div>
+					<div class="col-4"> </div>
+				</div>
+
+				<div class="row cl shopdiv">
+					<label class="form-label col-2"><span class="c-red">*</span>备注：</label>
+					<div class="formControls col-4">
+						<input type="text" class="input-text" value="" placeholder="输入备注" id="remark" name="remark">
+					</div>
+				</div>
+
+				<div class="row cl">
+					<div class="col-10 col-offset-2">
+						<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;" onclick="return check()">
+					</div>
+				</div>
+			</form>
+		</div>
+		</div>
+		<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/admin/lib/layer/1.9.3/layer.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/admin/lib/My97DatePicker/WdatePicker.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/admin/lib/icheck/jquery.icheck.min.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/admin/lib/Validform/5.3.2/Validform.min.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/admin/lib/webuploader/0.1.5/webuploader.min.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/admin/js/H-ui.admin.js"></script>
+		<script type="text/javascript">
+			function check() {
+				
+				$type = $('#shoptype').val();
+				if($('#name').val() == "") {
+					alert("特权名称不能为空!");
+					return false;
+				}
+
+				if($type == 0) {
+					if($('#privilege_products').val() == "") {
+						alert("特权产品不能为空!");
+						return false;
+					}
+					if($('#number').val() == "") {
+						alert("数量不能为空!");
+						return false;
+					}
+					if($('#term').val() == "") {
+						alert("使用期限不能为空!");
+						return false;
+					}
+				} else if($type == 1) {
+					if($('#privilege_products').val() == "") {
+						alert("特权产品不能为空!");
+						return false;
+					}
+					if($('#number').val() == "") {
+						alert("数量不能为空!");
+						return false;
+					}
+					if($('#term').val() == "") {
+						alert("使用期限不能为空!");
+						return false;
+					}
+				} else if($type == 4) {
+					if($('#privilege_products').val() == "") {
+						alert("特权产品不能为空!");
+						return false;
+					}
+					if($('#number').val() == "") {
+						alert("数量不能为空!");
+						return false;
+					}
+
+				} else if($type == 2) {
+					if($('#rebate').val() == "") {
+						alert("折扣不能为空!");
+						return false;
+					}
+					if($('#rebate_quota').val() == "") {
+						alert("折扣限额不能为空!");
+						return false;
+					}
+
+				} else if($type == 3) {
+					if($('#rebate').val() == "") {
+						alert("折扣不能为空!");
+						return false;
+					}
+					if($('#rebate_quota').val() == "") {
+						alert("折扣限额不能为空!");
+						return false;
+					}
+				}
+				if($('#sm_pic').val() == "") {
+					alert("产品图标不能为空!");
+					return false;
+				}
+				return true;
+			}
+		</script>
+		<script type="text/javascript">
+			$(function() {
+				$type = $("#shoptype").val();
+				$("#shopgood").show();
+				getinfo($type);
+				$("#shopnum").show();
+				$("#shopterm").show();
+				$("#shopflow").hide();
+				$("#shoprebate").hide();
+				$("#shopfrequency").hide();
+				$("#shopquota").hide();
+			});
+			$("#shoptype").change(function() {
+				$type = $("#shoptype").val();
+				if($type == 2) {
+					$("#shopgood").hide();
+					$("#shopnum").hide();
+					$("#shopterm").hide();
+					$("#shopflow").hide();
+					$("#shoprebate").show();
+					$("#shopfrequency").show();
+					$("#shopquota").show();
+				} else if($type == 3) {
+					$("#shopgood").hide();
+					$("#shopnum").hide();
+					$("#shopterm").hide();
+					$("#shopflow").show();
+					$("#shoprebate").show();
+					$("#shopfrequency").show();
+					$("#shopquota").show();
+				} else if($type == 4||$type == 5) {
+					$("#shopgood").show();
+					getinfo($type);
+					$("#shopnum").show();
+					$("#shopterm").hide();
+					$("#shopflow").hide();
+					$("#shoprebate").hide();
+					$("#shopfrequency").hide();
+					$("#shopquota").hide();
+				} else {
+					$("#shopgood").show();
+					getinfo($type);
+					$("#shopnum").show();
+					$("#shopterm").show();
+					$("#shopflow").hide();
+					$("#shoprebate").hide();
+					$("#shopfrequency").hide();
+					$("#shopquota").hide();
+				}
+			})
+
+			function getinfo($id) {
+				$.ajax({
+					type: "post",
+					url: "{:U('home/privilege/getinfo')}",
+					data: {
+						id: $id
+					},
+					async: true,
+					success: function(data) {
+						console.log(data);
+						$("#goodss").empty();
+						$("#goodss").append("<select class='select' size='1' id='privilege_products' name='privilege_products'></select>");
+						for(var i = 0; i < data.length; i++) {
+							console.log(data[i]['id']);
+							$("#privilege_products").append("<option value='" + data[i]['id'] + "'>" + data[i]['name'] + "</option>");
+						}
+						$('#privilege_products').searchableSelect();
+					}
+				});
+			}
+		</script>
+
+		<script type="text/javascript">
+			//$(function(){
+			//	$('#privilege_products').searchableSelect();
+			//})
+			var strid = '';
+			(function($) {
+				// a case insensitive jQuery :contains selector
+				$.expr[":"].searchableSelectContains = $.expr.createPseudo(function(arg) {
+					return function(elem) {
+						return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+					};
+				});
+
+				$.searchableSelect = function(element, options) {
+					this.element = element;
+					this.options = options || {};
+					this.init();
+
+					var _this = this;
+
+					this.searchableElement.click(function(event) {
+						// event.stopPropagation();
+						_this.show();
+					}).on('keydown', function(event) {
+						if(event.which === 13 || event.which === 40 || event.which == 38) {
+							event.preventDefault();
+							_this.show();
+						}
+					});
+
+					$(document).on('click', null, function(event) {
+						if(_this.searchableElement.has($(event.target)).length === 0)
+							_this.hide();
+					});
+
+					this.input.on('keydown', function(event) {
+						event.stopPropagation();
+						if(event.which === 13) { //enter
+							event.preventDefault();
+							_this.selectCurrentHoverItem();
+							_this.hide();
+						} else if(event.which == 27) { //ese
+							_this.hide();
+						} else if(event.which == 40) { //down
+							_this.hoverNextItem();
+						} else if(event.which == 38) { //up
+							_this.hoverPreviousItem();
+						}
+					}).on('keyup', function(event) {
+						if(event.which != 13 && event.which != 27 && event.which != 38 && event.which != 40)
+							_this.filter();
+					})
+
+				}
+
+				var $sS = $.searchableSelect;
+
+				$sS.fn = $sS.prototype = {
+					version: '0.0.1'
+				};
+
+				$sS.fn.extend = $sS.extend = $.extend;
+
+				$sS.fn.extend({
+					init: function() {
+						var _this = this;
+						this.element.hide();
+
+						this.searchableElement = $('<div tabindex="0" class="searchable-select"></div>');
+						this.holder = $('<div class="searchable-select-holder"></div>');
+						this.dropdown = $('<div class="searchable-select-dropdown searchable-select-hide"></div>');
+						this.input = $('<input type="text" class="searchable-select-input" />');
+						this.items = $('<div class="searchable-select-items"></div>');
+						this.caret = $('<span class="searchable-select-caret"></span>');
+
+						this.scrollPart = $('<div class="searchable-scroll"></div>');
+						this.hasPrivious = $('<div class="searchable-has-privious">...</div>');
+						this.hasNext = $('<div class="searchable-has-next">...</div>');
+
+						this.hasNext.on('mouseenter', function() {
+							_this.hasNextTimer = null;
+
+							var f = function() {
+								var scrollTop = _this.items.scrollTop();
+								_this.items.scrollTop(scrollTop + 20);
+								_this.hasNextTimer = setTimeout(f, 50);
+							}
+
+							f();
+						}).on('mouseleave', function(event) {
+							clearTimeout(_this.hasNextTimer);
+						});
+
+						this.hasPrivious.on('mouseenter', function() {
+							_this.hasPriviousTimer = null;
+
+							var f = function() {
+								var scrollTop = _this.items.scrollTop();
+								_this.items.scrollTop(scrollTop - 20);
+								_this.hasPriviousTimer = setTimeout(f, 50);
+							}
+
+							f();
+						}).on('mouseleave', function(event) {
+							clearTimeout(_this.hasPriviousTimer);
+						});
+
+						this.dropdown.append(this.input);
+						this.dropdown.append(this.scrollPart);
+
+						this.scrollPart.append(this.hasPrivious);
+						this.scrollPart.append(this.items);
+						this.scrollPart.append(this.hasNext);
+
+						this.searchableElement.append(this.caret);
+						this.searchableElement.append(this.holder);
+						this.searchableElement.append(this.dropdown);
+						this.element.after(this.searchableElement);
+
+						this.buildItems();
+						this.setPriviousAndNextVisibility();
+					},
+
+					filter: function() {
+						var text = this.input.val();
+						this.items.find('.searchable-select-item').addClass('searchable-select-hide');
+						this.items.find('.searchable-select-item:searchableSelectContains(' + text + ')').removeClass('searchable-select-hide');
+						if(this.currentSelectedItem.hasClass('searchable-select-hide') && this.items.find('.searchable-select-item:not(.searchable-select-hide)').length > 0) {
+							this.hoverFirstNotHideItem();
+						}
+
+						this.setPriviousAndNextVisibility();
+					},
+
+					hoverFirstNotHideItem: function() {
+						this.hoverItem(this.items.find('.searchable-select-item:not(.searchable-select-hide)').first());
+					},
+
+					selectCurrentHoverItem: function() {
+						if(!this.currentHoverItem.hasClass('searchable-select-hide'))
+							this.selectItem(this.currentHoverItem);
+					},
+
+					hoverPreviousItem: function() {
+						if(!this.hasCurrentHoverItem())
+							this.hoverFirstNotHideItem();
+						else {
+							var prevItem = this.currentHoverItem.prevAll('.searchable-select-item:not(.searchable-select-hide):first')
+							if(prevItem.length > 0)
+								this.hoverItem(prevItem);
+						}
+					},
+
+					hoverNextItem: function() {
+						if(!this.hasCurrentHoverItem())
+							this.hoverFirstNotHideItem();
+						else {
+							var nextItem = this.currentHoverItem.nextAll('.searchable-select-item:not(.searchable-select-hide):first')
+							if(nextItem.length > 0)
+								this.hoverItem(nextItem);
+						}
+					},
+
+					buildItems: function() {
+						var _this = this;
+						this.element.find('option').each(function() {
+							var item = $('<div class="searchable-select-item" data-value="' + $(this).attr('value') + '">' + $(this).text() + '</div>');
+
+							if(this.selected) {
+								_this.selectItem(item);
+								_this.hoverItem(item);
+							}
+
+							item.on('mouseenter', function() {
+								$(this).addClass('hover');
+							}).on('mouseleave', function() {
+								$(this).removeClass('hover');
+							}).click(function(event) {
+								event.stopPropagation();
+								_this.selectItem($(this));
+								_this.hide();
+							});
+
+							_this.items.append(item);
+						});
+
+						this.items.on('scroll', function() {
+							_this.setPriviousAndNextVisibility();
+						})
+					},
+					show: function() {
+						this.dropdown.removeClass('searchable-select-hide');
+						this.input.focus();
+						this.status = 'show';
+						this.setPriviousAndNextVisibility();
+					},
+
+					hide: function() {
+						if(!(this.status === 'show'))
+							return;
+
+						if(this.items.find(':not(.searchable-select-hide)').length === 0)
+							this.input.val('');
+						this.dropdown.addClass('searchable-select-hide');
+						this.searchableElement.trigger('focus');
+						this.status = 'hide';
+					},
+
+					hasCurrentSelectedItem: function() {
+						return this.currentSelectedItem && this.currentSelectedItem.length > 0;
+					},
+					selectItem: function(item) {
+						if(this.hasCurrentSelectedItem())
+							this.currentSelectedItem.removeClass('selected');
+
+						this.currentSelectedItem = item;
+						item.addClass('selected');
+
+						this.hoverItem(item);
+
+						this.holder.text(item.text());
+						var value = item.data('value'); //当前选择的门店的value
+
+						this.holder.data('value', value);
+						this.element.val(value);
+						if(this.options.afterSelectItem) {
+							this.options.afterSelectItem.apply(this);
+						}
+
+					},
+
+					hasCurrentHoverItem: function() {
+						return this.currentHoverItem && this.currentHoverItem.length > 0;
+					},
+
+					hoverItem: function(item) {
+						if(this.hasCurrentHoverItem())
+							this.currentHoverItem.removeClass('hover');
+
+						if(item.outerHeight() + item.position().top > this.items.height())
+							this.items.scrollTop(this.items.scrollTop() + item.outerHeight() + item.position().top - this.items.height());
+						else if(item.position().top < 0)
+							this.items.scrollTop(this.items.scrollTop() + item.position().top);
+
+						this.currentHoverItem = item;
+						item.addClass('hover');
+					},
+
+					setPriviousAndNextVisibility: function() {
+						if(this.items.scrollTop() === 0) {
+							this.hasPrivious.addClass('searchable-select-hide');
+							this.scrollPart.removeClass('has-privious');
+						} else {
+							this.hasPrivious.removeClass('searchable-select-hide');
+							this.scrollPart.addClass('has-privious');
+						}
+
+						if(this.items.scrollTop() + this.items.innerHeight() >= this.items[0].scrollHeight) {
+							this.hasNext.addClass('searchable-select-hide');
+							this.scrollPart.removeClass('has-next');
+						} else {
+							this.hasNext.removeClass('searchable-select-hide');
+							this.scrollPart.addClass('has-next');
+						}
+					}
+				});
+
+				$.fn.searchableSelect = function(options) {
+					this.each(function() {
+						var sS = new $sS($(this), options);
+					});
+
+					return this;
+				};
+
+			})(jQuery);
+		</script>
+
+		<script type="text/javascript">
+			function change() {
+				var pic = document.getElementById("smpic"),
+					file = document.getElementById("sm_pic");
+
+				var ext = file.value.substring(file.value.lastIndexOf(".") + 1).toLowerCase();
+
+				// gif在IE浏览器暂时无法显示
+				if(ext != 'png' && ext != 'jpg' && ext != 'jpeg') {
+					alert("图片的格式必须为png或者jpg或者jpeg格式！");
+					return;
+				}
+				var isIE = navigator.userAgent.match(/MSIE/) != null,
+					isIE6 = navigator.userAgent.match(/MSIE 6.0/) != null;
+
+				if(isIE) {
+					file.select();
+					var reallocalpath = document.selection.createRange().text;
+
+					// IE6浏览器设置img的src为本地路径可以直接显示图片
+					if(isIE6) {
+						pic.src = reallocalpath;
+					} else {
+						// 非IE6版本的IE由于安全问题直接设置img的src无法显示本地图片，但是可以通过滤镜来实现
+						pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image',src=\"" + reallocalpath + "\")";
+						// 设置img的src为base64编码的透明图片 取消显示浏览器默认图片
+						pic.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+					}
+				} else {
+					html5Reader(file);
+				}
+			}
+
+			function html5Reader(file) {
+				var file = file.files[0];
+				var reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = function(e) {
+					var pic = document.getElementById("smpic");
+					pic.src = this.result;
+				}
+			}
+		</script>
+
+	</body>
+
+	</html>

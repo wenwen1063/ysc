@@ -1,0 +1,87 @@
+body {
+    overflow-x: hidden;
+}
+
+.mui-bar {
+    position: relative;
+    background-color: #ff5353;
+    height: 45px;
+}#content{
+    width: 100%;
+    overflow-x: hidden;
+ }
+
+.mui-title, .mui-action-back {
+    font-weight: 100;
+    color: #FFFFFF;
+}
+
+#content {
+    position: relative;
+    top: 10px;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+}
+
+#content .list {
+    position: relative;
+    left: 5%;
+    height: 111px;
+    border-bottom: 1px solid #efeff4;
+}
+
+#content .list .img {
+    position: relative;
+    top: 12px;
+}
+
+#content .list .img img {
+    border-radius: 5px;
+}
+
+#content .list div {
+    float: left;
+}
+
+#content .list span, del {
+    color: #4a4a4a;
+}
+
+#content .list .name {
+    position: relative;
+    top: 12px;
+    width: 60%;
+    left: 20px;
+}
+
+#content .list .money {
+    position: relative;
+    top: 50px;
+    left: 20px;
+    width: 65%;
+}
+
+#content .list .money span {
+    position: relative;
+    color: #ff5353;
+}
+
+#content .list .money del {
+    position: relative;
+    left: 10px;
+    font-size: 14px;
+}
+
+#content .list .money .red {
+    padding-top: 5px;
+    position: relative;
+    font-size: 12px;
+    float: right;
+    height: 26px;
+    width: 50px;
+    border-radius: 5px;
+    color: #ff5353;
+    border: 1px solid #ff5353;
+}

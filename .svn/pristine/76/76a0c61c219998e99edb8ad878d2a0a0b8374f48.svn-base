@@ -1,0 +1,19 @@
+.mui-card{
+    padding: 0;
+    margin: 0;
+}
+.mui-table-view-cell{
+    height:50px;
+}
+
+.mui-table-view-cell .mui-badge img{
+    width: 35px;
+
+}
+.mui-badge{
+    background-color: #FFFFFF;
+}
+.mui-table-view{
+    font-weight: 100;
+    color: #4a4a4a;
+}

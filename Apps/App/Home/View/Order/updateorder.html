@@ -1,0 +1,110 @@
+<!--index -->
+<include file="public:index" />
+<!--index-->
+<title>订单发货</title>
+</head>
+
+<body>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 系统 <span class="c-gray en">&gt;</span> 订单管理 <span class="c-gray en">&gt;</span> 订单信息<span class="c-gray en">&gt;</span> 编辑<a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" onClick="javascript :history.go(-1);" title="返回"><i class="Hui-iconfont">&#xe66b;</i></a><a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="pd-20">
+        <form action="{:U('/home/order/updateorder')}" method="post" name="main_form" class="form form-horizontal" id="form-admin-add">
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>订单编号：</label>
+                <div class="formControls col-5">
+                    <input type="text" class="input-text" value="{$order['id']}" placeholder="请输出订单编号" id="order_id" name="order_id" datatype="*2-16" readOnly="true">
+                </div>
+                <div class="col-4"> </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>收货人：</label>
+                <div class="formControls col-5">
+                    <input type="text" class="input-text" value="{$order['contact']}" id="contact" name="contact" datatype="*2-16">
+                </div>
+                <div class="col-4"> </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>联系电话：</label>
+                <div class="formControls col-5">
+                    <input type="text" class="input-text" value="{$order['phone']}" maxlength="11" id="tel" name="tel" datatype="*2-16" onkeyup="value=value.replace(/[\W]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" ID="Text1">
+                </div>
+                <div class="col-4"> </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>收货地址（省市区）：</label>
+                <div class="formControls col-5">
+                    <input type="text" class="input-text" value="{$order['province']}-{$order['city']}-{$order['district']}" id="shengshiqu" name="shengshiqu" datatype="*2-16">
+                </div>
+                <div class="col-4"> </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">*</span>收货地址（详细地址）：</label>
+                <div class="formControls col-5">
+                    <input type="text" class="input-text" value="{$order['address']}" id="address" name="address" datatype="*2-16">
+                </div>
+                <div class="col-4"> </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3">订单备注：</label>
+                <div class="formControls col-5">
+                    <textarea name="note" cols="" rows="" class="textarea" placeholder="" datatype="*10-100" dragonfly="true" onKeyUp="textarealength(this,200)">{$order['note']}</textarea>
+                    <p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+                </div>
+                <div class="col-4"> </div>
+            </div>
+            <div class="row cl">
+                <div class="col-9 col-offset-3">
+                    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;" onclick="return check()">
+                    <input class="btn btn-primary radius" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;">
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/lib/icheck/jquery.icheck.min.js"></script>
+    <script type="text/javascript">
+    function check() {
+        //form1是form中的name属性
+        var _form = document.main_form;
+        if (trim(_form.order_id.value) == "") {
+            alert("订单编号不能为空!");
+            return false;
+        }
+        if (trim(_form.consignee.value) == "") {
+            alert("收货人不能为空!");
+            return false;
+        }
+        if (trim(_form.address.value) == "") {
+            alert("售后地址不能为空!");
+            return false;
+        }
+        if (trim(_form.tel.value) == "") {
+            alert("电话不能为空!");
+            return false;
+        }
+        return true;
+    }
+
+    function trim(s) {
+        var count = s.length;
+        var st = 0; // start
+        var end = count - 1; // end
+
+        if (s == "") return s;
+        while (st < count) {
+            if (s.charAt(st) == " ")
+                st++;
+            else
+                break;
+        }
+        while (end > st) {
+            if (s.charAt(end) == " ")
+                end--;
+            else
+                break;
+        }
+        return s.substring(st, end + 1);
+    }
+    </script>
+</body>
+
+</html>

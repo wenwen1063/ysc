@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>订单详情</title>
+		<meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link href="__PUBLIC__/Wx/CSS/CommonCSS/Base.css" rel="stylesheet">
+		<link href="__PUBLIC__/Wx/CSS/BusinessCSS/Myorder/Orderdetails.css" rel="stylesheet">
+		<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+	</head>
+
+	<body>
+		<!--<header class="mui-bar mui-bar-nav header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">订单详情</h1>
+		</header>-->
+		<span class="title">商品信息</span>
+		<foreach name="info" item="v" key="key">
+			<div class="xin">
+				<div class="img">
+					<img src="__PUBLIC__/Uploads/{$v['sm_pic']}">
+				</div>
+				<h5>{$v['goods_name']}</h5>
+				<if condition="$v['og_is_shouhou'] eq 1">
+				<span>
+					<if condition="$v['og_status'] eq 0">
+					<a class=" mui-active status">待通过售后</a>
+					<elseif condition="$data['status'] eq 1" />
+					<a class=" status">退货中</a>
+					<elseif condition="$data['status'] eq 2" />
+					<a class=" status">退款中</a>
+					<elseif condition="$data['status'] eq 4" />
+					<a class=" status">已完成 </a>
+					<elseif condition="$data['status'] eq 5" />
+					<a class=" status">拒绝退货 </a>
+					<elseif condition="$data['status'] eq 6" />
+					<a class="status">拒绝退款 </a>
+				</if>
+				</span>
+				</if>
+				<p>￥{$v['shop_price']}&numsp;&numsp;&numsp;<span>{$v['goods_number']}</span></p>
+			</div>
+		</foreach>
+		<span class="title">地址详情</span>
+		<div class="bian">
+			<p>订单编号：{$info[0]['order_number']}</p>
+			<p>收&numsp;货&numsp;人：{$info[0]['contact']}</p>
+			<p>手机号码：{$info[0]['province']}{$info[0]['city']}{$info[0]['district']}{$info[0]['address']}</p>
+			<p>收货地址：{$info[0]['contact']}</p>
+			<p>订单状态：<span>
+    	<if condition="$info[0]['order_status'] eq 0">待付款
+			<elseif condition="$info[0]['order_status'] eq 1"/>待发货
+			<elseif condition="$info[0]['order_status'] eq 2"/>待收货
+			<elseif condition="$info[0]['order_status'] eq 3"/>待评价
+			<elseif condition="$info[0]['order_status'] eq 4"/>已完成
+		</if>     
+    </span></p>
+			<p>订单备注：{$info[0]['note']}</p>
+			<if condition="$evaluation neq ''">
+				<p>订单评分：
+					<if condition="$evaluation['score'] eq 0">
+						<a><span>☆☆☆☆☆</span></a>
+						<elseif condition="$evaluation['score'] eq 1" />
+						<a>★<span>☆☆☆☆</span></a>
+						<elseif condition="$evaluation['score'] eq 2" />
+						<a>★★<span>☆☆☆</span></a>
+						<elseif condition="$evaluation['score'] eq 3" />
+						<a>★★★<span>☆☆</span></a>
+						<elseif condition="$evaluation['score'] eq 4" />
+						<a>★★★★<span>☆</span></a>
+						<else />
+						<a>★★★★★<span></span></a>
+					</if>
+				</p>
+				<p>订单评价：{$evaluation['content']}</p>
+			</if>
+		</div>
+		<span class="title">费用详情</span>
+		<div class="bian">
+			<if condition="$info[0]['order_from'] eq 0">
+			<!--<p>物流费用：￥521</p>-->
+			<p>优惠费用：{$con}</p>
+			<p>商品总额：{$info[0]['paid_price']}</p>
+			<else/>
+			 <p>商品总额(金币)：{$info[0]['gold']}</p>
+			</if>
+		</div>
+		<nav class="mui-bar mui-bar-tab">
+			<div class="fukuan">
+				<if condition="$info[0]['order_status'] eq 0">
+					<input class="red payment" type="button" oid="{$info[0]['id']}" order_number="{$info[0]['order_number']}" order_paid="{$info[0]['paid_price']}" value="马上付款">
+					<input type="button" class="quxiao" oid="{$info[0]['id']}" value="取消订单">
+					<elseif condition="$info[0]['order_status'] eq 1" />
+						<if condition="$info[0]['is_shouhou'] eq 0 and $info[0]['order_from'] eq 0">
+					   		<input type="button" class="shouhou"  oid="{$v[0]['id']}"  value="售后"/>
+						<else/>
+							<input type="button" class="cancelorder" oid="{$info[0]['id']}" value="删除订单">
+						</if>
+					<elseif condition="$info[0]['order_status'] eq 2" />
+						<if condition="$info[0]['is_shouhou'] eq 0 and $info[0]['order_from'] eq 0">
+					   		<input type="button" class="shouhou"  oid="{$v[0]['id']}"  value="售后"/>
+						<else/>
+							<input type="button" class="cancelorder" oid="{$info[0]['id']}" value="删除订单">
+						</if>
+					    <input class="red suregoods" type="button" oid="{$info[0]['id']}" value="确认收货">
+					<elseif condition="$info[0]['order_status'] eq 3" />
+					 <if condition="$info[0]['is_shouhou'] eq 0">
+						<else/>
+							<input type="button" class="cancelorder" oid="{$info[0]['id']}" value="删除订单">
+						</if>
+					    <input class="red evaluate" type="button" oid="{$info[0]['id']}" value="马上评价">
+					<elseif condition="$info[0]['order_status'] eq 4" />
+					<input type="button" class="cancelorder" oid="{$info[0]['id']}" value="删除订单">
+				</if>
+			</div>
+		</nav>
+	</body>
+	<script src="__PUBLIC__/Wx/Script/CommonJS/Base.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Wx/Script/ActiveXJS/mui.min.js"></script>
+	<script>
+		//  mui('#segmentedControl').on('tap', 'a', function () {
+		//
+		////        this.style.display = 'block'
+		//  })
+
+		function orderinfo(state) {
+			mui.openWindow({
+				url: "__ROOT__/wx.php/home/user/orderinfo?state=" + state,
+				id: 'orderinfo'
+			});
+		}
+		//详情页
+		$(".derdetail").click(function() {
+				$id = $(this).attr('oid');
+				mui.openWindow({
+					url: "__ROOT__/wx.php/home/user/orderdetails?order_no=" + $id,
+					id: 'orderinfo'
+				});
+			})
+			//支付
+		$(".payment").click(function() {
+				$id = $(this).attr('oid');
+				$order_number = $(this).attr('order_number');
+				$paid_price = $(this).attr('order_paid');
+				$order_ids = $order_number + $id;
+				mui.openWindow({
+					url: "__ROOT__/wx.php/home/pay/order_wxpay?id=" + $order_ids + "&allmoney=" + $paid_price,
+					id: 'orderinfo'
+				});
+			})
+			//确认收货
+		$(".suregoods").click(function() {
+			$id = $(this).attr('oid');
+			var btnArray = ['否', '是'];
+			mui.confirm('确定收货', ' ', btnArray, function(e) {
+				if(e.index == 1) {
+					mui.openWindow({
+						url: "__ROOT__/wx.php/home/user/suregoods?order_no=" + $id,
+						id: 'orderinfo'
+					});
+				} else {}
+			})
+		});
+
+		//马上评价
+		$(".evaluate").click(function() {
+				$id = $(this).attr('oid');
+				mui.openWindow({
+					url: "__ROOT__/wx.php/home/user/evaluate?order_no=" + $id,
+					id: 'orderinfo'
+				});
+			})
+			//取消订单
+		$(".quxiao").click(function() {
+			$id = $(this).attr('oid');
+			var btnArray = ['否', '是'];
+			mui.confirm('确定取消订单', ' ', btnArray, function(e) {
+				if(e.index == 1) {
+					mui.openWindow({
+						url: "__ROOT__/wx.php/home/user/cancelorder?order_no=" + $id,
+						id: 'orderinfo'
+					});
+				} else {}
+			})
+		});
+		//删除订单
+		$(".cancelorder").click(function() {
+			$id = $(this).attr('oid');
+			var btnArray = ['否', '是'];
+			mui.confirm('确定删除订单', ' ', btnArray, function(e) {
+				if(e.index == 1) {
+					mui.openWindow({
+						url: "__ROOT__/wx.php/home/user/cancelorder?order_no=" + $id,
+						id: 'orderinfo'
+					});
+				} else {}
+			})
+		});
+		//售后订单
+		$(".shouhou").click(function() {
+			$id = $(this).attr('oid');
+			var btnArray = ['否', '是'];
+			mui.confirm('确定申请售后服务', ' ', btnArray, function(e) {
+				if(e.index == 1) {
+					mui.openWindow({
+						url: "__ROOT__/wx.php/home/customer/customer?order_no=" + $id,
+						id: 'orderinfo'
+					});
+				} else {}
+			})
+		});
+	</script>
+
+</html>

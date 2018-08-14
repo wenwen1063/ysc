@@ -1,0 +1,31 @@
+.list .userm img {
+    width: 40px;
+    border-radius: 100px;
+    float: left;
+}
+
+.list {
+
+    position: relative;
+    top:10px;
+    background-color: #FFFFFF;
+    width: 100%;
+    padding: 0 10px;
+    padding-top: 10px;
+    height:145px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.list .name h4{
+    font-weight: 100;
+
+}
+.list .name{
+    position: absolute;
+    left:65px;
+}
+.list .name .other span{
+    color: #fe504f;
+}
+.list .name .other p{
+    height:10px;
+}

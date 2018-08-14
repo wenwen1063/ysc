@@ -1,0 +1,218 @@
+body {
+    overflow-x: hidden;
+}
+.mui-slider,
+
+#popup{
+    width: 100%;
+    overflow-x: hidden;
+}
+.mui-bar {
+    position: relative;
+    background-color: #ff5353;
+    height: 45px;
+}
+
+.mui-title, .mui-action-back {
+    font-weight: 100;
+    color: #FFFFFF;
+}
+
+#introduce{
+    position: relative;
+    height: 322px;
+    width: 100%;  
+    background-color: #FFFFFF;
+}
+
+#introduce .img img{
+    width: 100%;
+    height: 250px;
+}
+
+#introduce span{
+    font-size: 14px;
+    color: #4a4a4a;
+}
+#introduce .money .moneys{
+    font-size: 16px;
+    color: #ff5353;
+}
+#introduce .name{
+    position: relative;
+    top: 15px;
+}
+#introduce .name,.money{
+    position: relative;
+    left: 5%;
+}
+
+#introduce .money{
+    position: relative;
+    top: 15px;
+}
+
+#introduce .money del {
+    position: relative;
+    left: 10px;
+    font-size: 12px;
+}
+
+#introduce .money .stock,.volume{
+    position: relative;
+    left: 40px;
+}
+
+#introduce .money .volume{
+    position: relative;
+    left: 80px;
+}
+
+#download{
+    position: relative;
+    top: 10px;
+    width: 100%;
+    height: 100%;
+    background-color: #FFFFFF;
+}
+
+#download .img img{
+    height: 200px;
+    width: 100%;
+}
+
+#download .onclick{
+    position: relative;
+    margin-bottom: 30px;
+}
+
+#download .onclick .button{
+    width: 90%;
+    position: relative;
+    left: 5%;
+    height: 44px;
+    color:  #ff5353;
+    border: 1px solid  #ff5353;
+}
+#download .introduce  {
+    position: relative;
+    top: -20px;
+    width: 64px;
+    height: 28px;
+    margin: 0 auto;
+    border-bottom: 1px solid #ff5353;
+}
+#download .introduce span{
+    position: relative;
+    color: #4a4a4a;
+    font-size: 16px;
+}
+
+#download .content{
+    position: relative;
+    width: 90%;
+    left: 5%;
+
+}
+
+
+#download .content span{
+    color: #4a4a4a;
+    font-size: 14px;
+}
+
+#download .buy{
+    position: relative;
+    top: 20px;
+    background-color: #FFFFFF;
+}
+
+#download .buy input {
+    background-color: #ff5353;
+    left: 3%;
+    width: 94%;
+    color: #FFFFFF;
+    font-size: 16px;
+}
+
+#popup{
+    border-radius: 10px;
+    opacity: 1;
+    z-index: 999;
+    position: absolute;
+    top: 40%;
+    left: 10%;
+    padding:0px;
+    margin: 0px;
+    width: 80%;
+    height: 123px;
+    background-color: #FFFFFF;
+}
+#popup div{
+    opacity: 1
+}
+#popup .title{
+    position: relative;
+    top: 20px;
+    width: 80%;
+    left: 10%;
+}
+
+
+#popup .title span{
+    color: #4a4a4a;
+    font-size: 14px;
+    width: 100%;
+}
+
+#popup .button{
+    position: relative;
+    left: 15%;
+    width: 70%;
+    top: 35px;
+}   
+
+#popup .button input{
+    padding-top: 3px;
+    border-radius: 5px;
+    height: 25px;
+    width: 80px;
+}
+
+#popup .button .red{
+    float: right;
+    color: #FFFFFF;
+    background-color: #ff5353;
+}
+
+#mess h5{
+	position: relative;
+	top: 10px;
+	font-size: 15px;
+	color: #4A4A4A;
+}
+
+#mess{
+	position: relative;
+	top: -25px;
+	padding: 0 10px;
+	width: 100%;
+	height: 80px;
+	background-color: #FFFFFF;
+}
+#mess p{
+	flood-color: #4A4A4A;
+	position: relative;
+	top:15px;
+}	
+#mess p span{
+	
+	font-size: 16px;
+	color: #ff5353;
+	margin-right: 10px;
+}
+
+.mui-slider-indicator{
+	position: relative;
+	top: -20px;
+}

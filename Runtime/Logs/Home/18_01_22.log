@@ -1,0 +1,810 @@
+[ 2018-01-22T10:33:54+08:00 ] ::1 /ysc2/index.php/home/login/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000016s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002172s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000901s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000955s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000132s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000261s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.038315s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.038538s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001565s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001609s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001680s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001781s ]
+
+[ 2018-01-22T10:33:54+08:00 ] ::1 /ysc2/index.php/home/verify/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000018s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000667s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001664s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001743s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000976s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001053s ]
+
+[ 2018-01-22T10:34:08+08:00 ] ::1 /ysc2/index.php/home/login/login.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000455s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000595s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000639s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0061s ]
+SQL: SELECT * FROM `admin` WHERE `user` = 'wenwen' AND `password` = '48a01a00a93653ac751c9387bb127da5' LIMIT 1   [ RunTime:0.0012s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000041s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000091s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.007414s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.007504s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000539s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000578s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000757s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000801s ]
+
+[ 2018-01-22T10:34:11+08:00 ] ::1 /ysc2/index.php/home/index/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000423s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000683s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000738s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0067s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Index/index' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0064s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '77' LIMIT 1   [ RunTime:0.0048s ]
+ERR: array (
+  'rabc_id' => '77',
+)
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0050s ]
+SQL: SELECT RADMIN.role_id FROM roleadmin RADMIN WHERE RADMIN.admin_id = '1'  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0061s ]
+SQL: SELECT c.id,c.icon,c.t_id,c.controller,c.controllername FROM rabc_info c left join rolerabc rc on rc.rabc_id = c.id  WHERE ( c.is_menu = 1 and rc.role_id ="1" )  [ RunTime:0.0018s ]
+INFO: [ view_parse ] --START--
+NOTIC: [2] file_get_contents(./Apps/app/Home/View/public/aside.html): failed to open stream: No such file or directory C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Template.class.php 第 696 行.
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000068s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000103s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.015993s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.016037s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000430s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000474s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000974s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001015s ]
+
+[ 2018-01-22T10:34:12+08:00 ] ::1 /ysc2/index.php/home/index/welcome.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000530s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000856s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000956s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0047s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Index/welcome' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0037s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '78' LIMIT 1   [ RunTime:0.0008s ]
+ERR: array (
+  'rabc_id' => '78',
+)
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0084s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `user` WHERE `is_delete` = 0 LIMIT 1   [ RunTime:0.0035s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0070s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `orders` WHERE `is_deleted` = 0 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `seller` [ RunTime:0.0082s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `seller` LIMIT 1   [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0111s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `goods` WHERE `is_delete` = 0 LIMIT 1   [ RunTime:0.0093s ]
+SQL: SHOW COLUMNS FROM `article` [ RunTime:0.0075s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `article` LIMIT 1   [ RunTime:0.0017s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0061s ]
+SQL: SELECT sum(o.total_price) as corderprice FROM orders o WHERE o.pay_status <> 0 GROUP BY o.pay_status  [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `record` [ RunTime:0.0061s ]
+SQL: SELECT sum(paid_price) as paid_price FROM `record` WHERE `type` = 0 AND `is_pay` = 1  [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `telephone_fare_record` [ RunTime:0.0108s ]
+SQL: SELECT sum(paid_price) as paid_price FROM `telephone_fare_record` WHERE `type` = 0 AND `state` = 1  [ RunTime:0.0007s ]
+SQL: SELECT sum(paid_price) as paid_price FROM `telephone_fare_record` WHERE `type` = 1 AND `state` = 1  [ RunTime:0.0004s ]
+SQL: SELECT sum(reward) as reward FROM `user` WHERE `is_disable` = 0  [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `user` WHERE `addtime` BETWEEN 1516550400 AND 1516636800 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `seller` WHERE `time` BETWEEN 1516550400 AND 1516636800 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `orders` WHERE `addtime` BETWEEN 1516550400 AND 1516636800 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0063s ]
+SQL: SELECT sum(o.total_price) as corderprice FROM orders o WHERE o.addtime BETWEEN 1516550400 AND 1516636800 AND o.pay_status <> 0 GROUP BY o.order_status  [ RunTime:0.0007s ]
+NOTIC: [8] Undefined offset: 0 C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\IndexController.class.php 第 188 行.
+SQL: SELECT COUNT(*) AS tp_count FROM `goods` WHERE `is_delete` = 0 AND `addtime` BETWEEN 1516550400 AND 1516636800 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `article` WHERE `time` BETWEEN 1516550400 AND 1516636800 LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT sum(paid_price) as paid_price FROM `record` WHERE `time` BETWEEN 1516550400 AND 1516636800 AND `type` = 0 AND `is_pay` = 1  [ RunTime:0.0003s ]
+SQL: SELECT sum(paid_price) as paid_price FROM `telephone_fare_record` WHERE `time` BETWEEN 1516550400 AND 1516636800 AND `type` = 0 AND `state` = 1  [ RunTime:0.0003s ]
+SQL: SELECT sum(paid_price) as paid_price FROM `telephone_fare_record` WHERE `time` BETWEEN 1516550400 AND 1516636800 AND `type` = 1 AND `state` = 1  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `bonus_recommend` [ RunTime:0.0057s ]
+SQL: SELECT sum(br.bonus_amount) as recommend FROM bonus_recommend br left join user u on u.id = br.user_id  WHERE u.addtime BETWEEN 1516550400 AND 1516636800  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `bonus_consume` [ RunTime:0.0063s ]
+SQL: SELECT sum(bc.money) as consume FROM bonus_consume bc left join orders o on o.id = bc.order_id  WHERE o.pay_time BETWEEN 1516550400 AND 1516636800 AND o.pay_status <> 0  [ RunTime:0.0007s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000312s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000448s ]
+NOTIC: [8] Undefined variable: is_seller C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\ee3925b7580957c46e9b1767d158436d.php 第 164 行.
+NOTIC: [8] Undefined variable: is_seller C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\ee3925b7580957c46e9b1767d158436d.php 第 333 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.011465s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.011534s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000762s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000818s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000994s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001050s ]
+
+[ 2018-01-22T10:34:22+08:00 ] ::1 /ysc2/admin.php/Home/Sys/general
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000566s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000646s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000720s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0046s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Sys/general' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0049s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '2' LIMIT 1   [ RunTime:0.0005s ]
+ERR: array (
+  'rabc_id' => '2',
+)
+SQL: SHOW COLUMNS FROM `base` [ RunTime:0.0066s ]
+SQL: SELECT * FROM `base` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0016s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000144s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000230s ]
+NOTIC: [8] Undefined index: distance C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\def2da5220475e56df0df42cac3955b3.php 第 91 行.
+NOTIC: [8] Undefined index: distribute_fee C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\def2da5220475e56df0df42cac3955b3.php 第 98 行.
+NOTIC: [8] Undefined index: distance C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\def2da5220475e56df0df42cac3955b3.php 第 105 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012047s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012102s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000589s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000640s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000699s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000745s ]
+
+[ 2018-01-22T10:34:23+08:00 ] ::1 /ysc2/admin.php/Home/Sys/general
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000664s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000548s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000594s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0058s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Sys/general' LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0050s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '2' LIMIT 1   [ RunTime:0.0005s ]
+ERR: array (
+  'rabc_id' => '2',
+)
+SQL: SHOW COLUMNS FROM `base` [ RunTime:0.0061s ]
+SQL: SELECT * FROM `base` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0005s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000101s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000140s ]
+NOTIC: [8] Undefined index: distance C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\def2da5220475e56df0df42cac3955b3.php 第 91 行.
+NOTIC: [8] Undefined index: distribute_fee C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\def2da5220475e56df0df42cac3955b3.php 第 98 行.
+NOTIC: [8] Undefined index: distance C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\def2da5220475e56df0df42cac3955b3.php 第 105 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.017570s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.017610s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000340s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000373s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000739s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000808s ]
+
+[ 2018-01-22T10:34:23+08:00 ] ::1 /ysc2/admin.php/home/sysno/get_start_imgs.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000319s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000773s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000844s ]
+ERR: 无法加载控制器:Sysno
+
+[ 2018-01-22T10:34:32+08:00 ] ::1 /ysc2/admin.php/home/discount/discountindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000016s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000435s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000570s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000642s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0054s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Discount/discountindex' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0038s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '1101' LIMIT 1   [ RunTime:0.0004s ]
+ERR: array (
+  'rabc_id' => '1101',
+)
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\DiscountController.class.php on line 14 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\DiscountController.class.php 第 68 行.
+SQL: SHOW COLUMNS FROM `coupon` [ RunTime:0.0060s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT c.*,s.number as s_number,s.name as s_name FROM coupon c left join seller s on s.id = c.seller_id  ORDER BY c.id LIMIT 0,20   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `coupon` [ RunTime:0.0044s ]
+SQL: SELECT COUNT(*) AS tp_count FROM coupon c LIMIT 1   [ RunTime:0.0003s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000067s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000104s ]
+NOTIC: [8] Undefined index: name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\e00f8412d3488ab5072afb978963981b.php 第 39 行.
+NOTIC: [8] Undefined index: sm_money C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\e00f8412d3488ab5072afb978963981b.php 第 40 行.
+NOTIC: [8] Undefined index: lg_money C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\e00f8412d3488ab5072afb978963981b.php 第 42 行.
+NOTIC: [8] Undefined index: time C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\e00f8412d3488ab5072afb978963981b.php 第 43 行.
+NOTIC: [8] Undefined index: time2 C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\e00f8412d3488ab5072afb978963981b.php 第 44 行.
+NOTIC: [8] Undefined index: forshort C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\e00f8412d3488ab5072afb978963981b.php 第 89 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.009873s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.009916s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000286s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000312s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000481s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000522s ]
+
+[ 2018-01-22T10:34:33+08:00 ] ::1 /ysc2/admin.php/home/discount/discountindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000013s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000728s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000590s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000635s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0090s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Discount/discountindex' LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0096s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '1101' LIMIT 1   [ RunTime:0.0007s ]
+ERR: array (
+  'rabc_id' => '1101',
+)
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\DiscountController.class.php on line 14 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\DiscountController.class.php 第 68 行.
+SQL: SHOW COLUMNS FROM `coupon` [ RunTime:0.0088s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT c.*,s.number as s_number,s.name as s_name FROM coupon c left join seller s on s.id = c.seller_id  ORDER BY c.id LIMIT 0,20   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `coupon` [ RunTime:0.0090s ]
+SQL: SELECT COUNT(*) AS tp_count FROM coupon c LIMIT 1   [ RunTime:0.0004s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000064s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000101s ]
+NOTIC: [8] Undefined index: name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\e00f8412d3488ab5072afb978963981b.php 第 39 行.
+NOTIC: [8] Undefined index: sm_money C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\e00f8412d3488ab5072afb978963981b.php 第 40 行.
+NOTIC: [8] Undefined index: lg_money C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\e00f8412d3488ab5072afb978963981b.php 第 42 行.
+NOTIC: [8] Undefined index: time C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\e00f8412d3488ab5072afb978963981b.php 第 43 行.
+NOTIC: [8] Undefined index: time2 C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\e00f8412d3488ab5072afb978963981b.php 第 44 行.
+NOTIC: [8] Undefined index: forshort C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\e00f8412d3488ab5072afb978963981b.php 第 89 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012083s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012142s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000950s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001074s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000982s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001077s ]
+
+[ 2018-01-22T10:34:40+08:00 ] ::1 /ysc2/admin.php/Home/Articleclass/articleclassindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000346s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000390s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000431s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0065s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Articleclass/articleclassindex' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0037s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '53' LIMIT 1   [ RunTime:0.0003s ]
+ERR: array (
+  'rabc_id' => '53',
+)
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleclassController.class.php on line 15 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+SQL: SHOW COLUMNS FROM `article_class` [ RunTime:0.0052s ]
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleclassController.class.php 第 31 行.
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT * FROM `article_class` LIMIT 0,20   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `article_class` LIMIT 1   [ RunTime:0.0003s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000067s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000118s ]
+NOTIC: [8] Undefined index: name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\50f8d0743c5f9cf2287364d8eedcffe3.php 第 38 行.
+NOTIC: [8] Undefined index: is_disable C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\50f8d0743c5f9cf2287364d8eedcffe3.php 第 41 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.007801s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.007850s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000219s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000244s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000367s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000396s ]
+
+[ 2018-01-22T10:34:41+08:00 ] ::1 /ysc2/admin.php/Home/Articleclass/articleclassindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000420s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000639s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000685s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0114s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Articleclass/articleclassindex' LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0103s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '53' LIMIT 1   [ RunTime:0.0009s ]
+ERR: array (
+  'rabc_id' => '53',
+)
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleclassController.class.php on line 15 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+SQL: SHOW COLUMNS FROM `article_class` [ RunTime:0.0073s ]
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleclassController.class.php 第 31 行.
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT * FROM `article_class` LIMIT 0,20   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `article_class` LIMIT 1   [ RunTime:0.0002s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000047s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000086s ]
+NOTIC: [8] Undefined index: name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\50f8d0743c5f9cf2287364d8eedcffe3.php 第 38 行.
+NOTIC: [8] Undefined index: is_disable C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\50f8d0743c5f9cf2287364d8eedcffe3.php 第 41 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.008455s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.008493s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000453s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000480s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000605s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000639s ]
+
+[ 2018-01-22T10:34:44+08:00 ] ::1 /ysc2/admin.php/Home/Articleclass/articleclassindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000322s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000600s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000645s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0107s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Articleclass/articleclassindex' LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0098s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '53' LIMIT 1   [ RunTime:0.0007s ]
+ERR: array (
+  'rabc_id' => '53',
+)
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleclassController.class.php on line 15 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+SQL: SHOW COLUMNS FROM `article_class` [ RunTime:0.0104s ]
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleclassController.class.php 第 31 行.
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT * FROM `article_class` LIMIT 0,20   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `article_class` LIMIT 1   [ RunTime:0.0005s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000072s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000141s ]
+NOTIC: [8] Undefined index: name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\50f8d0743c5f9cf2287364d8eedcffe3.php 第 38 行.
+NOTIC: [8] Undefined index: is_disable C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\50f8d0743c5f9cf2287364d8eedcffe3.php 第 41 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.014652s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.014722s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000426s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000455s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000600s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000632s ]
+
+[ 2018-01-22T10:34:45+08:00 ] ::1 /ysc2/admin.php/Home/Article/articleindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000317s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000445s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000486s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0103s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Article/articleindex' LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0082s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '54' LIMIT 1   [ RunTime:0.0009s ]
+ERR: array (
+  'rabc_id' => '54',
+)
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleController.class.php on line 15 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: title C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleController.class.php 第 16 行.
+NOTIC: [8] Undefined index: teacher_name C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleController.class.php 第 21 行.
+NOTIC: [8] Undefined index: time C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleController.class.php 第 25 行.
+NOTIC: [8] Undefined index: status C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleController.class.php 第 33 行.
+NOTIC: [8] Undefined variable: map C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleController.class.php 第 42 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleController.class.php 第 45 行.
+SQL: SHOW COLUMNS FROM `article` [ RunTime:0.0070s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT a.*,u.username,ac.name as class_name FROM article a left join user u on u.id = a.teacher_id left join article_class ac on ac.id = a.class_id  LIMIT 0,20   [ RunTime:0.0081s ]
+NOTIC: [8] Undefined variable: map C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleController.class.php 第 48 行.
+SQL: SHOW COLUMNS FROM `article` [ RunTime:0.0052s ]
+SQL: SELECT COUNT(*) AS tp_count FROM article a left join teacher t on t.id = a.teacher_id left join article_class ac on ac.id = a.class_id  LIMIT 1   [ RunTime:0.0021s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000107s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000181s ]
+NOTIC: [8] Undefined index: title C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6dfd0dad1a22d7621e1d19b267ec0532.php 第 56 行.
+NOTIC: [8] Undefined index: teacher_name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6dfd0dad1a22d7621e1d19b267ec0532.php 第 57 行.
+NOTIC: [8] Undefined index: time C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6dfd0dad1a22d7621e1d19b267ec0532.php 第 58 行.
+NOTIC: [8] Undefined index: time2 C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6dfd0dad1a22d7621e1d19b267ec0532.php 第 59 行.
+NOTIC: [8] Undefined index: status C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6dfd0dad1a22d7621e1d19b267ec0532.php 第 62 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.015906s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.015963s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000401s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000443s ]
+
+[ 2018-01-22T10:34:46+08:00 ] ::1 /ysc2/admin.php/Home/Article/articleindex
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000428s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000562s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000603s ]
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0076s ]
+SQL: SELECT `id` FROM `rabc_info` WHERE `controller` = 'Home/Article/articleindex' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `roleadmin` [ RunTime:0.0055s ]
+SQL: SELECT rr.rabc_id FROM roleadmin ra left join rolerabc rr on rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND rr.rabc_id = '54' LIMIT 1   [ RunTime:0.0004s ]
+ERR: array (
+  'rabc_id' => '54',
+)
+NOTIC: [2] Missing argument 1 for I(), called in C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleController.class.php on line 15 and defined C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 269 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 270 行.
+NOTIC: [8] Undefined variable: name C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 307 行.
+NOTIC: [8] Undefined index: title C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleController.class.php 第 16 行.
+NOTIC: [8] Undefined index: teacher_name C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleController.class.php 第 21 行.
+NOTIC: [8] Undefined index: time C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleController.class.php 第 25 行.
+NOTIC: [8] Undefined index: status C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleController.class.php 第 33 行.
+NOTIC: [8] Undefined variable: map C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleController.class.php 第 42 行.
+NOTIC: [8] Undefined index: p C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleController.class.php 第 45 行.
+SQL: SHOW COLUMNS FROM `article` [ RunTime:0.0049s ]
+NOTIC: [8] Undefined index: limit C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Db\Driver.class.php 第 961 行.
+SQL: SELECT a.*,u.username,ac.name as class_name FROM article a left join user u on u.id = a.teacher_id left join article_class ac on ac.id = a.class_id  LIMIT 0,20   [ RunTime:0.0020s ]
+NOTIC: [8] Undefined variable: map C:\phpStudy\WWW\ysc2\Apps\App\Home\Controller\ArticleController.class.php 第 48 行.
+SQL: SHOW COLUMNS FROM `article` [ RunTime:0.0053s ]
+SQL: SELECT COUNT(*) AS tp_count FROM article a left join teacher t on t.id = a.teacher_id left join article_class ac on ac.id = a.class_id  LIMIT 1   [ RunTime:0.0006s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000074s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000131s ]
+NOTIC: [8] Undefined index: title C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6dfd0dad1a22d7621e1d19b267ec0532.php 第 56 行.
+NOTIC: [8] Undefined index: teacher_name C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6dfd0dad1a22d7621e1d19b267ec0532.php 第 57 行.
+NOTIC: [8] Undefined index: time C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6dfd0dad1a22d7621e1d19b267ec0532.php 第 58 行.
+NOTIC: [8] Undefined index: time2 C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6dfd0dad1a22d7621e1d19b267ec0532.php 第 59 行.
+NOTIC: [8] Undefined index: status C:\phpStudy\WWW\ysc2\Runtime\Cache\Home\6dfd0dad1a22d7621e1d19b267ec0532.php 第 62 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.011298s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.011352s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000484s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000516s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000618s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000674s ]
+
+[ 2018-01-22T10:35:13+08:00 ] ::1 /ysc2/index.php/home/search/neworder.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000016s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000746s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000800s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000859s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0065s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 37  [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0059s ]
+SQL: SELECT o.id,o.prompt_tone FROM orders o WHERE o.pay_status = 1 AND `prompt_tone` = 0  [ RunTime:0.0004s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T10:35:18+08:00 ] ::1 /ysc2/index.php/home/search/newbonus.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000290s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000393s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000430s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0046s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2083  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0052s ]
+SQL: SELECT `id`,`prompt_tone` FROM `goods` WHERE `prompt_tone` = 0  [ RunTime:0.0007s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T10:35:48+08:00 ] ::1 /ysc2/index.php/home/search/service.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000342s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000976s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001049s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0055s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2108  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `customer_service` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`prompt_tone` FROM `customer_service` WHERE `prompt_tone` = 0  [ RunTime:0.0002s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T10:37:33+08:00 ] ::1 /ysc2/index.php/home/search/rechargecash.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000016s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000525s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000760s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000824s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0374s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 1600  [ RunTime:0.1702s ]
+SQL: SHOW COLUMNS FROM `rechargecash` [ RunTime:0.0430s ]
+SQL: SELECT `id`,`prompt_tone` FROM `rechargecash` WHERE `type` = 2 AND `prompt_tone` = 0  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `rechargecash_seller` [ RunTime:0.0070s ]
+SQL: SELECT `id`,`prompt_tone` FROM `rechargecash_seller` WHERE `type` = 1 AND `prompt_tone` = 0  [ RunTime:0.0003s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T10:39:49+08:00 ] ::1 /ysc2/index.php/home/search/neworder.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000016s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000529s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000472s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000518s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0068s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 37  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0059s ]
+SQL: SELECT o.id,o.prompt_tone FROM orders o WHERE o.pay_status = 1 AND `prompt_tone` = 0  [ RunTime:0.0004s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T10:41:48+08:00 ] ::1 /ysc2/index.php/home/search/newbonus.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000880s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001716s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001762s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0066s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2083  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0048s ]
+SQL: SELECT `id`,`prompt_tone` FROM `goods` WHERE `prompt_tone` = 0  [ RunTime:0.0007s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T10:43:34+08:00 ] ::1 /ysc2/index.php/home/search/service.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000016s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000668s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002190s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002764s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0049s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2108  [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `customer_service` [ RunTime:0.0049s ]
+SQL: SELECT `id`,`prompt_tone` FROM `customer_service` WHERE `prompt_tone` = 0  [ RunTime:0.0003s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T10:45:22+08:00 ] ::1 /ysc2/index.php/home/search/rechargecash.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000015s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000610s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000914s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000968s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0064s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 1600  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `rechargecash` [ RunTime:0.0071s ]
+SQL: SELECT `id`,`prompt_tone` FROM `rechargecash` WHERE `type` = 2 AND `prompt_tone` = 0  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `rechargecash_seller` [ RunTime:0.0056s ]
+SQL: SELECT `id`,`prompt_tone` FROM `rechargecash_seller` WHERE `type` = 1 AND `prompt_tone` = 0  [ RunTime:0.0007s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T10:47:09+08:00 ] ::1 /ysc2/index.php/home/search/neworder.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000016s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000359s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000886s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000959s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0074s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 37  [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0065s ]
+SQL: SELECT o.id,o.prompt_tone FROM orders o WHERE o.pay_status = 1 AND `prompt_tone` = 0  [ RunTime:0.0004s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T10:48:55+08:00 ] ::1 /ysc2/index.php/home/search/newbonus.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000016s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000518s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000866s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000938s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0048s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2083  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0053s ]
+SQL: SELECT `id`,`prompt_tone` FROM `goods` WHERE `prompt_tone` = 0  [ RunTime:0.0007s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T10:50:44+08:00 ] ::1 /ysc2/index.php/home/search/service.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000019s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000401s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000512s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000568s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0059s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2108  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `customer_service` [ RunTime:0.0062s ]
+SQL: SELECT `id`,`prompt_tone` FROM `customer_service` WHERE `prompt_tone` = 0  [ RunTime:0.0003s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T10:53:08+08:00 ] ::1 /ysc2/index.php/home/search/rechargecash.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000382s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000436s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000473s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0050s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 1600  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `rechargecash` [ RunTime:0.0045s ]
+SQL: SELECT `id`,`prompt_tone` FROM `rechargecash` WHERE `type` = 2 AND `prompt_tone` = 0  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `rechargecash_seller` [ RunTime:0.0057s ]
+SQL: SELECT `id`,`prompt_tone` FROM `rechargecash_seller` WHERE `type` = 1 AND `prompt_tone` = 0  [ RunTime:0.0004s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T10:54:54+08:00 ] ::1 /ysc2/index.php/home/search/neworder.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000306s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000389s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000428s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0052s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 37  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0060s ]
+SQL: SELECT o.id,o.prompt_tone FROM orders o WHERE o.pay_status = 1 AND `prompt_tone` = 0  [ RunTime:0.0003s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T10:56:39+08:00 ] ::1 /ysc2/index.php/home/search/newbonus.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000337s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000456s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000492s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0061s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2083  [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0044s ]
+SQL: SELECT `id`,`prompt_tone` FROM `goods` WHERE `prompt_tone` = 0  [ RunTime:0.0007s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T10:58:27+08:00 ] ::1 /ysc2/index.php/home/search/service.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000425s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000509s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000575s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0054s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2108  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `customer_service` [ RunTime:0.0048s ]
+SQL: SELECT `id`,`prompt_tone` FROM `customer_service` WHERE `prompt_tone` = 0  [ RunTime:0.0003s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T11:00:18+08:00 ] ::1 /ysc2/index.php/home/search/rechargecash.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000300s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000724s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000787s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0057s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 1600  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `rechargecash` [ RunTime:0.0051s ]
+SQL: SELECT `id`,`prompt_tone` FROM `rechargecash` WHERE `type` = 2 AND `prompt_tone` = 0  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `rechargecash_seller` [ RunTime:0.0052s ]
+SQL: SELECT `id`,`prompt_tone` FROM `rechargecash_seller` WHERE `type` = 1 AND `prompt_tone` = 0  [ RunTime:0.0003s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T11:02:05+08:00 ] ::1 /ysc2/index.php/home/search/neworder.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000659s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000951s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001016s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0050s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 37  [ RunTime:0.0009s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0051s ]
+SQL: SELECT o.id,o.prompt_tone FROM orders o WHERE o.pay_status = 1 AND `prompt_tone` = 0  [ RunTime:0.0005s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T11:02:35+08:00 ] ::1 /ysc2/index.php/home/search/newbonus.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000441s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000591s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000652s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0053s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2083  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `goods` [ RunTime:0.0058s ]
+SQL: SELECT `id`,`prompt_tone` FROM `goods` WHERE `prompt_tone` = 0  [ RunTime:0.0009s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T11:02:36+08:00 ] ::1 /ysc2/index.php/home/search/service.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000013s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000335s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000385s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000426s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0057s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 2108  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `customer_service` [ RunTime:0.0052s ]
+SQL: SELECT `id`,`prompt_tone` FROM `customer_service` WHERE `prompt_tone` = 0  [ RunTime:0.0003s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T11:02:37+08:00 ] ::1 /ysc2/index.php/home/search/rechargecash.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000018s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000733s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000704s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000775s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0053s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 1600  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `rechargecash` [ RunTime:0.0046s ]
+SQL: SELECT `id`,`prompt_tone` FROM `rechargecash` WHERE `type` = 2 AND `prompt_tone` = 0  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `rechargecash_seller` [ RunTime:0.0047s ]
+SQL: SELECT `id`,`prompt_tone` FROM `rechargecash_seller` WHERE `type` = 1 AND `prompt_tone` = 0  [ RunTime:0.0010s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+
+[ 2018-01-22T11:02:38+08:00 ] ::1 /ysc2/index.php/home/search/neworder.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000017s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000459s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000406s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000448s ]
+NOTIC: [2] session_start(): Cannot send session cache limiter - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Common\functions.php 第 1190 行.
+SQL: SHOW COLUMNS FROM `rabc_info` [ RunTime:0.0073s ]
+SQL: SELECT ri.id FROM rabc_info ri left join rolerabc rr on  ri.id = rr.rabc_id left join roleadmin  ra on  rr.role_id = ra.role_id  WHERE ra.admin_id = '1' AND ri.id = 37  [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `orders` [ RunTime:0.0058s ]
+SQL: SELECT o.id,o.prompt_tone FROM orders o WHERE o.pay_status = 1 AND `prompt_tone` = 0  [ RunTime:0.0005s ]
+NOTIC: [2] Cannot modify header information - headers already sent C:\phpStudy\WWW\ysc2\ThinkPHP\Library\Think\Controller.class.php 第 215 行.
+

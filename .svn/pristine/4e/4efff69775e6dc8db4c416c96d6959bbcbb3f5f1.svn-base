@@ -1,0 +1,99 @@
+<?php
+namespace Home\Controller;
+
+use Think\Controller;
+
+class WalletController extends Controller
+{
+    // 钱包首页
+    public function walletindex()
+    {
+        //用户的基本信息
+        $user_id   = cookie('user_id');
+        $user_info = M('user')
+            ->where(array('id' => $user_id))
+            ->field('avatar as head_img,balance,gold')
+            ->find();
+        $card_count = M('coupon_user')
+            ->where(array('user_id' => $user_id))
+            ->count();
+        $bank_count = M('user_bank')
+            ->where(array('user_id' => $user_id))
+            ->count();
+
+        $this->assign('user_info', $user_info);
+        $this->assign('card_count', $card_count);
+        $this->assign('bank_count', $bank_count);
+        $this->display();
+    }
+    //交易记录页面
+    public function record()
+    {
+        //查询充值提现记录
+        $data = M('rechargecash')
+            ->where(array('user_id' => cookie('user_id'), 'is_ok' => 1))
+            ->select();
+        $this->assign('data', $data);
+        $this->display();
+    }
+
+    //我的银行卡
+    public function bankcard()
+    {
+        $data = M()->table('__USER_BANK__ ub')
+            ->where(array('ub.user_id' => cookie('user_id')))
+            ->join('left join __BANK__ b on b.id=ub.bank_type')
+            ->field('b.bank_name,ub.id,ub.open_address,ub.open_account')
+            ->select();
+
+        $this->assign('data', $data);
+        $this->display();
+    }
+
+    //添加银行卡
+    public function addbankcard()
+    {
+        $arr = I();
+        if ($arr != null) {
+            $ub                   = M('user_bank');
+            $save['open_name']    = $arr['open_name'];
+            $save['bank_type']    = $arr['bank_type'];
+            $save['open_account'] = $arr['open_account'];
+            $save['open_address'] = $arr['open_address'];
+            $save['user_id']      = cookie('user_id');
+            $res                  = $ub->add($save);
+            if ($res) {
+                $json = array(
+                    'result' => 1,
+                    'msg'    => '添加成功！',
+                );
+            } else {
+                $json = array(
+                    'result' => 0,
+                    'msg'    => '添加失败！',
+                );
+            }
+            $this->ajaxReturn($json);
+        } else {
+            $bank = M('bank')
+                ->where(array('is_disabled' => 0, 'is_delete' => 0))
+                ->field('id,bank_name')
+                ->select();
+            $this->assign('bank', $bank);
+            $this->display();
+        }
+    }
+
+    //删除银行卡
+    public function delbankcard()
+    {
+        $id = I('id');
+        M('user_bank')->where(array('id' => $id))->delete();
+        $json = array(
+            'result' => 1,
+            'msg'    => '删除银行卡成功！',
+        );
+        $this->ajaxReturn($json);
+    }
+
+}

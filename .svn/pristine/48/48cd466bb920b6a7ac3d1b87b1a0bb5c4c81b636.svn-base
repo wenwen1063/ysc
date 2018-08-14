@@ -1,0 +1,206 @@
+body {
+	overflow-x: hidden;
+}
+#header,
+#classification,
+#content,
+#popupnones{
+	width: 100%;
+	overflow-x: hidden;
+}
+.header {
+	position: relative;
+	background-color: #ff5353;
+	height: 45px;
+}
+
+.mui-title,
+.mui-action-back {
+	font-weight: 100;
+	color: #FFFFFF;
+}
+
+#header img {
+	background-size: 100% 100%;
+	height: 126px;
+	width: 100%;
+}
+
+#classification {
+	width: 100%;
+	height: 120px;
+	background-color: #fff;
+}
+
+#classification .list {
+	border-right: 1px solid #eeeeee;
+	float: left;
+	height: 120px;
+	width: 33%;
+}
+
+#classification .list p {
+	position: relative;
+	top: 21px;
+	text-align: center;
+}
+
+#classification .list .img {
+	position: relative;
+	top: 30px;
+	width: 60px;
+	margin: 0 auto;
+}
+
+#classification .list img {
+	width: 60px;
+}
+
+#content {
+	position: relative;
+	top: 10px;
+	height: 100%;
+	background-color: #fff;
+}
+
+#content .title {
+	height: 43px;
+	border-bottom: 1px solid #eeeeee;
+}
+
+#content .title h5 {
+	position: relative;
+	top: 13px;
+	margin: 0 auto;
+	height: 30px;
+	width: 56px;
+	border-bottom: 3px solid #fe504f;
+}
+
+#content h6 {
+	width: 120px;
+	height: 14px;
+	font-size: 15px;
+	border-left: 2px solid #fe504f;
+	padding-left: 5%;
+	padding-bottom: 20px;
+}
+
+#content .tiao {
+	position: relative;
+	left: 5%;
+}
+
+#content .tiao span {
+	color: #fe504f;
+}
+
+#content .te table {
+	width: 100%;
+}
+
+#content .te,
+.fan {
+	width: 90%;
+	position: relative;
+	left: 5%;
+}
+
+th {
+	font-weight: 100;
+	color: #4a4a4a;
+	border: none;
+	background-color: #eeeeee;
+	font-size: 14px;
+}
+
+td {
+	font-weight: 100;
+	text-align: center;
+	font-size: 14px;
+	color: #4a4a4a;
+}
+
+table {
+	border: 1px solid #eeeeee;
+}
+
+#content .fan table {
+	width: 100%;
+}
+
+#content .jie {
+	width: 90%;
+	left: 5%;
+	position: relative;
+}
+
+.popup {
+	border-radius: 10px;
+	position: absolute;
+	height: 120px;
+	left: 15%;
+	width: 70%;
+	top: 0;
+	background-color: #FFFFFF;
+}
+
+.popup span {
+	position: relative;
+	left: 5%;
+	font-weight: 100;
+	border-left: 2px solid #2ac845;
+	padding-left: 10px;
+	height: 16px;
+	color: #2ac845;
+	top: 10px;
+}
+
+.popup .money {
+	position: relative;
+	top: 5px;
+}
+
+.popup .money p {
+	width: 90%;
+	position: relative;
+	margin-bottom: 15px;
+	top: 20px;
+	left: 20px;
+	color: #4a4a4a;
+}
+
+.popup .money input {
+	float: right;
+	border: none;
+	background-color: #fe504f;
+	color: #FFFFFF;
+	padding-top: 1px;
+	padding-left: 10px;
+	width: 50px;
+	height: 20px;
+}
+
+.fan .td {
+	border: none;
+}
+
+#content p,
+#content h6 {
+	color: #909090;
+}
+
+
+.popup{
+	position: absolute;
+	top:50%;
+}
+
+
+.popup p a{
+	color: #ff5053;
+}
+
+
+
+

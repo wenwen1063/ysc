@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>历史记录</title>
+    <meta content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="../../CSS/CommonCSS/Base.css" rel="stylesheet">
+    <link href="../../CSS/BusinessCSS/classification/Searchgoods.css" rel="stylesheet">
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <div class="mui-title" style="right: 52px;">
+    	<input  type="text" placeholder="搜索商品">
+    </div> 
+    <a class="mui-action-back mui-icon mui-icon-right-nav mui-pull-right" style="font-size: 16px;top: 5px;">编辑</a> 
+</header>
+<span class="title">搜索历史</span>
+<div class="content">
+    <ul class="mui-table-view">
+        <li class="mui-table-view-cell"><span class="mui-icon mui-icon-search"></span>&numsp;夸张大头花女戒</li>
+        <li class="mui-table-view-cell"><span class="mui-icon mui-icon-search"></span>&numsp;夸张大头花女戒</li>
+        <li class="mui-table-view-cell"><span class="mui-icon mui-icon-search"></span>&numsp;夸张大头花女戒</li>
+    </ul>
+</div>
+<div class="input">
+    <input type="button" value="清空搜索记录">
+</div>
+</body>
+</html>

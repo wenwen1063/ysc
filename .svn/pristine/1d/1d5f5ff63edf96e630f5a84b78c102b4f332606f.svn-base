@@ -1,0 +1,35 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../CSS/CommonCSS/Base.css">
+    <title>用户协议</title>
+    <style>
+        body {
+            background-color: #FFFFFF;
+
+        }
+
+        h5 {
+            padding: 0 10px;
+            position: relative;
+            top: 10px;
+            letter-spacing: 2px;
+            line-height: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="mui-bar mui-bar-nav header">
+    <a href="../More/More.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">用户协议</h1>
+</header>
+<h5>
+    &numsp;&numsp;&numsp;&numsp;用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议... <br><br>
+    &numsp;&numsp;&numsp;&numsp;用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议... <br><br>
+    &numsp;&numsp;&numsp;&numsp;用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议...用户协议... <br><br>
+
+</h5>
+</body>
+</html>
